@@ -117,7 +117,21 @@ function act(id: string, etapaId: string, tipo: ActividadTipo, titulo: string, p
     etapa_id: etapaId,
     tipo,
     titulo,
-    configuracion: { preguntas, mostrarFelicitacion: true, vozSintetica: true }
+    configuracion: { preguntas, mostrarFelicitacion: true, vozSintetica: true },
+    atelier: {
+      subtituloPoetico: `Unidad didáctica interactiva: ${titulo}`,
+      materia: 'Educación Adaptativa PIAR',
+      resumenBreve: 'Nodo de aprendizaje diseñado para explorar el concepto mediante observación activa, datos didácticos clave y desafío interactivo.',
+      datosClave: [
+        { icono: '◇', etiqueta: 'Formato', valor: tipo.toUpperCase() },
+        { icono: '♙', etiqueta: 'Adaptación', valor: 'PIAR Estudiantil' },
+        { icono: '⌁', etiqueta: 'Interacción', valor: 'Inmersiva & Didáctica' },
+        { icono: '⌖', etiqueta: 'Enfoque', valor: 'Educación Inclusiva' }
+      ],
+      importanciaEducativa: 'Fomenta la discriminación visual, la lógica y el pensamiento autónomo.',
+      sabiasQue: 'La exploración gráfica asistida incrementa la atención y retención en procesos pedagógicos diversos.',
+      instruccionTip: 'Haz clic en los puntos interactivos o presiona "Iniciar Actividad" para la evaluación.'
+    }
   };
 }
 

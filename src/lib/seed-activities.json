@@ -1,1 +1,3541 @@
-[{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"seleccion","titulo":"¿Cuántas piezas tiene el tangram?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-a1-1","opciones":[{"id":"op-a1-1","texto":"5 piezas","esCorrecta":false},{"id":"op-a1-2","texto":"7 piezas","esCorrecta":true},{"id":"op-a1-3","texto":"9 piezas","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png","instruccion":"Mira el cuadrado del tangram. ¿Con cuántas piezas se arma?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"seleccion","titulo":"El billete de mayor valor","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-a2-1","opciones":[{"id":"op-a2-1","texto":"$1.000","esCorrecta":false},{"id":"op-a2-2","texto":"$20.000","esCorrecta":false},{"id":"op-a2-3","texto":"$50.000","esCorrecta":true}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png","instruccion":"Mira la pila de billetes. ¿Cuál billete vale más?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"seleccion","titulo":"Comprando en el kiosco","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-a3-1","opciones":[{"id":"op-a3-1","texto":"$1.000","esCorrecta":false},{"id":"op-a3-2","texto":"$5.000","esCorrecta":true},{"id":"op-a3-3","texto":"$10.000","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png","instruccion":"En el kiosco el jugo cuesta $5.000. ¿Qué billete usas para pagar?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"completar","titulo":"Completa la frase del dinero","configuracion":{"preguntas":[{"tipo":"completar","datos":{"id":"preg-a4-1","imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png","instruccion":"Completa la oración con las palabras correctas.","oracionConHuecos":"Con un billete de [mil] y uno de [dos mil] tengo tres mil pesos.","palabrasOpciones":["mil","dos mil","tres mil","cinco mil"],"respuestasCorrectas":{"0":"mil","1":"dos mil"}}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"emparejar","titulo":"Cambios del billete","configuracion":{"preguntas":[{"tipo":"emparejar","datos":{"id":"preg-a5-1","parejas":[{"id":"p-a5-1","origen":"Billete de $2.000","destino":"Dos billetes de $1.000","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-a5-2","origen":"Billete de $10.000","destino":"Dos billetes de $5.000","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-a5-3","origen":"Billete de $50.000","destino":"Cinco billetes de $10.000","origenTipo":"texto","destinoTipo":"texto"}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png","instruccion":"Une cada billete con su cambio equivalente."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"explorador_3d","titulo":"Explora el cubo","configuracion":{"preguntas":[{"tipo":"explorador_3d","datos":{"id":"preg-a6-1","objetivo":"Descubrir cara, arista y vértice.","modeloUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121813_99f029ea-5fd6-4e99-981b-dc4723b9aa4d.glb","instruccion":"Toca los botones para descubrir las partes del cubo.","nombreObjeto":"El cubo","puntosDeInteres":[{"id":"punto-a6-1","nombre":"La cara","descripcion":"Cada cara del cubo es un cuadrado."},{"id":"punto-a6-2","nombre":"La arista","descripcion":"La línea donde se juntan dos caras."},{"id":"punto-a6-3","nombre":"El vértice","descripcion":"El punto donde se juntan tres aristas."}]}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"explorador_3d","titulo":"Explora la pirámide","configuracion":{"preguntas":[{"tipo":"explorador_3d","datos":{"id":"preg-a7-1","objetivo":"Descubrir base, caras y cúspide.","modeloUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121815_70889eaf-6ee3-475c-b87e-d1f991d9336c.glb","instruccion":"Explora la pirámide y toca sus partes.","nombreObjeto":"La pirámide","puntosDeInteres":[{"id":"punto-a7-1","nombre":"La base","descripcion":"La base de la pirámide es un cuadrado."},{"id":"punto-a7-2","nombre":"Las caras","descripcion":"Los lados son triángulos."},{"id":"punto-a7-3","nombre":"La cúspide","descripcion":"El punto más alto de la pirámide."}]}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000201","tipo":"autoevaluacion","titulo":"¿Cómo te fue con el tangram?","configuracion":{"preguntas":[{"tipo":"autoevaluacion","datos":{"id":"preg-a8-1","escala":[{"id":"muy_bien","color":"#22c55e","emoji":"🌟","etiqueta":"Muy bien"},{"id":"bien","color":"#3b82f6","emoji":"👍","etiqueta":"Bien"},{"id":"regular","color":"#f59e0b","emoji":"😐","etiqueta":"Regular"},{"id":"necesito_ayuda","color":"#ef4444","emoji":"🤝","etiqueta":"Necesito ayuda"}],"reflexion":"¿Qué fue lo más difícil del tangram?","instruccion":"Toca el emoji que muestra cómo te sentiste."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"seleccion","titulo":"A la izquierda del cero","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-d1-1","opciones":[{"id":"op-d1-1","texto":"-1","esCorrecta":true},{"id":"op-d1-2","texto":"+1","esCorrecta":false},{"id":"op-d1-3","texto":"0","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png","instruccion":"Mira el tablero. ¿Qué número está a la izquierda del cero?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"seleccion","titulo":"Frío o caliente","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-d2-1","opciones":[{"id":"op-d2-1","texto":"Frío","esCorrecta":true},{"id":"op-d2-2","texto":"Caliente","esCorrecta":false},{"id":"op-d2-3","texto":"Ni frío ni caliente","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png","instruccion":"El termómetro marca -5. ¿Ese número es frío o caliente?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"completar","titulo":"Derecha e izquierda en el tablero","configuracion":{"preguntas":[{"tipo":"completar","datos":{"id":"preg-d3-1","imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png","instruccion":"Completa la oración sobre el tablero.","oracionConHuecos":"El número +3 está a la [derecha] del cero y el -3 a la [izquierda].","palabrasOpciones":["derecha","izquierda","arriba","abajo"],"respuestasCorrectas":{"0":"derecha","1":"izquierda"}}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"explorador_3d","titulo":"El dado del parqués","configuracion":{"preguntas":[{"tipo":"explorador_3d","datos":{"id":"preg-d4-1","objetivo":"Descubrir las partes del dado.","modeloUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121813_99f029ea-5fd6-4e99-981b-dc4723b9aa4d.glb","instruccion":"Gira el dado y descubre sus partes.","nombreObjeto":"El dado","puntosDeInteres":[{"id":"punto-d4-1","nombre":"Una cara","descripcion":"Aquí viven los puntos del dado."},{"id":"punto-d4-2","nombre":"Una arista","descripcion":"Se junta con otra cara del dado."},{"id":"punto-d4-3","nombre":"Un vértice","descripcion":"Esquina donde se tocan tres caras."}]}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"seleccion","titulo":"¿Cuántas caras tiene el dado?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-d5-1","opciones":[{"id":"op-d5-1","texto":"5 caras","esCorrecta":false},{"id":"op-d5-2","texto":"6 caras","esCorrecta":true},{"id":"op-d5-3","texto":"7 caras","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png","instruccion":"Un dado de parqués tiene 1, 2, 3, 4, 5 y 6. ¿Cuántas caras tiene en total?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000202","tipo":"autoevaluacion","titulo":"Números enteros: ¿cómo te fue?","configuracion":{"preguntas":[{"tipo":"autoevaluacion","datos":{"id":"preg-d6-1","escala":[{"id":"muy_bien","color":"#22c55e","emoji":"🌟","etiqueta":"Muy bien"},{"id":"bien","color":"#3b82f6","emoji":"👍","etiqueta":"Bien"},{"id":"regular","color":"#f59e0b","emoji":"😐","etiqueta":"Regular"},{"id":"necesito_ayuda","color":"#ef4444","emoji":"🤝","etiqueta":"Necesito ayuda"}],"reflexion":"¿Qué número del tablero te pareció más difícil?","instruccion":"Toca el emoji que muestra cómo te sentiste."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"emparejar","titulo":"La casa en inglés y español","configuracion":{"preguntas":[{"tipo":"emparejar","datos":{"id":"preg-y1-1","parejas":[{"id":"p-y1-1","origen":"Kitchen","destino":"Cocina","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-y1-2","origen":"Bathroom","destino":"Baño","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-y1-3","origen":"Living room","destino":"Sala","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-y1-4","origen":"Bedroom","destino":"Habitación","origenTipo":"texto","destinoTipo":"texto"}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png","instruccion":"Une cada palabra en inglés con su traducción."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"seleccion","titulo":"¿Qué hay en la cocina?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-y2-1","opciones":[{"id":"op-y2-1","texto":"La estufa","esCorrecta":true},{"id":"op-y2-2","texto":"La cama","esCorrecta":false},{"id":"op-y2-3","texto":"El espejo","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png","instruccion":"Mira los objetos. ¿Cuál pertenece a la cocina?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"clasificar","titulo":"¿Cocina o baño?","configuracion":{"preguntas":[{"tipo":"clasificar","datos":{"id":"preg-y3-1","elementos":[{"id":"el-y-1","texto":"La estufa","categoriaId":"cat-y-cocina"},{"id":"el-y-2","texto":"El lavamanos","categoriaId":"cat-y-bano"},{"id":"el-y-3","texto":"La nevera","categoriaId":"cat-y-cocina"},{"id":"el-y-4","texto":"La ducha","categoriaId":"cat-y-bano"}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png","categorias":[{"id":"cat-y-cocina","nombre":"Cocina"},{"id":"cat-y-bano","nombre":"Baño"}],"instruccion":"Coloca cada objeto en el lugar de la casa donde va."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"seleccion","titulo":"¿Qué parte de la casa es?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-y4-1","opciones":[{"id":"op-y4-1","texto":"La sala","esCorrecta":true},{"id":"op-y4-2","texto":"La cocina","esCorrecta":false},{"id":"op-y4-3","texto":"El baño","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png","instruccion":"Mira la imagen. ¿Qué parte de la casa es?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"reconocer_emociones","titulo":"¿Cómo se siente?","configuracion":{"preguntas":[{"tipo":"reconocer_emociones","datos":{"id":"preg-y5-1","opciones":[{"id":"e-y5-1","emocion":"alegría"},{"id":"e-y5-2","emocion":"tristeza"},{"id":"e-y5-3","emocion":"enojo"}],"instruccion":"Mira la cara de la persona. ¿Qué emoción tiene?","emocionCorrecta":"alegría","rostroImagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000203","tipo":"autoevaluacion","titulo":"La casa: ¿cómo te fue?","configuracion":{"preguntas":[{"tipo":"autoevaluacion","datos":{"id":"preg-y6-1","escala":[{"id":"muy_bien","color":"#22c55e","emoji":"🌟","etiqueta":"Muy bien"},{"id":"bien","color":"#3b82f6","emoji":"👍","etiqueta":"Bien"},{"id":"regular","color":"#f59e0b","emoji":"😐","etiqueta":"Regular"},{"id":"necesito_ayuda","color":"#ef4444","emoji":"🤝","etiqueta":"Necesito ayuda"}],"reflexion":"¿Qué palabra en inglés te gustaría aprender más?","instruccion":"Toca el emoji que muestra cómo te sentiste."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"explorador_3d","titulo":"Explora el corazón","configuracion":{"preguntas":[{"tipo":"explorador_3d","datos":{"id":"preg-m1-1","objetivo":"Descubrir las partes del corazón y su función.","modeloUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121859_65fde6c9-fe8f-4715-818a-5c9b98a705bf.glb","instruccion":"Gira el corazón y toca los botones para descubrir sus partes.","nombreObjeto":"El corazón","puntosDeInteres":[{"id":"punto-m1-1","nombre":"Aurícula","descripcion":"Recibe la sangre que llega al corazón."},{"id":"punto-m1-2","nombre":"Ventrículo","descripcion":"Bombea la sangre hacia el cuerpo."},{"id":"punto-m1-3","nombre":"Aorta","descripcion":"La arteria más grande, lleva sangre a todo el cuerpo."}]}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"explorador_3d","titulo":"Explora el cerebro","configuracion":{"preguntas":[{"tipo":"explorador_3d","datos":{"id":"preg-m2-1","objetivo":"Descubrir las partes del cerebro.","modeloUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121901_0473328e-4cd6-45af-beb4-2087ae2c3f1d.glb","instruccion":"Explora el cerebro y toca sus partes.","nombreObjeto":"El cerebro","puntosDeInteres":[{"id":"punto-m2-1","nombre":"Lóbulo frontal","descripcion":"Nos ayuda a pensar y planear."},{"id":"punto-m2-2","nombre":"Lóbulo temporal","descripcion":"Nos ayuda a escuchar."},{"id":"punto-m2-3","nombre":"Cerebelo","descripcion":"Nos ayuda a mantener el equilibrio."}]}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"seleccion","titulo":"¿Qué órgano es este?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-m3-1","opciones":[{"id":"op-m3-1","texto":"El ojo","esCorrecta":true},{"id":"op-m3-2","texto":"La oreja","esCorrecta":false},{"id":"op-m3-3","texto":"La piel","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png","instruccion":"Mira la imagen. ¿Qué órgano del sentido es?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"emparejar","titulo":"Cada sentido con su órgano","configuracion":{"preguntas":[{"tipo":"emparejar","datos":{"id":"preg-m4-1","parejas":[{"id":"p-m4-1","origen":"El ojo","destino":"Ver","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-m4-2","origen":"La oreja","destino":"Oír","origenTipo":"texto","destinoTipo":"texto"},{"id":"p-m4-3","origen":"La piel","destino":"Tocar","origenTipo":"texto","destinoTipo":"texto"}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png","instruccion":"Une cada órgano con lo que hace."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"seleccion","titulo":"¿Qué animal vive en el polo?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-m5-1","opciones":[{"id":"op-m5-1","texto":"El oso polar","esCorrecta":true},{"id":"op-m5-2","texto":"El camello","esCorrecta":false},{"id":"op-m5-3","texto":"El león","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png","instruccion":"Mira el paisaje. ¿Qué animal vive en el polo norte?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"clasificar","titulo":"¿Frío o calor?","configuracion":{"preguntas":[{"tipo":"clasificar","datos":{"id":"preg-m6-1","elementos":[{"id":"el-m-1","texto":"Oso polar","categoriaId":"cat-m-frio"},{"id":"el-m-2","texto":"Camello","categoriaId":"cat-m-calor"},{"id":"el-m-3","texto":"Pingüino","categoriaId":"cat-m-frio"},{"id":"el-m-4","texto":"León","categoriaId":"cat-m-calor"}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png","categorias":[{"id":"cat-m-frio","nombre":"Frío"},{"id":"cat-m-calor","nombre":"Calor"}],"instruccion":"Coloca cada animal en el clima donde vive."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"seleccion","titulo":"¿Qué sentimos con la piel?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-m7-1","opciones":[{"id":"op-m7-1","texto":"Frío","esCorrecta":true},{"id":"op-m7-2","texto":"Dulce","esCorrecta":false},{"id":"op-m7-3","texto":"Ruido","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png","instruccion":"Tocas un cubo de hielo. ¿Qué sientes con la piel?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000204","tipo":"autoevaluacion","titulo":"Mi cuerpo: ¿cómo te fue?","configuracion":{"preguntas":[{"tipo":"autoevaluacion","datos":{"id":"preg-m8-1","escala":[{"id":"muy_bien","color":"#22c55e","emoji":"🌟","etiqueta":"Muy bien"},{"id":"bien","color":"#3b82f6","emoji":"👍","etiqueta":"Bien"},{"id":"regular","color":"#f59e0b","emoji":"😐","etiqueta":"Regular"},{"id":"necesito_ayuda","color":"#ef4444","emoji":"🤝","etiqueta":"Necesito ayuda"}],"reflexion":"¿Qué parte del cuerpo te gustó más explorar?","instruccion":"Toca el emoji que muestra cómo te sentiste."}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000205","tipo":"seleccion","titulo":"¿Qué emoción es?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-e1-1","opciones":[{"id":"op-e1-1","texto":"Alegría","esCorrecta":true},{"id":"op-e1-2","texto":"Tristeza","esCorrecta":false},{"id":"op-e1-3","texto":"Enojo","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png","instruccion":"Mira el rostro de la profesora. ¿Qué emoción muestra?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000205","tipo":"reconocer_emociones","titulo":"¡Qué sorpresa!","configuracion":{"preguntas":[{"tipo":"reconocer_emociones","datos":{"id":"preg-e2-1","opciones":[{"id":"e-e2-1","emocion":"sorpresa"},{"id":"e-e2-2","emocion":"alegría"},{"id":"e-e2-3","emocion":"miedo"}],"instruccion":"Mira la cara de la persona. ¿Qué emoción tiene?","emocionCorrecta":"sorpresa","rostroImagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000205","tipo":"seleccion","titulo":"Un amigo está triste","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-e3-1","opciones":[{"id":"op-e3-1","texto":"Consolarla con un abrazo","esCorrecta":true},{"id":"op-e3-2","texto":"Irme sin decir nada","esCorrecta":false},{"id":"op-e3-3","texto":"Reírme de ella","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png","instruccion":"Mira la escena. Tu amiga se siente triste. ¿Qué puedes hacer?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000205","tipo":"seleccion","titulo":"¿Cómo se siente?","configuracion":{"preguntas":[{"tipo":"seleccion","datos":{"id":"preg-e4-1","opciones":[{"id":"op-e4-1","texto":"Miedo","esCorrecta":true},{"id":"op-e4-2","texto":"Alegría","esCorrecta":false},{"id":"op-e4-3","texto":"Calma","esCorrecta":false}],"imagenUrl":"https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png","instruccion":"Mira la imagen. ¿Qué emoción está sintiendo?"}}],"vozSintetica":true,"mostrarFelicitacion":true}},{"profesor_id":"00000000-0000-0000-0000-000000000001","etapa_id":"00000000-0000-0000-0000-000000000205","tipo":"autoevaluacion","titulo":"¿Cómo te sentiste hoy?","configuracion":{"preguntas":[{"tipo":"autoevaluacion","datos":{"id":"preg-e5-1","escala":[{"id":"muy_bien","color":"#22c55e","emoji":"🌟","etiqueta":"Muy bien"},{"id":"bien","color":"#3b82f6","emoji":"👍","etiqueta":"Bien"},{"id":"regular","color":"#f59e0b","emoji":"😐","etiqueta":"Regular"},{"id":"necesito_ayuda","color":"#ef4444","emoji":"🤝","etiqueta":"Necesito ayuda"}],"reflexion":"¿Qué te hizo sentir bien hoy?","instruccion":"Toca el emoji que muestra cómo te sientes hoy."}}],"vozSintetica":true,"mostrarFelicitacion":true}}]
+[
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "seleccion",
+    "titulo": "¿Cuántas piezas tiene el tangram?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a1-1",
+            "opciones": [
+              {
+                "id": "op-a1-1",
+                "texto": "5 piezas",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-2",
+                "texto": "7 piezas",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a1-3",
+                "texto": "9 piezas",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "instruccion": "Mira el cuadrado del tangram. ¿Con cuántas piezas se arma?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cuántas piezas tiene el tangram?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "seleccion",
+    "titulo": "El billete de mayor valor",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a2-1",
+            "opciones": [
+              {
+                "id": "op-a2-1",
+                "texto": "$1.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-2",
+                "texto": "$20.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-3",
+                "texto": "$50.000",
+                "esCorrecta": true
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "instruccion": "Mira la pila de billetes. ¿Cuál billete vale más?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de el billete de mayor valor",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "seleccion",
+    "titulo": "Comprando en el kiosco",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a3-1",
+            "opciones": [
+              {
+                "id": "op-a3-1",
+                "texto": "$1.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a3-2",
+                "texto": "$5.000",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a3-3",
+                "texto": "$10.000",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "instruccion": "En el kiosco el jugo cuesta $5.000. ¿Qué billete usas para pagar?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de comprando en el kiosco",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "completar",
+    "titulo": "Completa la frase del dinero",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-a4-1",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "instruccion": "Completa la oración con las palabras correctas.",
+            "oracionConHuecos": "Con un billete de [mil] y uno de [dos mil] tengo tres mil pesos.",
+            "palabrasOpciones": [
+              "mil",
+              "dos mil",
+              "tres mil",
+              "cinco mil"
+            ],
+            "respuestasCorrectas": {
+              "0": "mil",
+              "1": "dos mil"
+            }
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de completa la frase del dinero",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "COMPLETAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "emparejar",
+    "titulo": "Cambios del billete",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-a5-1",
+            "parejas": [
+              {
+                "id": "p-a5-1",
+                "origen": "Billete de $2.000",
+                "destino": "Dos billetes de $1.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-2",
+                "origen": "Billete de $10.000",
+                "destino": "Dos billetes de $5.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-3",
+                "origen": "Billete de $50.000",
+                "destino": "Cinco billetes de $10.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
+            "instruccion": "Une cada billete con su cambio equivalente."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de cambios del billete",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EMPAREJAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "explorador_3d",
+    "titulo": "Explora el cubo",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "explorador_3d",
+          "datos": {
+            "id": "preg-a6-1",
+            "objetivo": "Descubrir cara, arista y vértice.",
+            "modeloUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121813_99f029ea-5fd6-4e99-981b-dc4723b9aa4d.glb",
+            "instruccion": "Toca los botones para descubrir las partes del cubo.",
+            "nombreObjeto": "El cubo",
+            "puntosDeInteres": [
+              {
+                "id": "punto-a6-1",
+                "nombre": "La cara",
+                "descripcion": "Cada cara del cubo es un cuadrado."
+              },
+              {
+                "id": "punto-a6-2",
+                "nombre": "La arista",
+                "descripcion": "La línea donde se juntan dos caras."
+              },
+              {
+                "id": "punto-a6-3",
+                "nombre": "El vértice",
+                "descripcion": "El punto donde se juntan tres aristas."
+              }
+            ]
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de explora el cubo",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EXPLORADOR_3D"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "explorador_3d",
+    "titulo": "Explora la pirámide",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "explorador_3d",
+          "datos": {
+            "id": "preg-a7-1",
+            "objetivo": "Descubrir base, caras y cúspide.",
+            "modeloUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121815_70889eaf-6ee3-475c-b87e-d1f991d9336c.glb",
+            "instruccion": "Explora la pirámide y toca sus partes.",
+            "nombreObjeto": "La pirámide",
+            "puntosDeInteres": [
+              {
+                "id": "punto-a7-1",
+                "nombre": "La base",
+                "descripcion": "La base de la pirámide es un cuadrado."
+              },
+              {
+                "id": "punto-a7-2",
+                "nombre": "Las caras",
+                "descripcion": "Los lados son triángulos."
+              },
+              {
+                "id": "punto-a7-3",
+                "nombre": "La cúspide",
+                "descripcion": "El punto más alto de la pirámide."
+              }
+            ]
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de explora la pirámide",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EXPLORADOR_3D"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "tipo": "autoevaluacion",
+    "titulo": "¿Cómo te fue con el tangram?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "autoevaluacion",
+          "datos": {
+            "id": "preg-a8-1",
+            "escala": [
+              {
+                "id": "muy_bien",
+                "color": "#22c55e",
+                "emoji": "🌟",
+                "etiqueta": "Muy bien"
+              },
+              {
+                "id": "bien",
+                "color": "#3b82f6",
+                "emoji": "👍",
+                "etiqueta": "Bien"
+              },
+              {
+                "id": "regular",
+                "color": "#f59e0b",
+                "emoji": "😐",
+                "etiqueta": "Regular"
+              },
+              {
+                "id": "necesito_ayuda",
+                "color": "#ef4444",
+                "emoji": "🤝",
+                "etiqueta": "Necesito ayuda"
+              }
+            ],
+            "reflexion": "¿Qué fue lo más difícil del tangram?",
+            "instruccion": "Toca el emoji que muestra cómo te sentiste."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cómo te fue con el tangram?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "AUTOEVALUACION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "seleccion",
+    "titulo": "A la izquierda del cero",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d1-1",
+            "opciones": [
+              {
+                "id": "op-d1-1",
+                "texto": "-1",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d1-2",
+                "texto": "+1",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d1-3",
+                "texto": "0",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "instruccion": "Mira el tablero. ¿Qué número está a la izquierda del cero?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de a la izquierda del cero",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "seleccion",
+    "titulo": "Frío o caliente",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d2-1",
+            "opciones": [
+              {
+                "id": "op-d2-1",
+                "texto": "Frío",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d2-2",
+                "texto": "Caliente",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d2-3",
+                "texto": "Ni frío ni caliente",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "instruccion": "El termómetro marca -5. ¿Ese número es frío o caliente?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de frío o caliente",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "completar",
+    "titulo": "Derecha e izquierda en el tablero",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-d3-1",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "instruccion": "Completa la oración sobre el tablero.",
+            "oracionConHuecos": "El número +3 está a la [derecha] del cero y el -3 a la [izquierda].",
+            "palabrasOpciones": [
+              "derecha",
+              "izquierda",
+              "arriba",
+              "abajo"
+            ],
+            "respuestasCorrectas": {
+              "0": "derecha",
+              "1": "izquierda"
+            }
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de derecha e izquierda en el tablero",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "COMPLETAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "explorador_3d",
+    "titulo": "El dado del parqués",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "explorador_3d",
+          "datos": {
+            "id": "preg-d4-1",
+            "objetivo": "Descubrir las partes del dado.",
+            "modeloUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121813_99f029ea-5fd6-4e99-981b-dc4723b9aa4d.glb",
+            "instruccion": "Gira el dado y descubre sus partes.",
+            "nombreObjeto": "El dado",
+            "puntosDeInteres": [
+              {
+                "id": "punto-d4-1",
+                "nombre": "Una cara",
+                "descripcion": "Aquí viven los puntos del dado."
+              },
+              {
+                "id": "punto-d4-2",
+                "nombre": "Una arista",
+                "descripcion": "Se junta con otra cara del dado."
+              },
+              {
+                "id": "punto-d4-3",
+                "nombre": "Un vértice",
+                "descripcion": "Esquina donde se tocan tres caras."
+              }
+            ]
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de el dado del parqués",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EXPLORADOR_3D"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "seleccion",
+    "titulo": "¿Cuántas caras tiene el dado?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d5-1",
+            "opciones": [
+              {
+                "id": "op-d5-1",
+                "texto": "5 caras",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d5-2",
+                "texto": "6 caras",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d5-3",
+                "texto": "7 caras",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "instruccion": "Un dado de parqués tiene 1, 2, 3, 4, 5 y 6. ¿Cuántas caras tiene en total?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cuántas caras tiene el dado?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "tipo": "autoevaluacion",
+    "titulo": "Números enteros: ¿cómo te fue?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "autoevaluacion",
+          "datos": {
+            "id": "preg-d6-1",
+            "escala": [
+              {
+                "id": "muy_bien",
+                "color": "#22c55e",
+                "emoji": "🌟",
+                "etiqueta": "Muy bien"
+              },
+              {
+                "id": "bien",
+                "color": "#3b82f6",
+                "emoji": "👍",
+                "etiqueta": "Bien"
+              },
+              {
+                "id": "regular",
+                "color": "#f59e0b",
+                "emoji": "😐",
+                "etiqueta": "Regular"
+              },
+              {
+                "id": "necesito_ayuda",
+                "color": "#ef4444",
+                "emoji": "🤝",
+                "etiqueta": "Necesito ayuda"
+              }
+            ],
+            "reflexion": "¿Qué número del tablero te pareció más difícil?",
+            "instruccion": "Toca el emoji que muestra cómo te sentiste."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de números enteros: ¿cómo te fue?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "AUTOEVALUACION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "emparejar",
+    "titulo": "La casa en inglés y español",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-y1-1",
+            "parejas": [
+              {
+                "id": "p-y1-1",
+                "origen": "Kitchen",
+                "destino": "Cocina",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-2",
+                "origen": "Bathroom",
+                "destino": "Baño",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-3",
+                "origen": "Living room",
+                "destino": "Sala",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-4",
+                "origen": "Bedroom",
+                "destino": "Habitación",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
+            "instruccion": "Une cada palabra en inglés con su traducción."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de la casa en inglés y español",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EMPAREJAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "seleccion",
+    "titulo": "¿Qué hay en la cocina?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y2-1",
+            "opciones": [
+              {
+                "id": "op-y2-1",
+                "texto": "La estufa",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y2-2",
+                "texto": "La cama",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y2-3",
+                "texto": "El espejo",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "instruccion": "Mira los objetos. ¿Cuál pertenece a la cocina?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué hay en la cocina?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "clasificar",
+    "titulo": "¿Cocina o baño?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "preg-y3-1",
+            "elementos": [
+              {
+                "id": "el-y-1",
+                "texto": "La estufa",
+                "categoriaId": "cat-y-cocina"
+              },
+              {
+                "id": "el-y-2",
+                "texto": "El lavamanos",
+                "categoriaId": "cat-y-bano"
+              },
+              {
+                "id": "el-y-3",
+                "texto": "La nevera",
+                "categoriaId": "cat-y-cocina"
+              },
+              {
+                "id": "el-y-4",
+                "texto": "La ducha",
+                "categoriaId": "cat-y-bano"
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png",
+            "categorias": [
+              {
+                "id": "cat-y-cocina",
+                "nombre": "Cocina"
+              },
+              {
+                "id": "cat-y-bano",
+                "nombre": "Baño"
+              }
+            ],
+            "instruccion": "Coloca cada objeto en el lugar de la casa donde va."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cocina o baño?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "CLASIFICAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "seleccion",
+    "titulo": "¿Qué parte de la casa es?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y4-1",
+            "opciones": [
+              {
+                "id": "op-y4-1",
+                "texto": "La sala",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y4-2",
+                "texto": "La cocina",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y4-3",
+                "texto": "El baño",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "instruccion": "Mira la imagen. ¿Qué parte de la casa es?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué parte de la casa es?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "reconocer_emociones",
+    "titulo": "¿Cómo se siente?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-y5-1",
+            "opciones": [
+              {
+                "id": "e-y5-1",
+                "emocion": "alegría"
+              },
+              {
+                "id": "e-y5-2",
+                "emocion": "tristeza"
+              },
+              {
+                "id": "e-y5-3",
+                "emocion": "enojo"
+              }
+            ],
+            "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
+            "emocionCorrecta": "alegría",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cómo se siente?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "RECONOCER_EMOCIONES"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "tipo": "autoevaluacion",
+    "titulo": "La casa: ¿cómo te fue?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "autoevaluacion",
+          "datos": {
+            "id": "preg-y6-1",
+            "escala": [
+              {
+                "id": "muy_bien",
+                "color": "#22c55e",
+                "emoji": "🌟",
+                "etiqueta": "Muy bien"
+              },
+              {
+                "id": "bien",
+                "color": "#3b82f6",
+                "emoji": "👍",
+                "etiqueta": "Bien"
+              },
+              {
+                "id": "regular",
+                "color": "#f59e0b",
+                "emoji": "😐",
+                "etiqueta": "Regular"
+              },
+              {
+                "id": "necesito_ayuda",
+                "color": "#ef4444",
+                "emoji": "🤝",
+                "etiqueta": "Necesito ayuda"
+              }
+            ],
+            "reflexion": "¿Qué palabra en inglés te gustaría aprender más?",
+            "instruccion": "Toca el emoji que muestra cómo te sentiste."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de la casa: ¿cómo te fue?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "AUTOEVALUACION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "explorador_3d",
+    "titulo": "Explora el corazón",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "explorador_3d",
+          "datos": {
+            "id": "preg-m1-1",
+            "objetivo": "Descubrir las partes del corazón y su función.",
+            "modeloUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121859_65fde6c9-fe8f-4715-818a-5c9b98a705bf.glb",
+            "instruccion": "Gira el corazón y toca los botones para descubrir sus partes.",
+            "nombreObjeto": "El corazón",
+            "puntosDeInteres": [
+              {
+                "id": "punto-m1-1",
+                "nombre": "Aurícula",
+                "descripcion": "Recibe la sangre que llega al corazón."
+              },
+              {
+                "id": "punto-m1-2",
+                "nombre": "Ventrículo",
+                "descripcion": "Bombea la sangre hacia el cuerpo."
+              },
+              {
+                "id": "punto-m1-3",
+                "nombre": "Aorta",
+                "descripcion": "La arteria más grande, lleva sangre a todo el cuerpo."
+              }
+            ]
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "La bomba incansable del cuerpo humano",
+      "materia": "Biología & Anatomía",
+      "resumenBreve": "El corazón es un órgano muscular hueco que bombea sangre de manera incesante a través del sistema circulatorio, abasteciendo de oxígeno a cada célula.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Tamaño",
+          "valor": "Aproximadamente del tamaño de un puño"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Peso",
+          "valor": "250 – 350 gramos"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Frecuencia",
+          "valor": "Late ~100.000 veces al día"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Ubicación",
+          "valor": "Detrás del esternón, inclinado a la izquierda"
+        },
+        {
+          "icono": "❋",
+          "etiqueta": "Irrigación",
+          "valor": "Arterias coronarias izquierda y derecha"
+        },
+        {
+          "icono": "◈",
+          "etiqueta": "Función",
+          "valor": "Impulsar la sangre oxigenada"
+        }
+      ],
+      "importanciaEducativa": "Su ritmo eléctrico coordina cada latido cardíaco de forma autónoma y continua.",
+      "sabiasQue": "El corazón de un ser humano bombea aproximadamente 7.200 litros de sangre al día.",
+      "instruccionTip": "Arrastra para rotar en 360° · Scroll para zoom · Haz clic en las esferas para explorar",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Aorta Principal",
+          "descripcion": "Arteria de mayor calibre que distribuye sangre oxigenada al cuerpo.",
+          "xPercent": 50,
+          "yPercent": 28
+        },
+        {
+          "id": "h2",
+          "nombre": "Aurícula Izquierda",
+          "descripcion": "Cámara superior que recibe la sangre fresca proveniente de los pulmones.",
+          "xPercent": 35,
+          "yPercent": 42
+        },
+        {
+          "id": "h3",
+          "nombre": "Ventrículo Izquierdo",
+          "descripcion": "Cámara muscular inferior con la pared más gruesa para la eyección de sangre.",
+          "xPercent": 45,
+          "yPercent": 65
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Vista microscópica",
+          "titulo": "Tejido muscular cardíaco",
+          "descripcionHtml": "Fibras estriadas ramificadas con discos intercalares.",
+          "imagenUrl": "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "comparar",
+          "etiquetaCategoria": "Comparativa didáctica",
+          "titulo": "Corazón vs. Cerebro",
+          "descripcionHtml": "Relación de consumo de oxígeno y flujo sanguíneo entre órganos vitales.",
+          "imagenUrl": "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "animacion",
+          "etiquetaCategoria": "Función dinámica",
+          "titulo": "Ciclo del latido cardíaco",
+          "descripcionHtml": "Simulación de sístole y diástole.",
+          "imagenUrl": "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Notas clínicas",
+          "titulo": "Cuidados del corazón",
+          "itemsLista": [
+            "Ejercicio físico aeróbico diario",
+            "Alimentación balanceada baja en sodio",
+            "Manejo del estrés y descanso adecuado",
+            "Hidratación constante"
+          ]
+        }
+      ],
+      "modelo3DUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121859_65fde6c9-fe8f-4715-818a-5c9b98a705bf.glb"
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "explorador_3d",
+    "titulo": "Explora el cerebro",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "explorador_3d",
+          "datos": {
+            "id": "preg-m2-1",
+            "objetivo": "Descubrir las partes del cerebro.",
+            "modeloUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121901_0473328e-4cd6-45af-beb4-2087ae2c3f1d.glb",
+            "instruccion": "Explora el cerebro y toca sus partes.",
+            "nombreObjeto": "El cerebro",
+            "puntosDeInteres": [
+              {
+                "id": "punto-m2-1",
+                "nombre": "Lóbulo frontal",
+                "descripcion": "Nos ayuda a pensar y planear."
+              },
+              {
+                "id": "punto-m2-2",
+                "nombre": "Lóbulo temporal",
+                "descripcion": "Nos ayuda a escuchar."
+              },
+              {
+                "id": "punto-m2-3",
+                "nombre": "Cerebelo",
+                "descripcion": "Nos ayuda a mantener el equilibrio."
+              }
+            ]
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "La central de mando de la mente y las emociones",
+      "materia": "Neurociencia & Inclusión",
+      "resumenBreve": "El cerebro procesa la información sensorial, controla el movimiento, genera pensamientos y regula las respuestas emocionales.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Masa",
+          "valor": "~1.400 gramos en promedio"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Neuronas",
+          "valor": "~86.000 millones de conexiones"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Consumo",
+          "valor": "Utiliza el 20% de la energía corporal"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Ubicación",
+          "valor": "Protegido dentro del cráneo"
+        },
+        {
+          "icono": "❋",
+          "etiqueta": "Lóbulos",
+          "valor": "Frontal, Parietal, Temporal, Occipital"
+        },
+        {
+          "icono": "◈",
+          "etiqueta": "Función",
+          "valor": "Cognición, lenguaje y control motor"
+        }
+      ],
+      "importanciaEducativa": "La neuroplasticidad permite al cerebro aprender nuevos caminos y habilidades a cualquier edad.",
+      "sabiasQue": "Las señales nerviosas viajan por las neuronas a velocidades de hasta 430 km/h.",
+      "instruccionTip": "Explora la estructura 3D del cerebro · Haz clic en las zonas para conocer sus funciones",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Lóbulo Frontal",
+          "descripcion": "Área encargada de la toma de decisiones, planificación y conducta.",
+          "xPercent": 35,
+          "yPercent": 30
+        },
+        {
+          "id": "h2",
+          "nombre": "Lóbulo Temporal",
+          "descripcion": "Procesa la audición, la memoria y la comprensión del lenguaje.",
+          "xPercent": 55,
+          "yPercent": 50
+        },
+        {
+          "id": "h3",
+          "nombre": "Cerebelo",
+          "descripcion": "Coordinación del equilibrio, la postura y el movimiento fino.",
+          "xPercent": 65,
+          "yPercent": 70
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Microscopía",
+          "titulo": "Red Neuronal y Sinapsis",
+          "descripcionHtml": "Impulsos bioeléctricos entre axones y dendritas.",
+          "imagenUrl": "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "comparar",
+          "etiquetaCategoria": "Comparativa",
+          "titulo": "Hemisferio Izquierdo vs. Derecho",
+          "descripcionHtml": "Lógica y lenguaje frente a creatividad e intuición espacial.",
+          "imagenUrl": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+        }
+      ],
+      "modelo3DUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121901_0473328e-4cd6-45af-beb4-2087ae2c3f1d.glb"
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "seleccion",
+    "titulo": "¿Qué órgano es este?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m3-1",
+            "opciones": [
+              {
+                "id": "op-m3-1",
+                "texto": "El ojo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m3-2",
+                "texto": "La oreja",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m3-3",
+                "texto": "La piel",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "instruccion": "Mira la imagen. ¿Qué órgano del sentido es?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué órgano es este?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "emparejar",
+    "titulo": "Cada sentido con su órgano",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-m4-1",
+            "parejas": [
+              {
+                "id": "p-m4-1",
+                "origen": "El ojo",
+                "destino": "Ver",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-2",
+                "origen": "La oreja",
+                "destino": "Oír",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-3",
+                "origen": "La piel",
+                "destino": "Tocar",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
+            "instruccion": "Une cada órgano con lo que hace."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de cada sentido con su órgano",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "EMPAREJAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "seleccion",
+    "titulo": "¿Qué animal vive en el polo?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m5-1",
+            "opciones": [
+              {
+                "id": "op-m5-1",
+                "texto": "El oso polar",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m5-2",
+                "texto": "El camello",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m5-3",
+                "texto": "El león",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "instruccion": "Mira el paisaje. ¿Qué animal vive en el polo norte?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué animal vive en el polo?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "clasificar",
+    "titulo": "¿Frío o calor?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "preg-m6-1",
+            "elementos": [
+              {
+                "id": "el-m-1",
+                "texto": "Oso polar",
+                "categoriaId": "cat-m-frio"
+              },
+              {
+                "id": "el-m-2",
+                "texto": "Camello",
+                "categoriaId": "cat-m-calor"
+              },
+              {
+                "id": "el-m-3",
+                "texto": "Pingüino",
+                "categoriaId": "cat-m-frio"
+              },
+              {
+                "id": "el-m-4",
+                "texto": "León",
+                "categoriaId": "cat-m-calor"
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png",
+            "categorias": [
+              {
+                "id": "cat-m-frio",
+                "nombre": "Frío"
+              },
+              {
+                "id": "cat-m-calor",
+                "nombre": "Calor"
+              }
+            ],
+            "instruccion": "Coloca cada animal en el clima donde vive."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿frío o calor?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "CLASIFICAR"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "seleccion",
+    "titulo": "¿Qué sentimos con la piel?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m7-1",
+            "opciones": [
+              {
+                "id": "op-m7-1",
+                "texto": "Frío",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m7-2",
+                "texto": "Dulce",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m7-3",
+                "texto": "Ruido",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "instruccion": "Tocas un cubo de hielo. ¿Qué sientes con la piel?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué sentimos con la piel?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "tipo": "autoevaluacion",
+    "titulo": "Mi cuerpo: ¿cómo te fue?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "autoevaluacion",
+          "datos": {
+            "id": "preg-m8-1",
+            "escala": [
+              {
+                "id": "muy_bien",
+                "color": "#22c55e",
+                "emoji": "🌟",
+                "etiqueta": "Muy bien"
+              },
+              {
+                "id": "bien",
+                "color": "#3b82f6",
+                "emoji": "👍",
+                "etiqueta": "Bien"
+              },
+              {
+                "id": "regular",
+                "color": "#f59e0b",
+                "emoji": "😐",
+                "etiqueta": "Regular"
+              },
+              {
+                "id": "necesito_ayuda",
+                "color": "#ef4444",
+                "emoji": "🤝",
+                "etiqueta": "Necesito ayuda"
+              }
+            ],
+            "reflexion": "¿Qué parte del cuerpo te gustó más explorar?",
+            "instruccion": "Toca el emoji que muestra cómo te sentiste."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de mi cuerpo: ¿cómo te fue?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "AUTOEVALUACION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "tipo": "seleccion",
+    "titulo": "¿Qué emoción es?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e1-1",
+            "opciones": [
+              {
+                "id": "op-e1-1",
+                "texto": "Alegría",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e1-2",
+                "texto": "Tristeza",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e1-3",
+                "texto": "Enojo",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "instruccion": "Mira el rostro de la profesora. ¿Qué emoción muestra?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿qué emoción es?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "tipo": "reconocer_emociones",
+    "titulo": "¡Qué sorpresa!",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-e2-1",
+            "opciones": [
+              {
+                "id": "e-e2-1",
+                "emocion": "sorpresa"
+              },
+              {
+                "id": "e-e2-2",
+                "emocion": "alegría"
+              },
+              {
+                "id": "e-e2-3",
+                "emocion": "miedo"
+              }
+            ],
+            "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
+            "emocionCorrecta": "sorpresa",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¡qué sorpresa!",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "RECONOCER_EMOCIONES"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "tipo": "seleccion",
+    "titulo": "Un amigo está triste",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e3-1",
+            "opciones": [
+              {
+                "id": "op-e3-1",
+                "texto": "Consolarla con un abrazo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e3-2",
+                "texto": "Irme sin decir nada",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e3-3",
+                "texto": "Reírme de ella",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "instruccion": "Mira la escena. Tu amiga se siente triste. ¿Qué puedes hacer?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de un amigo está triste",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "tipo": "seleccion",
+    "titulo": "¿Cómo se siente?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e4-1",
+            "opciones": [
+              {
+                "id": "op-e4-1",
+                "texto": "Miedo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e4-2",
+                "texto": "Alegría",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e4-3",
+                "texto": "Calma",
+                "esCorrecta": false
+              }
+            ],
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "instruccion": "Mira la imagen. ¿Qué emoción está sintiendo?"
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cómo se siente?",
+      "materia": "Pensamiento Lógico & Matemáticas",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "SELECCION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "tipo": "autoevaluacion",
+    "titulo": "¿Cómo te sentiste hoy?",
+    "configuracion": {
+      "preguntas": [
+        {
+          "tipo": "autoevaluacion",
+          "datos": {
+            "id": "preg-e5-1",
+            "escala": [
+              {
+                "id": "muy_bien",
+                "color": "#22c55e",
+                "emoji": "🌟",
+                "etiqueta": "Muy bien"
+              },
+              {
+                "id": "bien",
+                "color": "#3b82f6",
+                "emoji": "👍",
+                "etiqueta": "Bien"
+              },
+              {
+                "id": "regular",
+                "color": "#f59e0b",
+                "emoji": "😐",
+                "etiqueta": "Regular"
+              },
+              {
+                "id": "necesito_ayuda",
+                "color": "#ef4444",
+                "emoji": "🤝",
+                "etiqueta": "Necesito ayuda"
+              }
+            ],
+            "reflexion": "¿Qué te hizo sentir bien hoy?",
+            "instruccion": "Toca el emoji que muestra cómo te sientes hoy."
+          }
+        }
+      ],
+      "vozSintetica": true,
+      "mostrarFelicitacion": true
+    },
+    "atelier": {
+      "subtituloPoetico": "Exploración interactiva de ¿cómo te sentiste hoy?",
+      "materia": "Inclusión & Habilidades Sociales",
+      "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
+      "datosClave": [
+        {
+          "icono": "◇",
+          "etiqueta": "Categoría",
+          "valor": "AUTOEVALUACION"
+        },
+        {
+          "icono": "♙",
+          "etiqueta": "Enfoque",
+          "valor": "Adaptación PIAR"
+        },
+        {
+          "icono": "⌁",
+          "etiqueta": "Modalidad",
+          "valor": "Visual / Interactivo"
+        },
+        {
+          "icono": "⌖",
+          "etiqueta": "Área",
+          "valor": "Educación Inclusiva"
+        }
+      ],
+      "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
+      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
+      "hotspots": [
+        {
+          "id": "h1",
+          "nombre": "Elemento Principal",
+          "descripcion": "Objeto central de análisis e indagación.",
+          "xPercent": 45,
+          "yPercent": 40
+        },
+        {
+          "id": "h2",
+          "nombre": "Detalle Didáctico",
+          "descripcion": "Punto de observación para la resolución.",
+          "xPercent": 60,
+          "yPercent": 55
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "microscopico",
+          "etiquetaCategoria": "Detalle Gráfico",
+          "titulo": "Estructura del Ejercicio",
+          "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
+          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "Recomendación Didáctica",
+          "titulo": "Habilidades a desarrollar",
+          "itemsLista": [
+            "Atención sostenida y discriminación visual",
+            "Asociación lógica de conceptos",
+            "Autoevaluación del proceso",
+            "Confianza en el propio ritmo de aprendizaje"
+          ]
+        }
+      ]
+    }
+  }
+]

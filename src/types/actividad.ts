@@ -166,6 +166,43 @@ export interface ActividadConfig {
   vozSintetica: boolean; // Si no hay audio grabado, usar Web Speech API TTS
 }
 
+export interface AtelierDatoClave {
+  icono: string;
+  etiqueta: string;
+  valor: string;
+}
+
+export interface AtelierTarjetaRecurso {
+  tipo: 'microscopico' | 'comparar' | 'animacion' | 'notas_clinicas' | 'donde_actua';
+  etiquetaCategoria: string;
+  titulo: string;
+  descripcionHtml?: string;
+  imagenUrl?: string;
+  itemsLista?: string[];
+}
+
+export interface AtelierHotspot {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  xPercent: number;
+  yPercent: number;
+}
+
+export interface AtelierConfig {
+  subtituloPoetico?: string;
+  materia?: string;
+  iconoMateria?: string;
+  resumenBreve?: string;
+  datosClave?: AtelierDatoClave[];
+  importanciaEducativa?: string;
+  sabiasQue?: string;
+  instruccionTip?: string;
+  hotspots?: AtelierHotspot[];
+  tarjetasRecursos?: AtelierTarjetaRecurso[];
+  modelo3DUrl?: string;
+}
+
 export interface Actividad {
   id: string;
   profesor_id: string;
@@ -173,6 +210,7 @@ export interface Actividad {
   tipo: ActividadTipo;
   titulo: string;
   configuracion: ActividadConfig;
+  atelier?: AtelierConfig;
   creado_en?: string;
 }
 
