@@ -1,0 +1,24 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Every 6 hours — prevents Supabase Free plan auto-pause
+    - cron: "0 */6 * * *"
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase API
+        run: |
+          echo "Pinging Supabase project..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "Response: $STATUS"
+          if [ "$STATUS" != "200" ] && [ "$STATUS" != "401" ] && [ "$STATUS" != "403" ]; then
+            echo "Warning: Unexpected status $STATUS — project may be paused"
+            exit 1
+          fi
+          echo "Project is awake."
