@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Actividad, ActividadTipo, Etapa, PreguntaConfig } from '../../types/actividad';
+import ReproductorActividad from '../../components/reproductor/ReproductorActividad';
 import { 
   PlusCircle, 
   Trash2, 
@@ -17,7 +18,9 @@ import {
   FolderPlus,
   Play,
   Check,
-  Award
+  Award,
+  Eye,
+  X
 } from 'lucide-react';
 
 export default function Actividades() {
@@ -26,6 +29,7 @@ export default function Actividades() {
   const [etapas, setEtapas] = useState<Etapa[]>([]);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ error: '', success: '' });
+  const [previewActividad, setPreviewActividad] = useState<Actividad | null>(null);
 
   // Creation/Editing Form State
   const [isCreating, setIsCreating] = useState(false);
@@ -156,6 +160,125 @@ export default function Actividades() {
     }
   };
 
+  const construirPreguntaConfig = (): PreguntaConfig => {
+    if (tipo === 'seleccion') {
+      return {
+        tipo: 'seleccion',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          opciones: opcionesSeleccion.map((op, idx) => ({
+            id: `op-${idx}`,
+            texto: op.texto,
+            esCorrecta: op.esCorrecta
+          }))
+        }
+      };
+    } else if (tipo === 'emparejar') {
+      return {
+        tipo: 'emparejar',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          parejas: parejasEmparejar.map((p, idx) => ({
+            id: `p-${idx}`,
+            origen: p.origen,
+            origenTipo: 'texto',
+            destino: p.destino,
+            destinoTipo: 'texto'
+          }))
+        }
+      };
+    } else if (tipo === 'clasificar') {
+      const validCats = categoriasClasificar.filter(c => c.trim() !== '');
+      const categoriesPayload = validCats.map((cat, idx) => ({ id: `cat-${idx}`, nombre: cat }));
+      
+      return {
+        tipo: 'clasificar',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          categorias: categoriesPayload,
+          elementos: elementosClasificar.map((el, idx) => ({
+            id: `el-${idx}`,
+            texto: el.texto,
+            categoriaId: `cat-${el.categoriaIndex}`
+          }))
+        }
+      };
+    } else if (tipo === 'completar') {
+      // Simple parser to map blank indexes to correct options
+      // We look for [word] blocks in the sentence
+      const blanks: { [key: number]: string } = {};
+      const matches = oracionCompletar.match(/\[(.*?)\]/g) || [];
+      matches.forEach((m, idx) => {
+        blanks[idx] = m.replace('[', '').replace(']', '');
+      });
+
+      return {
+        tipo: 'completar',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          oracionConHuecos: oracionCompletar,
+          palabrasOpciones: opcionesCompletar.filter(o => o.trim() !== ''),
+          respuestasCorrectas: blanks
+        }
+      };
+    } else if (tipo === 'reconocer_emociones') {
+      return {
+        tipo: 'reconocer_emociones',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          rostroImagenUrl: rostroUrl,
+          emocionCorrecta,
+          opciones: opcionesEmociones.map((op, idx) => ({
+            id: `e-${idx}`,
+            emocion: op
+          }))
+        }
+      };
+    } else if (tipo === 'explorador_3d') {
+      return {
+        tipo: 'explorador_3d',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          modeloUrl,
+          nombreObjeto: nombreObjeto || 'Objeto',
+          puntosDeInteres: puntosInteres
+            .filter(p => p.nombre.trim() !== '')
+            .map((p, idx) => ({ id: `punto-${idx}`, nombre: p.nombre, descripcion: p.descripcion })),
+          objetivo: instruccion
+        }
+      };
+    } else {
+      // autoevaluacion
+      return {
+        tipo: 'autoevaluacion',
+        datos: {
+          id: 'preg-1',
+          instruccion,
+          imagenUrl: imagenUrl || undefined,
+          escala: [
+            { id: 'muy_bien', etiqueta: 'Muy bien', emoji: '🌟', color: '#22c55e' },
+            { id: 'bien', etiqueta: 'Bien', emoji: '👍', color: '#3b82f6' },
+            { id: 'regular', etiqueta: 'Regular', emoji: '😐', color: '#f59e0b' },
+            { id: 'necesito_ayuda', etiqueta: 'Necesito ayuda', emoji: '🤝', color: '#ef4444' }
+          ],
+          reflexion: reflexionAutoeval || undefined
+        }
+      };
+    }
+  };
+
   const handleGuardar = async (e: React.FormEvent) => {
     e.preventDefault();
     setMsg({ error: '', success: '' });
@@ -166,125 +289,8 @@ export default function Actividades() {
     }
 
     try {
-      let preguntaConfig: PreguntaConfig;
-
       // Construct question payload based on type
-      if (tipo === 'seleccion') {
-        preguntaConfig = {
-          tipo: 'seleccion',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            opciones: opcionesSeleccion.map((op, idx) => ({
-              id: `op-${idx}`,
-              texto: op.texto,
-              esCorrecta: op.esCorrecta
-            }))
-          }
-        };
-      } else if (tipo === 'emparejar') {
-        preguntaConfig = {
-          tipo: 'emparejar',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            parejas: parejasEmparejar.map((p, idx) => ({
-              id: `p-${idx}`,
-              origen: p.origen,
-              origenTipo: 'texto',
-              destino: p.destino,
-              destinoTipo: 'texto'
-            }))
-          }
-        };
-      } else if (tipo === 'clasificar') {
-        const validCats = categoriasClasificar.filter(c => c.trim() !== '');
-        const categoriesPayload = validCats.map((cat, idx) => ({ id: `cat-${idx}`, nombre: cat }));
-        
-        preguntaConfig = {
-          tipo: 'clasificar',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            categorias: categoriesPayload,
-            elementos: elementosClasificar.map((el, idx) => ({
-              id: `el-${idx}`,
-              texto: el.texto,
-              categoriaId: `cat-${el.categoriaIndex}`
-            }))
-          }
-        };
-      } else if (tipo === 'completar') {
-        // Simple parser to map blank indexes to correct options
-        // We look for [word] blocks in the sentence
-        const blanks: { [key: number]: string } = {};
-        const matches = oracionCompletar.match(/\[(.*?)\]/g) || [];
-        matches.forEach((m, idx) => {
-          blanks[idx] = m.replace('[', '').replace(']', '');
-        });
-
-        preguntaConfig = {
-          tipo: 'completar',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            oracionConHuecos: oracionCompletar,
-            palabrasOpciones: opcionesCompletar.filter(o => o.trim() !== ''),
-            respuestasCorrectas: blanks
-          }
-        };
-      } else if (tipo === 'reconocer_emociones') {
-        preguntaConfig = {
-          tipo: 'reconocer_emociones',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            rostroImagenUrl: rostroUrl,
-            emocionCorrecta,
-            opciones: opcionesEmociones.map((op, idx) => ({
-              id: `e-${idx}`,
-              emocion: op
-            }))
-          }
-        };
-      } else if (tipo === 'explorador_3d') {
-        preguntaConfig = {
-          tipo: 'explorador_3d',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            modeloUrl,
-            nombreObjeto: nombreObjeto || 'Objeto',
-            puntosDeInteres: puntosInteres
-              .filter(p => p.nombre.trim() !== '')
-              .map((p, idx) => ({ id: `punto-${idx}`, nombre: p.nombre, descripcion: p.descripcion })),
-            objetivo: instruccion
-          }
-        };
-      } else {
-        // autoevaluacion
-        preguntaConfig = {
-          tipo: 'autoevaluacion',
-          datos: {
-            id: 'preg-1',
-            instruccion,
-            imagenUrl: imagenUrl || undefined,
-            escala: [
-              { id: 'muy_bien', etiqueta: 'Muy bien', emoji: '🌟', color: '#22c55e' },
-              { id: 'bien', etiqueta: 'Bien', emoji: '👍', color: '#3b82f6' },
-              { id: 'regular', etiqueta: 'Regular', emoji: '😐', color: '#f59e0b' },
-              { id: 'necesito_ayuda', etiqueta: 'Necesito ayuda', emoji: '🤝', color: '#ef4444' }
-            ],
-            reflexion: reflexionAutoeval || undefined
-          }
-        };
-      }
+      const preguntaConfig = construirPreguntaConfig();
 
       const actividadPayload = {
         id: editingId || undefined,
@@ -307,6 +313,39 @@ export default function Actividades() {
     } catch (err: any) {
       setMsg({ error: err.message || 'Error al guardar la actividad.', success: '' });
     }
+  };
+
+  const handlePreviewClick = (act: Actividad) => {
+    setPreviewActividad(act);
+  };
+
+  const handlePreviewForm = () => {
+    setMsg({ error: '', success: '' });
+
+    if (!titulo.trim() || !instruccion.trim()) {
+      setMsg({ error: 'El título y la instrucción son requeridos para la vista previa.', success: '' });
+      return;
+    }
+
+    if (tipo === 'explorador_3d' && !modeloUrl.trim()) {
+      setMsg({ error: 'La URL del modelo .glb es requerida para previsualizar el explorador 3D.', success: '' });
+      return;
+    }
+
+    const preguntaConfig = construirPreguntaConfig();
+    const actividadPreview: Actividad = {
+      id: editingId || 'preview',
+      profesor_id: profile!.id,
+      etapa_id: etapaId || undefined,
+      tipo,
+      titulo: titulo.trim(),
+      configuracion: {
+        preguntas: [preguntaConfig],
+        mostrarFelicitacion,
+        vozSintetica
+      }
+    };
+    setPreviewActividad(actividadPreview);
   };
 
   return (
@@ -366,6 +405,12 @@ export default function Actividades() {
 
                     <div className="flex items-center justify-end gap-2 border-t pt-3 dark:border-gray-700/50">
                       <button
+                        onClick={() => handlePreviewClick(act)}
+                        className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:text-pink-600 dark:hover:text-pink-400 text-gray-500 dark:text-gray-300 rounded-lg text-xs font-bold transition"
+                      >
+                        <Eye className="w-3.5 h-3.5" /> Vista previa
+                      </button>
+                      <button
                         onClick={() => handleEditClick(act)}
                         className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 text-gray-500 dark:text-gray-300 rounded-lg text-xs font-bold transition"
                       >
@@ -390,12 +435,21 @@ export default function Actividades() {
               <p className="text-xs text-gray-400 font-bold">Personaliza la accesibilidad y el formato del juego.</p>
             </div>
             
-            <button
-              onClick={() => setIsCreating(false)}
-              className="text-xs font-bold text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
-            >
-              Cancelar
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handlePreviewForm}
+                className="flex items-center gap-1.5 px-3 py-2 bg-pink-50 dark:bg-pink-950/30 text-pink-700 dark:text-pink-400 hover:bg-pink-100 dark:hover:bg-pink-950/50 rounded-xl text-xs font-extrabold transition"
+              >
+                <Eye className="w-3.5 h-3.5" /> Vista previa
+              </button>
+              <button
+                onClick={() => setIsCreating(false)}
+                className="text-xs font-bold text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
 
           <form onSubmit={handleGuardar} className="space-y-6">
@@ -810,6 +864,32 @@ export default function Actividades() {
               {editingId ? 'Guardar Cambios' : 'Crear Actividad Adaptada'}
             </button>
           </form>
+        </div>
+      )}
+
+      {/* PREVIEW OVERLAY */}
+      {previewActividad && (
+        <div className="fixed inset-0 z-50 bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur flex flex-col overflow-auto">
+          <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-900/90 border-b dark:border-gray-700 px-6 py-3 flex items-center justify-between shadow-sm">
+            <div>
+              <h3 className="text-sm font-black text-gray-900 dark:text-white">{previewActividad.titulo}</h3>
+              <p className="text-xs text-pink-600 dark:text-pink-400 font-bold">Modo vista previa</p>
+            </div>
+            <button
+              onClick={() => setPreviewActividad(null)}
+              className="flex items-center gap-1.5 px-3 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-extrabold transition"
+            >
+              <X className="w-4 h-4" /> Cerrar preview
+            </button>
+          </div>
+          <div className="flex-1">
+            <ReproductorActividad
+              actividad={previewActividad}
+              estudianteId={profile!.id}
+              onCompletado={() => setPreviewActividad(null)}
+              modoPreview
+            />
+          </div>
         </div>
       )}
     </div>

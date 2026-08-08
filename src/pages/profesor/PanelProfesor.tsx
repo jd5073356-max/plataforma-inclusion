@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Etapa, Perfil, Actividad, Asignacion } from '../../types/actividad';
 import Estudiantes from './Estudiantes';
+import Actividades from './Actividades';
 import { 
   GraduationCap, 
   Layers, 
@@ -21,7 +22,7 @@ import {
 
 export default function PanelProfesor() {
   const { profile, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<'resumen' | 'estudiantes' | 'etapas'>('resumen');
+  const [activeTab, setActiveTab] = useState<'resumen' | 'estudiantes' | 'etapas' | 'actividades'>('resumen');
   
   // States for stats and data
   const [etapas, setEtapas] = useState<Etapa[]>([]);
@@ -160,6 +161,17 @@ export default function PanelProfesor() {
         >
           <Layers className="w-4 h-4" />
           Etapas de Aprendizaje
+        </button>
+        <button
+          onClick={() => setActiveTab('actividades')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+            activeTab === 'actividades'
+              ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+          }`}
+        >
+          <Activity className="w-4 h-4" />
+          Banco de Actividades
         </button>
       </div>
 
@@ -396,6 +408,11 @@ export default function PanelProfesor() {
                   )}
                 </div>
               </div>
+            )}
+
+            {/* TAB 4: BANCO DE ACTIVIDADES */}
+            {activeTab === 'actividades' && (
+              <Actividades />
             )}
           </>
         )}

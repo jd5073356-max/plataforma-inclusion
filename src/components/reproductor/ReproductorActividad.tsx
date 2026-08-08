@@ -9,13 +9,15 @@ interface ReproductorActividadProps {
   ajuste?: 'cognitiva' | 'motriz' | 'tea';
   estudianteId: string;
   onCompletado: () => void;
+  modoPreview?: boolean;
 }
 
 export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   actividad,
   ajuste,
   estudianteId,
-  onCompletado
+  onCompletado,
+  modoPreview = false
 }) => {
   const [currentPreguntaIndex, setCurrentPreguntaIndex] = useState(0);
   const [selectedOpcionId, setSelectedOpcionId] = useState<string | null>(null);
@@ -116,7 +118,9 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setIsCorrect(esCorrecta);
     setIntentado(true);
 
-    await db.registrarIntento(estudianteId, actividad.id, esCorrecta);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, esCorrecta);
+    }
   };
 
   const verificarEmparejar = async () => {
@@ -132,7 +136,9 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setIsCorrect(todasCorrectas);
     setIntentado(true);
 
-    await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    }
   };
 
   const verificarClasificar = async () => {
@@ -148,7 +154,9 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setIsCorrect(todasCorrectas);
     setIntentado(true);
 
-    await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    }
   };
 
   const verificarCompletar = async () => {
@@ -165,7 +173,9 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setIsCorrect(todasCorrectas);
     setIntentado(true);
 
-    await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    }
   };
 
   const handleSiguiente = () => {
@@ -186,6 +196,11 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
               isCognitiva ? 'bg-amber-100 text-amber-800' : isMotriz ? 'bg-purple-100 text-purple-800' : 'bg-sky-100 text-sky-800'
             }`}>
               Ajuste: {ajuste === 'cognitiva' ? 'Cognitivo' : ajuste === 'motriz' ? 'Motriz' : 'TEA'}
+            </span>
+          )}
+          {modoPreview && (
+            <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-pink-100 text-pink-800 border border-pink-200">
+              Vista previa
             </span>
           )}
         </div>
