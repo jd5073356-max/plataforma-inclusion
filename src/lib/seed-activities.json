@@ -10,6 +10,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-a1-1",
+            "instruccion": "Observa el tangram armado como un cuadrado perfecto. ¿Con cuántas piezas se forma?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
             "opciones": [
               {
                 "id": "op-a1-1",
@@ -25,10 +27,128 @@
                 "id": "op-a1-3",
                 "texto": "9 piezas",
                 "esCorrecta": false
+              },
+              {
+                "id": "op-a1-4",
+                "texto": "6 piezas",
+                "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a1-2",
+            "instruccion": "¿Cuántos triángulos hay en un tangram clásico?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
-            "instruccion": "Mira el cuadrado del tangram. ¿Con cuántas piezas se arma?"
+            "opciones": [
+              {
+                "id": "op-a1-5",
+                "texto": "3 triángulos",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-6",
+                "texto": "5 triángulos",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a1-7",
+                "texto": "7 triángulos",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-8",
+                "texto": "4 triángulos",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a1-3",
+            "instruccion": "¿Qué forma geométrica NO es una pieza del tangram?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "opciones": [
+              {
+                "id": "op-a1-9",
+                "texto": "Triángulo",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-10",
+                "texto": "Cuadrado",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-11",
+                "texto": "Círculo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a1-12",
+                "texto": "Paralelogramo",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a1-4",
+            "instruccion": "Si juntas las 7 piezas del tangram, ¿qué figura grande puedes formar?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "opciones": [
+              {
+                "id": "op-a1-13",
+                "texto": "Un cuadrado perfecto",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a1-14",
+                "texto": "Un círculo",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-15",
+                "texto": "Una estrella",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a1-5",
+            "instruccion": "¿De qué país viene el tangram originalmente?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "opciones": [
+              {
+                "id": "op-a1-16",
+                "texto": "Japón",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-17",
+                "texto": "China",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a1-18",
+                "texto": "India",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a1-19",
+                "texto": "Colombia",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -36,8 +156,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿cuántas piezas tiene el tangram?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Las 7 piezas que pueden ser cualquier cosa",
+      "materia": "Matemáticas — Geometría",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -62,7 +182,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "El tangram se inventó en China hace más de 200 años. Con solo 7 piezas puedes crear más de 1.600 figuras diferentes.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -113,6 +233,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-a2-1",
+            "instruccion": "Mira los billetes colombianos. ¿Cuál es el de mayor valor?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
             "opciones": [
               {
                 "id": "op-a2-1",
@@ -127,11 +249,94 @@
               {
                 "id": "op-a2-3",
                 "texto": "$50.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-4",
+                "texto": "$100.000",
                 "esCorrecta": true
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a2-2",
+            "instruccion": "¿Cuál billete vale menos que $5.000?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
-            "instruccion": "Mira la pila de billetes. ¿Cuál billete vale más?"
+            "opciones": [
+              {
+                "id": "op-a2-5",
+                "texto": "$2.000",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a2-6",
+                "texto": "$10.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-7",
+                "texto": "$20.000",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a2-3",
+            "instruccion": "Si tienes un billete de $10.000 y uno de $5.000, ¿cuánto dinero tienes en total?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "opciones": [
+              {
+                "id": "op-a2-8",
+                "texto": "$15.000",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a2-9",
+                "texto": "$10.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-10",
+                "texto": "$20.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-11",
+                "texto": "$50.000",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a2-4",
+            "instruccion": "¿Cuántos billetes de $10.000 necesitas para tener $50.000?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "opciones": [
+              {
+                "id": "op-a2-12",
+                "texto": "3 billetes",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a2-13",
+                "texto": "5 billetes",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a2-14",
+                "texto": "10 billetes",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -139,8 +344,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de el billete de mayor valor",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Conociendo el valor de nuestro dinero",
+      "materia": "Matemáticas — Sistema Monetario",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -165,7 +370,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Colombia tiene 7 billetes diferentes: $1.000, $2.000, $5.000, $10.000, $20.000, $50.000 y $100.000.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -216,10 +421,12 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-a3-1",
+            "instruccion": "En el kiosco el jugo cuesta $2.000 y las galletas $3.000. ¿Cuánto pagas por ambos?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
             "opciones": [
               {
                 "id": "op-a3-1",
-                "texto": "$1.000",
+                "texto": "$4.000",
                 "esCorrecta": false
               },
               {
@@ -229,12 +436,110 @@
               },
               {
                 "id": "op-a3-3",
-                "texto": "$10.000",
+                "texto": "$6.000",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a3-2",
+            "instruccion": "Pagas con un billete de $10.000 una compra de $7.000. ¿Cuánto cambio recibes?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
-            "instruccion": "En el kiosco el jugo cuesta $5.000. ¿Qué billete usas para pagar?"
+            "opciones": [
+              {
+                "id": "op-a3-4",
+                "texto": "$2.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a3-5",
+                "texto": "$3.000",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a3-6",
+                "texto": "$5.000",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a3-3",
+            "instruccion": "¿Qué puedes comprar si tienes exactamente $5.000? Manzana $2.000, jugo $3.000, galletas $4.000.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "opciones": [
+              {
+                "id": "op-a3-7",
+                "texto": "Manzana y jugo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a3-8",
+                "texto": "Jugo y galletas",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a3-9",
+                "texto": "Manzana y galletas",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a3-4",
+            "instruccion": "El helado cuesta $3.500. ¿Con cuál billete puedes pagar sin que te falte?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "opciones": [
+              {
+                "id": "op-a3-10",
+                "texto": "Billete de $2.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a3-11",
+                "texto": "Billete de $5.000",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a3-12",
+                "texto": "Billete de $1.000",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-a3-5",
+            "instruccion": "Compraste un paquete de papas por $1.500 y un agua por $1.000. Pagaste con $5.000. ¿Cuánto cambio?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "opciones": [
+              {
+                "id": "op-a3-13",
+                "texto": "$2.500",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-a3-14",
+                "texto": "$3.000",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-a3-15",
+                "texto": "$1.500",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -242,8 +547,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de comprando en el kiosco",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Comprando y calculando en la tienda escolar",
+      "materia": "Matemáticas — Operaciones con Dinero",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -268,7 +573,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Saber sumar y restar con dinero te ayuda a ser independiente cuando vayas de compras.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -319,8 +624,8 @@
           "tipo": "completar",
           "datos": {
             "id": "preg-a4-1",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
             "instruccion": "Completa la oración con las palabras correctas.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
             "oracionConHuecos": "Con un billete de [mil] y uno de [dos mil] tengo tres mil pesos.",
             "palabrasOpciones": [
               "mil",
@@ -333,14 +638,72 @@
               "1": "dos mil"
             }
           }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-a4-2",
+            "instruccion": "Completa: ¿cuánto dinero se forma?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "oracionConHuecos": "Si junto [dos] billetes de $5.000 tengo [diez mil] pesos en total.",
+            "palabrasOpciones": [
+              "dos",
+              "tres",
+              "diez mil",
+              "cinco mil",
+              "quince mil"
+            ],
+            "respuestasCorrectas": {
+              "0": "dos",
+              "1": "diez mil"
+            }
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-a4-3",
+            "instruccion": "Completa la frase sobre el cambio.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "oracionConHuecos": "Si pago $3.000 con un billete de $5.000, el vendedor me devuelve [dos mil] pesos de [cambio].",
+            "palabrasOpciones": [
+              "dos mil",
+              "tres mil",
+              "cambio",
+              "vueltas",
+              "propina"
+            ],
+            "respuestasCorrectas": {
+              "0": "dos mil",
+              "1": "cambio"
+            }
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-a4-4",
+            "instruccion": "Completa la frase sobre las monedas.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "oracionConHuecos": "La moneda de [quinientos] pesos es la de mayor valor entre las monedas colombianas de uso diario.",
+            "palabrasOpciones": [
+              "cien",
+              "doscientos",
+              "quinientos",
+              "mil"
+            ],
+            "respuestasCorrectas": {
+              "0": "quinientos"
+            }
+          }
         }
       ],
       "vozSintetica": true,
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de completa la frase del dinero",
-      "materia": "Inclusión & Habilidades Sociales",
+      "subtituloPoetico": "Las palabras del dinero colombiano",
+      "materia": "Matemáticas — Comprensión del Dinero",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -365,7 +728,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Las monedas colombianas de uso diario son de $50, $100, $200, $500 y $1.000.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -416,6 +779,8 @@
           "tipo": "emparejar",
           "datos": {
             "id": "preg-a5-1",
+            "instruccion": "Une cada billete con su cambio equivalente.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
             "parejas": [
               {
                 "id": "p-a5-1",
@@ -437,10 +802,77 @@
                 "destino": "Cinco billetes de $10.000",
                 "origenTipo": "texto",
                 "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-4",
+                "origen": "Billete de $20.000",
+                "destino": "Cuatro billetes de $5.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-a5-2",
+            "instruccion": "Une cada compra con el billete exacto para pagarla.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
-            "instruccion": "Une cada billete con su cambio equivalente."
+            "parejas": [
+              {
+                "id": "p-a5-5",
+                "origen": "Jugo de $2.000",
+                "destino": "Billete de $2.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-6",
+                "origen": "Cuaderno de $5.000",
+                "destino": "Billete de $5.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-7",
+                "origen": "Camiseta de $20.000",
+                "destino": "Billete de $20.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-a5-3",
+            "instruccion": "Une cada cantidad de monedas con el billete equivalente.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
+            "parejas": [
+              {
+                "id": "p-a5-8",
+                "origen": "10 monedas de $100",
+                "destino": "$1.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-9",
+                "origen": "4 monedas de $500",
+                "destino": "$2.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-a5-10",
+                "origen": "5 monedas de $200",
+                "destino": "$1.000",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
           }
         }
       ],
@@ -448,8 +880,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de cambios del billete",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Billetes y sus cambios equivalentes",
+      "materia": "Matemáticas — Equivalencias Monetarias",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -474,7 +906,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Entender los cambios te permite verificar que te devuelvan bien cuando compras algo.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -847,6 +1279,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-d1-1",
+            "instruccion": "En la recta numérica, ¿qué número está justo a la izquierda del cero?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
             "opciones": [
               {
                 "id": "op-d1-1",
@@ -863,9 +1297,107 @@
                 "texto": "0",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d1-2",
+            "instruccion": "¿Cuál número es menor: -3 o +2?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
-            "instruccion": "Mira el tablero. ¿Qué número está a la izquierda del cero?"
+            "opciones": [
+              {
+                "id": "op-d1-4",
+                "texto": "-3 es menor",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d1-5",
+                "texto": "+2 es menor",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d1-6",
+                "texto": "Son iguales",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d1-3",
+            "instruccion": "Los números a la izquierda del cero en la recta numérica son...",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "opciones": [
+              {
+                "id": "op-d1-7",
+                "texto": "Números negativos",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d1-8",
+                "texto": "Números positivos",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d1-9",
+                "texto": "Números decimales",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d1-4",
+            "instruccion": "¿Qué número está más lejos del cero: -7 o -2?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "opciones": [
+              {
+                "id": "op-d1-10",
+                "texto": "-7",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d1-11",
+                "texto": "-2",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d1-12",
+                "texto": "Están a la misma distancia",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d1-5",
+            "instruccion": "Ordena de menor a mayor: +3, -5, 0, -1",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "opciones": [
+              {
+                "id": "op-d1-13",
+                "texto": "-5, -1, 0, +3",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d1-14",
+                "texto": "0, -1, -5, +3",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d1-15",
+                "texto": "+3, 0, -1, -5",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -873,8 +1405,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de a la izquierda del cero",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Explorando el mundo de los números negativos",
+      "materia": "Matemáticas — Números Enteros",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -899,7 +1431,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Los números negativos se usan todos los días: en la temperatura, en los pisos de sótano de un edificio, y en las deudas.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -950,6 +1482,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-d2-1",
+            "instruccion": "El termómetro marca -5°C. ¿Ese número indica frío o caliente?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
             "opciones": [
               {
                 "id": "op-d2-1",
@@ -963,12 +1497,85 @@
               },
               {
                 "id": "op-d2-3",
-                "texto": "Ni frío ni caliente",
+                "texto": "Templado",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d2-2",
+            "instruccion": "¿A qué temperatura se congela el agua?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
-            "instruccion": "El termómetro marca -5. ¿Ese número es frío o caliente?"
+            "opciones": [
+              {
+                "id": "op-d2-4",
+                "texto": "0°C",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d2-5",
+                "texto": "10°C",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d2-6",
+                "texto": "-10°C",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d2-3",
+            "instruccion": "En Bogotá la temperatura es 14°C y en el Nevado del Ruiz es -3°C. ¿Dónde hace más frío?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "opciones": [
+              {
+                "id": "op-d2-7",
+                "texto": "Nevado del Ruiz",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d2-8",
+                "texto": "Bogotá",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d2-9",
+                "texto": "En los dos igual",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d2-4",
+            "instruccion": "Si la temperatura sube de -3°C a +5°C, ¿cuántos grados subió?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "opciones": [
+              {
+                "id": "op-d2-10",
+                "texto": "8 grados",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d2-11",
+                "texto": "2 grados",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d2-12",
+                "texto": "5 grados",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -976,8 +1583,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de frío o caliente",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "El termómetro nos enseña los negativos",
+      "materia": "Matemáticas — Números Enteros y Temperatura",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1002,7 +1609,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "En el Nevado del Ruiz, Colombia, la temperatura puede bajar hasta -10°C. ¡Eso es bajo cero!",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1053,8 +1660,8 @@
           "tipo": "completar",
           "datos": {
             "id": "preg-d3-1",
+            "instruccion": "Completa la oración sobre la recta numérica.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
-            "instruccion": "Completa la oración sobre el tablero.",
             "oracionConHuecos": "El número +3 está a la [derecha] del cero y el -3 a la [izquierda].",
             "palabrasOpciones": [
               "derecha",
@@ -1067,14 +1674,71 @@
               "1": "izquierda"
             }
           }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-d3-2",
+            "instruccion": "Completa: los números negativos.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "oracionConHuecos": "Los números [negativos] siempre están a la [izquierda] del cero.",
+            "palabrasOpciones": [
+              "negativos",
+              "positivos",
+              "izquierda",
+              "derecha"
+            ],
+            "respuestasCorrectas": {
+              "0": "negativos",
+              "1": "izquierda"
+            }
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-d3-3",
+            "instruccion": "Completa la frase sobre el orden.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "oracionConHuecos": "Mientras más a la [izquierda] esté un número, más [pequeño] es su valor.",
+            "palabrasOpciones": [
+              "izquierda",
+              "derecha",
+              "pequeño",
+              "grande"
+            ],
+            "respuestasCorrectas": {
+              "0": "izquierda",
+              "1": "pequeño"
+            }
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "preg-d3-4",
+            "instruccion": "Completa: el signo de los números.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "oracionConHuecos": "El número -5 tiene signo [menos] y el número +5 tiene signo [más].",
+            "palabrasOpciones": [
+              "menos",
+              "más",
+              "igual",
+              "por"
+            ],
+            "respuestasCorrectas": {
+              "0": "menos",
+              "1": "más"
+            }
+          }
         }
       ],
       "vozSintetica": true,
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de derecha e izquierda en el tablero",
-      "materia": "Inclusión & Habilidades Sociales",
+      "subtituloPoetico": "Derecha e izquierda: la brújula de los números",
+      "materia": "Matemáticas — Ubicación en la Recta Numérica",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1099,7 +1763,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "La recta numérica es como un mapa infinito donde cada número tiene su lugar exacto.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1255,6 +1919,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-d5-1",
+            "instruccion": "Un dado de parqués tiene los números del 1 al 6. ¿Cuántas caras tiene?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
             "opciones": [
               {
                 "id": "op-d5-1",
@@ -1271,9 +1937,82 @@
                 "texto": "7 caras",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d5-2",
+            "instruccion": "Las caras opuestas de un dado siempre suman...",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
-            "instruccion": "Un dado de parqués tiene 1, 2, 3, 4, 5 y 6. ¿Cuántas caras tiene en total?"
+            "opciones": [
+              {
+                "id": "op-d5-4",
+                "texto": "7",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d5-5",
+                "texto": "6",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d5-6",
+                "texto": "10",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d5-3",
+            "instruccion": "¿Cuántas aristas (bordes) tiene un dado?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "opciones": [
+              {
+                "id": "op-d5-7",
+                "texto": "8",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d5-8",
+                "texto": "12",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d5-9",
+                "texto": "6",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-d5-4",
+            "instruccion": "¿Cuántos vértices (esquinas) tiene un dado?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "opciones": [
+              {
+                "id": "op-d5-10",
+                "texto": "6",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-d5-11",
+                "texto": "8",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-d5-12",
+                "texto": "4",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -1281,8 +2020,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿cuántas caras tiene el dado?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "El dado: un cubo perfecto lleno de secretos",
+      "materia": "Matemáticas — Geometría 3D",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1307,7 +2046,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Los dados más antiguos se hicieron hace más de 5.000 años con huesos de animales.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1470,6 +2209,8 @@
           "tipo": "emparejar",
           "datos": {
             "id": "preg-y1-1",
+            "instruccion": "Une cada palabra en inglés con su traducción al español.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
             "parejas": [
               {
                 "id": "p-y1-1",
@@ -1499,9 +2240,83 @@
                 "origenTipo": "texto",
                 "destinoTipo": "texto"
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-y1-2",
+            "instruccion": "Une cada objeto de la casa con su nombre en inglés.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
-            "instruccion": "Une cada palabra en inglés con su traducción."
+            "parejas": [
+              {
+                "id": "p-y1-5",
+                "origen": "Estufa",
+                "destino": "Stove",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-6",
+                "origen": "Nevera",
+                "destino": "Fridge",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-7",
+                "origen": "Cama",
+                "destino": "Bed",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-8",
+                "origen": "Espejo",
+                "destino": "Mirror",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-y1-3",
+            "instruccion": "Une cada acción con el cuarto donde la haces.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
+            "parejas": [
+              {
+                "id": "p-y1-9",
+                "origen": "Cocinar",
+                "destino": "Kitchen",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-10",
+                "origen": "Dormir",
+                "destino": "Bedroom",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-11",
+                "origen": "Bañarse",
+                "destino": "Bathroom",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-y1-12",
+                "origen": "Ver televisión",
+                "destino": "Living room",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
           }
         }
       ],
@@ -1509,8 +2324,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de la casa en inglés y español",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "My house: conociendo cada rincón en dos idiomas",
+      "materia": "Inglés — Vocabulario del Hogar",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1535,7 +2350,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Aprender vocabulario por categorías (como 'la casa') hace que tu cerebro recuerde mejor las palabras.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1586,25 +2401,100 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-y2-1",
+            "instruccion": "¿Cuál de estos objetos pertenece a la cocina (kitchen)?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
             "opciones": [
               {
                 "id": "op-y2-1",
-                "texto": "La estufa",
+                "texto": "Stove (estufa)",
                 "esCorrecta": true
               },
               {
                 "id": "op-y2-2",
-                "texto": "La cama",
+                "texto": "Bed (cama)",
                 "esCorrecta": false
               },
               {
                 "id": "op-y2-3",
-                "texto": "El espejo",
+                "texto": "Mirror (espejo)",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y2-2",
+            "instruccion": "¿Cómo se dice 'nevera' en inglés?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
-            "instruccion": "Mira los objetos. ¿Cuál pertenece a la cocina?"
+            "opciones": [
+              {
+                "id": "op-y2-4",
+                "texto": "Fridge",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y2-5",
+                "texto": "Table",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y2-6",
+                "texto": "Sink",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y2-3",
+            "instruccion": "¿Cuál objeto NO está normalmente en una cocina?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "opciones": [
+              {
+                "id": "op-y2-7",
+                "texto": "Pillow (almohada)",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y2-8",
+                "texto": "Pot (olla)",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y2-9",
+                "texto": "Sink (lavaplatos)",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y2-4",
+            "instruccion": "'I cook in the ____'. ¿Qué palabra completa la oración?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "opciones": [
+              {
+                "id": "op-y2-10",
+                "texto": "kitchen",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y2-11",
+                "texto": "bathroom",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y2-12",
+                "texto": "bedroom",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -1612,8 +2502,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué hay en la cocina?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Kitchen objects: lo que hay en cada rincón",
+      "materia": "Inglés — Objetos de la Casa",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1638,7 +2528,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "La cocina es uno de los cuartos donde más objetos diferentes puedes encontrar en una casa.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1689,40 +2579,100 @@
           "tipo": "clasificar",
           "datos": {
             "id": "preg-y3-1",
-            "elementos": [
-              {
-                "id": "el-y-1",
-                "texto": "La estufa",
-                "categoriaId": "cat-y-cocina"
-              },
-              {
-                "id": "el-y-2",
-                "texto": "El lavamanos",
-                "categoriaId": "cat-y-bano"
-              },
-              {
-                "id": "el-y-3",
-                "texto": "La nevera",
-                "categoriaId": "cat-y-cocina"
-              },
-              {
-                "id": "el-y-4",
-                "texto": "La ducha",
-                "categoriaId": "cat-y-bano"
-              }
-            ],
+            "instruccion": "Coloca cada objeto en el cuarto donde va: Kitchen o Bathroom.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png",
             "categorias": [
               {
                 "id": "cat-y-cocina",
-                "nombre": "Cocina"
+                "nombre": "Kitchen (Cocina)"
               },
               {
                 "id": "cat-y-bano",
-                "nombre": "Baño"
+                "nombre": "Bathroom (Baño)"
               }
             ],
-            "instruccion": "Coloca cada objeto en el lugar de la casa donde va."
+            "elementos": [
+              {
+                "id": "el-y-1",
+                "texto": "Stove (estufa)",
+                "categoriaId": "cat-y-cocina"
+              },
+              {
+                "id": "el-y-2",
+                "texto": "Sink (lavamanos)",
+                "categoriaId": "cat-y-bano"
+              },
+              {
+                "id": "el-y-3",
+                "texto": "Fridge (nevera)",
+                "categoriaId": "cat-y-cocina"
+              },
+              {
+                "id": "el-y-4",
+                "texto": "Shower (ducha)",
+                "categoriaId": "cat-y-bano"
+              },
+              {
+                "id": "el-y-5",
+                "texto": "Towel (toalla)",
+                "categoriaId": "cat-y-bano"
+              },
+              {
+                "id": "el-y-6",
+                "texto": "Pot (olla)",
+                "categoriaId": "cat-y-cocina"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "preg-y3-2",
+            "instruccion": "Clasifica cada objeto: ¿Bedroom o Living room?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png",
+            "categorias": [
+              {
+                "id": "cat-y-bed",
+                "nombre": "Bedroom (Habitación)"
+              },
+              {
+                "id": "cat-y-living",
+                "nombre": "Living room (Sala)"
+              }
+            ],
+            "elementos": [
+              {
+                "id": "el-y-7",
+                "texto": "Bed (cama)",
+                "categoriaId": "cat-y-bed"
+              },
+              {
+                "id": "el-y-8",
+                "texto": "Sofa (sofá)",
+                "categoriaId": "cat-y-living"
+              },
+              {
+                "id": "el-y-9",
+                "texto": "Pillow (almohada)",
+                "categoriaId": "cat-y-bed"
+              },
+              {
+                "id": "el-y-10",
+                "texto": "TV (televisor)",
+                "categoriaId": "cat-y-living"
+              },
+              {
+                "id": "el-y-11",
+                "texto": "Closet (armario)",
+                "categoriaId": "cat-y-bed"
+              },
+              {
+                "id": "el-y-12",
+                "texto": "Lamp (lámpara)",
+                "categoriaId": "cat-y-living"
+              }
+            ]
           }
         }
       ],
@@ -1730,8 +2680,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿cocina o baño?",
-      "materia": "Inclusión & Habilidades Sociales",
+      "subtituloPoetico": "¿Dónde va cada cosa? Organizando la casa bilingüe",
+      "materia": "Inglés — Clasificación por Espacios",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1756,7 +2706,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Clasificar objetos por categorías es una habilidad que usas tanto en inglés como en tu vida diaria.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1807,25 +2757,100 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-y4-1",
+            "instruccion": "Ves un sofá, un televisor y una mesa de centro. ¿Qué parte de la casa es?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
             "opciones": [
               {
                 "id": "op-y4-1",
-                "texto": "La sala",
+                "texto": "Living room (Sala)",
                 "esCorrecta": true
               },
               {
                 "id": "op-y4-2",
-                "texto": "La cocina",
+                "texto": "Kitchen (Cocina)",
                 "esCorrecta": false
               },
               {
                 "id": "op-y4-3",
-                "texto": "El baño",
+                "texto": "Bathroom (Baño)",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y4-2",
+            "instruccion": "Hay una cama, un escritorio y un closet. ¿En qué cuarto estás?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
-            "instruccion": "Mira la imagen. ¿Qué parte de la casa es?"
+            "opciones": [
+              {
+                "id": "op-y4-4",
+                "texto": "Bedroom (Habitación)",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y4-5",
+                "texto": "Kitchen (Cocina)",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y4-6",
+                "texto": "Living room (Sala)",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y4-3",
+            "instruccion": "¿Cómo se dice 'habitación' en inglés?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "opciones": [
+              {
+                "id": "op-y4-7",
+                "texto": "Bedroom",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y4-8",
+                "texto": "Bathroom",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y4-9",
+                "texto": "Kitchen",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-y4-4",
+            "instruccion": "'The family watches TV in the ____.' Completa:",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "opciones": [
+              {
+                "id": "op-y4-10",
+                "texto": "living room",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-y4-11",
+                "texto": "bathroom",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-y4-12",
+                "texto": "kitchen",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -1833,8 +2858,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué parte de la casa es?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Room detective: ¿en qué cuarto estamos?",
+      "materia": "Inglés — Identificación de Espacios",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -1859,7 +2884,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Una casa promedio tiene entre 4 y 6 habitaciones diferentes, cada una con objetos específicos.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -1910,6 +2935,9 @@
           "tipo": "reconocer_emociones",
           "datos": {
             "id": "preg-y5-1",
+            "instruccion": "Mira el rostro. ¿Qué emoción muestra?",
+            "emocionCorrecta": "alegría",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
             "opciones": [
               {
                 "id": "e-y5-1",
@@ -1923,10 +2951,53 @@
                 "id": "e-y5-3",
                 "emocion": "enojo"
               }
-            ],
-            "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
+            ]
+          }
+        },
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-y5-2",
+            "instruccion": "Un compañero llega a casa después del colegio y su mamá le tiene su comida favorita. ¿Cómo se siente?",
             "emocionCorrecta": "alegría",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png"
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
+            "opciones": [
+              {
+                "id": "e-y5-4",
+                "emocion": "alegría"
+              },
+              {
+                "id": "e-y5-5",
+                "emocion": "miedo"
+              },
+              {
+                "id": "e-y5-6",
+                "emocion": "tristeza"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-y5-3",
+            "instruccion": "La mascota de la familia se perdió. ¿Qué emoción sienten en casa?",
+            "emocionCorrecta": "tristeza",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
+            "opciones": [
+              {
+                "id": "e-y5-7",
+                "emocion": "tristeza"
+              },
+              {
+                "id": "e-y5-8",
+                "emocion": "alegría"
+              },
+              {
+                "id": "e-y5-9",
+                "emocion": "sorpresa"
+              }
+            ]
           }
         }
       ],
@@ -2379,25 +3450,100 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-m3-1",
+            "instruccion": "Mira la imagen. ¿Qué órgano de los sentidos es este?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
             "opciones": [
               {
                 "id": "op-m3-1",
-                "texto": "El ojo",
+                "texto": "El ojo (vista)",
                 "esCorrecta": true
               },
               {
                 "id": "op-m3-2",
-                "texto": "La oreja",
+                "texto": "La oreja (oído)",
                 "esCorrecta": false
               },
               {
                 "id": "op-m3-3",
-                "texto": "La piel",
+                "texto": "La piel (tacto)",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m3-2",
+            "instruccion": "¿Con qué órgano percibimos los olores?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
-            "instruccion": "Mira la imagen. ¿Qué órgano del sentido es?"
+            "opciones": [
+              {
+                "id": "op-m3-4",
+                "texto": "La nariz",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m3-5",
+                "texto": "La lengua",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m3-6",
+                "texto": "Los ojos",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m3-3",
+            "instruccion": "¿Cuántos sentidos tiene el ser humano?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "opciones": [
+              {
+                "id": "op-m3-7",
+                "texto": "5 sentidos",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m3-8",
+                "texto": "3 sentidos",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m3-9",
+                "texto": "7 sentidos",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m3-4",
+            "instruccion": "¿Qué parte del ojo le da color (marrón, azul, verde)?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "opciones": [
+              {
+                "id": "op-m3-10",
+                "texto": "El iris",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m3-11",
+                "texto": "La pupila",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m3-12",
+                "texto": "La retina",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -2405,8 +3551,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué órgano es este?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Los órganos que nos conectan con el mundo",
+      "materia": "Biología — Los Sentidos",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -2431,7 +3577,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "El ojo humano puede distinguir aproximadamente 10 millones de colores diferentes.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -2482,31 +3628,114 @@
           "tipo": "emparejar",
           "datos": {
             "id": "preg-m4-1",
+            "instruccion": "Une cada órgano con el sentido que permite.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
             "parejas": [
               {
                 "id": "p-m4-1",
-                "origen": "El ojo",
-                "destino": "Ver",
+                "origen": "👁️ Ojo",
+                "destino": "Vista (ver)",
                 "origenTipo": "texto",
                 "destinoTipo": "texto"
               },
               {
                 "id": "p-m4-2",
-                "origen": "La oreja",
-                "destino": "Oír",
+                "origen": "👂 Oreja",
+                "destino": "Oído (oír)",
                 "origenTipo": "texto",
                 "destinoTipo": "texto"
               },
               {
                 "id": "p-m4-3",
-                "origen": "La piel",
-                "destino": "Tocar",
+                "origen": "✋ Piel",
+                "destino": "Tacto (tocar)",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-4",
+                "origen": "👃 Nariz",
+                "destino": "Olfato (oler)",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-5",
+                "origen": "👅 Lengua",
+                "destino": "Gusto (saborear)",
                 "origenTipo": "texto",
                 "destinoTipo": "texto"
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-m4-2",
+            "instruccion": "Une cada situación con el sentido que usas.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
-            "instruccion": "Une cada órgano con lo que hace."
+            "parejas": [
+              {
+                "id": "p-m4-6",
+                "origen": "Escuchar música",
+                "destino": "Oído",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-7",
+                "origen": "Oler una flor",
+                "destino": "Olfato",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-8",
+                "origen": "Leer un libro",
+                "destino": "Vista",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-9",
+                "origen": "Probar un helado",
+                "destino": "Gusto",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "preg-m4-3",
+            "instruccion": "Une cada órgano con el sistema del cuerpo al que pertenece.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
+            "parejas": [
+              {
+                "id": "p-m4-10",
+                "origen": "Corazón",
+                "destino": "Sistema circulatorio",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-11",
+                "origen": "Cerebro",
+                "destino": "Sistema nervioso",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p-m4-12",
+                "origen": "Pulmones",
+                "destino": "Sistema respiratorio",
+                "origenTipo": "texto",
+                "destinoTipo": "texto"
+              }
+            ]
           }
         }
       ],
@@ -2514,8 +3743,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de cada sentido con su órgano",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Cada sentido tiene su propio superhéroe",
+      "materia": "Biología — Los 5 Sentidos",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -2540,7 +3769,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Tu nariz puede distinguir más de 1 billón de olores diferentes.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -2591,6 +3820,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-m5-1",
+            "instruccion": "¿Qué animal vive en el Polo Norte donde hay mucho hielo?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
             "opciones": [
               {
                 "id": "op-m5-1",
@@ -2607,9 +3838,107 @@
                 "texto": "El león",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m5-2",
+            "instruccion": "¿Qué animal vive en el desierto donde hace mucho calor?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
-            "instruccion": "Mira el paisaje. ¿Qué animal vive en el polo norte?"
+            "opciones": [
+              {
+                "id": "op-m5-4",
+                "texto": "El camello",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m5-5",
+                "texto": "El pingüino",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m5-6",
+                "texto": "La foca",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m5-3",
+            "instruccion": "¿Por qué el oso polar tiene pelo blanco y grueso?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "opciones": [
+              {
+                "id": "op-m5-7",
+                "texto": "Para camuflarse en la nieve y protegerse del frío",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m5-8",
+                "texto": "Porque le gusta el color blanco",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m5-9",
+                "texto": "Para verse bonito",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m5-4",
+            "instruccion": "¿Qué animal vive en la selva tropical colombiana?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "opciones": [
+              {
+                "id": "op-m5-10",
+                "texto": "El tucán",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m5-11",
+                "texto": "El oso polar",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m5-12",
+                "texto": "El camello",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m5-5",
+            "instruccion": "¿Qué necesitan los animales del polo para sobrevivir?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "opciones": [
+              {
+                "id": "op-m5-13",
+                "texto": "Grasa corporal gruesa y pelo denso",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m5-14",
+                "texto": "Mucha agua y sombra",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m5-15",
+                "texto": "Árboles altos para trepar",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -2617,8 +3946,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué animal vive en el polo?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Animales del mundo: cada uno en su hábitat",
+      "materia": "Biología — Ecosistemas y Climas",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -2643,7 +3972,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Colombia es el segundo país con más especies de animales en todo el mundo.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -2694,6 +4023,18 @@
           "tipo": "clasificar",
           "datos": {
             "id": "preg-m6-1",
+            "instruccion": "Clasifica cada animal según el clima donde vive.",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png",
+            "categorias": [
+              {
+                "id": "cat-m-frio",
+                "nombre": "Clima frío ❄️"
+              },
+              {
+                "id": "cat-m-calor",
+                "nombre": "Clima cálido ☀️"
+              }
+            ],
             "elementos": [
               {
                 "id": "el-m-1",
@@ -2714,20 +4055,58 @@
                 "id": "el-m-4",
                 "texto": "León",
                 "categoriaId": "cat-m-calor"
+              },
+              {
+                "id": "el-m-5",
+                "texto": "Foca",
+                "categoriaId": "cat-m-frio"
+              },
+              {
+                "id": "el-m-6",
+                "texto": "Tucán",
+                "categoriaId": "cat-m-calor"
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "preg-m6-2",
+            "instruccion": "Clasifica cada órgano con el sistema del cuerpo al que pertenece.",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png",
             "categorias": [
               {
-                "id": "cat-m-frio",
-                "nombre": "Frío"
+                "id": "cat-m-circ",
+                "nombre": "Sistema Circulatorio 💓"
               },
               {
-                "id": "cat-m-calor",
-                "nombre": "Calor"
+                "id": "cat-m-nerv",
+                "nombre": "Sistema Nervioso 🧠"
               }
             ],
-            "instruccion": "Coloca cada animal en el clima donde vive."
+            "elementos": [
+              {
+                "id": "el-m-7",
+                "texto": "Corazón",
+                "categoriaId": "cat-m-circ"
+              },
+              {
+                "id": "el-m-8",
+                "texto": "Cerebro",
+                "categoriaId": "cat-m-nerv"
+              },
+              {
+                "id": "el-m-9",
+                "texto": "Venas",
+                "categoriaId": "cat-m-circ"
+              },
+              {
+                "id": "el-m-10",
+                "texto": "Nervios",
+                "categoriaId": "cat-m-nerv"
+              }
+            ]
           }
         }
       ],
@@ -2735,8 +4114,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿frío o calor?",
-      "materia": "Inclusión & Habilidades Sociales",
+      "subtituloPoetico": "Frío o calor: los animales se adaptan",
+      "materia": "Biología — Adaptación Animal",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -2761,7 +4140,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Los animales del polo tienen capas gruesas de grasa bajo la piel para resistir temperaturas de hasta -60°C.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -2812,6 +4191,8 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-m7-1",
+            "instruccion": "Tocas un cubo de hielo. ¿Qué sientes con la piel?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
             "opciones": [
               {
                 "id": "op-m7-1",
@@ -2828,9 +4209,82 @@
                 "texto": "Ruido",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m7-2",
+            "instruccion": "¿Qué capa de la piel es la que vemos por fuera?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
-            "instruccion": "Tocas un cubo de hielo. ¿Qué sientes con la piel?"
+            "opciones": [
+              {
+                "id": "op-m7-4",
+                "texto": "La epidermis",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m7-5",
+                "texto": "La dermis",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m7-6",
+                "texto": "El hueso",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m7-3",
+            "instruccion": "La piel nos protege de muchas cosas. ¿Cuál de estas es una?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "opciones": [
+              {
+                "id": "op-m7-7",
+                "texto": "Los rayos del sol",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m7-8",
+                "texto": "Los sonidos fuertes",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m7-9",
+                "texto": "Los sabores amargos",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-m7-4",
+            "instruccion": "¿Qué sentido usas cuando sientes que algo es suave o áspero?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "opciones": [
+              {
+                "id": "op-m7-10",
+                "texto": "El tacto",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-m7-11",
+                "texto": "La vista",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-m7-12",
+                "texto": "El olfato",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -2838,8 +4292,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué sentimos con la piel?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "La piel: el órgano más grande del cuerpo",
+      "materia": "Biología — El Tacto",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -2864,7 +4318,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "La piel es el órgano más grande del cuerpo humano. Si la extendieras, mediría casi 2 metros cuadrados.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -3027,25 +4481,125 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-e1-1",
+            "instruccion": "Mira el rostro. ¿Qué emoción muestra la persona?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
             "opciones": [
               {
                 "id": "op-e1-1",
-                "texto": "Alegría",
+                "texto": "Alegría 😊",
                 "esCorrecta": true
               },
               {
                 "id": "op-e1-2",
-                "texto": "Tristeza",
+                "texto": "Tristeza 😢",
                 "esCorrecta": false
               },
               {
                 "id": "op-e1-3",
+                "texto": "Enojo 😠",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e1-2",
+            "instruccion": "Tu mejor amigo te invita a su cumpleaños. ¿Qué emoción sientes?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "opciones": [
+              {
+                "id": "op-e1-4",
+                "texto": "Alegría",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e1-5",
+                "texto": "Miedo",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e1-6",
                 "texto": "Enojo",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e1-3",
+            "instruccion": "¿Qué señales del cuerpo muestran que alguien está enojado?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
-            "instruccion": "Mira el rostro de la profesora. ¿Qué emoción muestra?"
+            "opciones": [
+              {
+                "id": "op-e1-7",
+                "texto": "Ceño fruncido y puños apretados",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e1-8",
+                "texto": "Sonrisa amplia y ojos brillantes",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e1-9",
+                "texto": "Ojos cerrados y respiración lenta",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e1-4",
+            "instruccion": "Un compañero rompe tu dibujo sin querer. ¿Cuál es la mejor reacción?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "opciones": [
+              {
+                "id": "op-e1-10",
+                "texto": "Respirar hondo y decirle que te molestó",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e1-11",
+                "texto": "Romper su cuaderno",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e1-12",
+                "texto": "No volver a hablarle nunca",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e1-5",
+            "instruccion": "¿Es normal sentir varias emociones diferentes en un mismo día?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "opciones": [
+              {
+                "id": "op-e1-13",
+                "texto": "Sí, es completamente normal",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e1-14",
+                "texto": "No, solo debemos sentir alegría",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e1-15",
+                "texto": "Solo los adultos sienten muchas emociones",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -3053,8 +4607,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿qué emoción es?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Reconociendo las emociones en los demás y en ti",
+      "materia": "Convivencia — Inteligencia Emocional",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -3079,7 +4633,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "Los científicos han identificado al menos 27 emociones humanas diferentes. Las 6 básicas son: alegría, tristeza, enojo, miedo, sorpresa y asco.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -3130,6 +4684,9 @@
           "tipo": "reconocer_emociones",
           "datos": {
             "id": "preg-e2-1",
+            "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
+            "emocionCorrecta": "sorpresa",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
             "opciones": [
               {
                 "id": "e-e2-1",
@@ -3143,10 +4700,53 @@
                 "id": "e-e2-3",
                 "emocion": "miedo"
               }
-            ],
-            "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
+            ]
+          }
+        },
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-e2-2",
+            "instruccion": "Tu profesora anuncia que mañana no hay clase. ¿Qué emoción puedes sentir?",
             "emocionCorrecta": "sorpresa",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png"
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
+            "opciones": [
+              {
+                "id": "e-e2-4",
+                "emocion": "sorpresa"
+              },
+              {
+                "id": "e-e2-5",
+                "emocion": "tristeza"
+              },
+              {
+                "id": "e-e2-6",
+                "emocion": "enojo"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "reconocer_emociones",
+          "datos": {
+            "id": "preg-e2-3",
+            "instruccion": "Un niño ve un perrito solo en la calle bajo la lluvia. ¿Qué siente?",
+            "emocionCorrecta": "tristeza",
+            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
+            "opciones": [
+              {
+                "id": "e-e2-7",
+                "emocion": "tristeza"
+              },
+              {
+                "id": "e-e2-8",
+                "emocion": "alegría"
+              },
+              {
+                "id": "e-e2-9",
+                "emocion": "enojo"
+              }
+            ]
           }
         }
       ],
@@ -3154,8 +4754,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¡qué sorpresa!",
-      "materia": "Inclusión & Habilidades Sociales",
+      "subtituloPoetico": "¡Sorpresa! Las emociones nos hablan",
+      "materia": "Convivencia — Emociones",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -3180,7 +4780,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "La sorpresa es la emoción más corta. Dura apenas unos segundos antes de transformarse en otra emoción como alegría o miedo.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -3231,25 +4831,100 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-e3-1",
+            "instruccion": "Tu amigo está triste porque perdió su juguete favorito. ¿Qué puedes hacer?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
             "opciones": [
               {
                 "id": "op-e3-1",
-                "texto": "Consolarla con un abrazo",
+                "texto": "Acompañarlo y ayudarle a buscarlo",
                 "esCorrecta": true
               },
               {
                 "id": "op-e3-2",
-                "texto": "Irme sin decir nada",
+                "texto": "Reírte de él",
                 "esCorrecta": false
               },
               {
                 "id": "op-e3-3",
-                "texto": "Reírme de ella",
+                "texto": "Ignorarlo y seguir jugando solo",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e3-2",
+            "instruccion": "¿Qué significa tener empatía?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
-            "instruccion": "Mira la escena. Tu amiga se siente triste. ¿Qué puedes hacer?"
+            "opciones": [
+              {
+                "id": "op-e3-4",
+                "texto": "Ponerse en el lugar del otro y entender cómo se siente",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e3-5",
+                "texto": "Hacer lo que los demás quieren siempre",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e3-6",
+                "texto": "No sentir nada cuando alguien llora",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e3-3",
+            "instruccion": "Dos compañeros están peleando por un balón. ¿Cuál es la mejor solución?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "opciones": [
+              {
+                "id": "op-e3-7",
+                "texto": "Turnarse para usarlo o jugar juntos",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e3-8",
+                "texto": "Que el más fuerte se quede con él",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e3-9",
+                "texto": "Que ninguno juegue",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e3-4",
+            "instruccion": "Cuando sientes mucho enojo, ¿qué es bueno hacer primero?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "opciones": [
+              {
+                "id": "op-e3-10",
+                "texto": "Parar, respirar profundo y contar hasta 10",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e3-11",
+                "texto": "Gritar muy fuerte",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e3-12",
+                "texto": "Golpear algo",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -3257,8 +4932,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de un amigo está triste",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Cuando un amigo necesita de ti",
+      "materia": "Convivencia — Empatía",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -3283,7 +4958,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "La empatía se puede entrenar. Cuanto más escuchas a otros, mejor entiendes sus emociones.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
@@ -3334,25 +5009,100 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-e4-1",
+            "instruccion": "Mira la imagen. La niña tiene los ojos muy abiertos y la boca en forma de O. ¿Cómo se siente?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
             "opciones": [
               {
                 "id": "op-e4-1",
-                "texto": "Miedo",
+                "texto": "Sorprendida",
                 "esCorrecta": true
               },
               {
                 "id": "op-e4-2",
-                "texto": "Alegría",
+                "texto": "Aburrida",
                 "esCorrecta": false
               },
               {
                 "id": "op-e4-3",
+                "texto": "Cansada",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e4-2",
+            "instruccion": "Un niño está temblando y tiene los ojos muy abiertos. ¿Qué emoción siente?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "opciones": [
+              {
+                "id": "op-e4-4",
+                "texto": "Miedo",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e4-5",
+                "texto": "Alegría",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e4-6",
                 "texto": "Calma",
                 "esCorrecta": false
               }
-            ],
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e4-3",
+            "instruccion": "¿Cuál de estas NO es una emoción?",
             "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
-            "instruccion": "Mira la imagen. ¿Qué emoción está sintiendo?"
+            "opciones": [
+              {
+                "id": "op-e4-7",
+                "texto": "Correr",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e4-8",
+                "texto": "Tristeza",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e4-9",
+                "texto": "Alegría",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "seleccion",
+          "datos": {
+            "id": "preg-e4-4",
+            "instruccion": "¿Qué herramienta te ayuda a calmarte cuando sientes emociones fuertes?",
+            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "opciones": [
+              {
+                "id": "op-e4-10",
+                "texto": "El semáforo de emociones: Parar → Pensar → Actuar",
+                "esCorrecta": true
+              },
+              {
+                "id": "op-e4-11",
+                "texto": "Gritar lo más fuerte posible",
+                "esCorrecta": false
+              },
+              {
+                "id": "op-e4-12",
+                "texto": "Esconderse y no hablar con nadie",
+                "esCorrecta": false
+              }
+            ]
           }
         }
       ],
@@ -3360,8 +5110,8 @@
       "mostrarFelicitacion": true
     },
     "atelier": {
-      "subtituloPoetico": "Exploración interactiva de ¿cómo se siente?",
-      "materia": "Pensamiento Lógico & Matemáticas",
+      "subtituloPoetico": "Leyendo el lenguaje del cuerpo y las emociones",
+      "materia": "Convivencia — Autorregulación",
       "resumenBreve": "Unidad de indagación desarrollada para explorar conceptos didácticos mediante observación activa, datos clave y retroalimentación interactiva.",
       "datosClave": [
         {
@@ -3386,7 +5136,7 @@
         }
       ],
       "importanciaEducativa": "Fomenta la autonomía, el razonamiento autónomo y la resolución de problemas.",
-      "sabiasQue": "Aprender a través de múltiples sentidos fortalece la asimilación conceptual en todos los estudiantes.",
+      "sabiasQue": "El 93% de la comunicación humana es no verbal: expresiones faciales, tono de voz y gestos.",
       "instruccionTip": "Explora la ficha gráfica · Haz clic en 'Iniciar Actividad' para completar el desafío",
       "hotspots": [
         {
