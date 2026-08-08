@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./hero-banner.png" alt="Plataforma de Inclusión Educativa Adaptativa Header" width="100%" />
+  <img src="./hero-banner.png" alt="ECO INCLUSIVO — Plataforma de Inclusión Educativa Adaptativa Header" width="100%" />
 </p>
 
-# Plataforma de Inclusión Educativa Adaptativa
+# ECO INCLUSIVO — Plataforma de Inclusión Educativa Adaptativa
 
 [![status](https://img.shields.io/badge/status-en%20producción-success?style=for-the-badge)](https://plataforma-inclusion-adaptativa.vercel.app/login)
 [![React](https://img.shields.io/badge/React-18.x-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
@@ -30,7 +30,7 @@ En el sistema educativo tradicional, los estudiantes con necesidades educativas 
 
 ## ⚡ ¿Para qué sirve? (El Propósito y Solución)
 
-La **Plataforma de Inclusión Educativa Adaptativa** transforma el aula de clase digital permitiendo que cada estudiante consuma el contenido académico según sus capacidades individuales, mientras que los profesores pueden crear, adaptar y monitorear actividades en tiempo real.
+**ECO INCLUSIVO** transforma el aula de clase digital permitiendo que cada estudiante consuma el contenido académico según sus capacidades individuales, mientras que los profesores pueden crear, adaptar y monitorear actividades en tiempo real.
 
 ### Componentes Clave:
 - **Reproductor Adaptativo:** Actividades interactivas con lector de voz sintética (Text-to-Speech), dictado de preguntas, asistencia visual y botones de respuesta simplificados.

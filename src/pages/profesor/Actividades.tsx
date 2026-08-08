@@ -71,6 +71,17 @@ export default function Actividades() {
   const [emocionCorrecta, setEmocionCorrecta] = useState('alegría');
   const [opcionesEmociones, setOpcionesEmociones] = useState(['alegría', 'tristeza', 'enojo']);
 
+  // 6. Explorador 3D
+  const [modeloUrl, setModeloUrl] = useState('');
+  const [nombreObjeto, setNombreObjeto] = useState('');
+  const [puntosInteres, setPuntosInteres] = useState([
+    { nombre: '', descripcion: '' },
+    { nombre: '', descripcion: '' }
+  ]);
+
+  // 7. Autoevaluación
+  const [reflexionAutoeval, setReflexionAutoeval] = useState('¿Cómo te sentiste al terminar la actividad?');
+
   const loadData = async () => {
     if (!profile) return;
     try {
@@ -135,6 +146,12 @@ export default function Actividades() {
         setRostroUrl(firstPreg.datos.rostroImagenUrl);
         setEmocionCorrecta(firstPreg.datos.emocionCorrecta);
         setOpcionesEmociones(firstPreg.datos.opciones.map(o => o.emocion));
+      } else if (firstPreg.tipo === 'explorador_3d') {
+        setModeloUrl(firstPreg.datos.modeloUrl);
+        setNombreObjeto(firstPreg.datos.nombreObjeto);
+        setPuntosInteres(firstPreg.datos.puntosDeInteres.map(p => ({ nombre: p.nombre, descripcion: p.descripcion })));
+      } else if (firstPreg.tipo === 'autoevaluacion') {
+        setReflexionAutoeval(firstPreg.datos.reflexion || '');
       }
     }
   };
@@ -220,8 +237,7 @@ export default function Actividades() {
             respuestasCorrectas: blanks
           }
         };
-      } else {
-        // reconocer_emociones
+      } else if (tipo === 'reconocer_emociones') {
         preguntaConfig = {
           tipo: 'reconocer_emociones',
           datos: {
@@ -234,6 +250,38 @@ export default function Actividades() {
               id: `e-${idx}`,
               emocion: op
             }))
+          }
+        };
+      } else if (tipo === 'explorador_3d') {
+        preguntaConfig = {
+          tipo: 'explorador_3d',
+          datos: {
+            id: 'preg-1',
+            instruccion,
+            imagenUrl: imagenUrl || undefined,
+            modeloUrl,
+            nombreObjeto: nombreObjeto || 'Objeto',
+            puntosDeInteres: puntosInteres
+              .filter(p => p.nombre.trim() !== '')
+              .map((p, idx) => ({ id: `punto-${idx}`, nombre: p.nombre, descripcion: p.descripcion })),
+            objetivo: instruccion
+          }
+        };
+      } else {
+        // autoevaluacion
+        preguntaConfig = {
+          tipo: 'autoevaluacion',
+          datos: {
+            id: 'preg-1',
+            instruccion,
+            imagenUrl: imagenUrl || undefined,
+            escala: [
+              { id: 'muy_bien', etiqueta: 'Muy bien', emoji: '🌟', color: '#22c55e' },
+              { id: 'bien', etiqueta: 'Bien', emoji: '👍', color: '#3b82f6' },
+              { id: 'regular', etiqueta: 'Regular', emoji: '😐', color: '#f59e0b' },
+              { id: 'necesito_ayuda', etiqueta: 'Necesito ayuda', emoji: '🤝', color: '#ef4444' }
+            ],
+            reflexion: reflexionAutoeval || undefined
           }
         };
       }
@@ -392,6 +440,8 @@ export default function Actividades() {
                   <option value="clasificar">Clasificar en Cajones</option>
                   <option value="completar">Completar la Oración</option>
                   <option value="reconocer_emociones">Reconocer Emociones</option>
+                  <option value="explorador_3d">Explorador 3D (Modelo Interactivo)</option>
+                  <option value="autoevaluacion">Autoevaluación (Tablero de Emojis)</option>
                 </select>
               </div>
 
@@ -660,6 +710,88 @@ export default function Actividades() {
                           />
                         ))}
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 6. EXPLORADOR 3D CONFIG */}
+                {tipo === 'explorador_3d' && (
+                  <div className="space-y-3">
+                    <span className="block text-xs font-bold text-blue-600 uppercase">Modelo 3D Interactivo</span>
+                    <div>
+                      <label className="block text-xs font-bold text-gray-500 mb-1">URL del Modelo (.glb)</label>
+                      <input
+                        type="text"
+                        placeholder="https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_....glb"
+                        value={modeloUrl}
+                        onChange={(e) => setModeloUrl(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-xl text-xs bg-white text-gray-900 font-mono"
+                        required
+                      />
+                      <p className="text-[10px] text-gray-400 mt-1">
+                        El alumno podrá rotar el modelo, hacer zoom y pulsar los puntos de interés.
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-gray-500 mb-1">Nombre del Objeto</label>
+                      <input
+                        type="text"
+                        placeholder="Ej: El corazón"
+                        value={nombreObjeto}
+                        onChange={(e) => setNombreObjeto(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-xl text-xs bg-white text-gray-900 font-bold"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2 border-t pt-3">
+                      <span className="block text-[10px] font-bold text-gray-400 uppercase">Puntos de Interés (mínimo 2 recomendados)</span>
+                      {puntosInteres.map((punto, idx) => (
+                        <div key={idx} className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <input
+                            type="text"
+                            placeholder={`Nombre del punto ${idx + 1}`}
+                            value={punto.nombre}
+                            onChange={(e) => {
+                              const val = [...puntosInteres];
+                              val[idx].nombre = e.target.value;
+                              setPuntosInteres(val);
+                            }}
+                            className="px-3 py-2 border rounded-xl text-xs bg-white text-gray-900"
+                          />
+                          <input
+                            type="text"
+                            placeholder="Descripción para el alumno"
+                            value={punto.descripcion}
+                            onChange={(e) => {
+                              const val = [...puntosInteres];
+                              val[idx].descripcion = e.target.value;
+                              setPuntosInteres(val);
+                            }}
+                            className="px-3 py-2 border rounded-xl text-xs bg-white text-gray-900"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 7. AUTOEVALUACION CONFIG */}
+                {tipo === 'autoevaluacion' && (
+                  <div className="space-y-3">
+                    <span className="block text-xs font-bold text-blue-600 uppercase">Tablero de Emojis</span>
+                    <p className="text-xs text-gray-500 font-semibold bg-blue-50 dark:bg-blue-950 p-2.5 rounded-lg">
+                      El alumno toca el emoji con cómo se sentió: 🌟 Muy bien · 👍 Bien · 😐 Regular · 🤝 Necesito ayuda.
+                      El tablero se genera automáticamente.
+                    </p>
+                    <div>
+                      <label className="block text-xs font-bold text-gray-500 mb-1">Pregunta de Reflexión (Opcional)</label>
+                      <input
+                        type="text"
+                        placeholder="Ej: ¿Qué fue lo más difícil de la actividad?"
+                        value={reflexionAutoeval}
+                        onChange={(e) => setReflexionAutoeval(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-xl text-xs bg-white text-gray-900"
+                      />
                     </div>
                   </div>
                 )}

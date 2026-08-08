@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, CheckCircle, AlertCircle, ArrowRight, Star, Award, Heart, Shield, RefreshCw } from 'lucide-react';
 import { Actividad, PreguntaConfig } from '../../types/actividad';
 import { db } from '../../lib/db';
+import { Visor3D } from './Visor3D';
 
 interface ReproductorActividadProps {
   actividad: Actividad;
@@ -543,6 +544,53 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                   );
                 })}
               </div>
+            </div>
+          )}
+
+          {/* 6. EXPLORADOR 3D */}
+          {pregunta.tipo === 'explorador_3d' && (
+            <div className="space-y-6">
+              <Visor3D
+                modeloUrl={(pregunta.datos as any).modeloUrl}
+                nombreObjeto={(pregunta.datos as any).nombreObjeto}
+                puntosDeInteres={(pregunta.datos as any).puntosDeInteres}
+              />
+            </div>
+          )}
+
+          {/* 7. AUTOEVALUACIÓN (tablero de sonrisas) */}
+          {pregunta.tipo === 'autoevaluacion' && (
+            <div className="space-y-6">
+              {(pregunta.datos as any).reflexion && (
+                <p className="text-center text-lg font-bold text-gray-700">
+                  {(pregunta.datos as any).reflexion}
+                </p>
+              )}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {(pregunta.datos as any).escala.map((op: any) => {
+                  const isSelected = selectedOpcionId === op.id;
+                  const esCorrecta = op.id === 'muy_bien';
+                  return (
+                    <button
+                      key={op.id}
+                      type="button"
+                      disabled={intentado && !isSelected}
+                      onClick={() => verificarSeleccion(op.id, esCorrecta)}
+                      className={`w-full p-6 text-center rounded-2xl border-4 transition font-bold shadow-sm flex flex-col items-center gap-3 ${
+                        isSelected 
+                          ? 'border-blue-600 bg-blue-50' 
+                          : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50'
+                      } ${op.color || ''}`}
+                    >
+                      <span className="text-5xl">{op.emoji}</span>
+                      <span className="text-lg">{op.etiqueta}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-center text-sm text-gray-500 font-semibold">
+                Marca cómo te sentiste al terminar la actividad.
+              </p>
             </div>
           )}
         </div>

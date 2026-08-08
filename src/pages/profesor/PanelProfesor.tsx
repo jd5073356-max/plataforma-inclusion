@@ -104,7 +104,7 @@ export default function PanelProfesor() {
           </div>
           <div>
             <h1 className="text-xl font-black text-gray-900 dark:text-white">Panel del Profesor</h1>
-            <p className="text-xs text-gray-500 font-medium">Inclusión Adaptativa • Bienvenido, {profile?.nombre}</p>
+            <p className="text-xs text-gray-500 font-medium">ECO INCLUSIVO • Bienvenido, {profile?.nombre}</p>
           </div>
         </div>
 

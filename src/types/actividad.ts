@@ -8,7 +8,9 @@ export type ActividadTipo =
   | 'completar'
   | 'memoria'
   | 'trazar_colorear'
-  | 'reconocer_emociones';
+  | 'reconocer_emociones'
+  | 'explorador_3d'
+  | 'autoevaluacion';
 
 export interface BasePregunta {
   id: string;
@@ -118,6 +120,29 @@ export interface ReconocerEmocionesPregunta extends BasePregunta {
   }[];
 }
 
+// 11. Explorador 3D (modelo GLB rotable con puntos de interés clicables)
+export interface Explorador3DPregunta extends BasePregunta {
+  modeloUrl: string; // URL del GLB
+  nombreObjeto: string; // Ej: "El corazón"
+  puntosDeInteres: {
+    id: string;
+    nombre: string;
+    descripcion: string;
+  }[];
+  objetivo: string; // Descripción de qué explorar
+}
+
+// 12. Autoevaluación (tablero de sonrisas: ¿cómo te sentiste?)
+export interface AutoevaluacionPregunta extends BasePregunta {
+  escala: {
+    id: string;
+    etiqueta: string; // "😀 Muy bien"
+    emoji: string;
+    color: string; // clase tailwind del fondo
+  }[];
+  reflexion?: string; // Pregunta opcional de reflexión
+}
+
 // Unión de todas las preguntas
 export type PreguntaConfig =
   | { tipo: 'emparejar'; datos: EmparejarPregunta }
@@ -129,7 +154,9 @@ export type PreguntaConfig =
   | { tipo: 'completar'; datos: CompletarPregunta }
   | { tipo: 'memoria'; datos: MemoriaPregunta }
   | { tipo: 'trazar_colorear'; datos: TrazarColorearPregunta }
-  | { tipo: 'reconocer_emociones'; datos: ReconocerEmocionesPregunta };
+  | { tipo: 'reconocer_emociones'; datos: ReconocerEmocionesPregunta }
+  | { tipo: 'explorador_3d'; datos: Explorador3DPregunta }
+  | { tipo: 'autoevaluacion'; datos: AutoevaluacionPregunta };
 
 // Configuración general de la actividad
 export interface ActividadConfig {

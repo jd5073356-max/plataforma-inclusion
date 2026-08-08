@@ -1,5 +1,6 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { Actividad, ActividadTipo, Perfil, Etapa, Asignacion, Progreso, Recurso } from '../types/actividad';
+import { ETAPAS_GUIA, ACTIVIDADES_GUIA } from './plantillas';
 
 // Helper for generating student emails internally
 export function correoInterno(nombre: string, curso: string): string {
@@ -18,7 +19,8 @@ const MOCK_PROFILES: Perfil[] = [
 
 const MOCK_ETAPAS: Etapa[] = [
   { id: 'etapa-1', nombre: 'Etapa 1: Colores y Figuras', orden: 1, profesor_id: 'profesor-1' },
-  { id: 'etapa-2', nombre: 'Etapa 2: Palabras y Números', orden: 2, profesor_id: 'profesor-1' }
+  { id: 'etapa-2', nombre: 'Etapa 2: Palabras y Números', orden: 2, profesor_id: 'profesor-1' },
+  ...ETAPAS_GUIA
 ];
 
 const MOCK_ACTIVIDADES: Actividad[] = [
@@ -159,7 +161,13 @@ const MOCK_ASIGNACIONES: Asignacion[] = [
   { id: 'asig-2', estudiante_id: 'estudiante-1', actividad_id: 'act-2', ajuste: 'cognitiva' },
   { id: 'asig-3', estudiante_id: 'estudiante-1', actividad_id: 'act-3', ajuste: 'cognitiva' },
   { id: 'asig-4', estudiante_id: 'estudiante-2', actividad_id: 'act-1', ajuste: 'tea' },
-  { id: 'asig-5', estudiante_id: 'estudiante-2', actividad_id: 'act-4', ajuste: 'motriz' }
+  { id: 'asig-5', estudiante_id: 'estudiante-2', actividad_id: 'act-4', ajuste: 'motriz' },
+  ...ACTIVIDADES_GUIA.map(a => ({
+    id: `asig-${a.id}`,
+    estudiante_id: 'estudiante-1',
+    actividad_id: a.id,
+    ajuste: 'cognitiva' as const
+  }))
 ];
 
 const MOCK_PROGRESO: Progreso[] = [

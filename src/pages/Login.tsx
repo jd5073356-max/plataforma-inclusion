@@ -55,7 +55,7 @@ export default function Login() {
         {/* Header */}
         <div className="bg-blue-600 p-8 text-center text-white">
           <BookOpen className="w-12 h-12 mx-auto mb-3 text-blue-100" />
-          <h1 className="text-2xl font-extrabold tracking-tight">Plataforma de Inclusión</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">ECO INCLUSIVO</h1>
           <p className="text-blue-100 mt-1 text-sm font-medium">Portal Educativo Adaptativo</p>
         </div>
 

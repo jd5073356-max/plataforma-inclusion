@@ -64,7 +64,7 @@ export default function PanelAdmin() {
           </div>
           <div>
             <h1 className="text-xl font-black">Panel de Administración</h1>
-            <p className="text-xs text-gray-500 font-medium">Inclusión Educativa Admin Portal</p>
+            <p className="text-xs text-gray-500 font-medium">ECO INCLUSIVO • Admin Portal</p>
           </div>
         </div>
 
