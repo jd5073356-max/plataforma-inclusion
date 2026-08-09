@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Compass, BookOpen, Bookmark, Search, ChevronDown, Heart, Sparkles, 
-  ArrowRight, Stethoscope, Play, HelpCircle, Share2, Microscope, 
-  FileText, Activity as ActivityIcon, Layers, CheckCircle2, ArrowLeft, Home, User
+  ArrowRight, Stethoscope, Play, Pause, Volume2, VolumeX, Maximize2, HelpCircle, Share2, Microscope, 
+  FileText, Activity as ActivityIcon, Layers, CheckCircle2, ArrowLeft, Home, User, Eye, RotateCcw
 } from 'lucide-react';
 import { Actividad, AtelierDatoClave, AtelierTarjetaRecurso, AtelierHotspot } from '../../types/actividad';
 import Visor3DAtelier from './Visor3DAtelier';
@@ -32,9 +32,20 @@ export const AtelierExplorador: React.FC<AtelierExploradorProps> = ({
   const [busqueda, setBusqueda] = useState('');
   const [actividadSeleccionada, setActividadSeleccionada] = useState<Actividad>(actividadActual);
   const [hotspotDestacado, setHotspotDestacado] = useState<AtelierHotspot | null>(null);
+  
+  // Controles de vídeo HD
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoPlaying, setVideoPlaying] = useState(true);
+  const [videoMuted, setVideoMuted] = useState(true);
 
   // Extraer configuración enriquecida o usar defaults con estilo Atelier
   const configAtelier = actividadSeleccionada.atelier || {};
+
+  // Determinar la mejor fuente de multimedia disponible
+  const videoUrl = actividadSeleccionada.video_url || (actividadSeleccionada.configuracion?.preguntas?.[0] as any)?.video_url;
+  const imagenUrl = actividadSeleccionada.imagen_url || (actividadSeleccionada.configuracion?.preguntas?.[0] as any)?.imagenUrl;
+  const modelo3DUrl = configAtelier.modelo3DUrl;
+  const esModelo3D = actividadSeleccionada.tipo === 'explorador_3d' || !!modelo3DUrl;
 
   const subtituloPoetico = configAtelier.subtituloPoetico || 'Unidad de aprendizaje inmersiva';
   const materia = configAtelier.materia || 'Ciencias & Inclusión';
@@ -255,17 +266,148 @@ export const AtelierExplorador: React.FC<AtelierExploradorProps> = ({
           </div>
         </aside>
 
-        {/* COLUMNA CENTRAL: VIEWPORT PRINCIPAL CON VISOR 3D (5 Cols en LG) */}
+        {/* COLUMNA CENTRAL: VIEWPORT MULTIMEDIAL ENRIQUECIDO (5 Cols en LG) */}
         <section className="lg:col-span-5 flex flex-col gap-4 min-h-[520px]">
-          <div className="atelier-card p-2 flex-1 relative min-h-[500px]">
-            <Visor3DAtelier
-              modeloUrl={configAtelier.modelo3DUrl}
-              nombreObjeto={actividadSeleccionada.titulo}
-              subtitulo={subtituloPoetico}
-              hotspots={hotspots}
-              instruccionTip={configAtelier.instruccionTip || 'Arrastra para rotar · Haz clic en los puntos'}
-              onSelectHotspot={(hp) => setHotspotDestacado(hp)}
-            />
+          <div className="atelier-card p-2 flex-1 relative min-h-[500px] overflow-hidden bg-[#F7F4EE] border border-[#EFECE6] rounded-[24px]">
+            
+            {/* CASO A: VÍDEO ANIMADO HD (Google Flow / MP4) */}
+            {videoUrl ? (
+              <div className="relative w-full h-full min-h-[480px] rounded-[20px] overflow-hidden bg-black flex items-center justify-center">
+                <video
+                  ref={videoRef}
+                  src={videoUrl}
+                  autoPlay
+                  loop
+                  muted={videoMuted}
+                  playsInline
+                  className="w-full h-full object-cover rounded-[20px]"
+                />
+
+                {/* Overlay flotante superior */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-auto">
+                  <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-[11px] font-bold flex items-center gap-1.5 border border-white/10">
+                    <Sparkles className="w-3.5 h-3.5 text-[#EE7C6A]" />
+                    <span>Animación Google Flow HD</span>
+                  </div>
+                  <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-[11px] font-bold border border-white/10">
+                    {actividadSeleccionada.titulo}
+                  </div>
+                </div>
+
+                {/* Hotspots interactivos sobre el vídeo */}
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                  {hotspots.map((hp) => (
+                    <button
+                      key={hp.id}
+                      type="button"
+                      onClick={() => setHotspotDestacado(hp)}
+                      style={{ left: `${hp.xPercent}%`, top: `${hp.yPercent}%` }}
+                      className={`hotspot-dot pointer-events-auto flex items-center justify-center text-[10px] font-bold text-white transition-all ${
+                        hotspotDestacado?.id === hp.id ? 'scale-125 bg-[#EE7C6A] ring-4 ring-[#EE7C6A]/40' : ''
+                      }`}
+                      title={hp.nombre}
+                    >
+                      •
+                    </button>
+                  ))}
+                </div>
+
+                {/* Barra de control de vídeo flotante inferior */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-20 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 text-white">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (videoRef.current) {
+                          if (videoPlaying) {
+                            videoRef.current.pause();
+                          } else {
+                            videoRef.current.play();
+                          }
+                          setVideoPlaying(!videoPlaying);
+                        }
+                      }}
+                      className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition"
+                      title={videoPlaying ? 'Pausar' : 'Reproducir'}
+                    >
+                      {videoPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (videoRef.current) {
+                          videoRef.current.muted = !videoMuted;
+                          setVideoMuted(!videoMuted);
+                        }
+                      }}
+                      className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition"
+                      title={videoMuted ? 'Activar sonido' : 'Silenciar'}
+                    >
+                      {videoMuted ? <VolumeX className="w-4 h-4 text-[#EE7C6A]" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+                    </button>
+                  </div>
+
+                  <span className="text-[11px] font-semibold text-white/80 italic font-serif-atelier px-2">
+                    {subtituloPoetico}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (videoRef.current) {
+                        videoRef.current.requestFullscreen?.();
+                      }
+                    }}
+                    className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition"
+                    title="Pantalla completa"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ) : imagenUrl && !esModelo3D ? (
+              /* CASO B: FOTOGRAFÍA / ILUSTRACIÓN DIDÁCTICA HD */
+              <div className="relative w-full h-full min-h-[480px] rounded-[20px] overflow-hidden bg-[#F7F4EE] flex items-center justify-center p-4">
+                <img
+                  src={imagenUrl}
+                  alt={actividadSeleccionada.titulo}
+                  className="max-h-[440px] w-auto object-contain rounded-2xl shadow-sm"
+                />
+
+                {/* Hotspots interactivos sobre la imagen */}
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                  {hotspots.map((hp) => (
+                    <button
+                      key={hp.id}
+                      type="button"
+                      onClick={() => setHotspotDestacado(hp)}
+                      style={{ left: `${hp.xPercent}%`, top: `${hp.yPercent}%` }}
+                      className={`hotspot-dot pointer-events-auto flex items-center justify-center text-[10px] font-bold text-white transition-all ${
+                        hotspotDestacado?.id === hp.id ? 'scale-125 bg-[#EE7C6A] ring-4 ring-[#EE7C6A]/40' : ''
+                      }`}
+                      title={hp.nombre}
+                    >
+                      •
+                    </button>
+                  ))}
+                </div>
+
+                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#EFECE6] text-xs font-bold text-[#1C1917]">
+                  {actividadSeleccionada.titulo}
+                </div>
+              </div>
+            ) : (
+              /* CASO C: VISOR 3D INTERACTIVO THREE.JS */
+              <Visor3DAtelier
+                modeloUrl={modelo3DUrl}
+                nombreObjeto={actividadSeleccionada.titulo}
+                subtitulo={subtituloPoetico}
+                hotspots={hotspots}
+                instruccionTip={configAtelier.instruccionTip || 'Arrastra para rotar · Haz clic en los puntos'}
+                onSelectHotspot={(hp) => setHotspotDestacado(hp)}
+              />
+            )}
           </div>
         </section>
 

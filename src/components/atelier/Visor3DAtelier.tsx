@@ -83,22 +83,56 @@ export const Visor3DAtelier: React.FC<Visor3DAtelierProps> = ({
     // Función para crear un espécimen interactivo si no hay GLB válido
     const crearEspecimenProcedural = () => {
       const grupo = new THREE.Group();
-      // Núcleo orgánico central tipo escultura didáctica
-      const geoPrincipal = new THREE.IcosahedronGeometry(1.1, 3);
-      const matPrincipal = new THREE.MeshStandardMaterial({
+      
+      // 1. Estructura piramidal / cristalina interior (Núcleo facetado)
+      const geoNucleo = new THREE.DodecahedronGeometry(0.95, 1);
+      const matNucleo = new THREE.MeshPhysicalMaterial({
         color: 0xEE7C6A,
-        roughness: 0.35,
-        metalness: 0.1,
+        roughness: 0.15,
+        metalness: 0.3,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
       });
-      const mallaPrincipal = new THREE.Mesh(geoPrincipal, matPrincipal);
-      grupo.add(mallaPrincipal);
+      const mallaNucleo = new THREE.Mesh(geoNucleo, matNucleo);
+      grupo.add(mallaNucleo);
 
-      // Anillos orbitales didácticos
-      const geoAnillo = new THREE.TorusGeometry(1.5, 0.04, 16, 100);
-      const matAnillo = new THREE.MeshStandardMaterial({ color: 0x7294B9, roughness: 0.2 });
-      const anillo1 = new THREE.Mesh(geoAnillo, matAnillo);
-      anillo1.rotation.x = Math.PI / 3;
+      // 2. Capa cristalina exterior translúcida (Anatomía celular)
+      const geoExterior = new THREE.IcosahedronGeometry(1.35, 2);
+      const matExterior = new THREE.MeshPhysicalMaterial({
+        color: 0x7294B9,
+        roughness: 0.1,
+        metalness: 0.0,
+        transmission: 0.65, // Efecto cristal translúcido
+        opacity: 0.85,
+        transparent: true,
+        ior: 1.5
+      });
+      const mallaExterior = new THREE.Mesh(geoExterior, matExterior);
+      grupo.add(mallaExterior);
+
+      // 3. Marco de alambre / estructura de soporte didáctica (Wireframe)
+      const geoWire = new THREE.IcosahedronGeometry(1.37, 2);
+      const matWire = new THREE.MeshBasicMaterial({
+        color: 0x1C1917,
+        wireframe: true,
+        opacity: 0.15,
+        transparent: true
+      });
+      const mallaWire = new THREE.Mesh(geoWire, matWire);
+      grupo.add(mallaWire);
+
+      // 4. Anillos didácticos concéntricos articulados
+      const geoAnillo1 = new THREE.TorusGeometry(1.75, 0.035, 16, 100);
+      const matAnillo1 = new THREE.MeshStandardMaterial({ color: 0xF59E0B, roughness: 0.2, metalness: 0.5 });
+      const anillo1 = new THREE.Mesh(geoAnillo1, matAnillo1);
+      anillo1.rotation.x = Math.PI / 4;
       grupo.add(anillo1);
+
+      const geoAnillo2 = new THREE.TorusGeometry(2.0, 0.025, 16, 100);
+      const matAnillo2 = new THREE.MeshStandardMaterial({ color: 0xEE7C6A, roughness: 0.3, metalness: 0.4 });
+      const anillo2 = new THREE.Mesh(geoAnillo2, matAnillo2);
+      anillo2.rotation.y = Math.PI / 3;
+      grupo.add(anillo2);
 
       escena.add(grupo);
       objetoCargado = grupo;

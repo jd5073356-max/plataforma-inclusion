@@ -209,6 +209,8 @@ export interface Actividad {
   etapa_id?: string;
   tipo: ActividadTipo;
   titulo: string;
+  video_url?: string;
+  imagen_url?: string;
   configuracion: ActividadConfig;
   atelier?: AtelierConfig;
   creado_en?: string;

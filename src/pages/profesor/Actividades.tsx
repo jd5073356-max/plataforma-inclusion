@@ -350,20 +350,20 @@ export default function Actividades() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans-atelier">
       {!isCreating ? (
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border dark:border-gray-700 shadow-sm space-y-6">
+        <div className="bg-white p-6 rounded-[28px] border border-[#EFECE6] shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
-                <Activity className="w-6 h-6 text-blue-600" /> Banco de Actividades ({actividades.length})
+              <h2 className="text-2xl font-serif-atelier font-bold text-[#1C1917] flex items-center gap-2">
+                <Activity className="w-6 h-6 text-[#EE7C6A]" /> Banco de Actividades ({actividades.length})
               </h2>
-              <p className="text-xs text-gray-400 font-semibold">Diseña y edita dinámicas de aprendizaje adaptadas.</p>
+              <p className="text-xs text-[#78716C]">Diseña y edita dinámicas de aprendizaje adaptadas.</p>
             </div>
             
             <button
               onClick={handleCreateNewClick}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-xl text-sm transition shadow-md shadow-blue-500/10"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#EE7C6A] hover:bg-[#E46653] text-white font-bold rounded-2xl text-xs transition shadow-sm"
             >
               <PlusCircle className="w-4 h-4" />
               Nueva Actividad
@@ -372,48 +372,48 @@ export default function Actividades() {
 
           {loading ? (
             <div className="flex justify-center py-10">
-              <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
+              <RefreshCw className="w-8 h-8 text-[#EE7C6A] animate-spin" />
             </div>
           ) : actividades.length === 0 ? (
-            <div className="text-center py-16 border border-dashed rounded-xl border-gray-200">
-              <Activity className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm font-semibold text-gray-500">No has diseñado ninguna actividad aún.</p>
-              <p className="text-xs text-gray-400 mt-1">¡Haz clic en "Nueva Actividad" para comenzar!</p>
+            <div className="text-center py-16 border border-dashed rounded-2xl border-[#EFECE6]">
+              <Activity className="w-12 h-12 text-[#A8A29E] mx-auto mb-3 opacity-50" />
+              <p className="text-xs font-semibold text-[#78716C]">No has diseñado ninguna actividad aún.</p>
+              <p className="text-xs text-[#A8A29E] mt-1">¡Haz clic en "Nueva Actividad" para comenzar!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {actividades.map((act) => {
                 const etapaName = etapas.find(e => e.id === act.etapa_id)?.nombre || 'Sin etapa';
                 return (
-                  <div key={act.id} className="p-5 border rounded-2xl border-gray-100 dark:border-gray-700 bg-gray-50/50 hover:bg-white dark:bg-gray-900/10 dark:hover:bg-gray-800 flex flex-col justify-between transition gap-4">
+                  <div key={act.id} className="p-5 border rounded-[24px] border-[#EFECE6] bg-[#FBF9F5] hover:bg-white flex flex-col justify-between transition gap-4 shadow-sm">
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="text-[10px] font-black uppercase tracking-wider bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-full">
+                        <span className="text-[10px] font-bold uppercase tracking-wider bg-[#EE7C6A]/10 text-[#EE7C6A] px-3 py-1 rounded-full">
                           {act.tipo.replace('_', ' ')}
                         </span>
-                        <span className="text-[10px] font-bold text-gray-400 truncate max-w-[150px]">
+                        <span className="text-[10px] font-bold text-[#78716C] truncate max-w-[150px]">
                           {etapaName}
                         </span>
                       </div>
                       
-                      <h3 className="font-extrabold text-base text-gray-900 dark:text-white leading-snug">
+                      <h3 className="font-serif-atelier font-bold text-xl text-[#1C1917] leading-snug">
                         {act.titulo}
                       </h3>
-                      <p className="text-xs font-semibold text-gray-400 mt-1">
+                      <p className="text-xs text-[#78716C] mt-1">
                         {act.configuracion.preguntas.length} pregunta(s) configurada(s)
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-end gap-2 border-t pt-3 dark:border-gray-700/50">
+                    <div className="flex items-center justify-end gap-2 border-t pt-3 border-[#EFECE6]">
                       <button
                         onClick={() => handlePreviewClick(act)}
-                        className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:text-pink-600 dark:hover:text-pink-400 text-gray-500 dark:text-gray-300 rounded-lg text-xs font-bold transition"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-white border border-[#EFECE6] hover:bg-[#EE7C6A]/10 hover:text-[#EE7C6A] text-[#57534E] rounded-full text-xs font-bold transition"
                       >
                         <Eye className="w-3.5 h-3.5" /> Vista previa
                       </button>
                       <button
                         onClick={() => handleEditClick(act)}
-                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 text-gray-500 dark:text-gray-300 rounded-lg text-xs font-bold transition"
+                        className="flex items-center gap-1 px-3 py-1.5 bg-[#F5F2EC] hover:bg-[#EBE8E0] text-[#57534E] rounded-full text-xs font-bold transition"
                       >
                         <FileEdit className="w-3.5 h-3.5" /> Editar
                       </button>
