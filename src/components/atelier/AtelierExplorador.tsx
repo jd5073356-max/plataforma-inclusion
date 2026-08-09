@@ -41,11 +41,34 @@ export const AtelierExplorador: React.FC<AtelierExploradorProps> = ({
   // Extraer configuración enriquecida o usar defaults con estilo Atelier
   const configAtelier = actividadSeleccionada.atelier || {};
 
-  // Determinar la mejor fuente de multimedia disponible
-  const videoUrl = actividadSeleccionada.video_url || (actividadSeleccionada.configuracion?.preguntas?.[0] as any)?.video_url;
-  const imagenUrl = actividadSeleccionada.imagen_url || (actividadSeleccionada.configuracion?.preguntas?.[0] as any)?.imagenUrl;
-  const modelo3DUrl = configAtelier.modelo3DUrl;
-  const esModelo3D = actividadSeleccionada.tipo === 'explorador_3d' || !!modelo3DUrl;
+  // Determinar la mejor fuente de multimedia disponible (Vídeo MP4, Imagen HD o Modelo 3D)
+  const extraerMedia = (act: Actividad) => {
+    if (act.video_url) return { url: act.video_url, tipo: 'video' };
+    if (act.atelier?.modelo3DUrl) return { url: act.atelier.modelo3DUrl, tipo: '3d' };
+    if (act.imagen_url) {
+      const isVid = act.imagen_url.toLowerCase().endsWith('.mp4') || act.imagen_url.toLowerCase().endsWith('.webm');
+      return { url: act.imagen_url, tipo: isVid ? 'video' : 'imagen' };
+    }
+
+    if (act.configuracion?.preguntas) {
+      for (const p of act.configuracion.preguntas) {
+        const d = (p as any).datos || {};
+        const cand = d.video_url || d.imagenUrl || d.rostroImagenUrl;
+        if (cand) {
+          const isVid = cand.toLowerCase().endsWith('.mp4') || cand.toLowerCase().endsWith('.webm');
+          const is3d = cand.toLowerCase().endsWith('.glb') || cand.toLowerCase().endsWith('.gltf');
+          return { url: cand, tipo: is3d ? '3d' : isVid ? 'video' : 'imagen' };
+        }
+      }
+    }
+    return { url: undefined, tipo: act.tipo === 'explorador_3d' ? '3d' : '3d' };
+  };
+
+  const mediaActual = extraerMedia(actividadSeleccionada);
+  const videoUrl = mediaActual.tipo === 'video' ? mediaActual.url : undefined;
+  const imagenUrl = mediaActual.tipo === 'imagen' ? mediaActual.url : undefined;
+  const modelo3DUrl = mediaActual.tipo === '3d' ? mediaActual.url : undefined;
+  const esModelo3D = mediaActual.tipo === '3d' || actividadSeleccionada.tipo === 'explorador_3d';
 
   const subtituloPoetico = configAtelier.subtituloPoetico || 'Unidad de aprendizaje inmersiva';
   const materia = configAtelier.materia || 'Ciencias & Inclusión';
