@@ -394,11 +394,22 @@ export const AtelierExplorador: React.FC<AtelierExploradorProps> = ({
 
               {rec.imagenUrl && (
                 <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5F2EC]">
-                  <img 
-                    src={rec.imagenUrl} 
-                    alt={rec.titulo} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
-                  />
+                  {/\.(mp4|webm)$/i.test(rec.imagenUrl) ? (
+                    <video
+                      src={rec.imagenUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    />
+                  ) : (
+                    <img 
+                      src={rec.imagenUrl} 
+                      alt={rec.titulo} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                    />
+                  )}
                 </div>
               )}
 

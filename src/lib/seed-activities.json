@@ -11,7 +11,7 @@
           "datos": {
             "id": "preg-a1-1",
             "instruccion": "Observa el tangram armado como un cuadrado perfecto. ¿Con cuántas piezas se forma?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "imagenUrl": "/multimedia/Wooden_Tangram_puzzle_forming_sq…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a1-1",
@@ -41,7 +41,7 @@
           "datos": {
             "id": "preg-a1-2",
             "instruccion": "¿Cuántos triángulos hay en un tangram clásico?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "imagenUrl": "/multimedia/Wooden_Tangram_puzzle_forming_sq…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a1-5",
@@ -71,7 +71,7 @@
           "datos": {
             "id": "preg-a1-3",
             "instruccion": "¿Qué forma geométrica NO es una pieza del tangram?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "imagenUrl": "/multimedia/Wooden_Tangram_puzzle_forming_sq…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a1-9",
@@ -101,7 +101,7 @@
           "datos": {
             "id": "preg-a1-4",
             "instruccion": "Si juntas las 7 piezas del tangram, ¿qué figura grande puedes formar?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "imagenUrl": "/multimedia/Wooden_Tangram_puzzle_forming_sq…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a1-13",
@@ -126,7 +126,7 @@
           "datos": {
             "id": "preg-a1-5",
             "instruccion": "¿De qué país viene el tangram originalmente?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121248_d7698d45-ccf0-4fe1-8bb5-dd5556321d8a.png",
+            "imagenUrl": "/multimedia/Wooden_Tangram_puzzle_forming_sq…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a1-16",
@@ -234,7 +234,7 @@
           "datos": {
             "id": "preg-a2-1",
             "instruccion": "Mira los billetes colombianos. ¿Cuál es el de mayor valor?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-a2-1",
@@ -264,7 +264,7 @@
           "datos": {
             "id": "preg-a2-2",
             "instruccion": "¿Cuál billete vale menos que $5.000?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-a2-5",
@@ -289,7 +289,7 @@
           "datos": {
             "id": "preg-a2-3",
             "instruccion": "Si tienes un billete de $10.000 y uno de $5.000, ¿cuánto dinero tienes en total?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-a2-8",
@@ -319,7 +319,7 @@
           "datos": {
             "id": "preg-a2-4",
             "instruccion": "¿Cuántos billetes de $10.000 necesitas para tener $50.000?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_77e2b7c9-6a84-402d-bd26-3c28bb34bda2.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-a2-12",
@@ -422,7 +422,7 @@
           "datos": {
             "id": "preg-a3-1",
             "instruccion": "En el kiosco el jugo cuesta $2.000 y las galletas $3.000. ¿Cuánto pagas por ambos?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "imagenUrl": "/multimedia/School_kiosk_with_stocked_shelves_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a3-1",
@@ -447,7 +447,7 @@
           "datos": {
             "id": "preg-a3-2",
             "instruccion": "Pagas con un billete de $10.000 una compra de $7.000. ¿Cuánto cambio recibes?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "imagenUrl": "/multimedia/School_kiosk_with_stocked_shelves_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a3-4",
@@ -472,7 +472,7 @@
           "datos": {
             "id": "preg-a3-3",
             "instruccion": "¿Qué puedes comprar si tienes exactamente $5.000? Manzana $2.000, jugo $3.000, galletas $4.000.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "imagenUrl": "/multimedia/School_kiosk_with_stocked_shelves_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a3-7",
@@ -497,7 +497,7 @@
           "datos": {
             "id": "preg-a3-4",
             "instruccion": "El helado cuesta $3.500. ¿Con cuál billete puedes pagar sin que te falte?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "imagenUrl": "/multimedia/School_kiosk_with_stocked_shelves_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a3-10",
@@ -522,7 +522,7 @@
           "datos": {
             "id": "preg-a3-5",
             "instruccion": "Compraste un paquete de papas por $1.500 y un agua por $1.000. Pagaste con $5.000. ¿Cuánto cambio?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121150_2f853563-bb3c-4c10-ae2c-bd9339efc6c0.png",
+            "imagenUrl": "/multimedia/School_kiosk_with_stocked_shelves_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-a3-13",
@@ -625,7 +625,7 @@
           "datos": {
             "id": "preg-a4-1",
             "instruccion": "Completa la oración con las palabras correctas.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "imagenUrl": "/multimedia/Banknote_splitting_on_wood_counter_202608082048.mp4",
             "oracionConHuecos": "Con un billete de [mil] y uno de [dos mil] tengo tres mil pesos.",
             "palabrasOpciones": [
               "mil",
@@ -644,7 +644,7 @@
           "datos": {
             "id": "preg-a4-2",
             "instruccion": "Completa: ¿cuánto dinero se forma?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "imagenUrl": "/multimedia/Banknote_splitting_on_wood_counter_202608082048.mp4",
             "oracionConHuecos": "Si junto [dos] billetes de $5.000 tengo [diez mil] pesos en total.",
             "palabrasOpciones": [
               "dos",
@@ -664,7 +664,7 @@
           "datos": {
             "id": "preg-a4-3",
             "instruccion": "Completa la frase sobre el cambio.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "imagenUrl": "/multimedia/Banknote_splitting_on_wood_counter_202608082048.mp4",
             "oracionConHuecos": "Si pago $3.000 con un billete de $5.000, el vendedor me devuelve [dos mil] pesos de [cambio].",
             "palabrasOpciones": [
               "dos mil",
@@ -684,7 +684,7 @@
           "datos": {
             "id": "preg-a4-4",
             "instruccion": "Completa la frase sobre las monedas.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_3e2eb126-9aec-4bb6-89c3-79c64eaeb7fd.png",
+            "imagenUrl": "/multimedia/Banknote_splitting_on_wood_counter_202608082048.mp4",
             "oracionConHuecos": "La moneda de [quinientos] pesos es la de mayor valor entre las monedas colombianas de uso diario.",
             "palabrasOpciones": [
               "cien",
@@ -780,7 +780,7 @@
           "datos": {
             "id": "preg-a5-1",
             "instruccion": "Une cada billete con su cambio equivalente.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048_2.jpeg",
             "parejas": [
               {
                 "id": "p-a5-1",
@@ -818,7 +818,7 @@
           "datos": {
             "id": "preg-a5-2",
             "instruccion": "Une cada compra con el billete exacto para pagarla.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048_2.jpeg",
             "parejas": [
               {
                 "id": "p-a5-5",
@@ -849,7 +849,7 @@
           "datos": {
             "id": "preg-a5-3",
             "instruccion": "Une cada cantidad de monedas con el billete equivalente.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121149_1037b108-be59-4c9c-8306-f0873ac99f0b.png",
+            "imagenUrl": "/multimedia/Colombian_peso_banknotes_floating_202608082048_2.jpeg",
             "parejas": [
               {
                 "id": "p-a5-8",
@@ -1035,7 +1035,7 @@
           "etiquetaCategoria": "Detalle Gráfico",
           "titulo": "Estructura del Ejercicio",
           "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
-          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+          "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         },
         {
           "tipo": "notas_clinicas",
@@ -1046,7 +1046,8 @@
             "Asociación lógica de conceptos",
             "Autoevaluación del proceso",
             "Confianza en el propio ritmo de aprendizaje"
-          ]
+          ],
+          "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         }
       ]
     }
@@ -1280,7 +1281,7 @@
           "datos": {
             "id": "preg-d1-1",
             "instruccion": "En la recta numérica, ¿qué número está justo a la izquierda del cero?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/3D_glowing_number_line_on_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-d1-1",
@@ -1305,7 +1306,7 @@
           "datos": {
             "id": "preg-d1-2",
             "instruccion": "¿Cuál número es menor: -3 o +2?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/3D_glowing_number_line_on_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-d1-4",
@@ -1330,7 +1331,7 @@
           "datos": {
             "id": "preg-d1-3",
             "instruccion": "Los números a la izquierda del cero en la recta numérica son...",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/3D_glowing_number_line_on_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-d1-7",
@@ -1355,7 +1356,7 @@
           "datos": {
             "id": "preg-d1-4",
             "instruccion": "¿Qué número está más lejos del cero: -7 o -2?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/3D_glowing_number_line_on_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-d1-10",
@@ -1380,7 +1381,7 @@
           "datos": {
             "id": "preg-d1-5",
             "instruccion": "Ordena de menor a mayor: +3, -5, 0, -1",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/3D_glowing_number_line_on_202608082048.jpeg",
             "opciones": [
               {
                 "id": "op-d1-13",
@@ -1483,7 +1484,7 @@
           "datos": {
             "id": "preg-d2-1",
             "instruccion": "El termómetro marca -5°C. ¿Ese número indica frío o caliente?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d2-1",
@@ -1508,7 +1509,7 @@
           "datos": {
             "id": "preg-d2-2",
             "instruccion": "¿A qué temperatura se congela el agua?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d2-4",
@@ -1533,7 +1534,7 @@
           "datos": {
             "id": "preg-d2-3",
             "instruccion": "En Bogotá la temperatura es 14°C y en el Nevado del Ruiz es -3°C. ¿Dónde hace más frío?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d2-7",
@@ -1558,7 +1559,7 @@
           "datos": {
             "id": "preg-d2-4",
             "instruccion": "Si la temperatura sube de -3°C a +5°C, ¿cuántos grados subió?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d2-10",
@@ -1661,7 +1662,7 @@
           "datos": {
             "id": "preg-d3-1",
             "instruccion": "Completa la oración sobre la recta numérica.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/Glowing_number_line_on_table_202608082048.jpeg",
             "oracionConHuecos": "El número +3 está a la [derecha] del cero y el -3 a la [izquierda].",
             "palabrasOpciones": [
               "derecha",
@@ -1680,7 +1681,7 @@
           "datos": {
             "id": "preg-d3-2",
             "instruccion": "Completa: los números negativos.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/Glowing_number_line_on_table_202608082048.jpeg",
             "oracionConHuecos": "Los números [negativos] siempre están a la [izquierda] del cero.",
             "palabrasOpciones": [
               "negativos",
@@ -1699,7 +1700,7 @@
           "datos": {
             "id": "preg-d3-3",
             "instruccion": "Completa la frase sobre el orden.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/Glowing_number_line_on_table_202608082048.jpeg",
             "oracionConHuecos": "Mientras más a la [izquierda] esté un número, más [pequeño] es su valor.",
             "palabrasOpciones": [
               "izquierda",
@@ -1718,7 +1719,7 @@
           "datos": {
             "id": "preg-d3-4",
             "instruccion": "Completa: el signo de los números.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_5787e1be-0306-44bd-b719-4f7cc1dde663.png",
+            "imagenUrl": "/multimedia/Glowing_number_line_on_table_202608082048.jpeg",
             "oracionConHuecos": "El número -5 tiene signo [menos] y el número +5 tiene signo [más].",
             "palabrasOpciones": [
               "menos",
@@ -1892,7 +1893,7 @@
           "etiquetaCategoria": "Detalle Gráfico",
           "titulo": "Estructura del Ejercicio",
           "descripcionHtml": "Observación detallada de los elementos que componen esta actividad.",
-          "imagenUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+          "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         },
         {
           "tipo": "notas_clinicas",
@@ -1903,7 +1904,8 @@
             "Asociación lógica de conceptos",
             "Autoevaluación del proceso",
             "Confianza en el propio ritmo de aprendizaje"
-          ]
+          ],
+          "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         }
       ]
     }
@@ -1920,7 +1922,7 @@
           "datos": {
             "id": "preg-d5-1",
             "instruccion": "Un dado de parqués tiene los números del 1 al 6. ¿Cuántas caras tiene?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d5-1",
@@ -1945,7 +1947,7 @@
           "datos": {
             "id": "preg-d5-2",
             "instruccion": "Las caras opuestas de un dado siempre suman...",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d5-4",
@@ -1970,7 +1972,7 @@
           "datos": {
             "id": "preg-d5-3",
             "instruccion": "¿Cuántas aristas (bordes) tiene un dado?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d5-7",
@@ -1995,7 +1997,7 @@
           "datos": {
             "id": "preg-d5-4",
             "instruccion": "¿Cuántos vértices (esquinas) tiene un dado?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_eb5fef15-b815-40f3-866c-97d50fe39885.png",
+            "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-d5-10",
@@ -2210,7 +2212,7 @@
           "datos": {
             "id": "preg-y1-1",
             "instruccion": "Une cada palabra en inglés con su traducción al español.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
+            "imagenUrl": "/multimedia/Modern_house_architectural_cutaw…_202608082048.jpeg",
             "parejas": [
               {
                 "id": "p-y1-1",
@@ -2248,7 +2250,7 @@
           "datos": {
             "id": "preg-y1-2",
             "instruccion": "Une cada objeto de la casa con su nombre en inglés.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
+            "imagenUrl": "/multimedia/Modern_house_architectural_cutaw…_202608082048.jpeg",
             "parejas": [
               {
                 "id": "p-y1-5",
@@ -2286,7 +2288,7 @@
           "datos": {
             "id": "preg-y1-3",
             "instruccion": "Une cada acción con el cuarto donde la haces.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121345_42e66b2d-d17f-4396-bc52-ca5fcf1419f6.png",
+            "imagenUrl": "/multimedia/Modern_house_architectural_cutaw…_202608082048.jpeg",
             "parejas": [
               {
                 "id": "p-y1-9",
@@ -2402,7 +2404,7 @@
           "datos": {
             "id": "preg-y2-1",
             "instruccion": "¿Cuál de estos objetos pertenece a la cocina (kitchen)?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "imagenUrl": "/multimedia/Steam_rising_from_copper_pot_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y2-1",
@@ -2427,7 +2429,7 @@
           "datos": {
             "id": "preg-y2-2",
             "instruccion": "¿Cómo se dice 'nevera' en inglés?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "imagenUrl": "/multimedia/Steam_rising_from_copper_pot_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y2-4",
@@ -2452,7 +2454,7 @@
           "datos": {
             "id": "preg-y2-3",
             "instruccion": "¿Cuál objeto NO está normalmente en una cocina?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "imagenUrl": "/multimedia/Steam_rising_from_copper_pot_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y2-7",
@@ -2477,7 +2479,7 @@
           "datos": {
             "id": "preg-y2-4",
             "instruccion": "'I cook in the ____'. ¿Qué palabra completa la oración?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_ec2c0df9-3b12-4e27-8d61-146ae96810e6.png",
+            "imagenUrl": "/multimedia/Steam_rising_from_copper_pot_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y2-10",
@@ -2580,7 +2582,7 @@
           "datos": {
             "id": "preg-y3-1",
             "instruccion": "Coloca cada objeto en el cuarto donde va: Kitchen o Bathroom.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png",
+            "imagenUrl": "/multimedia/Modern_house_architectural_cutaw…_202608082048_2.jpeg",
             "categorias": [
               {
                 "id": "cat-y-cocina",
@@ -2630,7 +2632,7 @@
           "datos": {
             "id": "preg-y3-2",
             "instruccion": "Clasifica cada objeto: ¿Bedroom o Living room?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_7d41f11a-1997-499f-8797-08f2f0ea5b2a.png",
+            "imagenUrl": "/multimedia/Modern_house_architectural_cutaw…_202608082048_2.jpeg",
             "categorias": [
               {
                 "id": "cat-y-bed",
@@ -2758,7 +2760,7 @@
           "datos": {
             "id": "preg-y4-1",
             "instruccion": "Ves un sofá, un televisor y una mesa de centro. ¿Qué parte de la casa es?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "imagenUrl": "/multimedia/Living_room_with_sofa_and_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y4-1",
@@ -2783,7 +2785,7 @@
           "datos": {
             "id": "preg-y4-2",
             "instruccion": "Hay una cama, un escritorio y un closet. ¿En qué cuarto estás?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "imagenUrl": "/multimedia/Living_room_with_sofa_and_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y4-4",
@@ -2808,7 +2810,7 @@
           "datos": {
             "id": "preg-y4-3",
             "instruccion": "¿Cómo se dice 'habitación' en inglés?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "imagenUrl": "/multimedia/Living_room_with_sofa_and_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y4-7",
@@ -2833,7 +2835,7 @@
           "datos": {
             "id": "preg-y4-4",
             "instruccion": "'The family watches TV in the ____.' Completa:",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121617_bf1ab3b3-c0ee-459e-b308-99c514e2989f.png",
+            "imagenUrl": "/multimedia/Living_room_with_sofa_and_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-y4-10",
@@ -2937,7 +2939,7 @@
             "id": "preg-y5-1",
             "instruccion": "Mira el rostro. ¿Qué emoción muestra?",
             "emocionCorrecta": "alegría",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
+            "rostroImagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-y5-1",
@@ -2960,7 +2962,7 @@
             "id": "preg-y5-2",
             "instruccion": "Un compañero llega a casa después del colegio y su mamá le tiene su comida favorita. ¿Cómo se siente?",
             "emocionCorrecta": "alegría",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
+            "rostroImagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-y5-4",
@@ -2983,7 +2985,7 @@
             "id": "preg-y5-3",
             "instruccion": "La mascota de la familia se perdió. ¿Qué emoción sienten en casa?",
             "emocionCorrecta": "tristeza",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_edec8e88-c59b-423a-a049-715075ba7a20.png",
+            "rostroImagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-y5-7",
@@ -3214,7 +3216,8 @@
                 "nombre": "Aorta",
                 "descripcion": "La arteria más grande, lleva sangre a todo el cuerpo."
               }
-            ]
+            ],
+            "imagenUrl": "/multimedia/Human_heart_beating_rhythmically_202608082048.mp4"
           }
         }
       ],
@@ -3351,7 +3354,8 @@
                 "nombre": "Cerebelo",
                 "descripcion": "Nos ayuda a mantener el equilibrio."
               }
-            ]
+            ],
+            "imagenUrl": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4"
           }
         }
       ],
@@ -3426,14 +3430,14 @@
           "etiquetaCategoria": "Microscopía",
           "titulo": "Red Neuronal y Sinapsis",
           "descripcionHtml": "Impulsos bioeléctricos entre axones y dendritas.",
-          "imagenUrl": "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=600&q=80"
+          "imagenUrl": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4"
         },
         {
           "tipo": "comparar",
           "etiquetaCategoria": "Comparativa",
           "titulo": "Hemisferio Izquierdo vs. Derecho",
           "descripcionHtml": "Lógica y lenguaje frente a creatividad e intuición espacial.",
-          "imagenUrl": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+          "imagenUrl": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4"
         }
       ],
       "modelo3DUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121901_0473328e-4cd6-45af-beb4-2087ae2c3f1d.glb"
@@ -3451,7 +3455,7 @@
           "datos": {
             "id": "preg-m3-1",
             "instruccion": "Mira la imagen. ¿Qué órgano de los sentidos es este?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m3-1",
@@ -3476,7 +3480,7 @@
           "datos": {
             "id": "preg-m3-2",
             "instruccion": "¿Con qué órgano percibimos los olores?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m3-4",
@@ -3501,7 +3505,7 @@
           "datos": {
             "id": "preg-m3-3",
             "instruccion": "¿Cuántos sentidos tiene el ser humano?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m3-7",
@@ -3526,7 +3530,7 @@
           "datos": {
             "id": "preg-m3-4",
             "instruccion": "¿Qué parte del ojo le da color (marrón, azul, verde)?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120002_0476c669-61e8-4d03-9d74-5445648f3dbd.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m3-10",
@@ -3629,7 +3633,7 @@
           "datos": {
             "id": "preg-m4-1",
             "instruccion": "Une cada órgano con el sentido que permite.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "parejas": [
               {
                 "id": "p-m4-1",
@@ -3674,7 +3678,7 @@
           "datos": {
             "id": "preg-m4-2",
             "instruccion": "Une cada situación con el sentido que usas.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "parejas": [
               {
                 "id": "p-m4-6",
@@ -3712,7 +3716,7 @@
           "datos": {
             "id": "preg-m4-3",
             "instruccion": "Une cada órgano con el sistema del cuerpo al que pertenece.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_a1ced599-7288-4a72-9ab6-6e3cc0edebe2.png",
+            "imagenUrl": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
             "parejas": [
               {
                 "id": "p-m4-10",
@@ -3821,7 +3825,7 @@
           "datos": {
             "id": "preg-m5-1",
             "instruccion": "¿Qué animal vive en el Polo Norte donde hay mucho hielo?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m5-1",
@@ -3846,7 +3850,7 @@
           "datos": {
             "id": "preg-m5-2",
             "instruccion": "¿Qué animal vive en el desierto donde hace mucho calor?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m5-4",
@@ -3871,7 +3875,7 @@
           "datos": {
             "id": "preg-m5-3",
             "instruccion": "¿Por qué el oso polar tiene pelo blanco y grueso?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m5-7",
@@ -3896,7 +3900,7 @@
           "datos": {
             "id": "preg-m5-4",
             "instruccion": "¿Qué animal vive en la selva tropical colombiana?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m5-10",
@@ -3921,7 +3925,7 @@
           "datos": {
             "id": "preg-m5-5",
             "instruccion": "¿Qué necesitan los animales del polo para sobrevivir?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120151_b14225a7-9f99-4453-a1f4-8120b4fd5eb3.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m5-13",
@@ -4024,7 +4028,7 @@
           "datos": {
             "id": "preg-m6-1",
             "instruccion": "Clasifica cada animal según el clima donde vive.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "categorias": [
               {
                 "id": "cat-m-frio",
@@ -4074,7 +4078,7 @@
           "datos": {
             "id": "preg-m6-2",
             "instruccion": "Clasifica cada órgano con el sistema del cuerpo al que pertenece.",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120152_8a1a63fb-5dcb-4d18-8a0e-ababb958d5cd.png",
+            "imagenUrl": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
             "categorias": [
               {
                 "id": "cat-m-circ",
@@ -4192,7 +4196,7 @@
           "datos": {
             "id": "preg-m7-1",
             "instruccion": "Tocas un cubo de hielo. ¿Qué sientes con la piel?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m7-1",
@@ -4217,7 +4221,7 @@
           "datos": {
             "id": "preg-m7-2",
             "instruccion": "¿Qué capa de la piel es la que vemos por fuera?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m7-4",
@@ -4242,7 +4246,7 @@
           "datos": {
             "id": "preg-m7-3",
             "instruccion": "La piel nos protege de muchas cosas. ¿Cuál de estas es una?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m7-7",
@@ -4267,7 +4271,7 @@
           "datos": {
             "id": "preg-m7-4",
             "instruccion": "¿Qué sentido usas cuando sientes que algo es suave o áspero?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_120107_8d183af7-9ff2-4cb5-aaaf-3d42674e7ab9.png",
+            "imagenUrl": "/multimedia/Digital_thermometer_measuring_te…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-m7-10",
@@ -4482,7 +4486,7 @@
           "datos": {
             "id": "preg-e1-1",
             "instruccion": "Mira el rostro. ¿Qué emoción muestra la persona?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "imagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e1-1",
@@ -4507,7 +4511,7 @@
           "datos": {
             "id": "preg-e1-2",
             "instruccion": "Tu mejor amigo te invita a su cumpleaños. ¿Qué emoción sientes?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "imagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e1-4",
@@ -4532,7 +4536,7 @@
           "datos": {
             "id": "preg-e1-3",
             "instruccion": "¿Qué señales del cuerpo muestran que alguien está enojado?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "imagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e1-7",
@@ -4557,7 +4561,7 @@
           "datos": {
             "id": "preg-e1-4",
             "instruccion": "Un compañero rompe tu dibujo sin querer. ¿Cuál es la mejor reacción?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "imagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e1-10",
@@ -4582,7 +4586,7 @@
           "datos": {
             "id": "preg-e1-5",
             "instruccion": "¿Es normal sentir varias emociones diferentes en un mismo día?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_d8ef303f-2a68-400b-8dc2-c30ebdf5812c.png",
+            "imagenUrl": "/multimedia/Student_smiling_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e1-13",
@@ -4686,7 +4690,7 @@
             "id": "preg-e2-1",
             "instruccion": "Mira la cara de la persona. ¿Qué emoción tiene?",
             "emocionCorrecta": "sorpresa",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
+            "rostroImagenUrl": "/multimedia/Person_reacting_with_joyful_surp…_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-e2-1",
@@ -4709,7 +4713,7 @@
             "id": "preg-e2-2",
             "instruccion": "Tu profesora anuncia que mañana no hay clase. ¿Qué emoción puedes sentir?",
             "emocionCorrecta": "sorpresa",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
+            "rostroImagenUrl": "/multimedia/Person_reacting_with_joyful_surp…_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-e2-4",
@@ -4732,7 +4736,7 @@
             "id": "preg-e2-3",
             "instruccion": "Un niño ve un perrito solo en la calle bajo la lluvia. ¿Qué siente?",
             "emocionCorrecta": "tristeza",
-            "rostroImagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_c49a363b-70bf-4c42-b63b-da27a90c8673.png",
+            "rostroImagenUrl": "/multimedia/Person_reacting_with_joyful_surp…_202608082048.mp4",
             "opciones": [
               {
                 "id": "e-e2-7",
@@ -4832,7 +4836,7 @@
           "datos": {
             "id": "preg-e3-1",
             "instruccion": "Tu amigo está triste porque perdió su juguete favorito. ¿Qué puedes hacer?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "imagenUrl": "/multimedia/Student_comforting_classmate_wit…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e3-1",
@@ -4857,7 +4861,7 @@
           "datos": {
             "id": "preg-e3-2",
             "instruccion": "¿Qué significa tener empatía?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "imagenUrl": "/multimedia/Student_comforting_classmate_wit…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e3-4",
@@ -4882,7 +4886,7 @@
           "datos": {
             "id": "preg-e3-3",
             "instruccion": "Dos compañeros están peleando por un balón. ¿Cuál es la mejor solución?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "imagenUrl": "/multimedia/Student_comforting_classmate_wit…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e3-7",
@@ -4907,7 +4911,7 @@
           "datos": {
             "id": "preg-e3-4",
             "instruccion": "Cuando sientes mucho enojo, ¿qué es bueno hacer primero?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_a077035e-2128-47cd-8262-2436452f8d4a.png",
+            "imagenUrl": "/multimedia/Student_comforting_classmate_wit…_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e3-10",
@@ -5010,7 +5014,7 @@
           "datos": {
             "id": "preg-e4-1",
             "instruccion": "Mira la imagen. La niña tiene los ojos muy abiertos y la boca en forma de O. ¿Cómo se siente?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "imagenUrl": "/multimedia/Child_comforting_friend_with_hug_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e4-1",
@@ -5035,7 +5039,7 @@
           "datos": {
             "id": "preg-e4-2",
             "instruccion": "Un niño está temblando y tiene los ojos muy abiertos. ¿Qué emoción siente?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "imagenUrl": "/multimedia/Child_comforting_friend_with_hug_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e4-4",
@@ -5060,7 +5064,7 @@
           "datos": {
             "id": "preg-e4-3",
             "instruccion": "¿Cuál de estas NO es una emoción?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "imagenUrl": "/multimedia/Child_comforting_friend_with_hug_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e4-7",
@@ -5085,7 +5089,7 @@
           "datos": {
             "id": "preg-e4-4",
             "instruccion": "¿Qué herramienta te ayuda a calmarte cuando sientes emociones fuertes?",
-            "imagenUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121714_bd8d1935-a221-46d4-a8df-58912162d500.png",
+            "imagenUrl": "/multimedia/Child_comforting_friend_with_hug_202608082048.mp4",
             "opciones": [
               {
                 "id": "op-e4-10",

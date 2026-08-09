@@ -250,14 +250,25 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
           )}
         </div>
 
-        {/* Optional Question-level image */}
+        {/* Optional Question-level image or video */}
         {pregunta.datos.imagenUrl && (
           <div className="mb-6 flex justify-center">
-            <img 
-              src={pregunta.datos.imagenUrl} 
-              alt="Instrucción visual" 
-              className="max-h-64 object-contain rounded-xl border border-gray-100 shadow" 
-            />
+            {/\.(mp4|webm)$/i.test(pregunta.datos.imagenUrl) ? (
+              <video 
+                src={pregunta.datos.imagenUrl} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="max-h-64 object-contain rounded-xl border border-gray-100 shadow" 
+              />
+            ) : (
+              <img 
+                src={pregunta.datos.imagenUrl} 
+                alt="Instrucción visual" 
+                className="max-h-64 object-contain rounded-xl border border-gray-100 shadow" 
+              />
+            )}
           </div>
         )}
 
