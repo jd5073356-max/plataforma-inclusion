@@ -1,6 +1,12 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { Actividad, ActividadTipo, Perfil, Etapa, Asignacion, Progreso, Recurso } from '../types/actividad';
 import { ETAPAS_GUIA, ACTIVIDADES_GUIA } from './plantillas';
+import seedActivitiesRaw from './seed-activities.json';
+
+const SEED_ACTIVITIES: Actividad[] = (seedActivitiesRaw as any[]).map((a, i) => ({
+  ...a,
+  id: a.id || `seed-act-${i + 1}`
+}));
 
 // Helper for generating student emails internally
 export function correoInterno(nombre: string, curso: string): string {
@@ -372,22 +378,31 @@ export const db = {
   async getActividades(profesorId: string): Promise<Actividad[]> {
     if (isSupabaseConfigured) {
       const { data, error } = await supabase.from('actividades').select('*').eq('profesor_id', profesorId);
-      if (error) throw error;
-      return data || [];
+      if (error) console.warn('Supabase fetch error, fallback to seed:', error);
+      const userActs = data || [];
+      // Combine user created activities + SEED_ACTIVITIES avoiding duplicates
+      const userIds = new Set(userActs.map((a: Actividad) => a.id));
+      const filteredSeed = SEED_ACTIVITIES.filter((a: Actividad) => !userIds.has(a.id));
+      return [...userActs, ...filteredSeed];
     } else {
       const acts = getStored<Actividad[]>('actividades', []);
-      return acts.filter(a => a.profesor_id === profesorId);
+      const userActs = acts.filter((a: Actividad) => a.profesor_id === profesorId);
+      const userIds = new Set(userActs.map((a: Actividad) => a.id));
+      const filteredSeed = SEED_ACTIVITIES.filter((a: Actividad) => !userIds.has(a.id));
+      return [...userActs, ...filteredSeed];
     }
   },
 
   async getActividad(id: string): Promise<Actividad | null> {
     if (isSupabaseConfigured) {
-      const { data, error } = await supabase.from('actividades').select('*').eq('id', id).single();
-      if (error) return null;
-      return data;
+      const { data } = await supabase.from('actividades').select('*').eq('id', id).single();
+      if (data) return data;
+      return SEED_ACTIVITIES.find(a => a.id === id) || null;
     } else {
       const acts = getStored<Actividad[]>('actividades', []);
-      return acts.find(a => a.id === id) || null;
+      const found = acts.find(a => a.id === id);
+      if (found) return found;
+      return SEED_ACTIVITIES.find(a => a.id === id) || null;
     }
   },
 

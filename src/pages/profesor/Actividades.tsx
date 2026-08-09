@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Actividad, ActividadTipo, Etapa, PreguntaConfig } from '../../types/actividad';
 import ReproductorActividad from '../../components/reproductor/ReproductorActividad';
+import AtelierExplorador from '../../components/atelier/AtelierExplorador';
 import { 
   PlusCircle, 
   Trash2, 
@@ -867,25 +868,26 @@ export default function Actividades() {
         </div>
       )}
 
-      {/* PREVIEW OVERLAY */}
+      {/* PREVIEW OVERLAY (ATELIER EDUCATIVO INMERSIVO) */}
       {previewActividad && (
-        <div className="fixed inset-0 z-50 bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur flex flex-col overflow-auto">
-          <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-900/90 border-b dark:border-gray-700 px-6 py-3 flex items-center justify-between shadow-sm">
-            <div>
-              <h3 className="text-sm font-black text-gray-900 dark:text-white">{previewActividad.titulo}</h3>
-              <p className="text-xs text-pink-600 dark:text-pink-400 font-bold">Modo vista previa</p>
+        <div className="fixed inset-0 z-50 bg-[#FBF9F5] flex flex-col overflow-auto">
+          <div className="sticky top-0 z-50 bg-white/90 border-b border-[#EFECE6] px-6 py-3 flex items-center justify-between shadow-sm backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <span className="font-serif-atelier font-bold text-lg text-[#1C1917]">ECO INCLUSIVO✦ Atelier</span>
+              <span className="text-xs bg-[#EE7C6A]/10 text-[#EE7C6A] px-2.5 py-0.5 rounded-full font-bold">Vista Previa Profesor</span>
             </div>
             <button
               onClick={() => setPreviewActividad(null)}
-              className="flex items-center gap-1.5 px-3 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-extrabold transition"
+              className="flex items-center gap-1.5 px-4 py-2 bg-[#F5F2EC] hover:bg-[#EBE8E0] text-[#57534E] rounded-full text-xs font-bold transition"
             >
-              <X className="w-4 h-4" /> Cerrar preview
+              <X className="w-4 h-4" /> Cerrar Vista Previa
             </button>
           </div>
           <div className="flex-1">
-            <ReproductorActividad
-              actividad={previewActividad}
-              estudianteId={profile!.id}
+            <AtelierExplorador
+              actividadActual={previewActividad}
+              listaActividades={actividades}
+              onSeleccionarActividad={(act) => setPreviewActividad(act)}
               onCompletado={() => setPreviewActividad(null)}
               modoPreview
             />
