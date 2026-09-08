@@ -1,6 +1,6 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { Actividad, ActividadTipo, Perfil, Etapa, Asignacion, Progreso, Recurso } from '../types/actividad';
-import { ETAPAS_GUIA, ACTIVIDADES_GUIA } from './plantillas';
+import { ETAPAS_GUIA } from './plantillas';
 import seedActivitiesRaw from './seed-activities.json';
 
 const SEED_ACTIVITIES: Actividad[] = (seedActivitiesRaw as any[]).map((a, i) => ({
@@ -17,23 +17,21 @@ export function correoInterno(nombre: string, curso: string): string {
 
 // Initial mock data if localStorage is empty
 const MOCK_PROFILES: Perfil[] = [
-  { id: 'profesor-1', rol: 'profesor', nombre: 'Profesor Juan', curso: 'General' },
-  { id: 'estudiante-1', rol: 'estudiante', nombre: 'Ana López', curso: '3A', profesor_id: 'profesor-1' },
-  { id: 'estudiante-2', rol: 'estudiante', nombre: 'Mateo Gómez', curso: '4B', profesor_id: 'profesor-1' },
-  { id: 'admin-1', rol: 'admin', nombre: 'Admin Sistema' }
+  { id: 'profesor-1', rol: 'profesor', nombre: 'Profesor Ejemplo', curso: 'General' },
+  { id: 'estudiante-1', rol: 'estudiante', nombre: 'Estudiante Ejemplo', curso: '3A', profesor_id: 'profesor-1' },
+  { id: 'estudiante-2', rol: 'estudiante', nombre: 'Estudiante Ejemplo 2', curso: '4B', profesor_id: 'profesor-1' },
+  { id: 'admin-1', rol: 'admin', nombre: 'Administrador' }
 ];
 
 const MOCK_ETAPAS: Etapa[] = [
-  { id: 'etapa-1', nombre: 'Etapa 1: Colores y Figuras', orden: 1, profesor_id: 'profesor-1' },
-  { id: 'etapa-2', nombre: 'Etapa 2: Palabras y Números', orden: 2, profesor_id: 'profesor-1' },
   ...ETAPAS_GUIA
 ];
 
 const MOCK_ACTIVIDADES: Actividad[] = [
+  // Plantillas base del Banco (etapa_id = undefined ⇒ reutilizables en cualquier ruta)
   {
     id: 'act-1',
     profesor_id: 'profesor-1',
-    etapa_id: 'etapa-1',
     tipo: 'seleccion',
     titulo: '¿Qué fruta es roja?',
     configuracion: {
@@ -58,7 +56,6 @@ const MOCK_ACTIVIDADES: Actividad[] = [
   {
     id: 'act-2',
     profesor_id: 'profesor-1',
-    etapa_id: 'etapa-1',
     tipo: 'emparejar',
     titulo: 'Une los opuestos',
     configuracion: {
@@ -83,7 +80,6 @@ const MOCK_ACTIVIDADES: Actividad[] = [
   {
     id: 'act-3',
     profesor_id: 'profesor-1',
-    etapa_id: 'etapa-1',
     tipo: 'clasificar',
     titulo: 'Frutas vs Verduras',
     configuracion: {
@@ -113,7 +109,6 @@ const MOCK_ACTIVIDADES: Actividad[] = [
   {
     id: 'act-4',
     profesor_id: 'profesor-1',
-    etapa_id: 'etapa-2',
     tipo: 'completar',
     titulo: 'Completa la frase',
     configuracion: {
@@ -136,7 +131,6 @@ const MOCK_ACTIVIDADES: Actividad[] = [
   {
     id: 'act-5',
     profesor_id: 'profesor-1',
-    etapa_id: 'etapa-1',
     tipo: 'reconocer_emociones',
     titulo: 'Identifica la emoción',
     configuracion: {
@@ -163,17 +157,10 @@ const MOCK_ACTIVIDADES: Actividad[] = [
 ];
 
 const MOCK_ASIGNACIONES: Asignacion[] = [
-  { id: 'asig-1', estudiante_id: 'estudiante-1', actividad_id: 'act-1', ajuste: 'cognitiva' },
-  { id: 'asig-2', estudiante_id: 'estudiante-1', actividad_id: 'act-2', ajuste: 'cognitiva' },
-  { id: 'asig-3', estudiante_id: 'estudiante-1', actividad_id: 'act-3', ajuste: 'cognitiva' },
-  { id: 'asig-4', estudiante_id: 'estudiante-2', actividad_id: 'act-1', ajuste: 'tea' },
-  { id: 'asig-5', estudiante_id: 'estudiante-2', actividad_id: 'act-4', ajuste: 'motriz' },
-  ...ACTIVIDADES_GUIA.map(a => ({
-    id: `asig-${a.id}`,
-    estudiante_id: 'estudiante-1',
-    actividad_id: a.id,
-    ajuste: 'cognitiva' as const
-  }))
+  // El estudiante se asigna a RUTAS (etapas), no a actividades sueltas
+  { id: 'asig-1', estudiante_id: 'estudiante-1', etapa_id: 'etapa-andres', ajuste: 'cognitiva' },
+  { id: 'asig-2', estudiante_id: 'estudiante-1', etapa_id: 'etapa-emociones', ajuste: 'cognitiva' },
+  { id: 'asig-3', estudiante_id: 'estudiante-2', etapa_id: 'etapa-david', ajuste: 'tea' }
 ];
 
 const MOCK_PROGRESO: Progreso[] = [
@@ -210,11 +197,42 @@ if (!isSupabaseConfigured) {
   inicializarMockDB();
 }
 
+// Modo mock de emergencia: si Supabase está configurado pero el proyecto es
+// inalcanzable (pausado/DNS caído), la app conmuta a localStorage y sigue usable.
+let modoMock = !isSupabaseConfigured;
+
+const usarSupabase = () => isSupabaseConfigured && !modoMock;
+
+export function activarModoMock() {
+  if (!modoMock) {
+    modoMock = true;
+    inicializarMockDB();
+  }
+}
+
+// Health-check al arranque: si Supabase no responde (proyecto pausado, DNS caído,
+// timeout), se conmuta a mock ANTES del login para no colgar la app.
+// 401/403/404 cuentan como "alcanzable" (problema de llave, no de proyecto muerto).
+export async function prepararModoDatos(): Promise<void> {
+  if (!isSupabaseConfigured || modoMock) return;
+  const url = import.meta.env.VITE_SUPABASE_URL as string;
+  const controlador = new AbortController();
+  const temporizador = setTimeout(() => controlador.abort(), 4000);
+  try {
+    const res = await fetch(`${url}/auth/v1/health`, { signal: controlador.signal });
+    if (res.status >= 500) activarModoMock();
+  } catch {
+    activarModoMock();
+  } finally {
+    clearTimeout(temporizador);
+  }
+}
+
 // Central database controller
 export const db = {
   // --- AUTH ---
   async signUp(email: string, pass: string, name: string, rol: 'admin'|'profesor'|'estudiante', extra: any = {}) {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.auth.signUp({ email, password: pass });
       if (error) throw error;
       
@@ -249,7 +267,7 @@ export const db = {
   },
 
   async signIn(email: string, pass: string) {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
       if (error) throw error;
       const { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
@@ -272,7 +290,7 @@ export const db = {
           if (matchStudent && pass === '123456') { // default mock password
             userProfile = matchStudent;
           }
-        } else if (email === 'profesor@inclusion.com' && pass === '123456') {
+        } else if (email === 'educador@escuela.edu.co' && pass === '123456') {
           userProfile = perfiles.find(p => p.id === 'profesor-1');
         } else if (email === 'admin@inclusion.com' && pass === '123456') {
           userProfile = perfiles.find(p => p.id === 'admin-1');
@@ -290,7 +308,7 @@ export const db = {
   },
 
   async getCurrentUser() {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
       const { data: profile } = await supabase.from('perfiles').select('*').eq('id', user.id).single();
@@ -303,7 +321,7 @@ export const db = {
   },
 
   async signOut() {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       await supabase.auth.signOut();
     } else {
       setStored('currentUser', null);
@@ -312,7 +330,7 @@ export const db = {
 
   // --- PERFILES & ESTUDIANTES ---
   async getEstudiantesPorProfesor(profesorId: string): Promise<Perfil[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('perfiles').select('*').eq('rol', 'estudiante').eq('profesor_id', profesorId);
       if (error) throw error;
       return data || [];
@@ -323,7 +341,7 @@ export const db = {
   },
 
   async getProfesores(): Promise<Perfil[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('perfiles').select('*').eq('rol', 'profesor');
       if (error) throw error;
       return data || [];
@@ -344,7 +362,7 @@ export const db = {
 
   // --- ETAPAS ---
   async getEtapas(profesorId: string): Promise<Etapa[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('etapas').select('*').eq('profesor_id', profesorId).order('orden', { ascending: true });
       if (error) throw error;
       return data || [];
@@ -355,7 +373,7 @@ export const db = {
   },
 
   async crearEtapa(nombre: string, orden: number, profesorId: string) {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('etapas').insert({ nombre, orden, profesor_id: profesorId }).select().single();
       if (error) throw error;
       return data;
@@ -376,7 +394,7 @@ export const db = {
 
   // --- ACTIVIDADES ---
   async getActividades(profesorId: string): Promise<Actividad[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('actividades').select('*').eq('profesor_id', profesorId);
       if (error) console.warn('Supabase fetch error, fallback to seed:', error);
       const userActs = data || [];
@@ -394,7 +412,7 @@ export const db = {
   },
 
   async getActividad(id: string): Promise<Actividad | null> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data } = await supabase.from('actividades').select('*').eq('id', id).single();
       if (data) return data;
       return SEED_ACTIVITIES.find(a => a.id === id) || null;
@@ -407,7 +425,7 @@ export const db = {
   },
 
   async guardarActividad(actividad: Omit<Actividad, 'id'> & { id?: string }) {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       if (actividad.id) {
         const { data, error } = await supabase.from('actividades').update(actividad).eq('id', actividad.id).select().single();
         if (error) throw error;
@@ -439,25 +457,149 @@ export const db = {
     }
   },
 
-  // --- ASIGNACIONES ---
-  async getAsignacionesPorEstudiante(estudianteId: string): Promise<(Asignacion & { actividad: Actividad })[]> {
-    if (isSupabaseConfigured) {
-      const { data, error } = await supabase.from('asignaciones').select('*, actividad:actividades(*)').eq('estudiante_id', estudianteId);
+  // --- RUTAS (ETAPAS CON PASOS LINEALES) ---
+
+  // Pasos ordenados de una ruta (una actividad con etapa_id = un paso)
+  async getPasosDeEtapa(etapaId: string): Promise<Actividad[]> {
+    const pasos = await this.getActividadesDeEtapa(etapaId);
+    return pasos.sort((a, b) => (a.orden ?? 99) - (b.orden ?? 99));
+  },
+
+  async getActividadesDeEtapa(etapaId: string): Promise<Actividad[]> {
+    if (usarSupabase()) {
+      const { data, error } = await supabase.from('actividades').select('*').eq('etapa_id', etapaId);
       if (error) throw error;
       return data || [];
     } else {
-      const asigs = getStored<Asignacion[]>('asignaciones', []);
       const acts = getStored<Actividad[]>('actividades', []);
-      const userAsigs = asigs.filter(a => a.estudiante_id === estudianteId);
-      return userAsigs.map(asig => {
-        const act = acts.find(a => a.id === asig.actividad_id)!;
-        return { ...asig, actividad: act };
-      }).filter(a => a.actividad !== undefined);
+      const userActs = acts.filter(a => a.etapa_id === etapaId);
+      const userIds = new Set(userActs.map(a => a.id));
+      const filteredSeed = SEED_ACTIVITIES.filter((a: Actividad) => a.etapa_id === etapaId && !userIds.has(a.id));
+      return [...userActs, ...filteredSeed];
     }
   },
 
+  // Banco de Actividades: solo plantillas individuales (sin etapa), reciclables a rutas
+  async getBanco(profesorId: string): Promise<Actividad[]> {
+    if (usarSupabase()) {
+      const { data, error } = await supabase.from('actividades').select('*').eq('profesor_id', profesorId).is('etapa_id', null);
+      if (error) throw error;
+      return data || [];
+    } else {
+      const acts = getStored<Actividad[]>('actividades', []);
+      return acts.filter(a => !a.etapa_id && a.profesor_id === profesorId);
+    }
+  },
+
+  // Reciclar: COPIA una plantilla del banco como paso al final de una ruta (autocontenida)
+  async reciclarARuta(actividadId: string, etapaId: string, profesorId: string): Promise<Actividad> {
+    const origen = await this.getActividad(actividadId);
+    if (!origen) throw new Error('La actividad de origen no existe');
+
+    const pasos = await this.getPasosDeEtapa(etapaId);
+    const nuevoOrden = pasos.length > 0 ? Math.max(...pasos.map(p => p.orden ?? 0)) + 1 : 1;
+
+    const copia: Omit<Actividad, 'id'> = {
+      profesor_id: profesorId,
+      etapa_id: etapaId,
+      orden: nuevoOrden,
+      tipo: origen.tipo,
+      titulo: origen.titulo,
+      video_url: origen.video_url,
+      imagen_url: origen.imagen_url,
+      configuracion: JSON.parse(JSON.stringify(origen.configuracion)),
+      atelier: origen.atelier ? JSON.parse(JSON.stringify(origen.atelier)) : undefined,
+      creado_en: new Date().toISOString()
+    };
+    return this.guardarActividad(copia);
+  },
+
+  // Mover un paso arriba/abajo dentro de la ruta (direccion: 'arriba' | 'abajo')
+  async moverPaso(pasoId: string, direccion: 'arriba' | 'abajo') {
+    const paso = await this.getActividad(pasoId);
+    if (!paso || !paso.etapa_id) throw new Error('El paso no pertenece a ninguna ruta');
+    const pasos = await this.getPasosDeEtapa(paso.etapa_id);
+    const idx = pasos.findIndex(p => p.id === pasoId);
+    const swapIdx = direccion === 'arriba' ? idx - 1 : idx + 1;
+    if (idx === -1 || swapIdx < 0 || swapIdx >= pasos.length) return;
+
+    const a = pasos[idx], b = pasos[swapIdx];
+    await this.guardarActividad({ ...a, orden: b.orden ?? swapIdx + 1 } as Actividad);
+    await this.guardarActividad({ ...b, orden: a.orden ?? idx + 1 } as Actividad);
+  },
+
+  // Eliminar un paso de una ruta (solo pasos con etapa; el banco no se toca)
+  async eliminarPaso(pasoId: string) {
+    if (usarSupabase()) {
+      const { error } = await supabase.from('actividades').delete().eq('id', pasoId);
+      if (error) throw error;
+    } else {
+      const acts = getStored<Actividad[]>('actividades', []);
+      setStored('actividades', acts.filter(a => a.id !== pasoId));
+    }
+  },
+
+  // Rutas asignadas a un estudiante, con sus pasos y progreso por paso
+  async getRutasAsignadas(estudianteId: string): Promise<(Asignacion & { etapa: Etapa; pasos: Actividad[] })[]> {
+    let asigs: Asignacion[] = [];
+    if (usarSupabase()) {
+      const { data, error } = await supabase.from('asignaciones').select('*').eq('estudiante_id', estudianteId);
+      if (error) throw error;
+      asigs = data || [];
+    } else {
+      const stored = getStored<Asignacion[]>('asignaciones', []);
+      asigs = stored.filter(a => a.estudiante_id === estudianteId);
+    }
+
+    const etapas = usarSupabase()
+      ? await (async () => { const { data } = await supabase.from('etapas').select('*'); return (data || []) as Etapa[]; })()
+      : getStored<Etapa[]>('etapas', []);
+
+    const rutas: (Asignacion & { etapa: Etapa; pasos: Actividad[] })[] = [];
+    for (const asig of asigs) {
+      const etapa = etapas.find(e => e.id === asig.etapa_id);
+      if (!etapa) continue;
+      const pasos = await this.getPasosDeEtapa(asig.etapa_id);
+      rutas.push({ ...asig, etapa, pasos });
+    }
+    return rutas.sort((a, b) => (a.etapa.orden ?? 0) - (b.etapa.orden ?? 0));
+  },
+
+  async asignarRuta(estudianteId: string, etapaId: string, ajuste: 'cognitiva' | 'motriz' | 'tea' | undefined) {
+    if (usarSupabase()) {
+      const { data, error } = await supabase.from('asignaciones').insert({ estudiante_id: estudianteId, etapa_id: etapaId, ajuste }).select().single();
+      if (error) throw error;
+      return data;
+    } else {
+      const asigs = getStored<Asignacion[]>('asignaciones', []);
+      const filtered = asigs.filter(a => !(a.estudiante_id === estudianteId && a.etapa_id === etapaId));
+      const newAsig: Asignacion = {
+        id: `asig-${Math.random().toString(36).substr(2, 9)}`,
+        estudiante_id: estudianteId,
+        etapa_id: etapaId,
+        ajuste,
+        creado_en: new Date().toISOString()
+      };
+      filtered.push(newAsig);
+      setStored('asignaciones', filtered);
+      return newAsig;
+    }
+  },
+
+  async desasignarRuta(estudianteId: string, etapaId: string) {
+    if (usarSupabase()) {
+      const { error } = await supabase.from('asignaciones').delete().eq('estudiante_id', estudianteId).eq('etapa_id', etapaId);
+      if (error) throw error;
+    } else {
+      const asigs = getStored<Asignacion[]>('asignaciones', []);
+      setStored('asignaciones', asigs.filter(a => !(a.estudiante_id === estudianteId && a.etapa_id === etapaId)));
+    }
+  },
+
+  // --- ASIGNACIONES (LEGACY: conteos del resumen) ---
+
   async getAsignacionesDeProfesor(profesorId: string): Promise<Asignacion[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       // Fetch assignations where student's profesor_id is teacher
       const { data, error } = await supabase.from('asignaciones').select('*, estudiante:perfiles(*)').filter('estudiante.profesor_id', 'eq', profesorId);
       if (error) throw error;
@@ -470,44 +612,9 @@ export const db = {
     }
   },
 
-  async asignarActividad(estudianteId: string, actividadId: string, ajuste: 'cognitiva'|'motriz'|'tea'|undefined) {
-    if (isSupabaseConfigured) {
-      const { data, error } = await supabase.from('asignaciones').insert({ estudiante_id: estudianteId, actividad_id: actividadId, ajuste }).select().single();
-      if (error) throw error;
-      return data;
-    } else {
-      const asigs = getStored<Asignacion[]>('asignaciones', []);
-      
-      // Remove previous assignment of same activity to same student if exists
-      const filtered = asigs.filter(a => !(a.estudiante_id === estudianteId && a.actividad_id === actividadId));
-      
-      const newAsig: Asignacion = {
-        id: `asig-${Math.random().toString(36).substr(2, 9)}`,
-        estudiante_id: estudianteId,
-        actividad_id: actividadId,
-        ajuste,
-        creado_en: new Date().toISOString()
-      };
-      filtered.push(newAsig);
-      setStored('asignaciones', filtered);
-      return newAsig;
-    }
-  },
-
-  async desasignarActividad(estudianteId: string, actividadId: string) {
-    if (isSupabaseConfigured) {
-      const { error } = await supabase.from('asignaciones').delete().eq('estudiante_id', estudianteId).eq('actividad_id', actividadId);
-      if (error) throw error;
-    } else {
-      const asigs = getStored<Asignacion[]>('asignaciones', []);
-      const filtered = asigs.filter(a => !(a.estudiante_id === estudianteId && a.actividad_id === actividadId));
-      setStored('asignaciones', filtered);
-    }
-  },
-
   // --- PROGRESO ---
   async getProgresoEstudiante(estudianteId: string): Promise<Progreso[]> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const { data, error } = await supabase.from('progreso').select('*').eq('estudiante_id', estudianteId);
       if (error) throw error;
       return data || [];
@@ -518,7 +625,7 @@ export const db = {
   },
 
   async registrarIntento(estudianteId: string, actividadId: string, completado: boolean) {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       // Fetch existing
       const { data: existing } = await supabase.from('progreso').select('*').eq('estudiante_id', estudianteId).eq('actividad_id', actividadId).single();
       const intentos = (existing?.intentos || 0) + 1;
@@ -557,7 +664,7 @@ export const db = {
 
   // --- RECURSOS (IMÁGENES & AUDIOS) ---
   async subirRecurso(file: File, tipo: 'imagen' | 'audio', profesorId: string): Promise<string> {
-    if (isSupabaseConfigured) {
+    if (usarSupabase()) {
       const bucket = tipo === 'imagen' ? 'imagenes' : 'audios';
       const fileExt = file.name.split('.').pop();
       const fileName = `${profesorId}/${Math.random().toString(36).substr(2, 9)}.${fileExt}`;

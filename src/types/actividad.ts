@@ -206,7 +206,8 @@ export interface AtelierConfig {
 export interface Actividad {
   id: string;
   profesor_id: string;
-  etapa_id?: string;
+  etapa_id?: string; // undefined = plantilla del Banco de Actividades
+  orden?: number; // posición del paso dentro de la ruta (1, 2, 3...)
   tipo: ActividadTipo;
   titulo: string;
   video_url?: string;
@@ -236,7 +237,7 @@ export interface Etapa {
 export interface Asignacion {
   id: string;
   estudiante_id: string;
-  actividad_id: string;
+  etapa_id: string; // el estudiante se asigna a rutas completas, no actividades sueltas
   ajuste?: 'cognitiva' | 'motriz' | 'tea';
   creado_en?: string;
 }

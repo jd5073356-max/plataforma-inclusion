@@ -2,27 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Actividad, ActividadTipo, Etapa, PreguntaConfig } from '../../types/actividad';
-import ReproductorActividad from '../../components/reproductor/ReproductorActividad';
-import AtelierExplorador from '../../components/atelier/AtelierExplorador';
-import { 
-  PlusCircle, 
-  Trash2, 
-  FileEdit, 
-  Layers, 
-  Activity, 
-  CheckCircle2, 
-  AlertCircle, 
-  Volume2, 
-  Image as ImageIcon, 
-  ArrowRight,
+import ReproductorEnfocado from '../../components/reproductor/ReproductorEnfocado';
+import {
+  PlusCircle,
+  FileEdit,
+  Activity,
   RefreshCw,
-  FolderPlus,
-  Play,
   Check,
-  Award,
   Eye,
-  X
+  X,
+  Recycle,
+  ArrowRight
 } from 'lucide-react';
+
+const msgErr = (err: unknown) => (err instanceof Error ? err.message : 'Ocurrió un error inesperado');
 
 export default function Actividades() {
   const { profile } = useAuth();
@@ -32,12 +25,33 @@ export default function Actividades() {
   const [msg, setMsg] = useState({ error: '', success: '' });
   const [previewActividad, setPreviewActividad] = useState<Actividad | null>(null);
 
+  // Reciclaje de plantillas hacia rutas
+  const [reciclandoActividad, setReciclandoActividad] = useState<Actividad | null>(null);
+  const [rutaDestinoId, setRutaDestinoId] = useState('');
+
+  const abrirReciclaje = (act: Actividad) => {
+    setReciclandoActividad(act);
+    setRutaDestinoId('');
+    setMsg({ error: '', success: '' });
+  };
+
+  const confirmarReciclaje = async () => {
+    if (!reciclandoActividad || !rutaDestinoId || !profile) return;
+    try {
+      await db.reciclarARuta(reciclandoActividad.id, rutaDestinoId, profile.id);
+      const nombreRuta = etapas.find(e => e.id === rutaDestinoId)?.nombre || 'la ruta';
+      setReciclandoActividad(null);
+      setMsg({ error: '', success: `¡Copiada a ${nombreRuta} como siguiente paso!` });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al reciclar la plantilla.', success: '' });
+    }
+  };
+
   // Creation/Editing Form State
   const [isCreating, setIsCreating] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
   const [titulo, setTitulo] = useState('');
-  const [etapaId, setEtapaId] = useState('');
   const [tipo, setTipo] = useState<ActividadTipo>('seleccion');
   const [mostrarFelicitacion, setMostrarFelicitacion] = useState(true);
   const [vozSintetica, setVozSintetica] = useState(true);
@@ -91,13 +105,14 @@ export default function Actividades() {
     if (!profile) return;
     try {
       setLoading(true);
-      const acts = await db.getActividades(profile.id);
+      // El Banco solo contiene plantillas individuales (sin etapa), reciclables a rutas
+      const acts = await db.getBanco(profile.id);
       setActividades(acts);
 
       const ets = await db.getEtapas(profile.id);
       setEtapas(ets);
     } catch (err) {
-      console.error('Error loading activities tab:', err);
+      console.error('Error loading bank tab:', err);
     } finally {
       setLoading(false);
     }
@@ -111,7 +126,6 @@ export default function Actividades() {
     setIsCreating(true);
     setEditingId(null);
     setTitulo('');
-    setEtapaId(etapas[0]?.id || '');
     setTipo('seleccion');
     setInstruccion('');
     setImagenUrl('');
@@ -122,7 +136,6 @@ export default function Actividades() {
     setIsCreating(true);
     setEditingId(act.id);
     setTitulo(act.titulo);
-    setEtapaId(act.etapa_id || '');
     setTipo(act.tipo);
     setMostrarFelicitacion(act.configuracion.mostrarFelicitacion);
     setVozSintetica(act.configuracion.vozSintetica);
@@ -296,7 +309,7 @@ export default function Actividades() {
       const actividadPayload = {
         id: editingId || undefined,
         profesor_id: profile!.id,
-        etapa_id: etapaId || undefined,
+        etapa_id: undefined, // lo creado aquí siempre es plantilla del Banco
         tipo,
         titulo: titulo.trim(),
         configuracion: {
@@ -311,8 +324,8 @@ export default function Actividades() {
       setIsCreating(false);
       setEditingId(null);
       await loadData();
-    } catch (err: any) {
-      setMsg({ error: err.message || 'Error al guardar la actividad.', success: '' });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al guardar la actividad.', success: '' });
     }
   };
 
@@ -337,7 +350,6 @@ export default function Actividades() {
     const actividadPreview: Actividad = {
       id: editingId || 'preview',
       profesor_id: profile!.id,
-      etapa_id: etapaId || undefined,
       tipo,
       titulo: titulo.trim(),
       configuracion: {
@@ -383,7 +395,6 @@ export default function Actividades() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {actividades.map((act) => {
-                const etapaName = etapas.find(e => e.id === act.etapa_id)?.nombre || 'Sin etapa';
                 return (
                   <div key={act.id} className="p-5 border rounded-[24px] border-[#EFECE6] bg-[#FBF9F5] hover:bg-white flex flex-col justify-between transition gap-4 shadow-sm">
                     <div>
@@ -391,11 +402,11 @@ export default function Actividades() {
                         <span className="text-[10px] font-bold uppercase tracking-wider bg-[#EE7C6A]/10 text-[#EE7C6A] px-3 py-1 rounded-full">
                           {act.tipo.replace('_', ' ')}
                         </span>
-                        <span className="text-[10px] font-bold text-[#78716C] truncate max-w-[150px]">
-                          {etapaName}
+                        <span className="text-[10px] font-bold text-[#78716C] bg-[#F5F2EC] px-2.5 py-1 rounded-full">
+                          Plantilla
                         </span>
                       </div>
-                      
+
                       <h3 className="font-serif-atelier font-bold text-xl text-[#1C1917] leading-snug">
                         {act.titulo}
                       </h3>
@@ -410,6 +421,12 @@ export default function Actividades() {
                         className="flex items-center gap-1 px-3 py-1.5 bg-white border border-[#EFECE6] hover:bg-[#EE7C6A]/10 hover:text-[#EE7C6A] text-[#57534E] rounded-full text-xs font-bold transition"
                       >
                         <Eye className="w-3.5 h-3.5" /> Vista previa
+                      </button>
+                      <button
+                        onClick={() => abrirReciclaje(act)}
+                        className="flex items-center gap-1 px-3 py-1.5 bg-[#10B981]/10 hover:bg-[#10B981]/20 text-[#10B981] rounded-full text-xs font-bold transition"
+                      >
+                        <Recycle className="w-3.5 h-3.5" /> Usar en ruta
                       </button>
                       <button
                         onClick={() => handleEditClick(act)}
@@ -456,7 +473,7 @@ export default function Actividades() {
           <form onSubmit={handleGuardar} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Título del juego</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Título de la plantilla</label>
                 <input
                   type="text"
                   placeholder="Ej: Sumando Manzanas"
@@ -467,18 +484,10 @@ export default function Actividades() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Etapa Asociada</label>
-                <select
-                  value={etapaId}
-                  onChange={(e) => setEtapaId(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-xl text-sm bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="">Selecciona etapa (Opcional)</option>
-                  {etapas.map(etapa => (
-                    <option key={etapa.id} value={etapa.id}>{etapa.nombre}</option>
-                  ))}
-                </select>
+              <div className="flex items-end">
+                <p className="text-xs text-gray-400 font-semibold bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 w-full">
+                  Esto crea una <b>plantilla del Banco</b>. Después puedes reciclarla a una ruta desde su tarjeta.
+                </p>
               </div>
             </div>
 
@@ -868,12 +877,12 @@ export default function Actividades() {
         </div>
       )}
 
-      {/* PREVIEW OVERLAY (ATELIER EDUCATIVO INMERSIVO) */}
+      {/* PREVIEW OVERLAY (REPRODUCTOR ENFOCADO — solo info de la actividad) */}
       {previewActividad && (
         <div className="fixed inset-0 z-50 bg-[#FBF9F5] flex flex-col overflow-auto">
           <div className="sticky top-0 z-50 bg-white/90 border-b border-[#EFECE6] px-6 py-3 flex items-center justify-between shadow-sm backdrop-blur-md">
             <div className="flex items-center gap-2">
-              <span className="font-serif-atelier font-bold text-lg text-[#1C1917]">ECO INCLUSIVO✦ Atelier</span>
+              <span className="font-serif-atelier font-bold text-lg text-[#1C1917]">ECO INCLUSIVO✦</span>
               <span className="text-xs bg-[#EE7C6A]/10 text-[#EE7C6A] px-2.5 py-0.5 rounded-full font-bold">Vista Previa Profesor</span>
             </div>
             <button
@@ -884,13 +893,68 @@ export default function Actividades() {
             </button>
           </div>
           <div className="flex-1">
-            <AtelierExplorador
-              actividadActual={previewActividad}
-              listaActividades={actividades}
-              onSeleccionarActividad={(act) => setPreviewActividad(act)}
+            <ReproductorEnfocado
+              actividad={previewActividad}
+              estudianteId="preview"
+              pasoActual={1}
+              totalPasos={1}
               onCompletado={() => setPreviewActividad(null)}
+              onVolver={() => setPreviewActividad(null)}
               modoPreview
             />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: RECICLAR PLANTILLA A UNA RUTA (copia autocontenida) */}
+      {reciclandoActividad && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md rounded-[24px] border border-[#EFECE6] shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif-atelier text-lg font-bold text-[#1C1917] flex items-center gap-2">
+                <Recycle className="w-5 h-5 text-[#10B981]" /> Usar en ruta
+              </h3>
+              <button
+                onClick={() => setReciclandoActividad(null)}
+                className="p-1.5 text-[#78716C] hover:text-[#1C1917] transition"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-[#57534E] leading-relaxed">
+              Se copiará <b className="text-[#1C1917]">«{reciclandoActividad.titulo}»</b> como el siguiente paso
+              de la ruta que elijas. La plantilla queda intacta en el Banco y la copia pertenece a la ruta.
+            </p>
+
+            {etapas.length === 0 ? (
+              <p className="text-xs font-bold text-[#B45309] bg-[#FFF8F0] border border-[#FFE8D0] p-3 rounded-xl">
+                Primero crea una ruta en la pestaña «Rutas».
+              </p>
+            ) : (
+              <select
+                value={rutaDestinoId}
+                onChange={(e) => setRutaDestinoId(e.target.value)}
+                className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
+              >
+                <option value="">Selecciona la ruta destino</option>
+                {etapas.map(et => (
+                  <option key={et.id} value={et.id}>{et.nombre}</option>
+                ))}
+              </select>
+            )}
+
+            {msg.error && <p className="text-xs font-bold text-[#D9363E] bg-[#FFF2F0] p-2.5 rounded-xl">{msg.error}</p>}
+            {msg.success && <p className="text-xs font-bold text-[#10B981] bg-[#ECFDF5] p-2.5 rounded-xl">{msg.success}</p>}
+
+            <button
+              type="button"
+              disabled={!rutaDestinoId || etapas.length === 0}
+              onClick={confirmarReciclaje}
+              className="w-full py-3 bg-[#10B981] hover:bg-[#0EA371] disabled:opacity-40 text-white font-bold rounded-2xl text-xs transition flex items-center justify-center gap-2"
+            >
+              Copiar a la ruta <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       )}

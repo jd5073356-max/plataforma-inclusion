@@ -10,15 +10,22 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase API
+      - name: Ping Supabase API (real query)
         run: |
+          set -e
           echo "Pinging Supabase project..."
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            "https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}")
-          echo "Response: $STATUS"
-          if [ "$STATUS" != "200" ] && [ "$STATUS" != "401" ] && [ "$STATUS" != "403" ]; then
-            echo "Warning: Unexpected status $STATUS — project may be paused"
+          URL="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/actividades?select=id&limit=1"
+          RESPONSE_FILE=$(mktemp)
+          HTTP_CODE=$(curl -sS --max-time 20 --retry 2 -o "$RESPONSE_FILE" -w "%{http_code}" \
+            "$URL" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "HTTP status: $HTTP_CODE"
+          echo "Response body:"
+          cat "$RESPONSE_FILE"
+          echo ""
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Error: Supabase did not return 200. Project may be paused, deleted or anon key is invalid."
             exit 1
           fi
-          echo "Project is awake."
+          echo "Project is awake and reachable."

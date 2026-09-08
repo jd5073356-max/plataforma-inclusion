@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, CheckCircle, AlertCircle, ArrowRight, Star, Award, Heart, Shield, RefreshCw } from 'lucide-react';
 import { Actividad, PreguntaConfig } from '../../types/actividad';
 import { db } from '../../lib/db';
-import { Visor3D } from './Visor3D';
+import Visor3DLazy from './Visor3DLazy';
 
 interface ReproductorActividadProps {
   actividad: Actividad;
@@ -37,8 +37,23 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // Completar:
   const [completadosHuecos, setCompletadosHuecos] = useState<{ [index: number]: string }>({});
 
+  // Explorador 3D en modo reto: tocar la parte correcta del modelo
+  const [objetivo3d, setObjetivo3d] = useState<{ id: string; nombre: string } | null>(null);
+
   const config = actividad.configuracion;
   const pregunta = config.preguntas[currentPreguntaIndex];
+
+  const elegirObjetivo3d = () => {
+    if (pregunta && pregunta.tipo === 'explorador_3d') {
+      const puntos = (pregunta.datos as any).puntosDeInteres || [];
+      if (puntos.length > 0) {
+        const elegido = puntos[Math.floor(Math.random() * puntos.length)];
+        setObjetivo3d({ id: elegido.id, nombre: elegido.nombre });
+        return;
+      }
+    }
+    setObjetivo3d(null);
+  };
 
   useEffect(() => {
     // Reset responses on changing question
@@ -50,6 +65,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setClasificado({});
     setSelectedElementoId(null);
     setCompletadosHuecos({});
+    elegirObjetivo3d();
 
     // TTS Voice instruction
     if (pregunta && !muted) {
@@ -123,11 +139,18 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     }
   };
 
+  const reintentarPregunta = () => {
+    setSelectedOpcionId(null);
+    setIsCorrect(null);
+    setIntentado(false);
+  };
+
   const verificarEmparejar = async () => {
     const datos = pregunta.datos as any;
     let todasCorrectas = true;
-    
+
     datos.parejas.forEach((p: any) => {
+      // Cada origen debe estar unido al destino con el mismo id de pareja
       if (emparejados[p.id] !== p.id) {
         todasCorrectas = false;
       }
@@ -139,6 +162,15 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     if (!modoPreview) {
       await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
     }
+  };
+
+  const deshacerEmpareje = (parejaId: string) => {
+    setEmparejados(prev => {
+      const next = { ...prev };
+      delete next[parejaId];
+      return next;
+    });
+    if (colASelected === parejaId) setColASelected(null);
   };
 
   const verificarClasificar = async () => {
@@ -157,6 +189,15 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     if (!modoPreview) {
       await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
     }
+  };
+
+  const deshacerClasificacion = (elementoId: string) => {
+    setClasificado(prev => {
+      const next = { ...prev };
+      delete next[elementoId];
+      return next;
+    });
+    if (selectedElementoId === elementoId) setSelectedElementoId(null);
   };
 
   const verificarCompletar = async () => {
@@ -280,15 +321,29 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
             <div className="grid grid-cols-1 gap-4">
               {(pregunta.datos as any).opciones.map((op: any) => {
                 const isSelected = selectedOpcionId === op.id;
+                const showCorrect = intentado && op.esCorrecta;
+                const showIncorrect = intentado && isSelected && !op.esCorrecta;
                 return (
                   <button
                     key={op.id}
                     type="button"
-                    disabled={intentado && !isSelected}
+                    disabled={intentado}
                     onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
-                    className={btnClass(isSelected)}
+                    className={`
+                      w-full p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
+                      ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
+                      ${showCorrect
+                        ? 'border-green-500 bg-green-50 text-green-950'
+                        : showIncorrect
+                          ? 'border-red-400 bg-red-50 text-red-950'
+                          : isSelected
+                            ? 'border-blue-600 bg-blue-50 text-blue-950 dark:bg-blue-950/20 dark:text-blue-300'
+                            : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'}
+                    `}
                   >
-                    <span className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-lg font-bold border-2 border-gray-300">
+                    <span className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold border-2 ${
+                      showCorrect ? 'bg-green-100 border-green-400 text-green-700' : showIncorrect ? 'bg-red-100 border-red-400 text-red-700' : 'bg-gray-100 dark:bg-gray-800 border-gray-300'
+                    }`}>
                       {op.texto[0].toUpperCase()}
                     </span>
                     <span className="flex-1">{op.texto}</span>
@@ -312,18 +367,28 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                       <button
                         key={`origen-${p.id}`}
                         type="button"
-                        disabled={intentado || isMatched}
-                        onClick={() => setColASelected(p.id)}
+                        disabled={intentado}
+                        onClick={() => {
+                          if (isMatched) {
+                            deshacerEmpareje(p.id);
+                          } else {
+                            setColASelected(p.id);
+                          }
+                        }}
                         className={`w-full p-4 border-4 rounded-2xl font-bold flex items-center justify-between text-left transition ${
-                          isSelected 
-                            ? 'border-blue-600 bg-blue-50 text-blue-900' 
-                            : isMatched 
-                              ? 'border-green-200 bg-green-50/50 text-green-950 opacity-60' 
+                          isSelected
+                            ? 'border-blue-600 bg-blue-50 text-blue-900'
+                            : isMatched
+                              ? 'border-green-200 bg-green-50/50 text-green-950 opacity-60 hover:border-red-300 hover:bg-red-50'
                               : 'border-gray-300 hover:border-blue-300'
                         }`}
                       >
                         <span>{p.origen}</span>
-                        {isMatched && <span className="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">Unido</span>}
+                        {isMatched && (
+                          <span className="text-xs bg-green-600 group-hover:bg-red-500 text-white px-2 py-0.5 rounded-full transition">
+                            Unido ✕
+                          </span>
+                        )}
                       </button>
                     );
                   })}
@@ -401,12 +466,18 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                         key={el.id}
                         type="button"
                         disabled={intentado}
-                        onClick={() => setSelectedElementoId(el.id)}
+                        onClick={() => {
+                          if (categoryName) {
+                            deshacerClasificacion(el.id);
+                          } else {
+                            setSelectedElementoId(el.id);
+                          }
+                        }}
                         className={`px-4 py-3 border-2 rounded-xl font-bold shadow-sm transition ${
-                          isSelected 
-                            ? 'border-blue-600 bg-blue-50 text-blue-900' 
-                            : categoryName 
-                              ? 'border-green-300 bg-green-50 text-green-950' 
+                          isSelected
+                            ? 'border-blue-600 bg-blue-50 text-blue-900'
+                            : categoryName
+                              ? 'border-green-300 bg-green-50 text-green-950 hover:border-red-300 hover:bg-red-50'
                               : 'border-gray-300 hover:border-blue-400 bg-white'
                         }`}
                       >
@@ -478,9 +549,22 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                     <React.Fragment key={idx}>
                       <span>{chunk}</span>
                       {idx < arr.length - 1 && (
-                        <span className="inline-block border-b-4 border-dashed border-blue-600 min-w-[100px] px-3 py-1 text-blue-700 bg-blue-50/50 rounded text-center mx-2 font-black">
+                        <button
+                          type="button"
+                          disabled={intentado}
+                          onClick={() => {
+                            if (completadosHuecos[idx]) {
+                              setCompletadosHuecos(prev => {
+                                const next = { ...prev };
+                                delete next[idx];
+                                return next;
+                              });
+                            }
+                          }}
+                          className="inline-block border-b-4 border-dashed border-blue-600 min-w-[100px] px-3 py-1 text-blue-700 bg-blue-50/50 rounded text-center mx-2 font-black disabled:cursor-default hover:bg-blue-100 transition"
+                        >
                           {completadosHuecos[idx] || '¿?'}
-                        </span>
+                        </button>
                       )}
                     </React.Fragment>
                   );
@@ -573,13 +657,33 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
             </div>
           )}
 
-          {/* 6. EXPLORADOR 3D */}
+          {/* 6. EXPLORADOR 3D (reto: tocar la parte pedida) */}
           {pregunta.tipo === 'explorador_3d' && (
             <div className="space-y-6">
-              <Visor3D
+              {objetivo3d && (
+                <div className={`p-4 rounded-2xl border-2 text-center font-extrabold ${
+                  intentado
+                    ? isCorrect
+                      ? 'border-green-400 bg-green-50 text-green-800'
+                      : 'border-red-300 bg-red-50 text-red-800'
+                    : 'border-[#EE7C6A]/40 bg-[#FFF8F0] text-[#8C2E00]'
+                }`}>
+                  {intentado
+                    ? isCorrect
+                      ? `¡Correcto! Tocaste ${objetivo3d.nombre} 🎉`
+                      : `Ese no era ${objetivo3d.nombre}. ¡Sigue intentando!`
+                    : `Reto: encuentra y toca 👉 ${objetivo3d.nombre}`}
+                </div>
+              )}
+              <Visor3DLazy
                 modeloUrl={(pregunta.datos as any).modeloUrl}
                 nombreObjeto={(pregunta.datos as any).nombreObjeto}
                 puntosDeInteres={(pregunta.datos as any).puntosDeInteres}
+                onSeleccionar={(punto) => {
+                  if (objetivo3d && !intentado) {
+                    verificarSeleccion(punto.id, punto.id === objetivo3d.id);
+                  }
+                }}
               />
             </div>
           )}
@@ -595,16 +699,15 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {(pregunta.datos as any).escala.map((op: any) => {
                   const isSelected = selectedOpcionId === op.id;
-                  const esCorrecta = op.id === 'muy_bien';
                   return (
                     <button
                       key={op.id}
                       type="button"
-                      disabled={intentado && !isSelected}
-                      onClick={() => verificarSeleccion(op.id, esCorrecta)}
+                      disabled={intentado}
+                      onClick={() => verificarSeleccion(op.id, true)}
                       className={`w-full p-6 text-center rounded-2xl border-4 transition font-bold shadow-sm flex flex-col items-center gap-3 ${
-                        isSelected 
-                          ? 'border-blue-600 bg-blue-50' 
+                        isSelected
+                          ? 'border-blue-600 bg-blue-50'
                           : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50'
                       } ${op.color || ''}`}
                     >
@@ -642,20 +745,31 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                   {isCorrect ? '¡Excelente trabajo!' : '¡Sigue intentándolo!'}
                 </h3>
                 <p className="text-sm opacity-90 mt-1">
-                  {isCorrect 
-                    ? 'Has resuelto este ejercicio a la perfección.' 
-                    : 'Puedes revisar la pregunta de nuevo o pasar a la siguiente.'}
+                  {isCorrect
+                    ? 'Has resuelto este ejercicio a la perfección.'
+                    : 'Revisa la pregunta y vuelve a intentarlo, o avanza si lo prefieres.'}
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={handleSiguiente}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-extrabold rounded-2xl shadow hover:bg-blue-700 transition"
-              >
-                <span>{currentPreguntaIndex < config.preguntas.length - 1 ? 'Siguiente Pregunta' : 'Completar Actividad'}</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-3">
+                {!isCorrect && (
+                  <button
+                    type="button"
+                    onClick={reintentarPregunta}
+                    className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-blue-600 text-blue-700 font-extrabold rounded-2xl shadow hover:bg-blue-50 transition"
+                  >
+                    <RefreshCw className="w-5 h-5" /> Reintentar
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleSiguiente}
+                  className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-extrabold rounded-2xl shadow hover:bg-blue-700 transition"
+                >
+                  <span>{currentPreguntaIndex < config.preguntas.length - 1 ? 'Siguiente Pregunta' : 'Completar Actividad'}</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         )}

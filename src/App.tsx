@@ -8,6 +8,7 @@ import RutaProtegida from './routes/RutaProtegida';
 import PanelAdmin from './pages/admin/PanelAdmin';
 import PanelProfesor from './pages/profesor/PanelProfesor';
 import PanelEstudiante from './pages/estudiante/PanelEstudiante';
+import RutaEtapa from './pages/estudiante/RutaEtapa';
 import JugarActividad from './pages/estudiante/JugarActividad';
 
 function AppRoutes() {
@@ -48,6 +49,7 @@ function AppRoutes() {
 
       <Route element={<RutaProtegida rolesPermitidos={['estudiante']} />}>
         <Route path="/estudiante" element={<PanelEstudiante />} />
+        <Route path="/estudiante/ruta/:etapaId" element={<RutaEtapa />} />
         <Route path="/estudiante/actividad/:id" element={<JugarActividad />} />
       </Route>
 

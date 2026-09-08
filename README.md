@@ -113,8 +113,6 @@ npm run build
 
 ## 👤 Autor
 
-**Juan David Herrera**  
-*AI Automation Engineer | Product Engineer · AI, Systems & Web3*  
-Bogotá, Colombia  
-- **GitHub:** [@jd5073356-max](https://github.com/jd5073356-max)  
-- **LinkedIn:** [linkedin.com/in/juan-david-herrera](https://linkedin.com)
+**Equipo ECO INCLUSIVO**  
+*Plataforma de Educación Inclusiva Adaptativa*  
+Bogotá, Colombia

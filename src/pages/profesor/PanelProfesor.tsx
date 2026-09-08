@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
-import { Etapa, Perfil, Actividad, Asignacion } from '../../types/actividad';
+import { Etapa } from '../../types/actividad';
 import Estudiantes from './Estudiantes';
+import Rutas from './Rutas';
 import Actividades from './Actividades';
-import { 
-  GraduationCap, 
-  Layers, 
-  LogOut, 
-  Plus, 
-  Trash2, 
-  CheckCircle2, 
-  Activity, 
-  LayoutDashboard, 
-  PlusCircle, 
+import {
+  GraduationCap,
+  LogOut,
+  CheckCircle2,
+  Activity,
+  LayoutDashboard,
   Calendar,
   Sparkles,
   RefreshCw,
-  FolderOpen
+  Route
 } from 'lucide-react';
 
 export default function PanelProfesor() {
   const { profile, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<'resumen' | 'estudiantes' | 'etapas' | 'actividades'>('resumen');
+  const [activeTab, setActiveTab] = useState<'resumen' | 'estudiantes' | 'rutas' | 'banco'>('resumen');
   
   // States for stats and data
   const [etapas, setEtapas] = useState<Etapa[]>([]);
@@ -31,18 +28,12 @@ export default function PanelProfesor() {
   const [asignacionesCount, setAsignacionesCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // States for new Stage form
-  const [nuevaEtapaNombre, setNuevaEtapaNombre] = useState('');
-  const [nuevaEtapaOrden, setNuevaEtapaOrden] = useState(1);
-  const [stageError, setStageError] = useState('');
-  const [stageSuccess, setStageSuccess] = useState('');
-
   const loadDashboardData = async () => {
     if (!profile) return;
     try {
       setLoading(true);
-      
-      // Load stages
+
+      // Load routes
       const stages = await db.getEtapas(profile.id);
       setEtapas(stages);
 
@@ -56,14 +47,6 @@ export default function PanelProfesor() {
       const asigs = await db.getAsignacionesDeProfesor(profile.id);
       setAsignacionesCount(asigs.length);
 
-      if (stages.length > 0) {
-        // Suggest next order number
-        const maxOrder = Math.max(...stages.map(e => e.orden), 0);
-        setNuevaEtapaOrden(maxOrder + 1);
-      } else {
-        setNuevaEtapaOrden(1);
-      }
-
     } catch (err) {
       console.error('Error loading dashboard stats:', err);
     } finally {
@@ -74,26 +57,6 @@ export default function PanelProfesor() {
   useEffect(() => {
     loadDashboardData();
   }, [profile]);
-
-  const handleCrearEtapa = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStageError('');
-    setStageSuccess('');
-
-    if (!nuevaEtapaNombre.trim()) {
-      setStageError('El nombre de la etapa es requerido.');
-      return;
-    }
-
-    try {
-      await db.crearEtapa(nuevaEtapaNombre.trim(), nuevaEtapaOrden, profile!.id);
-      setStageSuccess('¡Etapa de aprendizaje creada con éxito!');
-      setNuevaEtapaNombre('');
-      await loadDashboardData();
-    } catch (err: any) {
-      setStageError(err.message || 'Error al crear la etapa');
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#FBF9F5] text-[#1C1917] flex flex-col font-sans-atelier">
@@ -154,20 +117,20 @@ export default function PanelProfesor() {
           Estudiantes y Asignaciones
         </button>
         <button
-          onClick={() => setActiveTab('etapas')}
+          onClick={() => setActiveTab('rutas')}
           className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-            activeTab === 'etapas'
+            activeTab === 'rutas'
               ? 'bg-white text-[#1C1917] shadow-sm'
               : 'text-[#78716C] hover:text-[#1C1917]'
           }`}
         >
-          <Layers className="w-4 h-4 text-[#F59E0B]" />
-          Etapas de Aprendizaje
+          <Route className="w-4 h-4 text-[#F59E0B]" />
+          Rutas
         </button>
         <button
-          onClick={() => setActiveTab('actividades')}
+          onClick={() => setActiveTab('banco')}
           className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-            activeTab === 'actividades'
+            activeTab === 'banco'
               ? 'bg-white text-[#1C1917] shadow-sm'
               : 'text-[#78716C] hover:text-[#1C1917]'
           }`}
@@ -221,11 +184,11 @@ export default function PanelProfesor() {
                   {/* Card 2: Etapas */}
                   <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm flex items-center gap-4">
                     <div className="bg-[#F59E0B]/15 p-4 rounded-2xl text-[#F59E0B]">
-                      <Layers className="w-6 h-6" />
+                      <Route className="w-6 h-6" />
                     </div>
                     <div>
                       <span className="block text-3xl font-serif-atelier font-bold text-[#1C1917]">{etapas.length}</span>
-                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Etapas creadas</span>
+                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Rutas creadas</span>
                     </div>
                   </div>
 
@@ -236,7 +199,7 @@ export default function PanelProfesor() {
                     </div>
                     <div>
                       <span className="block text-3xl font-serif-atelier font-bold text-[#1C1917]">{actividadesCount}</span>
-                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Actividades base</span>
+                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Actividades totales</span>
                     </div>
                   </div>
 
@@ -247,7 +210,7 @@ export default function PanelProfesor() {
                     </div>
                     <div>
                       <span className="block text-3xl font-serif-atelier font-bold text-[#1C1917]">{asignacionesCount}</span>
-                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Actividades Asignadas</span>
+                      <span className="text-xs font-bold text-[#78716C] uppercase tracking-wider">Rutas asignadas</span>
                     </div>
                   </div>
                 </div>
@@ -257,16 +220,16 @@ export default function PanelProfesor() {
                   {/* Left block: Etapas Timeline */}
                   <div className="lg:col-span-2 bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm space-y-4">
                     <h3 className="font-serif-atelier text-xl font-bold text-[#1C1917] flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-[#F59E0B]" /> Secuencia de Etapas
+                      <Route className="w-5 h-5 text-[#F59E0B]" /> Secuencia de Rutas
                     </h3>
                     {etapas.length === 0 ? (
                       <div className="text-center py-10 border border-dashed rounded-2xl border-[#EFECE6]">
-                        <Layers className="w-10 h-10 text-[#A8A29E] mx-auto mb-2 opacity-50" />
-                        <p className="text-xs text-[#78716C]">No hay etapas registradas. Dirígete a la pestaña de "Etapas" para crear tu primera unidad de aprendizaje.</p>
+                        <Route className="w-10 h-10 text-[#A8A29E] mx-auto mb-2 opacity-50" />
+                        <p className="text-xs text-[#78716C]">No hay rutas registradas. Dirígete a la pestaña de "Rutas" para crear tu primera unidad de aprendizaje.</p>
                       </div>
                     ) : (
                       <div className="relative border-l-2 border-[#EFECE6] ml-4 pl-6 space-y-6">
-                        {etapas.map((etapa, idx) => (
+                        {etapas.map((etapa) => (
                           <div key={etapa.id} className="relative">
                             <span className="absolute -left-10 top-0.5 bg-[#EE7C6A] text-white w-7 h-7 rounded-full text-xs font-black flex items-center justify-center">
                               {etapa.orden}
@@ -289,7 +252,7 @@ export default function PanelProfesor() {
                   {/* Right block: Quick tips or instructions */}
                   <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm space-y-4">
                     <h3 className="font-serif-atelier text-xl font-bold text-[#1C1917] flex items-center gap-2">
-                      <FolderOpen className="w-5 h-5 text-[#7294B9]" /> Guía de Accesibilidad
+                      <Route className="w-5 h-5 text-[#7294B9]" /> Guía de Accesibilidad
                     </h3>
                     <div className="space-y-4 text-xs">
                       <div className="p-4 bg-[#FFF8F0] border border-[#FFE8D0] rounded-2xl">
@@ -315,105 +278,13 @@ export default function PanelProfesor() {
               <Estudiantes />
             )}
 
-            {/* TAB 3: ETAPAS DE APRENDIZAJE */}
-            {activeTab === 'etapas' && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Form to create stage */}
-                <div className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-sm border dark:border-gray-700 h-fit space-y-6">
-                  <div className="flex items-center gap-2">
-                    <PlusCircle className="w-5 h-5 text-blue-600" />
-                    <h2 className="text-lg font-extrabold">Crear Nueva Etapa</h2>
-                  </div>
-
-                  <form onSubmit={handleCrearEtapa} className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1.5">
-                        Nombre de la Etapa
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Ej: Etapa 3: Sílabas y Frases"
-                        value={nuevaEtapaNombre}
-                        onChange={(e) => setNuevaEtapaNombre(e.target.value)}
-                        className="w-full px-3 py-2.5 border rounded-xl text-sm bg-gray-50/50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1.5">
-                        Orden Secuencial
-                      </label>
-                      <input
-                        type="number"
-                        min="1"
-                        value={nuevaEtapaOrden}
-                        onChange={(e) => setNuevaEtapaOrden(parseInt(e.target.value) || 1)}
-                        className="w-full px-3 py-2.5 border rounded-xl text-sm bg-gray-50/50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        required
-                      />
-                      <p className="text-[10px] text-gray-400 font-semibold mt-1">
-                        Determina la posición de esta etapa dentro de la ruta de aprendizaje del estudiante.
-                      </p>
-                    </div>
-
-                    {stageError && <p className="text-xs font-bold text-red-600 bg-red-50 dark:bg-red-950/20 p-2.5 rounded-lg border border-red-200 dark:border-red-900">{stageError}</p>}
-                    {stageSuccess && <p className="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-950/20 p-2.5 rounded-lg border border-green-200 dark:border-green-900">{stageSuccess}</p>}
-
-                    <button
-                      type="submit"
-                      className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm transition shadow-md hover:shadow-blue-500/10 flex items-center justify-center gap-1.5"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Guardar Etapa
-                    </button>
-                  </form>
-                </div>
-
-                {/* List of Stages */}
-                <div className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-sm border dark:border-gray-700 lg:col-span-2 space-y-6">
-                  <div className="flex items-center gap-2">
-                    <Layers className="w-5 h-5 text-blue-600" />
-                    <h2 className="text-lg font-extrabold">Etapas Registradas ({etapas.length})</h2>
-                  </div>
-
-                  {etapas.length === 0 ? (
-                    <div className="text-center py-16 border border-dashed rounded-xl border-gray-300 dark:border-gray-600">
-                      <Layers className="w-12 h-12 text-gray-400 mx-auto mb-2 opacity-50" />
-                      <span className="text-sm font-semibold text-gray-500">No has registrado ninguna etapa todavía.</span>
-                    </div>
-                  ) : (
-                    <div className="overflow-hidden rounded-xl border dark:border-gray-700">
-                      <table className="w-full text-left text-sm border-collapse">
-                        <thead>
-                          <tr className="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700 text-gray-400 font-bold">
-                            <th className="py-3 px-4 w-20 text-center">Orden</th>
-                            <th className="py-3 px-4">Nombre de la Etapa</th>
-                            <th className="py-3 px-4 text-right">Identificador de Etapa</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y dark:divide-gray-700 font-medium">
-                          {etapas.map((etapa) => (
-                            <tr key={etapa.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-900/30 transition">
-                              <td className="py-4 px-4 text-center">
-                                <span className="inline-flex items-center justify-center w-7 h-7 bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 font-black text-xs rounded-full">
-                                  {etapa.orden}
-                                </span>
-                              </td>
-                              <td className="py-4 px-4 font-bold text-gray-900 dark:text-white">{etapa.nombre}</td>
-                              <td className="py-4 px-4 text-right text-gray-400 text-xs font-mono">{etapa.id}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              </div>
+            {/* TAB 3: RUTAS DE APRENDIZAJE */}
+            {activeTab === 'rutas' && (
+              <Rutas />
             )}
 
-            {/* TAB 4: BANCO DE ACTIVIDADES */}
-            {activeTab === 'actividades' && (
+            {/* TAB 4: BANCO DE PLANTILLAS */}
+            {activeTab === 'banco' && (
               <Actividades />
             )}
           </>

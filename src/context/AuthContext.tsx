@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { db, correoInterno } from '../lib/db';
+import { db, correoInterno, activarModoMock, prepararModoDatos } from '../lib/db';
 import { Perfil } from '../types/actividad';
+
+// Un fallo de red (Supabase inalcanzable) activa el modo mock de emergencia;
+// los errores de credenciales se dejan pasar tal cual.
+const esFalloDeRed = (err: unknown): boolean =>
+  err instanceof TypeError ||
+  /failed to fetch|fetch failed|networkerror|load failed/i.test(
+    err instanceof Error ? err.message : String(err)
+  );
 
 interface AuthContextType {
   user: any;
@@ -21,6 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     async function loadUser() {
       try {
+        await prepararModoDatos();
         const data = await db.getCurrentUser();
         if (data) {
           setUser(data.user);
@@ -28,6 +37,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       } catch (err) {
         console.error('Error loading current user', err);
+        if (esFalloDeRed(err)) {
+          activarModoMock();
+          try {
+            const data = await db.getCurrentUser();
+            if (data) {
+              setUser(data.user);
+              setProfile(data.profile);
+            }
+          } catch {
+            // seguir sin sesión en modo mock
+          }
+        }
       } finally {
         setLoading(false);
       }
@@ -43,7 +64,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // If course is provided, it's a student login, resolve internal email
         email = correoInterno(emailOrName, course);
       }
-      const data = await db.signIn(email, pass);
+      let data: Awaited<ReturnType<typeof db.signIn>>;
+      try {
+        data = await db.signIn(email, pass);
+      } catch (err) {
+        if (!esFalloDeRed(err)) throw err;
+        // Supabase inalcanzable → conmutar a mock y reintentar
+        activarModoMock();
+        data = await db.signIn(email, pass);
+      }
       setUser(data.user);
       setProfile(data.profile);
     } catch (err) {

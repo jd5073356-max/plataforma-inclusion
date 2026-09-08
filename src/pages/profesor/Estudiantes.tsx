@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
-import { Perfil, Actividad, Asignacion } from '../../types/actividad';
-import { UserPlus, UserCheck, Plus, Trash2, Award, ClipboardCheck, GraduationCap, ArrowRight, Settings, AlertCircle, RefreshCw } from 'lucide-react';
+import { Perfil, Etapa, Asignacion } from '../../types/actividad';
+import { UserPlus, Trash2, ClipboardCheck, GraduationCap, RefreshCw } from 'lucide-react';
+
+const msgErr = (err: unknown) => (err instanceof Error ? err.message : 'Ocurrió un error inesperado');
 
 export default function Estudiantes() {
   const { profile } = useAuth();
   const [estudiantes, setEstudiantes] = useState<Perfil[]>([]);
-  const [actividades, setActividades] = useState<Actividad[]>([]);
+  const [etapas, setEtapas] = useState<Etapa[]>([]);
   const [asignaciones, setAsignaciones] = useState<Asignacion[]>([]);
-  
+
   // Create Student Form state
   const [nombre, setNombre] = useState('');
   const [curso, setCurso] = useState('');
   const [contrasena, setContrasena] = useState('123456'); // Default simple password
-  
-  // Assign Activity state
+
+  // Assign Route state
   const [selectedEstudianteId, setSelectedEstudianteId] = useState<string | null>(null);
-  const [selectedActividadId, setSelectedActividadId] = useState('');
+  const [selectedEtapaId, setSelectedEtapaId] = useState('');
   const [ajuste, setAjuste] = useState<'cognitiva' | 'motriz' | 'tea' | ''>('cognitiva');
 
   const [loading, setLoading] = useState(false);
@@ -28,9 +30,9 @@ export default function Estudiantes() {
     try {
       const studs = await db.getEstudiantesPorProfesor(profile.id);
       setEstudiantes(studs);
-      
-      const acts = await db.getActividades(profile.id);
-      setActividades(acts);
+
+      const ets = await db.getEtapas(profile.id);
+      setEtapas(ets);
 
       const asigs = await db.getAsignacionesDeProfesor(profile.id);
       setAsignaciones(asigs);
@@ -58,8 +60,8 @@ export default function Estudiantes() {
       setCurso('');
       setContrasena('123456');
       await loadData();
-    } catch (err: any) {
-      setMsg({ error: err.message || 'Error al registrar estudiante', success: '' });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al registrar estudiante', success: '' });
     } finally {
       setLoading(false);
     }
@@ -68,24 +70,25 @@ export default function Estudiantes() {
   const handleAsignar = async (e: React.FormEvent) => {
     e.preventDefault();
     setMsg({ error: '', success: '' });
-    if (!selectedEstudianteId || !selectedActividadId) {
-      setMsg({ error: 'Debes seleccionar un estudiante y una actividad', success: '' });
+    if (!selectedEstudianteId || !selectedEtapaId) {
+      setMsg({ error: 'Debes seleccionar un estudiante y una ruta', success: '' });
       return;
     }
 
     try {
-      await db.asignarActividad(selectedEstudianteId, selectedActividadId, ajuste || undefined);
-      setMsg({ error: '', success: 'Actividad asignada correctamente.' });
-      setSelectedActividadId('');
+      await db.asignarRuta(selectedEstudianteId, selectedEtapaId, ajuste || undefined);
+      const nombreRuta = etapas.find(e => e.id === selectedEtapaId)?.nombre || 'la ruta';
+      setMsg({ error: '', success: `Ruta «${nombreRuta}» asignada correctamente.` });
+      setSelectedEtapaId('');
       await loadData();
-    } catch (err: any) {
-      setMsg({ error: err.message || 'Error al asignar', success: '' });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al asignar', success: '' });
     }
   };
 
-  const handleDesasignar = async (estudianteId: string, actividadId: string) => {
+  const handleDesasignar = async (estudianteId: string, etapaId: string) => {
     try {
-      await db.desasignarActividad(estudianteId, actividadId);
+      await db.desasignarRuta(estudianteId, etapaId);
       await loadData();
     } catch (err) {
       console.error('Error al desasignar:', err);
@@ -110,7 +113,7 @@ export default function Estudiantes() {
               <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Nombre Completo</label>
               <input
                 type="text"
-                placeholder="Ej: Mateo Gómez"
+                placeholder="Ej: Carlos Andrés"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
@@ -153,10 +156,10 @@ export default function Estudiantes() {
           </form>
         </div>
 
-        {/* Asignación de Actividades */}
+        {/* Asignación de Rutas */}
         <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm">
           <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917] mb-4 flex items-center gap-2">
-            <ClipboardCheck className="w-5 h-5 text-[#7294B9]" /> Asignar Actividad
+            <ClipboardCheck className="w-5 h-5 text-[#7294B9]" /> Asignar Ruta
           </h2>
           <form onSubmit={handleAsignar} className="space-y-4">
             <div>
@@ -175,18 +178,21 @@ export default function Estudiantes() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Actividad</label>
+              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Ruta de aprendizaje</label>
               <select
-                value={selectedActividadId}
-                onChange={(e) => setSelectedActividadId(e.target.value)}
+                value={selectedEtapaId}
+                onChange={(e) => setSelectedEtapaId(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
                 required
               >
-                <option value="">Selecciona actividad</option>
-                {actividades.map(act => (
-                  <option key={act.id} value={act.id}>{act.titulo} [{act.tipo.toUpperCase()}]</option>
+                <option value="">Selecciona una ruta</option>
+                {etapas.map(et => (
+                  <option key={et.id} value={et.id}>{et.nombre}</option>
                 ))}
               </select>
+              <p className="text-[10px] text-[#A8A29E] font-semibold mt-1">
+                El estudiante recorrerá todos sus pasos en orden, uno a la vez.
+              </p>
             </div>
 
             <div>
@@ -207,7 +213,7 @@ export default function Estudiantes() {
               type="submit"
               className="w-full py-3 bg-[#7294B9] hover:bg-[#5C7D9E] text-white rounded-2xl font-bold transition text-xs shadow-sm"
             >
-              Asignar Actividad
+              Asignar Ruta
             </button>
           </form>
         </div>
@@ -249,17 +255,17 @@ export default function Estudiantes() {
                   </div>
 
                   <div className="flex-1 max-w-md">
-                    <span className="block text-[10px] font-bold text-[#78716C] uppercase tracking-wider mb-2">Actividades Asignadas ({activeAsigs.length})</span>
+                    <span className="block text-[10px] font-bold text-[#78716C] uppercase tracking-wider mb-2">Rutas asignadas ({activeAsigs.length})</span>
                     {activeAsigs.length === 0 ? (
-                      <span className="text-xs font-bold text-[#B45309] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#FFE8D0]">Sin actividades</span>
+                      <span className="text-xs font-bold text-[#B45309] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#FFE8D0]">Sin rutas</span>
                     ) : (
                       <div className="flex flex-wrap gap-1.5">
                         {activeAsigs.map((asig) => {
-                          const act = actividades.find(a => a.id === asig.actividad_id);
-                          if (!act) return null;
+                          const etapa = etapas.find(e => e.id === asig.etapa_id);
+                          if (!etapa) return null;
                           return (
                             <div key={asig.id} className="flex items-center gap-1.5 px-3 py-1 bg-white border border-[#EFECE6] rounded-full shadow-sm text-xs font-bold text-[#1C1917]">
-                              <span className="truncate max-w-[120px]">{act.titulo}</span>
+                              <span className="truncate max-w-[180px]">{etapa.nombre}</span>
                               {asig.ajuste && (
                                 <span className="px-2 py-0.5 rounded-full text-[9px] uppercase font-bold bg-[#F5F2EC] text-[#57534E]">
                                   {asig.ajuste}
@@ -267,9 +273,9 @@ export default function Estudiantes() {
                               )}
                               <button
                                 type="button"
-                                onClick={() => handleDesasignar(est.id, asig.actividad_id)}
+                                onClick={() => handleDesasignar(est.id, asig.etapa_id)}
                                 className="text-[#A8A29E] hover:text-[#D9363E] transition ml-1"
-                                title="Desasignar"
+                                title="Desasignar ruta"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>

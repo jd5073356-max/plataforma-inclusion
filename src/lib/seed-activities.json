@@ -1,7 +1,7 @@
 [
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "seleccion",
     "titulo": "¿Cuántas piezas tiene el tangram?",
     "configuracion": {
@@ -220,11 +220,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 1,
+    "id": "seed-andres-1"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "seleccion",
     "titulo": "El billete de mayor valor",
     "configuracion": {
@@ -408,11 +410,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 2,
+    "id": "seed-andres-2"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "seleccion",
     "titulo": "Comprando en el kiosco",
     "configuracion": {
@@ -611,11 +615,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 3,
+    "id": "seed-andres-3"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "completar",
     "titulo": "Completa la frase del dinero",
     "configuracion": {
@@ -766,11 +772,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 4,
+    "id": "seed-andres-4"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "emparejar",
     "titulo": "Cambios del billete",
     "configuracion": {
@@ -944,11 +952,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 5,
+    "id": "seed-andres-5"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "explorador_3d",
     "titulo": "Explora el cubo",
     "configuracion": {
@@ -1050,11 +1060,13 @@
           "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         }
       ]
-    }
+    },
+    "orden": 6,
+    "id": "seed-andres-6"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "explorador_3d",
     "titulo": "Explora la pirámide",
     "configuracion": {
@@ -1155,11 +1167,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 7,
+    "id": "seed-andres-7"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000201",
+    "etapa_id": "etapa-andres",
     "tipo": "autoevaluacion",
     "titulo": "¿Cómo te fue con el tangram?",
     "configuracion": {
@@ -1267,11 +1281,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 8,
+    "id": "seed-andres-8"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "seleccion",
     "titulo": "A la izquierda del cero",
     "configuracion": {
@@ -1470,11 +1486,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 1,
+    "id": "seed-david-1"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "seleccion",
     "titulo": "Frío o caliente",
     "configuracion": {
@@ -1648,11 +1666,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 2,
+    "id": "seed-david-2"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "completar",
     "titulo": "Derecha e izquierda en el tablero",
     "configuracion": {
@@ -1802,11 +1822,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 3,
+    "id": "seed-david-3"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "explorador_3d",
     "titulo": "El dado del parqués",
     "configuracion": {
@@ -1908,11 +1930,13 @@
           "imagenUrl": "/multimedia/White_die_rolling_on_felt_202608082048.mp4"
         }
       ]
-    }
+    },
+    "orden": 4,
+    "id": "seed-david-4"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "seleccion",
     "titulo": "¿Cuántas caras tiene el dado?",
     "configuracion": {
@@ -2086,11 +2110,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 5,
+    "id": "seed-david-5"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000202",
+    "etapa_id": "etapa-david",
     "tipo": "autoevaluacion",
     "titulo": "Números enteros: ¿cómo te fue?",
     "configuracion": {
@@ -2198,11 +2224,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 6,
+    "id": "seed-david-6"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "emparejar",
     "titulo": "La casa en inglés y español",
     "configuracion": {
@@ -2390,11 +2418,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 1,
+    "id": "seed-yessica-1"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "seleccion",
     "titulo": "¿Qué hay en la cocina?",
     "configuracion": {
@@ -2568,11 +2598,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 2,
+    "id": "seed-yessica-2"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "clasificar",
     "titulo": "¿Cocina o baño?",
     "configuracion": {
@@ -2746,11 +2778,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 3,
+    "id": "seed-yessica-3"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "seleccion",
     "titulo": "¿Qué parte de la casa es?",
     "configuracion": {
@@ -2924,11 +2958,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 4,
+    "id": "seed-yessica-4"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "reconocer_emociones",
     "titulo": "¿Cómo se siente?",
     "configuracion": {
@@ -3071,11 +3107,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 5,
+    "id": "seed-yessica-5"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000203",
+    "etapa_id": "etapa-yessica",
     "tipo": "autoevaluacion",
     "titulo": "La casa: ¿cómo te fue?",
     "configuracion": {
@@ -3183,11 +3221,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 6,
+    "id": "seed-yessica-6"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "explorador_3d",
     "titulo": "Explora el corazón",
     "configuracion": {
@@ -3321,11 +3361,13 @@
         }
       ],
       "modelo3DUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121859_65fde6c9-fe8f-4715-818a-5c9b98a705bf.glb"
-    }
+    },
+    "orden": 1,
+    "id": "seed-maria-1"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "explorador_3d",
     "titulo": "Explora el cerebro",
     "configuracion": {
@@ -3441,11 +3483,13 @@
         }
       ],
       "modelo3DUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3DkNbs6yI5BmSePfTQoWyNvgVSN/hf_20260808_121901_0473328e-4cd6-45af-beb4-2087ae2c3f1d.glb"
-    }
+    },
+    "orden": 2,
+    "id": "seed-maria-2"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "seleccion",
     "titulo": "¿Qué órgano es este?",
     "configuracion": {
@@ -3619,11 +3663,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 3,
+    "id": "seed-maria-3"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "emparejar",
     "titulo": "Cada sentido con su órgano",
     "configuracion": {
@@ -3811,11 +3857,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 4,
+    "id": "seed-maria-4"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "seleccion",
     "titulo": "¿Qué animal vive en el polo?",
     "configuracion": {
@@ -4014,11 +4062,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 5,
+    "id": "seed-maria-5"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "clasificar",
     "titulo": "¿Frío o calor?",
     "configuracion": {
@@ -4182,11 +4232,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 6,
+    "id": "seed-maria-6"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "seleccion",
     "titulo": "¿Qué sentimos con la piel?",
     "configuracion": {
@@ -4360,11 +4412,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 7,
+    "id": "seed-maria-7"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000204",
+    "etapa_id": "etapa-maria",
     "tipo": "autoevaluacion",
     "titulo": "Mi cuerpo: ¿cómo te fue?",
     "configuracion": {
@@ -4472,11 +4526,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 8,
+    "id": "seed-maria-8"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "etapa_id": "etapa-emociones",
     "tipo": "seleccion",
     "titulo": "¿Qué emoción es?",
     "configuracion": {
@@ -4675,11 +4731,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 1,
+    "id": "seed-emociones-1"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "etapa_id": "etapa-emociones",
     "tipo": "reconocer_emociones",
     "titulo": "¡Qué sorpresa!",
     "configuracion": {
@@ -4822,11 +4880,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 2,
+    "id": "seed-emociones-2"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "etapa_id": "etapa-emociones",
     "tipo": "seleccion",
     "titulo": "Un amigo está triste",
     "configuracion": {
@@ -5000,11 +5060,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 3,
+    "id": "seed-emociones-3"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "etapa_id": "etapa-emociones",
     "tipo": "seleccion",
     "titulo": "¿Cómo se siente?",
     "configuracion": {
@@ -5178,11 +5240,13 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 4,
+    "id": "seed-emociones-4"
   },
   {
     "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "etapa_id": "00000000-0000-0000-0000-000000000205",
+    "etapa_id": "etapa-emociones",
     "tipo": "autoevaluacion",
     "titulo": "¿Cómo te sentiste hoy?",
     "configuracion": {
@@ -5290,6 +5354,8 @@
           ]
         }
       ]
-    }
+    },
+    "orden": 5,
+    "id": "seed-emociones-5"
   }
 ]

@@ -107,7 +107,7 @@ export default function Login() {
                     </div>
                     <input
                       type="text"
-                      placeholder="Ej: Ana López"
+                      placeholder="Ej: María Clara"
                       value={nombre}
                       onChange={(e) => setNombre(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
@@ -166,7 +166,7 @@ export default function Login() {
                     </div>
                     <input
                       type="email"
-                      placeholder="profesor@inclusion.com"
+                      placeholder="educador@escuela.edu.co"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
@@ -213,7 +213,7 @@ export default function Login() {
           </form>
           
           <div className="mt-6 text-center text-xs text-[#78716C] font-medium">
-            Acceso predeterminado: <b className="text-[#1C1917]">profesor@inclusion.com</b> / <b className="text-[#1C1917]">123456</b>
+            Acceso predeterminado: <b className="text-[#1C1917]">educador@escuela.edu.co</b> / <b className="text-[#1C1917]">123456</b>
           </div>
         </div>
       </div>
