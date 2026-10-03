@@ -1,8 +1,8 @@
-name: App Keep-Alive
+name: Supabase Keep-Alive
 
 on:
   schedule:
-    # Every 6 hours — keeps the Vercel deployment warm
+    # Every 6 hours — prevents Supabase Free plan auto-pause
     - cron: "0 */6 * * *"
   workflow_dispatch:  # Allow manual trigger
 
@@ -10,19 +10,22 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping deployed app on Vercel
+      - name: Ping Supabase API (real query)
         run: |
           set -e
-          echo "Pinging Vercel deployment..."
-          URL="https://plataforma-inclusion-adaptativa.vercel.app/login"
+          echo "Pinging Supabase project..."
+          URL="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/actividades?select=id&limit=1"
           RESPONSE_FILE=$(mktemp)
           HTTP_CODE=$(curl -sS --max-time 20 --retry 2 -o "$RESPONSE_FILE" -w "%{http_code}" \
             "$URL" \
-            -H "Accept: text/html")
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
           echo "HTTP status: $HTTP_CODE"
+          echo "Response body:"
+          cat "$RESPONSE_FILE"
+          echo ""
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "Error: App did not return 200. Deployment may be down."
-            cat "$RESPONSE_FILE"
+            echo "Error: Supabase did not return 200. Project may be paused, deleted or anon key is invalid."
             exit 1
           fi
-          echo "App is awake and reachable."
+          echo "Project is awake and reachable."
