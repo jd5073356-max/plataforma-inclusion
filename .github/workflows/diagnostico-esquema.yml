@@ -1,0 +1,61 @@
+name: Diagnóstico de esquema (una vez)
+
+# Workflow temporal: verifica si supabase/migracion-rutas.sql está aplicada.
+# Usa el secret SUPABASE_ANON_KEY sin exponerlo: PostgREST devuelve un código
+# de error distinto según exista o no la columna, y aquí solo se imprime la
+# conclusión, nunca la clave.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  esquema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sondear columnas de la migración
+        env:
+          K: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          BASE="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1"
+
+          sonda () {   # $1=tabla  $2=columna
+            local cuerpo
+            cuerpo=$(curl -sS --max-time 20 -o - -w "" \
+              "$BASE/$1?select=$2&limit=1" \
+              -H "apikey: $K" -H "Authorization: Bearer $K" 2>/dev/null)
+            if echo "$cuerpo" | grep -q "does not exist"; then
+              echo "AUSENTE"
+            elif echo "$cuerpo" | grep -qE '^\[|^\{'; then
+              echo "OK"
+            else
+              echo "INDEFINIDO"
+            fi
+          }
+
+          echo "── Estado del esquema (migracion-rutas.sql) ──"
+          R1=$(sonda actividades orden)            printf "  actividades.orden            %s\n" "$R1"
+          R2=$(sonda actividades etapa_id)         printf "  actividades.etapa_id         %s\n" "$R2"
+          R3=$(sonda asignaciones etapa_id)        printf "  asignaciones.etapa_id        %s\n" "$R3"
+          R4=$(sonda asignaciones actividad_id)    printf "  asignaciones.actividad_id    %s\n" "$R4"
+          R5=$(sonda etapas orden)                 printf "  etapas.orden                 %s\n" "$R5"
+          R6=$(sonda perfiles rol)                 printf "  perfiles.rol                 %s\n" "$R6"
+
+          echo
+          echo "── Contenido ──"
+          for t in actividades etapas perfiles asignaciones progreso recursos; do
+            rango=$(curl -sS --max-time 20 -D - -o /dev/null \
+                 "$BASE/$t?select=id&limit=1" \
+                 -H "apikey: $K" -H "Authorization: Bearer $K" \
+                 -H "Prefer: count=exact" 2>/dev/null \
+                 | tr -d '\r' | grep -i '^content-range:' | sed 's#.*/##')
+            printf "  %-14s %s filas\n" "$t" "${rango:-?}"
+          done
+
+          echo
+          if [ "$R1" = OK ] && [ "$R3" = OK ]; then
+            echo "VEREDICTO: la migración YA está aplicada."
+          elif [ "$R2" = OK ] && [ "$R1" = AUSENTE ]; then
+            echo "VEREDICTO: la migración NO está aplicada (faltan orden y etapa_id en asignaciones)."
+          else
+            echo "VEREDICTO: estado mixto o indeterminado — revisar columna por columna arriba."
+          fi
