@@ -1,9 +1,9 @@
 name: Diagnóstico de esquema (una vez)
 
-# Workflow temporal: verifica si supabase/migracion-rutas.sql está aplicada.
-# Usa el secret SUPABASE_ANON_KEY sin exponerlo: PostgREST devuelve un código
-# de error distinto según exista o no la columna, y aquí solo se imprime la
-# conclusión, nunca la clave.
+# Workflow temporal: verifica si supabase/migracion-rutas.sql está aplicada y si
+# el seed del código choca con los datos que ya hay en la BD.
+# Usa el secret SUPABASE_ANON_KEY sin exponerlo: PostgREST distingue columna
+# inexistente por el mensaje de error, y aquí solo se imprime la conclusión.
 
 on:
   workflow_dispatch:
@@ -12,6 +12,8 @@ jobs:
   esquema:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Sondear columnas de la migración
         shell: bash {0}
         env:
@@ -24,10 +26,10 @@ jobs:
               "$BASE/$1?select=$2&limit=1" \
               -H "apikey: $K" -H "Authorization: Bearer $K" 2>/dev/null || echo "CURL_FALLO")
             case "$cuerpo" in
-              *"does not exist"*)                       echo "AUSENTE" ;;
-              "["*|"{"*)                                echo "OK" ;;
-              CURL_FALLO)                               echo "ERROR_REDE" ;;
-              *)                                        echo "INDEFINIDO:$(echo "$cuerpo" | head -c 90)" ;;
+              *"does not exist"*)  echo "AUSENTE" ;;
+              "["*|"{"*)           echo "OK" ;;
+              CURL_FALLO)          echo "ERROR_REDE" ;;
+              *)                   echo "INDEFINIDO:$(echo "$cuerpo" | head -c 90)" ;;
             esac
           }
 
@@ -37,12 +39,11 @@ jobs:
           R3=$(sonda asignaciones etapa_id)        ; printf "  asignaciones.etapa_id        %s\n" "$R3"
           R4=$(sonda asignaciones actividad_id)    ; printf "  asignaciones.actividad_id    %s\n" "$R4"
           R5=$(sonda etapas orden)                 ; printf "  etapas.orden                 %s\n" "$R5"
-          R6=$(sonda perfiles rol)                 ; printf "  perfiles.rol                 %s\n" "$R6"
           R7=$(sonda progreso actividad_id)        ; printf "  progreso.actividad_id        %s\n" "$R7"
 
           echo
           echo "── Contenido ──"
-          for t in actividades etapas perfiles asignaciones progreso recursos; do
+          for t in actividades etapas perfiles asignaciones progreso; do
             rango=$(curl -sS --max-time 20 -D - -o /dev/null \
                  "$BASE/$t?select=id&limit=1" \
                  -H "apikey: $K" -H "Authorization: Bearer $K" \
@@ -54,8 +55,23 @@ jobs:
           echo
           if [ "$R1" = OK ] && [ "$R3" = OK ]; then
             echo "VEREDICTO: la migración YA está aplicada."
-          elif [ "$R2" = OK ] && [ "$R1" = AUSENTE ]; then
-            echo "VEREDICTO: la migración NO está aplicada (faltan orden y etapa_id en asignaciones)."
           else
-            echo "VEREDICTO: estado mixto o indeterminado — revisar columna por columna arriba."
+            echo "VEREDICTO: la migración NO está aplicada (faltan orden y etapa_id en asignaciones)."
           fi
+
+      - name: Choca el seed con los datos de la BD
+        shell: bash {0}
+        env:
+          K: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          BASE="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1"
+          HDR=(-H "apikey: $K" -H "Authorization: Bearer $K")
+
+          curl -sS --max-time 25 "${HDR[@]}" "$BASE/etapas?select=id,nombre,orden&limit=50" \
+            > /tmp/etapas_bd.json
+          curl -sS --max-time 25 "${HDR[@]}" \
+            "$BASE/actividades?select=id,tipo,titulo,etapa_id&limit=60" \
+            > /tmp/actividades_bd.json
+
+          python3 scripts/checa_seed_vs_bd.py \
+            /tmp/etapas_bd.json /tmp/actividades_bd.json src/lib/seed-activities.json

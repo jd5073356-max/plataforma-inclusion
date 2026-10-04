@@ -111,6 +111,13 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     );
   }
 
+  // Una pregunta cuyo tipo no tenga renderer no pinta opciones, y sin opciones
+  // nunca se activa 'intentado' → el botón de avance no aparece y el estudiante
+  // queda atrapado. Esto pasa con filas obsoletas de la BD (por ejemplo
+  // explorador_3d, eliminado del código). Se degrada con honestidad y permite seguir.
+  const TIPOS_CON_RENDERER = ['seleccion', 'emparejar', 'clasificar', 'completar', 'reconocer_emociones', 'autoevaluacion'];
+  const tipoConocido = TIPOS_CON_RENDERER.includes(pregunta.tipo);
+
   // ACCESSIBILITY ADJUSTMENTS / THEMES based on 'ajuste'
   const isCognitiva = ajuste === 'cognitiva';
   const isMotriz = ajuste === 'motriz';
@@ -737,6 +744,27 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
               <p className="text-center text-sm text-gray-500 font-semibold">
                 Marca cómo te sentiste al terminar la actividad.
               </p>
+            </div>
+          )}
+
+          {/* Ramas agotadas: tipo de pregunta sin renderer disponible */}
+          {!tipoConocido && (
+            <div className="text-center space-y-5 py-6">
+              <AlertCircle className="w-14 h-14 text-amber-500 mx-auto" />
+              <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
+                Este ejercicio usa un formato que esta plataforma ya no puede mostrar.
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                No te preocupes: puedes pasar al siguiente. Avísale a tu profe para que lo revise.
+              </p>
+              <button
+                type="button"
+                onClick={handleSiguiente}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-extrabold rounded-2xl shadow hover:bg-blue-700 transition"
+              >
+                <span>{currentPreguntaIndex < config.preguntas.length - 1 ? 'Siguiente Pregunta' : 'Completar Actividad'}</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
             </div>
           )}
         </div>
