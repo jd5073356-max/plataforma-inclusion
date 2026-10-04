@@ -10,22 +10,65 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase API (real query)
+      - name: Check secret is configured
+        env:
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          set -e
-          echo "Pinging Supabase project..."
-          URL="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/actividades?select=id&limit=1"
-          RESPONSE_FILE=$(mktemp)
-          HTTP_CODE=$(curl -sS --max-time 20 --retry 2 -o "$RESPONSE_FILE" -w "%{http_code}" \
-            "$URL" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
-          echo "HTTP status: $HTTP_CODE"
-          echo "Response body:"
-          cat "$RESPONSE_FILE"
-          echo ""
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Error: Supabase did not return 200. Project may be paused, deleted or anon key is invalid."
+          if [ -z "$ANON_KEY" ]; then
+            echo "::error::Falta el secret SUPABASE_ANON_KEY en este repositorio."
+            echo "Sin él, este workflow no puede despertar la base de datos."
+            echo ""
+            echo "Cómo arreglarlo:"
+            echo "  1. Supabase dashboard → proyecto fmpubxikjdbdfvanfcok → Settings → API Data API → anon public"
+            echo "  2. GitHub → este repo → Settings → Secrets and variables → Actions → New repository secret"
+            echo "  3. Nombre: SUPABASE_ANON_KEY   Valor: <la anon public>"
+            echo ""
+            echo "Verificado: gh secret list --repo ${{ github.repository }} devuelve 0 secrets."
             exit 1
           fi
-          echo "Project is awake and reachable."
+          echo "Secret presente (${#ANON_KEY} caracteres)."
+
+      - name: Ping Supabase API (real query)
+        env:
+          ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -e
+          PROJECT="fmpubxikjdbdfvanfcok"
+          URL="https://$PROJECT.supabase.co/rest/v1/actividades?select=id&limit=1"
+          RESPONSE_FILE=$(mktemp)
+
+          HTTP_CODE=$(curl -sS --max-time 20 --retry 2 -o "$RESPONSE_FILE" -w "%{http_code}" \
+            "$URL" \
+            -H "apikey: $ANON_KEY" \
+            -H "Authorization: Bearer $ANON_KEY")
+
+          BODY=$(cat "$RESPONSE_FILE")
+          echo "HTTP status: $HTTP_CODE"
+          echo "Response body: $BODY"
+
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
+            echo "✓ Project awake and reachable."
+            exit 0
+          fi
+
+          # Diagnóstico por causa: antes fallaban todas igual y eso ocultaba el motivo.
+          case "$HTTP_CODE:$BODY" in
+            *"No API key found"*|*"Invalid API key"*)
+              echo "::error::La anon key enviada no es válida (HTTP $HTTP_CODE)."
+              echo "El proyecto SÍ responde, así que está despierto: el problema es la clave."
+              echo "Revísala en Supabase → Settings → API Data API → anon public."
+              ;;
+            *"paused"*|*"Paused"*)
+              echo "::error::El proyecto está pausado. Supabase no acepta queries hasta que"
+              echo "alguien lo reactive a mano en el dashboard (un ping no lo despierta)."
+              ;;
+            *)
+              if [ "$HTTP_CODE" = "000" ]; then
+                echo "::error::No resolve el DNS de $PROJECT.supabase.co."
+                echo "El proyecto fue eliminado o la red no lo alcanza."
+              else
+                echo "::error::Supabase respondió HTTP $HTTP_CODE inesperado."
+              fi
+              ;;
+          esac
+          exit 1
