@@ -1456,7 +1456,7 @@
                 "esCorrecta": false
               }
             ],
-            "imagenUrl": "/multimedia/img/ficha_azul.jpg"
+            "imagenUrl": "/multimedia/img/tablero_enteros.jpg"
           }
         }
       ],
@@ -3425,17 +3425,15 @@
               {
                 "id": "op-e3b-1",
                 "texto": "Turnarse para jugar",
-                "esCorrecta": true,
-                "imagenUrl": "/multimedia/img/ficha_azul.jpg"
+                "esCorrecta": true
               },
               {
                 "id": "op-e3b-2",
                 "texto": "Quedárselo el más fuerte",
-                "esCorrecta": false,
-                "imagenUrl": "/multimedia/img/ficha_verde.jpg"
+                "esCorrecta": false
               }
             ],
-            "imagenUrl": "/multimedia/img/ficha_azul.jpg"
+            "imagenUrl": "/multimedia/img/escena_consuelo.jpg"
           }
         },
         {
