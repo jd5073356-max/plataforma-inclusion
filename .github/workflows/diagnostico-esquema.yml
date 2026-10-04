@@ -75,3 +75,11 @@ jobs:
 
           python3 scripts/checa_seed_vs_bd.py \
             /tmp/etapas_bd.json /tmp/actividades_bd.json src/lib/seed-activities.json
+
+          echo
+          curl -sS --max-time 25 "${HDR[@]}" "$BASE/perfiles?select=id,rol,nombre&limit=30" \
+            > /tmp/perfiles.json
+          curl -sS --max-time 25 "${HDR[@]}" \
+            "$BASE/actividades?select=id,tipo,titulo,etapa_id,profesor_id&limit=80" \
+            > /tmp/actividades_completas.json
+          python3 scripts/estado_bd.py /tmp/perfiles.json /tmp/actividades_completas.json
