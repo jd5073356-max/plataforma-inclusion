@@ -13,32 +13,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sondear columnas de la migración
+        shell: bash {0}
         env:
           K: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           BASE="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1"
 
           sonda () {   # $1=tabla  $2=columna
-            local cuerpo
-            cuerpo=$(curl -sS --max-time 20 -o - -w "" \
+            cuerpo=$(curl -sS --max-time 20 \
               "$BASE/$1?select=$2&limit=1" \
-              -H "apikey: $K" -H "Authorization: Bearer $K" 2>/dev/null)
-            if echo "$cuerpo" | grep -q "does not exist"; then
-              echo "AUSENTE"
-            elif echo "$cuerpo" | grep -qE '^\[|^\{'; then
-              echo "OK"
-            else
-              echo "INDEFINIDO"
-            fi
+              -H "apikey: $K" -H "Authorization: Bearer $K" 2>/dev/null || echo "CURL_FALLO")
+            case "$cuerpo" in
+              *"does not exist"*)                       echo "AUSENTE" ;;
+              "["*|"{"*)                                echo "OK" ;;
+              CURL_FALLO)                               echo "ERROR_REDE" ;;
+              *)                                        echo "INDEFINIDO:$(echo "$cuerpo" | head -c 90)" ;;
+            esac
           }
 
           echo "── Estado del esquema (migracion-rutas.sql) ──"
-          R1=$(sonda actividades orden)            printf "  actividades.orden            %s\n" "$R1"
-          R2=$(sonda actividades etapa_id)         printf "  actividades.etapa_id         %s\n" "$R2"
-          R3=$(sonda asignaciones etapa_id)        printf "  asignaciones.etapa_id        %s\n" "$R3"
-          R4=$(sonda asignaciones actividad_id)    printf "  asignaciones.actividad_id    %s\n" "$R4"
-          R5=$(sonda etapas orden)                 printf "  etapas.orden                 %s\n" "$R5"
-          R6=$(sonda perfiles rol)                 printf "  perfiles.rol                 %s\n" "$R6"
+          R1=$(sonda actividades orden)            ; printf "  actividades.orden            %s\n" "$R1"
+          R2=$(sonda actividades etapa_id)         ; printf "  actividades.etapa_id         %s\n" "$R2"
+          R3=$(sonda asignaciones etapa_id)        ; printf "  asignaciones.etapa_id        %s\n" "$R3"
+          R4=$(sonda asignaciones actividad_id)    ; printf "  asignaciones.actividad_id    %s\n" "$R4"
+          R5=$(sonda etapas orden)                 ; printf "  etapas.orden                 %s\n" "$R5"
+          R6=$(sonda perfiles rol)                 ; printf "  perfiles.rol                 %s\n" "$R6"
+          R7=$(sonda progreso actividad_id)        ; printf "  progreso.actividad_id        %s\n" "$R7"
 
           echo
           echo "── Contenido ──"
