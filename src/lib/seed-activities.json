@@ -471,7 +471,7 @@
                 "id": "op-b5a-1",
                 "texto": "La esfera",
                 "esCorrecta": true,
-                "imagenUrl": "/multimedia/img/red_cubo.jpg"
+                "imagenUrl": "/multimedia/img/esfera.jpg"
               },
               {
                 "id": "op-b5a-2",
@@ -515,25 +515,25 @@
           "tipo": "seleccion",
           "datos": {
             "id": "preg-b5c",
-            "instruccion": "¿Cuál de estos objetos de la casa tiene forma de cubo?",
+            "instruccion": "¿Cuál de estas tres figuras tiene punta y base redonda?",
             "opciones": [
               {
                 "id": "op-b5c-1",
-                "texto": "La caja de cereal",
+                "texto": "El cono",
                 "esCorrecta": true,
-                "imagenUrl": "/multimedia/img/cubo.jpg"
+                "imagenUrl": "/multimedia/img/cono.jpg"
               },
               {
                 "id": "op-b5c-2",
-                "texto": "La pelota",
+                "texto": "La esfera",
                 "esCorrecta": false,
-                "imagenUrl": "/multimedia/img/red_cubo.jpg"
+                "imagenUrl": "/multimedia/img/esfera.jpg"
               },
               {
                 "id": "op-b5c-3",
-                "texto": "El embudo",
+                "texto": "El cubo",
                 "esCorrecta": false,
-                "imagenUrl": "/multimedia/img/piramide.jpg"
+                "imagenUrl": "/multimedia/img/cubo.jpg"
               }
             ],
             "imagenUrl": "/multimedia/img/formas_2d.jpg"
@@ -546,7 +546,7 @@
     "atelier": {
       "subtituloPoetico": "Sólidos en la casa",
       "materia": "Matemáticas — Geometría",
-      "resumenBreve": "Las figuras geométricas están en los objetos que se usan todos los días: la caja de cereal es un cubo, la tejado de la casa es una pirámide.",
+      "resumenBreve": "Las figuras geométricas están en los objetos que se usan todos los días: la caja de cereal es un cubo, el embudo es un cono.",
       "datosClave": [
         {
           "icono": "🧊",
@@ -564,14 +564,14 @@
           "valor": "Redonda, rueda"
         },
         {
-          "icono": "📦",
-          "etiqueta": "Arista",
-          "valor": "Donde se juntan dos caras"
+          "icono": "️",
+          "etiqueta": "Cono",
+          "valor": "Círculo y punta, como el embudo"
         }
       ],
       "importanciaEducativa": "Nombrar formas en objetos reales desarrolla el pensamiento espacial, base de la geometría escolar.",
       "sabiasQue": "Una caja de leche no es un cubo perfecto: es un prisma rectangular, porque sus caras son rectángulos de distinto tamaño.",
-      "instruccionTip": "Cuenta las aristas con el dedo mientras giras el objeto en la mente."
+      "instruccionTip": "Busca en tu casa un objeto con la forma que se pide."
     }
   },
   {
@@ -579,53 +579,49 @@
     "profesor_id": "00000000-0000-0000-0000-000000000001",
     "tipo": "emparejar",
     "titulo": "La casa en dos idiomas",
-    "imagen_url": "/multimedia/img/sala.jpg",
+    "imagen_url": "/multimedia/img/casa_fachada.jpg",
     "configuracion": {
       "preguntas": [
         {
           "tipo": "emparejar",
           "datos": {
             "id": "preg-b6",
-            "instruccion": "Une el cuarto en inglés con su nombre en español.",
+            "instruccion": "Une el cuarto en inglés con su foto.",
             "parejas": [
               {
                 "id": "p-b6-1",
-                "origen": "/multimedia/img/cocina.jpg",
-                "origenTipo": "imagen",
-                "origenAlt": "Kitchen",
+                "origen": "Kitchen",
+                "origenTipo": "texto",
                 "destino": "/multimedia/img/cocina.jpg",
                 "destinoTipo": "imagen",
                 "destinoAlt": "Cocina"
               },
               {
                 "id": "p-b6-2",
-                "origen": "/multimedia/img/bano.jpg",
-                "origenTipo": "imagen",
-                "origenAlt": "Bathroom",
+                "origen": "Bathroom",
+                "origenTipo": "texto",
                 "destino": "/multimedia/img/bano.jpg",
                 "destinoTipo": "imagen",
                 "destinoAlt": "Baño"
               },
               {
                 "id": "p-b6-3",
-                "origen": "/multimedia/img/sala.jpg",
-                "origenTipo": "imagen",
-                "origenAlt": "Living room",
+                "origen": "Living room",
+                "origenTipo": "texto",
                 "destino": "/multimedia/img/sala.jpg",
                 "destinoTipo": "imagen",
                 "destinoAlt": "Sala"
               },
               {
                 "id": "p-b6-4",
-                "origen": "/multimedia/img/habitacion.jpg",
-                "origenTipo": "imagen",
-                "origenAlt": "Bedroom",
+                "origen": "Bedroom",
+                "origenTipo": "texto",
                 "destino": "/multimedia/img/habitacion.jpg",
                 "destinoTipo": "imagen",
                 "destinoAlt": "Habitación"
               }
             ],
-            "imagenUrl": "/multimedia/img/cocina.jpg"
+            "imagenUrl": "/multimedia/img/sala.jpg"
           }
         }
       ],
@@ -2394,7 +2390,7 @@
     "profesor_id": "00000000-0000-0000-0000-000000000001",
     "tipo": "autoevaluacion",
     "titulo": "¿Cómo te fue con la casa en inglés?",
-    "imagen_url": "/multimedia/img/sala.jpg",
+    "imagen_url": "/multimedia/img/casa_fachada.jpg",
     "configuracion": {
       "preguntas": [
         {
@@ -2523,7 +2519,7 @@
                 "esCorrecta": false
               }
             ],
-            "imagenUrl": "/multimedia/img/corazon.jpg"
+            "imagenUrl": "/multimedia/img/cuerpo_corazon.jpg"
           }
         },
         {
@@ -2658,7 +2654,7 @@
                 "esCorrecta": false
               }
             ],
-            "imagenUrl": "/multimedia/img/cerebro.jpg"
+            "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg"
           }
         }
       ],
