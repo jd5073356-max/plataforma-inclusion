@@ -9,7 +9,6 @@ export type ActividadTipo =
   | 'memoria'
   | 'trazar_colorear'
   | 'reconocer_emociones'
-  | 'explorador_3d'
   | 'autoevaluacion';
 
 export interface BasePregunta {
@@ -23,10 +22,12 @@ export interface BasePregunta {
 export interface EmparejarPregunta extends BasePregunta {
   parejas: {
     id: string;
-    origen: string; // Texto o URL imagen origen
+    origen: string; // Texto, o URL de imagen si origenTipo === 'imagen'
     origenTipo: 'texto' | 'imagen';
-    destino: string; // Texto o URL imagen destino
+    origenAlt?: string; // Etiqueta legible cuando origen es una imagen
+    destino: string; // Texto, o URL de imagen si destinoTipo === 'imagen'
     destinoTipo: 'texto' | 'imagen';
+    destinoAlt?: string;
   }[];
 }
 
@@ -120,19 +121,7 @@ export interface ReconocerEmocionesPregunta extends BasePregunta {
   }[];
 }
 
-// 11. Explorador 3D (modelo GLB rotable con puntos de interés clicables)
-export interface Explorador3DPregunta extends BasePregunta {
-  modeloUrl: string; // URL del GLB
-  nombreObjeto: string; // Ej: "El corazón"
-  puntosDeInteres: {
-    id: string;
-    nombre: string;
-    descripcion: string;
-  }[];
-  objetivo: string; // Descripción de qué explorar
-}
-
-// 12. Autoevaluación (tablero de sonrisas: ¿cómo te sentiste?)
+// 11. Autoevaluación (tablero de sonrisas: ¿cómo te sentiste?)
 export interface AutoevaluacionPregunta extends BasePregunta {
   escala: {
     id: string;
@@ -155,7 +144,6 @@ export type PreguntaConfig =
   | { tipo: 'memoria'; datos: MemoriaPregunta }
   | { tipo: 'trazar_colorear'; datos: TrazarColorearPregunta }
   | { tipo: 'reconocer_emociones'; datos: ReconocerEmocionesPregunta }
-  | { tipo: 'explorador_3d'; datos: Explorador3DPregunta }
   | { tipo: 'autoevaluacion'; datos: AutoevaluacionPregunta };
 
 // Configuración general de la actividad
@@ -200,7 +188,6 @@ export interface AtelierConfig {
   instruccionTip?: string;
   hotspots?: AtelierHotspot[];
   tarjetasRecursos?: AtelierTarjetaRecurso[];
-  modelo3DUrl?: string;
 }
 
 export interface Actividad {

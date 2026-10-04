@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { ArrowLeft, ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2, Sparkles, RotateCw } from 'lucide-react';
 import { Actividad, AtelierDatoClave, AtelierHotspot } from '../../types/actividad';
 import ReproductorActividad from './ReproductorActividad';
-import Visor3DLazy from './Visor3DLazy';
 
 interface ReproductorEnfocadoProps {
   actividad: Actividad;
@@ -38,28 +37,25 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
   const atelier = actividad.atelier || {};
 
   // Mejor multimedia disponible: solo fuentes PROPIAS de la actividad
-  const extraerMedia = (act: Actividad): { url?: string; tipo: 'video' | 'imagen' | '3d' } => {
+  const extraerMedia = (act: Actividad): { url?: string; tipo: 'video' | 'imagen' | 'ninguno' } => {
     if (act.video_url) return { url: act.video_url, tipo: 'video' };
-    if (act.atelier?.modelo3DUrl) return { url: act.atelier.modelo3DUrl, tipo: '3d' };
     if (act.imagen_url) {
       const esVid = /\.(mp4|webm)$/i.test(act.imagen_url);
-      const es3d = /\.(glb|gltf)$/i.test(act.imagen_url);
-      return { url: act.imagen_url, tipo: es3d ? '3d' : esVid ? 'video' : 'imagen' };
+      return { url: act.imagen_url, tipo: esVid ? 'video' : 'imagen' };
     }
     for (const p of act.configuracion?.preguntas || []) {
       const d = p.datos as unknown as Record<string, unknown>;
-      if (act.tipo === 'explorador_3d' && d.modeloUrl) return { url: String(d.modeloUrl), tipo: '3d' };
       const cand = (d.video_url || d.imagenUrl || d.rostroImagenUrl) as string | undefined;
       if (cand) {
         const esVid = /\.(mp4|webm)$/i.test(cand);
-        const es3d = /\.(glb|gltf)$/i.test(cand);
-        return { url: cand, tipo: es3d ? '3d' : esVid ? 'video' : 'imagen' };
+        return { url: cand, tipo: esVid ? 'video' : 'imagen' };
       }
     }
-    return { url: undefined, tipo: '3d' };
+    return { url: undefined, tipo: 'ninguno' };
   };
 
   const media = extraerMedia(actividad);
+  const tieneMedia = media.tipo !== 'ninguno' && !!media.url;
 
   const hotspots: AtelierHotspot[] = atelier.hotspots || [];
   const datosClave: AtelierDatoClave[] = atelier.datosClave || [];
@@ -109,11 +105,12 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* ZONA 1: Multimedia de la actividad */}
+        <div className={`grid grid-cols-1 gap-6 items-start ${tieneMedia ? 'lg:grid-cols-12' : ''}`}>
+          {/* ZONA 1: Multimedia de la actividad (solo si la actividad trae medio propio) */}
+          {tieneMedia && (
           <section className="lg:col-span-7">
             <div className="atelier-card p-2 relative min-h-[340px] overflow-hidden rounded-[24px] border border-[#EFECE6] bg-[#F7F4EE]">
-              {media.tipo === 'video' && media.url ? (
+              {media.tipo === 'video' ? (
                 <div className="relative w-full h-full min-h-[340px] rounded-[20px] overflow-hidden bg-black flex items-center justify-center">
                   <video
                     ref={videoRef}
@@ -152,7 +149,7 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
                     </button>
                   </div>
                 </div>
-              ) : media.tipo === 'imagen' && media.url ? (
+              ) : (
                 <div className="relative w-full h-full min-h-[340px] rounded-[20px] flex items-center justify-center p-4">
                   <img src={media.url} alt={actividad.titulo} className="max-h-[440px] w-auto object-contain rounded-2xl shadow-sm" />
                   {hotspots.map(hp => (
@@ -170,12 +167,6 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
                     </button>
                   ))}
                 </div>
-              ) : (
-                <Visor3DLazy
-                  modeloUrl={media.url}
-                  nombreObjeto={actividad.titulo}
-                  alto={420}
-                />
               )}
             </div>
 
@@ -187,9 +178,10 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
               </div>
             )}
           </section>
+          )}
 
           {/* ZONA 2: Ficha propia de la actividad (solo campos existentes) */}
-          <aside className="lg:col-span-5 flex flex-col gap-4">
+          <aside className={`${tieneMedia ? 'lg:col-span-5' : 'lg:col-span-12'} flex flex-col gap-4`}>
             <div className="atelier-card p-6 flex flex-col gap-4">
               {atelier.resumenBreve && (
                 <p className="text-sm text-[#57534E] leading-relaxed">{atelier.resumenBreve}</p>

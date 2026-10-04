@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, CheckCircle, AlertCircle, ArrowRight, Star, Award, Heart, Shield, RefreshCw } from 'lucide-react';
-import { Actividad, PreguntaConfig } from '../../types/actividad';
+import { Actividad, PreguntaConfig, EmparejarPregunta } from '../../types/actividad';
 import { db } from '../../lib/db';
-import Visor3DLazy from './Visor3DLazy';
 
 interface ReproductorActividadProps {
   actividad: Actividad;
@@ -37,23 +36,30 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // Completar:
   const [completadosHuecos, setCompletadosHuecos] = useState<{ [index: number]: string }>({});
 
-  // Explorador 3D en modo reto: tocar la parte correcta del modelo
-  const [objetivo3d, setObjetivo3d] = useState<{ id: string; nombre: string } | null>(null);
-
   const config = actividad.configuracion;
   const pregunta = config.preguntas[currentPreguntaIndex];
 
-  const elegirObjetivo3d = () => {
-    if (pregunta && pregunta.tipo === 'explorador_3d') {
-      const puntos = (pregunta.datos as any).puntosDeInteres || [];
-      if (puntos.length > 0) {
-        const elegido = puntos[Math.floor(Math.random() * puntos.length)];
-        setObjetivo3d({ id: elegido.id, nombre: elegido.nombre });
-        return;
-      }
+  // Columna B de emparejar, barajada al cambiar de pregunta. Sin esto la Columna B
+  // replica el orden de la A y el ejercicio se resuelve pulsando en línea recta sin leer.
+  const [destinosBarajados, setDestinosBarajados] = useState<EmparejarPregunta['parejas']>([]);
+
+  useEffect(() => {
+    if (!pregunta || pregunta.tipo !== 'emparejar') {
+      setDestinosBarajados([]);
+      return;
     }
-    setObjetivo3d(null);
-  };
+    const original = pregunta.datos.parejas;
+    let barajado = original;
+    for (let intento = 0; intento < 5; intento++) {
+      barajado = [...original];
+      for (let i = barajado.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [barajado[i], barajado[j]] = [barajado[j], barajado[i]];
+      }
+      if (barajado.some((p, i) => p.id !== original[i].id)) break;
+    }
+    setDestinosBarajados(barajado);
+  }, [currentPreguntaIndex, actividad]);
 
   useEffect(() => {
     // Reset responses on changing question
@@ -65,7 +71,6 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setClasificado({});
     setSelectedElementoId(null);
     setCompletadosHuecos({});
-    elegirObjetivo3d();
 
     // TTS Voice instruction
     if (pregunta && !muted) {
@@ -127,6 +132,21 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
       ? 'border-blue-600 bg-blue-50 text-blue-950 dark:bg-blue-950/20 dark:text-blue-300' 
       : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'}
   `;
+
+  // Celda de una pareja de emparejar: pinta la imagen si el tipo lo declara,
+  // con su etiqueta legible al lado (origenAlt/destinoAlt).
+  const parejaTexto = (valor: string, tipo: string | undefined, alt?: string) => {
+    if (tipo === 'imagen') {
+      return (
+        <span className="flex items-center gap-3">
+          <img src={valor} alt={alt || ''} aria-hidden="true"
+               className="w-14 h-14 shrink-0 rounded-lg object-cover border-2 border-gray-200" />
+          {alt && <span>{alt}</span>}
+        </span>
+      );
+    }
+    return <span>{valor}</span>;
+  };
 
   // Validation functions
   const verificarSeleccion = async (opcionId: string, esCorrecta: boolean) => {
@@ -341,11 +361,20 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                             : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'}
                     `}
                   >
-                    <span className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold border-2 ${
-                      showCorrect ? 'bg-green-100 border-green-400 text-green-700' : showIncorrect ? 'bg-red-100 border-red-400 text-red-700' : 'bg-gray-100 dark:bg-gray-800 border-gray-300'
-                    }`}>
-                      {op.texto[0].toUpperCase()}
-                    </span>
+                    {op.imagenUrl ? (
+                      <img
+                        src={op.imagenUrl}
+                        alt=""
+                        aria-hidden="true"
+                        className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
+                      />
+                    ) : (
+                      <span className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 ${
+                        showCorrect ? 'bg-green-100 border-green-400 text-green-700' : showIncorrect ? 'bg-red-100 border-red-400 text-red-700' : 'bg-gray-100 dark:bg-gray-800 border-gray-300'
+                      }`}>
+                        {op.texto[0].toUpperCase()}
+                      </span>
+                    )}
                     <span className="flex-1">{op.texto}</span>
                   </button>
                 );
@@ -383,7 +412,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                               : 'border-gray-300 hover:border-blue-300'
                         }`}
                       >
-                        <span>{p.origen}</span>
+                        {parejaTexto(p.origen, p.origenTipo, p.origenAlt)}
                         {isMatched && (
                           <span className="text-xs bg-green-600 group-hover:bg-red-500 text-white px-2 py-0.5 rounded-full transition">
                             Unido ✕
@@ -397,7 +426,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                 {/* Columna B: Destinos */}
                 <div className="space-y-3">
                   <span className="block text-sm font-bold text-gray-500 mb-1">Columna B</span>
-                  {(pregunta.datos as any).parejas.map((p: any) => {
+                  {destinosBarajados.map((p: any) => {
                     const isMatchedWithSelected = colASelected !== null;
                     const matchingOrigenId = Object.keys(emparejados).find(k => emparejados[k] === p.id);
                     
@@ -420,7 +449,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                               : 'border-gray-300 opacity-60'
                         }`}
                       >
-                        {p.destino}
+                        {parejaTexto(p.destino, p.destinoTipo, p.destinoAlt)}
                       </button>
                     );
                   })}
@@ -473,7 +502,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                             setSelectedElementoId(el.id);
                           }
                         }}
-                        className={`px-4 py-3 border-2 rounded-xl font-bold shadow-sm transition ${
+                        className={`px-4 py-3 border-2 rounded-xl font-bold shadow-sm transition flex items-center gap-3 ${
                           isSelected
                             ? 'border-blue-600 bg-blue-50 text-blue-900'
                             : categoryName
@@ -481,7 +510,13 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                               : 'border-gray-300 hover:border-blue-400 bg-white'
                         }`}
                       >
-                        {el.texto} {categoryName && <span className="text-xs text-green-600 block">({categoryName})</span>}
+                        {el.imagenUrl && (
+                          <img src={el.imagenUrl} alt="" aria-hidden="true"
+                               className="w-12 h-12 shrink-0 rounded-lg object-cover border border-gray-200" />
+                        )}
+                        <span>
+                          {el.texto} {categoryName && <span className="text-xs text-green-600 block">({categoryName})</span>}
+                        </span>
                       </button>
                     );
                   })}
@@ -628,13 +663,26 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
           {/* 5. RECONOCER EMOCIONES */}
           {pregunta.tipo === 'reconocer_emociones' && (
             <div className="space-y-6">
-              <div className="flex justify-center">
-                <img
-                  src={(pregunta.datos as any).rostroImagenUrl}
-                  alt="Imagen de expresión o emoción"
-                  className="max-h-64 object-contain rounded-2xl border border-gray-100 shadow"
-                />
-              </div>
+              {(pregunta.datos as any).rostroImagenUrl && (
+                <div className="flex justify-center">
+                  {/\.(mp4|webm)$/i.test((pregunta.datos as any).rostroImagenUrl) ? (
+                    <video
+                      src={(pregunta.datos as any).rostroImagenUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="max-h-64 object-contain rounded-2xl border border-gray-100 shadow"
+                    />
+                  ) : (
+                    <img
+                      src={(pregunta.datos as any).rostroImagenUrl}
+                      alt="Imagen de expresión o emoción"
+                      className="max-h-64 object-contain rounded-2xl border border-gray-100 shadow"
+                    />
+                  )}
+                </div>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {(pregunta.datos as any).opciones.map((op: any) => {
@@ -657,38 +705,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
             </div>
           )}
 
-          {/* 6. EXPLORADOR 3D (reto: tocar la parte pedida) */}
-          {pregunta.tipo === 'explorador_3d' && (
-            <div className="space-y-6">
-              {objetivo3d && (
-                <div className={`p-4 rounded-2xl border-2 text-center font-extrabold ${
-                  intentado
-                    ? isCorrect
-                      ? 'border-green-400 bg-green-50 text-green-800'
-                      : 'border-red-300 bg-red-50 text-red-800'
-                    : 'border-[#EE7C6A]/40 bg-[#FFF8F0] text-[#8C2E00]'
-                }`}>
-                  {intentado
-                    ? isCorrect
-                      ? `¡Correcto! Tocaste ${objetivo3d.nombre} 🎉`
-                      : `Ese no era ${objetivo3d.nombre}. ¡Sigue intentando!`
-                    : `Reto: encuentra y toca 👉 ${objetivo3d.nombre}`}
-                </div>
-              )}
-              <Visor3DLazy
-                modeloUrl={(pregunta.datos as any).modeloUrl}
-                nombreObjeto={(pregunta.datos as any).nombreObjeto}
-                puntosDeInteres={(pregunta.datos as any).puntosDeInteres}
-                onSeleccionar={(punto) => {
-                  if (objetivo3d && !intentado) {
-                    verificarSeleccion(punto.id, punto.id === objetivo3d.id);
-                  }
-                }}
-              />
-            </div>
-          )}
-
-          {/* 7. AUTOEVALUACIÓN (tablero de sonrisas) */}
+          {/* 6. AUTOEVALUACIÓN (tablero de sonrisas) */}
           {pregunta.tipo === 'autoevaluacion' && (
             <div className="space-y-6">
               {(pregunta.datos as any).reflexion && (

@@ -15,7 +15,7 @@ interface RutaAsignada extends Asignacion {
 const tipoEmoji = (tipo: string): string => {
   const mapa: Record<string, string> = {
     seleccion: '✅', emparejar: '🔗', clasificar: '🗂️', completar: '🧩',
-    reconocer_emociones: '😊', explorador_3d: '🧊', autoevaluacion: '🌟'
+    reconocer_emociones: '😊', autoevaluacion: '🌟'
   };
   return mapa[tipo] || '⭐';
 };
