@@ -55,10 +55,16 @@ def main():
         print(f"  {k}  →  {v}")
 
     print()
-    print("── profesor_id de las etapas ──")
-    c = collections.Counter(e.get("profesor_id") for e in perfiles if e.get("rol") == "profesor")
+    print("── etapas en la BD ──")
+    for e in etapas:
+        print(f"  {str(e.get('id'))[:8]}…  {str(e.get('nombre'))[:38]:38s} "
+              f"orden={e.get('orden')}  prof={str(e.get('profesor_id'))[:8]}…")
+
+    print()
+    print("── profesor_id distintos en las etapas ──")
+    c = collections.Counter(e.get("profesor_id") for e in etapas)
     for k, v in c.most_common():
-        print(f"  {k}  →  {v}")
+        print(f"  {k}  →  {v} etapas")
 
     print()
     print("── tipos en la BD ──")
