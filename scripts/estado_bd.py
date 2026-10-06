@@ -22,12 +22,13 @@ def cargar(ruta):
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print(__doc__)
         return 2
 
     perfiles = cargar(sys.argv[1])
     acts = cargar(sys.argv[2])
+    etapas = cargar(sys.argv[3])
 
     print("── perfiles en la BD ──")
     for p in perfiles:
@@ -51,6 +52,12 @@ def main():
     print("── reparto de actividades por etapa ──")
     por_etapa = collections.Counter(a.get("etapa_id") for a in acts)
     for k, v in sorted(por_etapa.items(), key=lambda x: (x[0] is None, str(x[0]))):
+        print(f"  {k}  →  {v}")
+
+    print()
+    print("── profesor_id de las etapas ──")
+    c = collections.Counter(e.get("profesor_id") for e in perfiles if e.get("rol") == "profesor")
+    for k, v in c.most_common():
         print(f"  {k}  →  {v}")
 
     print()

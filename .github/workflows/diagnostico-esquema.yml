@@ -82,4 +82,7 @@ jobs:
           curl -sS --max-time 25 "${HDR[@]}" \
             "$BASE/actividades?select=id,tipo,titulo,etapa_id,profesor_id&limit=80" \
             > /tmp/actividades_completas.json
-          python3 scripts/estado_bd.py /tmp/perfiles.json /tmp/actividades_completas.json
+          curl -sS --max-time 25 "${HDR[@]}" \
+            "$BASE/etapas?select=id,nombre,profesor_id,orden&limit=20" \
+            > /tmp/etapas_completas.json
+          python3 scripts/estado_bd.py /tmp/perfiles.json /tmp/actividades_completas.json /tmp/etapas_completas.json
