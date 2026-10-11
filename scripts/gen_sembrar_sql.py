@@ -36,9 +36,6 @@ ETAPAS_BD = {
     "etapa-emociones": "00000000-0000-0000-0000-000000000205",  # Guía Convivencia · Emociones
 }
 
-# profesor_id sintético ya usado en el seed y en las etapas de la BD.
-PROFESOR = "00000000-0000-0000-0000-000000000001"
-
 # Namespace para derivar UUIDs deterministas (UUIDv5-style sobre md5).
 NS = "eco-inclusivo:seed:"
 
@@ -61,6 +58,16 @@ def jsonb(obj) -> str:
 
 def main():
     dry = "--dry-run" in sys.argv
+    profesor_override = None
+    for arg in sys.argv[1:]:
+        if arg.startswith("--profesor="):
+            profesor_override = arg.split("=", 1)[1]
+
+    # profesor_id real en la BD verificada: todas las actividades y etapas de las
+    # 5 guías pertenecen a "Profesor Demo" (a8ea2006…). Se puede sobreescribir con
+    # --profesor=<UUID> para otro entorno.
+    PROFESOR = profesor_override or "a8ea2006-d62d-4bc9-a7fb-9b6e8e240551"
+    print(f"profesor_id destino: {PROFESOR}")
     actividades = json.load(open(SEED, encoding="utf-8"))
 
     # Sanidad antes de emitir nada
@@ -155,7 +162,7 @@ def main():
     filas = []
     for a in actividades:
         et = a.get("etapa_id")
-        uid_et = ETAPAS_BD[et] if et else "NULL"
+        uid_et = lit(ETAPAS_BD[et]) if et else "NULL"
         orden = a.get("orden")
         uid_act = uuid_de(a["id"])
         vals = ", ".join([
