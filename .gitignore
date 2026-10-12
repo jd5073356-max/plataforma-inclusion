@@ -32,3 +32,5 @@ dns_proxy.py
 .env
 .env.local
 .env.production
+
+__pycache__/

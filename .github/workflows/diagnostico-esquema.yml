@@ -86,3 +86,27 @@ jobs:
             "$BASE/etapas?select=id,nombre,profesor_id,orden&limit=20" \
             > /tmp/etapas_completas.json
           python3 scripts/estado_bd.py /tmp/perfiles.json /tmp/actividades_completas.json /tmp/etapas_completas.json
+
+      - name: Exportar el spec OpenAPI de PostgREST
+        shell: bash {0}
+        env:
+          K: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          # El spec describe tablas y columnas sin necesidad de permisos de
+          # administración. Se baja como artefacto para reconstruir el esquema
+          # en local y poder probar sembrar-contenido.sql contra un Postgres
+          # propio antes de tocar producción.
+          curl -sS --max-time 40 \
+            "https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/" \
+            -H "apikey: $K" -H "Authorization: Bearer $K" \
+            -H "Accept: application/openapi+json;version=3.0" \
+            > /tmp/openapi.json
+          echo "  bytes: $(stat -c%s /tmp/openapi.json)"
+          python3 -c "import json;d=json.load(open('/tmp/openapi.json'));print('  rutas:',len(d.get('paths',{})));print('  versiones:',list(d.keys())[:6])"
+          cp /tmp/openapi.json openapi.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: esquema-produccion
+          path: openapi.json
+          retention-days: 7
