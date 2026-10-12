@@ -42,6 +42,15 @@ jobs:
           R7=$(sonda progreso actividad_id)        ; printf "  progreso.actividad_id        %s\n" "$R7"
 
           echo
+          echo "── Columnas opcionales del tipo Actividad (el sembrado las inserta) ──"
+          for col in imagen_url video_url atelier descripcion nivel ajuste duracion; do
+            printf "  actividades.%-14s %s\n" "$col" "$(sonda actividades "$col")"
+          done
+          echo "  (AUSENTE = PostgREST dice que la columna no existe;"
+          echo "   no confundir con 'existe pero vale null en las filas mostradas':"
+          echo "   select=* omite los null, por eso hace falta este sondeo explícito.)"
+
+          echo
           echo "── Contenido ──"
           for t in actividades etapas perfiles asignaciones progreso; do
             rango=$(curl -sS --max-time 20 -D - -o /dev/null \
