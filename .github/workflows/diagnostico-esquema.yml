@@ -77,7 +77,7 @@ jobs:
             /tmp/etapas_bd.json /tmp/actividades_bd.json src/lib/seed-activities.json
 
           echo
-          curl -sS --max-time 25 "${HDR[@]}" "$BASE/perfiles?select=id,rol,nombre&limit=30" \
+          curl -sS --max-time 25 "${HDR[@]}" "$BASE/perfiles?select=id,rol&limit=30" \
             > /tmp/perfiles.json
           curl -sS --max-time 25 "${HDR[@]}" \
             "$BASE/actividades?select=id,tipo,titulo,etapa_id,profesor_id&limit=80" \
@@ -87,26 +87,34 @@ jobs:
             > /tmp/etapas_completas.json
           python3 scripts/estado_bd.py /tmp/perfiles.json /tmp/actividades_completas.json /tmp/etapas_completas.json
 
-      - name: Exportar el spec OpenAPI de PostgREST
+      - name: Exportar muestras para reconstruir el esquema en local
         shell: bash {0}
         env:
           K: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          # El spec describe tablas y columnas sin necesidad de permisos de
-          # administración. Se baja como artefacto para reconstruir el esquema
-          # en local y poder probar sembrar-contenido.sql contra un Postgres
-          # propio antes de tocar producción.
-          curl -sS --max-time 40 \
-            "https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1/" \
-            -H "apikey: $K" -H "Authorization: Bearer $K" \
-            -H "Accept: application/openapi+json;version=3.0" \
-            > /tmp/openapi.json
-          echo "  bytes: $(stat -c%s /tmp/openapi.json)"
-          python3 -c "import json;d=json.load(open('/tmp/openapi.json'));print('  rutas:',len(d.get('paths',{})));print('  versiones:',list(d.keys())[:6])"
-          cp /tmp/openapi.json openapi.json
+          # El spec OpenAPI de este proyecto devuelve un error con la anon key,
+          # así que la forma de las tablas se deduce de filas reales.
+          # Se limita la proyección: actividades y etapas son contenido
+          # pedagógico; de perfiles NO se saca ni el nombre, porque hay cuentas
+          # de menores y el artefacto queda visible en GitHub.
+          BASE="https://fmpubxikjdbdfvanfcok.supabase.co/rest/v1"
+          HDR=(-H "apikey: $K" -H "Authorization: Bearer $K")
+
+          curl -sS --max-time 30 "${HDR[@]}" "$BASE/actividades?select=*&limit=6" \
+            > muestra_actividades.json
+          curl -sS --max-time 30 "${HDR[@]}" "$BASE/etapas?select=*&limit=20" \
+            > muestra_etapas.json
+
+          python3 -c "import json;a=json.load(open('muestra_actividades.json'));e=json.load(open('muestra_etapas.json'));print('  actividades muestreadas:',len(a));print('  columnas:',sorted(a[0].keys()) if a else '?');print('  etapas muestreadas:',len(e));print('  columnas:',sorted(e[0].keys()) if e else '?')"
+
+          if grep -qiE '"(nombre|email|apellido|documento)"[[:space:]]*:' muestra_actividades.json muestra_etapas.json; then
+            echo "::warning::las muestras traen campos que parecen personales; revisar antes de compartir el artefacto"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: esquema-produccion
-          path: openapi.json
-          retention-days: 7
+          name: muestras-esquema
+          path: |
+            muestra_actividades.json
+            muestra_etapas.json
+          retention-days: 3

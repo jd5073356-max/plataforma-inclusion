@@ -31,8 +31,10 @@ def main():
     etapas = cargar(sys.argv[3])
 
     print("── perfiles en la BD ──")
+    # Sin nombres: los logs de un workflow son visibles en GitHub y hay cuentas
+    # de estudiantes menores. Basta el id y el rol para decidir el sembrado.
     for p in perfiles:
-        print(f"  {p.get('id')}  {str(p.get('rol')):11s} {str(p.get('nombre'))[:30]}")
+        print(f"  {p.get('id')}  {str(p.get('rol')):11s}")
 
     print()
     print("── profesor_id distintos en actividades ──")
