@@ -72,9 +72,10 @@ CREATE POLICY "estudiante ve actividades asignadas" ON public.actividades
   );
 
 -- 4. Funciones SECURITY DEFINER: dejar de exponerlas como RPC públicos.
---    El EXECUTE por defecto lo otorga PUBLIC (anon y authenticated
---    heredan de ahí), así que se revoca a PUBLIC y se re-otorga SOLO a
---    quien lo necesita:
+--    El ACL real (verificado contra la BD) tiene EXECUTE explícito para anon
+--    y authenticated, no solo el default de PUBLIC — el SQL original de la
+--    tabla lo otorgó a mano. Se revoca a PUBLIC Y a anon (authenticated se
+--    conserva donde hace falta, abajo):
 --      · handle_new_user: es trigger de auth.users (la invoca el sistema
 --        al crear usuarios, no por RPC). Nadie necesita ejecutarla.
 --      · is_admin: la evalúa la policy "admin ve todos" cuando consulta
@@ -82,9 +83,9 @@ CREATE POLICY "estudiante ve actividades asignadas" ON public.actividades
 --      · crear_estudiante: tiene guard interno (solo rol profesor),
 --        pero anon no debe siquiera poder llamarla: recibe un password
 --        como parámetro. authenticated la conserva para los profesores.
-REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC;
-REVOKE EXECUTE ON FUNCTION public.is_admin() FROM PUBLIC;
-REVOKE EXECUTE ON FUNCTION public.crear_estudiante(text, text, text, text, uuid) FROM PUBLIC;
+REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.is_admin() FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.crear_estudiante(text, text, text, text, uuid) FROM PUBLIC, anon;
 
 GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.crear_estudiante(text, text, text, text, uuid) TO authenticated;
