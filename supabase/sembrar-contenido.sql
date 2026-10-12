@@ -9,8 +9,11 @@
 -- Idempotente: los ids se derivan por hash del id del seed, y se hace
 -- UPSERT sobre la clave primaria. Se puede volver a ejecutar.
 --
--- Requiere: supabase/migracion-rutas.sql ya aplicada (columnas
---   actividades.orden y asignaciones.etapa_id).
+-- Requiere: supabase/migracion-rutas.sql ya aplicada. Ésta añade
+--   actividades.orden, actividades.imagen_url, actividades.video_url,
+--   actividades.atelier y asignaciones.etapa_id; sin ella el INSERT
+--   rebota con PGRST204 (column does not exist).
+--   Se comprueba abajo, antes de escribir nada.
 --
 -- Ejecutar en: Supabase dashboard → SQL Editor del proyecto
 --   fmpubxikjdbdfvanfcok. Necesita permisos de escritura (service_role
@@ -21,18 +24,28 @@ BEGIN;
 
 -- 0. Precondición: la migración de rutas aplicada. Si falla, aborta sin tocar datos.
 DO $$
+DECLARE
+  faltantes text[] := ARRAY[]::text[];
+  c text;
 BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'actividades' AND column_name = 'orden'
-  ) THEN
-    RAISE EXCEPTION 'falta actividades.orden: aplica supabase/migracion-rutas.sql primero';
-  END IF;
-  IF NOT EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'asignaciones' AND column_name = 'etapa_id'
-  ) THEN
-    RAISE EXCEPTION 'falta asignaciones.etapa_id: aplica supabase/migracion-rutas.sql primero';
+  FOR c IN
+    SELECT x FROM unnest(ARRAY[
+      'actividades.orden', 'actividades.imagen_url', 'actividades.video_url',
+      'actividades.atelier', 'asignaciones.etapa_id'
+    ]) AS x
+  LOOP
+    IF NOT EXISTS (
+      SELECT 1 FROM information_schema.columns
+      WHERE table_schema = 'public'
+        AND table_name = split_part(c, '.', 1)
+        AND column_name  = split_part(c, '.', 2)
+    ) THEN
+      faltantes := array_append(faltantes, c);
+    END IF;
+  END LOOP;
+  IF array_length(faltantes, 1) IS NOT NULL THEN
+    RAISE EXCEPTION 'faltan columnas: %. Aplica supabase/migracion-rutas.sql primero.',
+      array_to_string(faltantes, ', ');
   END IF;
 END $$;
 
