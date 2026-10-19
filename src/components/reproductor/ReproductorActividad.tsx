@@ -720,7 +720,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                   {(pregunta.datos as any).reflexion}
                 </p>
               )}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className={`grid grid-cols-2 ${(pregunta.datos as any).escala.length > 2 ? 'md:grid-cols-4' : 'max-w-xl mx-auto'} gap-4`}>
                 {(pregunta.datos as any).escala.map((op: any) => {
                   const isSelected = selectedOpcionId === op.id;
                   return (

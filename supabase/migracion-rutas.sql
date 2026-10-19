@@ -56,6 +56,7 @@ ALTER TABLE actividades ADD COLUMN IF NOT EXISTS atelier    jsonb;
 
 -- 3. Asignaciones por RUTA (no por actividad suelta)
 ALTER TABLE asignaciones ADD COLUMN IF NOT EXISTS etapa_id uuid REFERENCES etapas(id);
+ALTER TABLE asignaciones ALTER COLUMN actividad_id DROP NOT NULL;
 
 -- Migrar asignaciones antiguas: deducir la etapa desde la actividad asignada
 UPDATE asignaciones a

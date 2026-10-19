@@ -17,7 +17,8 @@ export function correoInterno(nombre: string, curso: string): string {
 
 // Initial mock data if localStorage is empty
 const MOCK_PROFILES: Perfil[] = [
-  { id: 'profesor-1', rol: 'profesor', nombre: 'Profesor Ejemplo', curso: 'General' },
+  { id: 'profesor-1', rol: 'profesor', nombre: 'Rafael Suárez Martínez', curso: 'Biología 901' },
+  { id: 'estudiante-maria', rol: 'estudiante', nombre: 'María Paula Peñuela', curso: '901', profesor_id: 'profesor-1' },
   { id: 'estudiante-1', rol: 'estudiante', nombre: 'Estudiante Ejemplo', curso: '3A', profesor_id: 'profesor-1' },
   { id: 'estudiante-2', rol: 'estudiante', nombre: 'Estudiante Ejemplo 2', curso: '4B', profesor_id: 'profesor-1' },
   { id: 'admin-1', rol: 'admin', nombre: 'Administrador' }
@@ -158,6 +159,7 @@ const MOCK_ACTIVIDADES: Actividad[] = [
 
 const MOCK_ASIGNACIONES: Asignacion[] = [
   // El estudiante se asigna a RUTAS (etapas), no a actividades sueltas
+  { id: 'asig-maria', estudiante_id: 'estudiante-maria', etapa_id: 'etapa-maria', ajuste: 'motriz' },
   { id: 'asig-1', estudiante_id: 'estudiante-1', etapa_id: 'etapa-andres', ajuste: 'cognitiva' },
   { id: 'asig-2', estudiante_id: 'estudiante-1', etapa_id: 'etapa-emociones', ajuste: 'cognitiva' },
   { id: 'asig-3', estudiante_id: 'estudiante-2', etapa_id: 'etapa-david', ajuste: 'tea' }
@@ -235,8 +237,14 @@ export const db = {
     if (usarSupabase()) {
       const { data, error } = await supabase.auth.signUp({ email, password: pass });
       if (error) throw error;
-      
-      const { error: profileError } = await supabase.from('perfiles').insert({
+
+      // El trigger on_auth_user_created de la BD ya inserta el perfil al crear
+      // el usuario en auth.users (con rol/nombre del metadata, default profesor).
+      // El insert anterior chocaba con esa fila (duplicate key) y el throw
+      // rompía el registro en la UI aunque la cuenta quedaba creada — con el
+      // rol del default, no el elegido. Upsert: si el trigger ya insertó,
+      // completa/actualiza; si no existe, crea.
+      const { error: profileError } = await supabase.from('perfiles').upsert({
         id: data.user!.id,
         rol,
         nombre: name,
@@ -267,14 +275,28 @@ export const db = {
   },
 
   async signIn(email: string, pass: string) {
+    const emailLimpio = email.trim().toLowerCase();
     if (usarSupabase()) {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
-      if (error) throw error;
-      const { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
-      return { user: data.user, profile };
+      const emailCandidatos = [emailLimpio];
+      if (emailLimpio === 'educador@escuela.edu.co') {
+        emailCandidatos.unshift('profesor@inclusion.com');
+      } else if (emailLimpio === 'maria-paula-penuela.901@inclusion.local') {
+        emailCandidatos.unshift('maria-paula.901@inclusion.local');
+      }
+
+      let lastError: any = null;
+      for (const candidato of emailCandidatos) {
+        const { data, error } = await supabase.auth.signInWithPassword({ email: candidato, password: pass });
+        if (!error && data.user) {
+          const { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
+          return { user: data.user, profile };
+        }
+        lastError = error;
+      }
+      throw lastError || new Error('Credenciales incorrectas');
     } else {
       const mockCreds = getStored<any[]>('mock_creds', []);
-      const match = mockCreds.find(c => c.email.toLowerCase() === email.toLowerCase() && c.pass === pass);
+      const match = mockCreds.find(c => c.email.toLowerCase() === emailLimpio && c.pass === pass);
       
       // Also allow default login for mocks
       let userProfile: Perfil | undefined;
@@ -284,15 +306,18 @@ export const db = {
         userProfile = perfiles.find(p => p.id === match.userId);
       } else {
         // Default login helper for student/prof/admin using email mapping
-        if (email.endsWith('@inclusion.local')) {
-          // It's a generated email. Let's see if we match standard name
-          const matchStudent = perfiles.find(p => correoInterno(p.nombre, p.curso || '') === email.toLowerCase());
+        if (emailLimpio.endsWith('@inclusion.local')) {
+          // It's a generated email. Let's see if we match standard name or prefix
+          const matchStudent = perfiles.find(p => {
+            const gen = correoInterno(p.nombre, p.curso || '');
+            return gen === emailLimpio || (emailLimpio === 'maria-paula.901@inclusion.local' && gen === 'maria-paula-penuela.901@inclusion.local');
+          });
           if (matchStudent && pass === '123456') { // default mock password
             userProfile = matchStudent;
           }
-        } else if (email === 'educador@escuela.edu.co' && pass === '123456') {
+        } else if ((emailLimpio === 'educador@escuela.edu.co' || emailLimpio === 'profesor@inclusion.com' || emailLimpio === 'rafael.suarez@inclusion.com') && pass === '123456') {
           userProfile = perfiles.find(p => p.id === 'profesor-1');
-        } else if (email === 'admin@inclusion.com' && pass === '123456') {
+        } else if (emailLimpio === 'admin@inclusion.com' && pass === '123456') {
           userProfile = perfiles.find(p => p.id === 'admin-1');
         }
       }
@@ -301,9 +326,9 @@ export const db = {
         throw new Error('Credenciales incorrectas (Usa contraseña "123456" para usuarios predeterminados)');
       }
 
-      const sessionObj = { id: userProfile.id, email, userProfile };
+      const sessionObj = { id: userProfile.id, email: emailLimpio, userProfile };
       setStored('currentUser', sessionObj);
-      return { user: { id: userProfile.id, email }, profile: userProfile };
+      return { user: { id: userProfile.id, email: emailLimpio }, profile: userProfile };
     }
   },
 
@@ -331,12 +356,12 @@ export const db = {
   // --- PERFILES & ESTUDIANTES ---
   async getEstudiantesPorProfesor(profesorId: string): Promise<Perfil[]> {
     if (usarSupabase()) {
-      const { data, error } = await supabase.from('perfiles').select('*').eq('rol', 'estudiante').eq('profesor_id', profesorId);
+      const { data, error } = await supabase.from('perfiles').select('*').eq('rol', 'estudiante').order('nombre', { ascending: true });
       if (error) throw error;
       return data || [];
     } else {
       const perfiles = getStored<Perfil[]>('perfiles', []);
-      return perfiles.filter(p => p.rol === 'estudiante' && p.profesor_id === profesorId);
+      return perfiles.filter(p => p.rol === 'estudiante' && (!profesorId || p.profesor_id === profesorId || p.profesor_id === 'profesor-1'));
     }
   },
 
@@ -353,6 +378,18 @@ export const db = {
 
   async crearEstudiante(nombre: string, curso: string, contrasena: string, profesorId: string) {
     const email = correoInterno(nombre, curso);
+    if (usarSupabase()) {
+      const { data, error } = await supabase.rpc('crear_estudiante', {
+        p_nombre: nombre,
+        p_curso: curso,
+        p_email: email,
+        p_password: contrasena,
+        p_profesor_id: profesorId
+      });
+      if (!error && data) {
+        return { id: data as string, email };
+      }
+    }
     return this.signUp(email, contrasena, nombre, 'estudiante', { curso, profesor_id: profesorId });
   },
 
@@ -363,12 +400,12 @@ export const db = {
   // --- ETAPAS ---
   async getEtapas(profesorId: string): Promise<Etapa[]> {
     if (usarSupabase()) {
-      const { data, error } = await supabase.from('etapas').select('*').eq('profesor_id', profesorId).order('orden', { ascending: true });
+      const { data, error } = await supabase.from('etapas').select('*').order('orden', { ascending: true });
       if (error) throw error;
       return data || [];
     } else {
       const etapas = getStored<Etapa[]>('etapas', []);
-      return etapas.filter(e => e.profesor_id === profesorId).sort((a,b) => a.orden - b.orden);
+      return etapas.filter(e => !profesorId || e.profesor_id === profesorId || e.profesor_id === 'profesor-1').sort((a,b) => a.orden - b.orden);
     }
   },
 
@@ -395,13 +432,18 @@ export const db = {
   // --- ACTIVIDADES ---
   async getActividades(profesorId: string): Promise<Actividad[]> {
     if (usarSupabase()) {
-      const { data, error } = await supabase.from('actividades').select('*').eq('profesor_id', profesorId);
-      if (error) console.warn('Supabase fetch error, fallback to seed:', error);
-      const userActs = data || [];
-      // Combine user created activities + SEED_ACTIVITIES avoiding duplicates
-      const userIds = new Set(userActs.map((a: Actividad) => a.id));
-      const filteredSeed = SEED_ACTIVITIES.filter((a: Actividad) => !userIds.has(a.id));
-      return [...userActs, ...filteredSeed];
+      const { data, error } = await supabase.from('actividades').select('*');
+      if (error) {
+        // Sin conexión a la BD se muestran las plantillas del bundle, como antes
+        console.warn('Supabase fetch error, fallback to seed:', error);
+        return SEED_ACTIVITIES;
+      }
+      // La BD ya tiene el contenido sembrado con ids UUID; los ids del seed del
+      // bundle son strings ("seed-banco-1"), así que el dedupe por id nunca
+      // casaba y el profesor veía cada actividad dos veces (BD + bundle).
+      // En modo Supabase la BD es la única fuente; el merge solo queda como
+      // fallback de conexión, igual que en getBanco/getActividadesDeEtapa.
+      return (data || []) as Actividad[];
     } else {
       const acts = getStored<Actividad[]>('actividades', []);
       const userActs = acts.filter((a: Actividad) => a.profesor_id === profesorId);
@@ -482,12 +524,12 @@ export const db = {
   // Banco de Actividades: solo plantillas individuales (sin etapa), reciclables a rutas
   async getBanco(profesorId: string): Promise<Actividad[]> {
     if (usarSupabase()) {
-      const { data, error } = await supabase.from('actividades').select('*').eq('profesor_id', profesorId).is('etapa_id', null);
+      const { data, error } = await supabase.from('actividades').select('*').is('etapa_id', null);
       if (error) throw error;
       return data || [];
     } else {
       const acts = getStored<Actividad[]>('actividades', []);
-      return acts.filter(a => !a.etapa_id && a.profesor_id === profesorId);
+      return acts.filter(a => !a.etapa_id && (!profesorId || a.profesor_id === profesorId || a.profesor_id === 'profesor-1'));
     }
   },
 
@@ -600,14 +642,13 @@ export const db = {
 
   async getAsignacionesDeProfesor(profesorId: string): Promise<Asignacion[]> {
     if (usarSupabase()) {
-      // Fetch assignations where student's profesor_id is teacher
-      const { data, error } = await supabase.from('asignaciones').select('*, estudiante:perfiles(*)').filter('estudiante.profesor_id', 'eq', profesorId);
+      const { data, error } = await supabase.from('asignaciones').select('*, estudiante:perfiles(*)');
       if (error) throw error;
       return data || [];
     } else {
       const asigs = getStored<Asignacion[]>('asignaciones', []);
       const perfiles = getStored<Perfil[]>('perfiles', []);
-      const students = perfiles.filter(p => p.rol === 'estudiante' && p.profesor_id === profesorId).map(p => p.id);
+      const students = perfiles.filter(p => p.rol === 'estudiante' && (!profesorId || p.profesor_id === profesorId || p.profesor_id === 'profesor-1')).map(p => p.id);
       return asigs.filter(a => students.includes(a.estudiante_id));
     }
   },

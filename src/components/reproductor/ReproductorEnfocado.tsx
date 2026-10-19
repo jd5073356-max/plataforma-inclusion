@@ -224,6 +224,31 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
                 </div>
               )}
 
+              {atelier.instruccionTip && (
+                <div className="bg-[#F3FAF5] border border-[#CBEAD3] p-3.5 rounded-2xl text-xs text-[#14532D]">
+                  <strong className="block font-bold mb-0.5">Guía de mediación en aula y casa:</strong>
+                  {atelier.instruccionTip}
+                </div>
+              )}
+
+              {atelier.tarjetasRecursos && atelier.tarjetasRecursos.length > 0 && (
+                <div className="space-y-2.5">
+                  {atelier.tarjetasRecursos.map((t, idx) => (
+                    <div key={idx} className="bg-[#FBF9F5] border border-[#EBE8E0] p-3.5 rounded-2xl text-xs text-[#44403C] space-y-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#EE7C6A] block">{t.etiquetaCategoria}</span>
+                      <p className="font-bold text-[#1C1917]">{t.titulo}</p>
+                      {t.itemsLista && t.itemsLista.length > 0 && (
+                        <ul className="space-y-1 pl-1">
+                          {t.itemsLista.map((item, i) => (
+                            <li key={i} className="leading-relaxed">{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {/* Acción principal */}
               {!mostrandoQuiz ? (
                 <button
