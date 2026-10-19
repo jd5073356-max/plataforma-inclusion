@@ -2466,402 +2466,807 @@
   },
   {
     "id": "seed-maria-1",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
-    "titulo": "Etapa 1 (Julio) · ¡Tu bitácora interactiva de ciencias!",
-    "imagen_url": "/multimedia/img/cerebro.jpg",
-    "configuracion": {
-      "preguntas": [
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m1a",
-            "instruccion": "🌟 Misión de inicio: Con ayuda de tu mamá Piedad, selecciona un sticker o color digital en tu tablet para marcar el inicio de tu guía de Biología.",
-            "audioUrl": "/multimedia/audios/musica_relajante.wav",
-            "imagenUrl": "/multimedia/img/cerebro.jpg",
-            "opciones": [
-              {
-                "id": "op-m1a-1",
-                "texto": "💙 Sticker Azul Cielo — Agua y brisa de Sopó",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m1a-2",
-                "texto": "💛 Sticker Amarillo Sol — Luz y energía",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m1a-3",
-                "texto": "💚 Sticker Verde Prado — Naturaleza y vida",
-                "esCorrecta": true
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m1b",
-            "instruccion": "María Paula, durante estos meses descubrirás cómo tu cuerpo se conecta con todo lo que te rodea. ¿Qué órganos de los sentidos vamos a explorar?",
-            "imagenUrl": "/multimedia/img/ojo.jpg",
-            "opciones": [
-              {
-                "id": "op-m1b-1",
-                "texto": "Tus ojos, tus oídos y tu piel (Sistema Nervioso)",
-                "imagenUrl": "/multimedia/img/ojo.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m1b-2",
-                "texto": "Solo los huesos del pie",
-                "esCorrecta": false
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m1c",
-            "instruccion": "También viajaremos con imágenes y sonidos por la Tierra (Biogeografía). ¿Qué lugares vamos a conocer?",
-            "imagenUrl": "/multimedia/img/oso_polar.jpg",
-            "opciones": [
-              {
-                "id": "op-m1c-1",
-                "texto": "Los lugares más fríos y más calientes donde viven animales maravillosos",
-                "imagenUrl": "/multimedia/img/oso_polar.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m1c-2",
-                "texto": "Únicamente el interior de una fábrica",
-                "esCorrecta": false
-              }
-            ]
-          }
-        }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
-    },
-    "atelier": {
-      "subtituloPoetico": "Nuestros sentidos y los paisajes del mundo (Julio – Noviembre · 18 semanas)",
-      "materia": "Biología Grado 901 — Docente: Rafael Suárez Martínez",
-      "resumenBreve": "María Paula, durante estos meses vas a descubrir cómo tus ojos, tus oídos y tu piel te permiten conectarte con todo lo que te rodea (Sistema Nervioso), y viajaremos con imágenes y sonidos por los lugares más fríos y más calientes de la Tierra (Biogeografía). En clase y en casa trabajarás con tu tablet, láminas grandes y el apoyo amoroso de tu mamá Piedad Arévalo y tu papá.",
-      "datosClave": [
-        {
-          "icono": "📱",
-          "etiqueta": "Herramienta",
-          "valor": "Tablet familiar y láminas grandes (Macrotipos)"
-        },
-        {
-          "icono": "🤝",
-          "etiqueta": "Mediación",
-          "valor": "Mamá Piedad Arévalo, papá y docente Rafael Suárez"
-        },
-        {
-          "icono": "👀",
-          "etiqueta": "Respuestas",
-          "valor": "Con tu mirada, tu sonrisa, tus palabras o toque asistido"
-        },
-        {
-          "icono": "🏠",
-          "etiqueta": "Flexibilidad",
-          "valor": "Disponible en casa a tu propio ritmo si faltas por salud"
-        }
-      ],
-      "importanciaEducativa": "Etapa 1 — Construcción de Sentido (Julio): Presentar las temáticas del semestre a María Paula y a sus padres de forma accesible, explicando cómo se mediará con tecnología o láminas gigantes y garantizando flexibilidad total entre el aula y el hogar.",
-      "sabiasQue": "Ruta Adaptativa (Julio–Noviembre): Julio (Etapa 1: Construcción de Sentido) · Agosto (Etapa 2: Punto de Partida) · Septiembre (Etapa 3: Recolección de Información) · Octubre (Etapa 4: Desarrollo de la Habilidad) · Noviembre (Etapa 5: Relación y Autoevaluación).",
-      "instruccionTip": "Misión de inicio: Con ayuda de mamá Piedad, María Paula selecciona un sticker o color digital en su tablet para marcar el inicio de su guía de ciencias.",
-      "tarjetasRecursos": [
-        {
-          "tipo": "notas_clinicas",
-          "etiquetaCategoria": "📦 Anexo de Materiales · El Banco Accesible de María Paula",
-          "titulo": "Materiales para la familia (Señora Piedad Arévalo y Papá)",
-          "itemsLista": [
-            "1. La Tablet Familiar (uso permanente en clase y casa): con buena carga, videos/audios descargados y esta guía interactiva.",
-            "2. Imágenes impresas en tamaño grande (Macrotipos - Hoja carta u oficio completa): 1 Oso Polar en la nieve, 1 León en la sabana o desierto, y 1 animal común de Sopó (vaca en un prado verde).",
-            "3. Proyecto del cuerpo humano (Octubre) y experiencia térmica (Agosto): 1 base de cartón grueso (octavo de cartulina con silueta humana), 1 botón de plástico grande color rojo brillante (cerebro), tiras de cinta de tela amarilla gruesa (nervios), pegamento y paños suaves (fresco y tibio)."
-          ]
-        }
-      ]
-    },
+    "profesor_id": "mock-prof-1",
     "etapa_id": "etapa-maria",
-    "orden": 1
-  },
-  {
-    "id": "seed-maria-2",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
-    "titulo": "Etapa 2 (Agosto) · Act. 2.1: El sonido que viaja a mi cerebro",
-    "imagen_url": "/multimedia/img/oreja.jpg",
+    "orden": 1,
+    "tipo": "ordenar",
+    "titulo": "Etapa 1 (Julio) · ¡Tu bitácora interactiva de ciencias!",
+    "imagen_url": "/multimedia/img/cuerpo_cerebro.jpg",
+    "video_url": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
           "tipo": "seleccion",
           "datos": {
-            "id": "preg-m2a",
-            "instruccion": "🎵 Sonido 1 (Canto de un pájaro): María Paula, ¿escuchaste el pájaro? Muéstrame con tus ojos o una sonrisa si te gustó. Mamá Piedad registra tu respuesta gestual.",
-            "audioUrl": "/multimedia/audios/pajaro.wav",
-            "imagenUrl": "/multimedia/img/oreja.jpg",
+            "id": "pm1-q1",
+            "instruccion": "🎨 MISIÓN DE INICIO Y DIAGNÓSTICO NEUROBIOLÓGICO: Con ayuda de mamá Piedad, elige tu insignia científica para inaugurar tu bitácora de Biología (Grado 901) e identifica cuál sistema del cuerpo humano procesa la luz, el sonido y la temperatura que exploraremos este semestre:",
+            "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg",
             "opciones": [
               {
-                "id": "op-m2a-1",
-                "texto": "😊 ¡Sí, escuché el pájaro y me gustó! (Mirada o sonrisa)",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m2a-2",
-                "texto": "👀 Escuché el sonido con atención tranquila",
-                "esCorrecta": true
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m2b",
-            "instruccion": "💧 Sonido 2 (Agua corriendo): Escucha el agua en volumen moderado. ¿Con qué órgano de tus sentidos escuchas el agua corriendo?",
-            "audioUrl": "/multimedia/audios/agua_corriendo.wav",
-            "imagenUrl": "/multimedia/img/vaso_agua.jpg",
-            "opciones": [
-              {
-                "id": "op-m2b-1",
-                "texto": "Con mis oídos (la oreja) 👂",
-                "imagenUrl": "/multimedia/img/oreja.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m2b-2",
-                "texto": "Con el codo",
-                "esCorrecta": false
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m2c",
-            "instruccion": "🔔 Sonido 3 (Campana): Escucha la campana. ¿A qué órgano viaja el sonido para que sepamos qué es?",
-            "audioUrl": "/multimedia/audios/campana.wav",
-            "imagenUrl": "/multimedia/img/cerebro.jpg",
-            "opciones": [
-              {
-                "id": "op-m2c-1",
-                "texto": "Al cerebro 🧠 (Centro de control)",
+                "id": "a",
+                "texto": "🌟 Insignia Neuro-Exploradora: El Sistema Nervioso Central y Periférico (cerebro, médula espinal y órganos de los sentidos)",
                 "imagenUrl": "/multimedia/img/cerebro.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m2c-2",
-                "texto": "Al estómago",
+                "id": "b",
+                "texto": "🦴 El Sistema Óseo exclusivamente (solo huesos sin receptores nerviosos)",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🦷 El Sistema Digestivo (encargado únicamente de absorber nutrientes en el intestino)",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "💪 El Sistema Muscular aislado sin conexión con el cerebro ni los nervios",
                 "esCorrecta": false
               }
             ]
           }
         },
         {
-          "tipo": "seleccion",
+          "tipo": "emparejar",
           "datos": {
-            "id": "preg-m2d",
-            "instruccion": "🌧️ Sonido de extensión (Clima frío de Sopó): Escucha la lluvia. Muéstrame con tus ojos o una sonrisa cuando la reconozcas.",
-            "audioUrl": "/multimedia/audios/lluvia.wav",
+            "id": "pm1-q2",
+            "instruccion": "🔬 RETO DE RECEPTORES SENSORIALES: Une cada órgano de los sentidos con el tipo de receptor especializado y el estímulo físico o químico que transforma en impulsos nerviosos:",
+            "parejas": [
+              {
+                "id": "p1",
+                "origen": "/multimedia/img/ojo.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Ojo humano (Retina)",
+                "destino": "Fotorreceptores (conos y bastones) · Captan la luz y los colores de los paisajes",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p2",
+                "origen": "/multimedia/img/oreja.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Oído humano (Cóclea)",
+                "destino": "Mecanorreceptores auditivos · Vibran con las ondas sonoras de aves, lluvia y música",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p3",
+                "origen": "/multimedia/img/piel.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Piel (Corpúsculos térmicos)",
+                "destino": "Termorreceptores cutáneos · Detectan el frío del hielo y el calor del sol",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "p4",
+                "origen": "/multimedia/img/cerebro.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Cerebro (Corteza cerebral)",
+                "destino": "Centro integrador · Interpreta todos los impulsos eléctricos y dirige tu mirada o sonrisa",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "ordenar",
+          "datos": {
+            "id": "pm1-q3",
+            "instruccion": "⚡ SECUENCIA DEL IMPULSO NERVIOSO: Toca en orden los 4 pasos que ocurren desde que un estímulo de la naturaleza llega a tu cuerpo hasta que respondes con tu mirada o tu sonrisa:",
+            "elementos": [
+              {
+                "id": "paso-1",
+                "texto": "1° Estímulo ambiental: La luz de un paisaje o el canto de un ave llega desde el entorno.",
+                "imagenUrl": "/multimedia/img/linterna.jpg",
+                "ordenCorrecto": 1
+              },
+              {
+                "id": "paso-2",
+                "texto": "2° Transducción en el receptor: El órgano sensorial (ojo, oído o piel) convierte el estímulo en señal eléctrica.",
+                "imagenUrl": "/multimedia/img/ojo.jpg",
+                "ordenCorrecto": 2
+              },
+              {
+                "id": "paso-3",
+                "texto": "3° Procesamiento cerebral: El impulso viaja por los nervios hasta la corteza del cerebro, que comprende qué ocurre.",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "ordenCorrecto": 3
+              },
+              {
+                "id": "paso-4",
+                "texto": "4° Respuesta voluntaria: El cerebro envía la orden para que María Paula responda con su mirada, sonrisa o voz.",
+                "imagenUrl": "/multimedia/img/emocion_alegria.jpg",
+                "ordenCorrecto": 4
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "pm1-q4",
+            "instruccion": "🗺️ MAPA CIENTÍFICO DEL SEMESTRE: Clasifica cada concepto en las dos grandes unidades que trabajaremos de julio a noviembre con el docente Rafael Suárez:",
+            "categorias": [
+              {
+                "id": "cat-neuro",
+                "nombre": "🧠 Eje 1: Sistema Nervioso y Sentidos"
+              },
+              {
+                "id": "cat-biogeo",
+                "nombre": "🌍 Eje 2: Biogeografía, Climas y Biomas"
+              }
+            ],
+            "elementos": [
+              {
+                "id": "e1",
+                "texto": "Impulsos eléctricos que viajan de la retina y la cóclea al cerebro",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "categoriaId": "cat-neuro"
+              },
+              {
+                "id": "e2",
+                "texto": "Adaptaciones del oso polar y el pingüino al hielo extremo del Ártico y la Antártida",
+                "imagenUrl": "/multimedia/img/oso_polar.jpg",
+                "categoriaId": "cat-biogeo"
+              },
+              {
+                "id": "e3",
+                "texto": "Termorreceptores de la piel que distinguen un paño frío de uno tibio",
+                "imagenUrl": "/multimedia/img/piel.jpg",
+                "categoriaId": "cat-neuro"
+              },
+              {
+                "id": "e4",
+                "texto": "Ecosistema verde altoandino de Sopó (2.600 m s.n.m.) y sabanas cálidas del mundo",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+                "categoriaId": "cat-biogeo"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "pm1-q5",
+            "instruccion": "✍️ SÍNTESIS DE CONSTRUCCIÓN DE SENTIDO: Toca las palabras científicas en el orden correcto para completar el principio fundamental de nuestra guía:",
+            "oracionConHuecos": "Nuestros [sentidos] captan información de los [ecosistemas] y la envían por los [nervios] hasta el [cerebro].",
+            "palabrasOpciones": [
+              "sentidos",
+              "ecosistemas",
+              "nervios",
+              "cerebro",
+              "huesos",
+              "pulmones"
+            ],
+            "respuestasCorrectas": {
+              "0": "sentidos",
+              "1": "ecosistemas",
+              "2": "nervios",
+              "3": "cerebro"
+            }
+          }
+        }
+      ]
+    },
+    "atelier": {
+      "subtituloPoetico": "NUESTROS SENTIDOS Y LOS PAISAJES DEL MUNDO · GRADO 901",
+      "materia": "Biología · Etapa 1: Construcción de Sentido (Julio)",
+      "iconoMateria": "🧠",
+      "resumenBreve": "María Paula, durante estos meses descubrirás cómo tus ojos, tus oídos y tu piel transforman estímulos físicos en impulsos eléctricos para el cerebro (Sistema Nervioso) y cómo los animales se adaptan a los climas más fríos y cálidos de la Tierra (Biogeografía). Toca los puntos brillantes sobre el video 3D del cerebro para explorar sus lóbulos.",
+      "datosClave": [
+        {
+          "icono": "👨‍🏫",
+          "etiqueta": "DOCENTE",
+          "valor": "Rafael Suárez Martínez · Grado 901"
+        },
+        {
+          "icono": "🗓️",
+          "etiqueta": "DURACIÓN",
+          "valor": "1 Semestre · 18 Semanas (Julio – Noviembre)"
+        },
+        {
+          "icono": "🤝",
+          "etiqueta": "MEDIACIÓN",
+          "valor": "Mamá Piedad Arévalo, Papá y Tablet Interactiva"
+        },
+        {
+          "icono": "🧬",
+          "etiqueta": "EJES",
+          "valor": "Neurobiología Sensorial + Biogeografía"
+        }
+      ],
+      "importanciaEducativa": "Presentar las temáticas del semestre de forma accesible y rigurosa, activando la comprensión del arco sensorial (estímulo → receptor → nervio → cerebro → respuesta gestual/mirada) y la relación clima-fauna.",
+      "sabiasQue": "Tu cerebro contiene cerca de 86.000 millones de neuronas que se comunican mediante destellos bioeléctricos a más de 300 kilómetros por hora.",
+      "instruccionTip": "Primero explora los 4 puntos interactivos del video del cerebro. Luego resuelve los 5 retos científicos (selección, emparejamiento, secuencia, clasificación y completar).",
+      "hotspots": [
+        {
+          "id": "hs-m1-1",
+          "nombre": "Lóbulo Occipital (Visión)",
+          "descripcion": "Recibe por el nervio óptico las imágenes de los paisajes blancos del polo, el desierto y el valle verde de Sopó.",
+          "xPercent": 78,
+          "yPercent": 52
+        },
+        {
+          "id": "hs-m1-2",
+          "nombre": "Lóbulo Temporal (Audición)",
+          "descripcion": "Procesa los sonidos del canto de las aves, el agua corriendo, la campana y la lluvia que llegan desde la cóclea.",
+          "xPercent": 52,
+          "yPercent": 64
+        },
+        {
+          "id": "hs-m1-3",
+          "nombre": "Corteza Somatosensorial (Tacto y Temperatura)",
+          "descripcion": "Registra las señales de los termorreceptores de tu piel cuando sientes un paño frío con hielo o un paño tibio.",
+          "xPercent": 48,
+          "yPercent": 26
+        },
+        {
+          "id": "hs-m1-4",
+          "nombre": "Lóbulo Frontal (Decisiones y Expresión)",
+          "descripcion": "Es tu centro de dirección: desde aquí decides hacia dónde dirigir tu mirada, tu parpadeo o tu sonrisa para responder.",
+          "xPercent": 24,
+          "yPercent": 42
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "donde_actua",
+          "etiquetaCategoria": "RUTA ADAPTATIVA (JULIO - NOVIEMBRE)",
+          "titulo": "Las 5 Etapas del Semestre",
+          "itemsLista": [
+            "Julio · Etapa 1: Construcción de Sentido (Neurobiología y Biogeografía interactiva).",
+            "Agosto · Etapa 2: Punto de Partida (Laboratorio auditivo y termorrecepción dirigida).",
+            "Septiembre · Etapa 3: Recolección de Información (Órganos sensoriales y mapa de biomas).",
+            "Octubre · Etapa 4: Desarrollo de la Habilidad (Circuito nervioso asistido y Álbum de Biomas).",
+            "Noviembre · Etapa 5: Relación en el hogar y Tablero de Sonrisas Logradas."
+          ]
+        },
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "ACCESIBILIDAD Y FLEXIBILIDAD",
+          "titulo": "Tu voz, tu mirada y tu sonrisa dirigen la ciencia",
+          "descripcionHtml": "En clase o desde casa si algún día debes descansar por salud, tú eres la directora científica: eliges con tu mirada, sonrisa, voz o toque asistido junto a tu mamá Piedad y tu papá."
+        }
+      ]
+    }
+  },
+  {
+    "id": "seed-maria-2",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 2,
+    "tipo": "escuchar_responder",
+    "titulo": "Etapa 2 (Agosto) · Act. 2.1: El sonido que viaja a mi cerebro",
+    "imagen_url": "/multimedia/img/oreja.jpg",
+    "video_url": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4",
+    "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
+      "preguntas": [
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm2-q1",
+            "instruccion": "🔊 SONIDO 1 · LABORATORIO ACÚSTICO (Canto de Ave): Escucha con atención el audio. \"María Paula, ¿escuchaste el pájaro? Muéstrame con tus ojos o una sonrisa\". ¿Qué estructuras convierten este canto en un mensaje para tu cerebro?",
+            "audioPreguntaUrl": "/multimedia/audios/pajaro.wav",
+            "imagenUrl": "/multimedia/img/oreja.jpg",
+            "opciones": [
+              {
+                "id": "a",
+                "texto": "🐦 Es el canto de un ave silvestre; las células ciliadas de la cóclea en el oído interno lo transforman en impulso nervioso hacia el lóbulo temporal.",
+                "imagenUrl": "/multimedia/img/oreja.jpg",
+                "esCorrecta": true
+              },
+              {
+                "id": "b",
+                "texto": "🔔 Es una campana metálica procesada por los fotorreceptores del ojo.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🌊 Es una cascada subterránea detectada únicamente por las papilas gustativas.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "❄️ Es el silencio del hielo polar captado sin intervención del nervio auditivo.",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm2-q2",
+            "instruccion": "🔊 SONIDO 2 · FLUJO HÍDRICO: Reproduce el segundo estímulo auditivo y analiza qué fenómeno natural representa y qué información ecológica le entrega a tu sistema nervioso:",
+            "audioPreguntaUrl": "/multimedia/audios/agua_corriendo.wav",
+            "imagenUrl": "/multimedia/img/vaso_agua.jpg",
+            "opciones": [
+              {
+                "id": "a",
+                "texto": "💧 Agua corriendo en un arroyo o quebrada: un sonido continuo de frecuencia suave que indica presencia de agua dulce en el ecosistema y activa una respuesta de calma.",
+                "imagenUrl": "/multimedia/img/vaso_agua.jpg",
+                "esCorrecta": true
+              },
+              {
+                "id": "b",
+                "texto": "🔥 Fuego crepitando en un desierto árido sin fuentes de agua.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🎸 Una guitarra eléctrica tocando notas agudas en un concierto.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🦁 El rugido grave de un león en la sabana africana.",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm2-q3",
+            "instruccion": "🔊 SONIDO 3 · TIMBRE METÁLICO Y ALERTA NEURONAL: Escucha el tercer sonido. ¿Por qué este timbre genera una respuesta de atención inmediata en tu sistema nervioso?",
+            "audioPreguntaUrl": "/multimedia/audios/campana.wav",
+            "imagenUrl": "/multimedia/img/cerebro.jpg",
+            "opciones": [
+              {
+                "id": "a",
+                "texto": "🔔 Es una campana: sus ondas sonoras de alta nitidez activan el sistema de alerta auditiva en el tronco encefálico y la corteza temporal para enfocar la mirada.",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "esCorrecta": true
+              },
+              {
+                "id": "b",
+                "texto": "🌧️ Es lluvia suave cayendo sobre las hojas del bosque de Sopó.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🐦 Es una bandada de aves tropicales en la selva amazónica.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🌬️ Es una ráfaga de viento polar sin vibración metálica.",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "ordenar",
+          "datos": {
+            "id": "pm2-q4",
+            "instruccion": "🧬 RUTA ANATÓMICA DE LA AUDICIÓN: Ordena del 1 al 4 el recorrido exacto que hace cualquiera de estos sonidos desde tus audífonos o el aula hasta convertirse en una sonrisa:",
+            "elementos": [
+              {
+                "id": "aud-1",
+                "texto": "1° Pabellón auricular y tímpano: La onda sonora entra al oído externo y hace vibrar la membrana del tímpano.",
+                "imagenUrl": "/multimedia/img/oreja.jpg",
+                "ordenCorrecto": 1
+              },
+              {
+                "id": "aud-2",
+                "texto": "2° Cóclea (Caracol): Los huesecillos transmiten la vibración al oído interno, donde las células ciliadas generan electricidad.",
+                "ordenCorrecto": 2
+              },
+              {
+                "id": "aud-3",
+                "texto": "3° Nervio vestibulococlear (auditivo): Conduce el impulso bioeléctrico a gran velocidad hacia el encéfalo.",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "ordenCorrecto": 3
+              },
+              {
+                "id": "aud-4",
+                "texto": "4° Corteza auditiva y respuesta: El cerebro reconoce si es pájaro, agua o campana y María Paula responde con su mirada o sonrisa.",
+                "imagenUrl": "/multimedia/img/emocion_alegria.jpg",
+                "ordenCorrecto": 4
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm2-q5",
+            "instruccion": "🌧️ SONIDO 4 · CONEXIÓN BIOGEOGRÁFICA CON SOPÓ: Escucha este sonido atmosférico y selecciona cómo se relaciona con el clima de nuestra región cundiboyacense:",
+            "audioPreguntaUrl": "/multimedia/audios/lluvia.wav",
             "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
             "opciones": [
               {
-                "id": "op-m2d-1",
-                "texto": "🌧️ ¡Sí! Es la lluvia que refresca el clima frío de Sopó",
+                "id": "a",
+                "texto": "🌧️ Es la lluvia andina: nutre los pastizales verdes y el bosque altoandino de Sopó, manteniendo su clima frío-templado de montaña (14 °C).",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m2d-2",
-                "texto": "🔥 Es el sonido del fuego",
+                "id": "b",
+                "texto": "🏜️ Es una tormenta de arena seca propia del desierto del Sahara donde casi nunca llueve.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🔔 Es el sonido de una campana escolar dentro del salón.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🎸 Es una cuerda de guitarra vibrando en un estudio musical.",
                 "esCorrecta": false
               }
             ]
           }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Punto de Partida — Experiencia auditiva dirigida (1 sesión de 60 min)",
-      "materia": "Sistema Nervioso — Canal Auditivo",
-      "resumenBreve": "Se reproducen en el aula o mediante los audífonos de la tablet 3 sonidos muy claros en volumen moderado: el canto de un pájaro, agua corriendo y el sonido de una campana (más lluvia para conectar con el clima frío de Sopó).",
+      "subtituloPoetico": "DE LA ONDA SONORA AL IMPULSO BIOELÉCTRICO",
+      "materia": "Biología · Etapa 2: Punto de Partida (Agosto)",
+      "iconoMateria": "🎧",
+      "resumenBreve": "En esta sesión de 60 minutos activamos tu canal auditivo con 4 estímulos reales (pájaro, agua corriendo, campana y lluvia de Sopó) y reconstruimos el viaje anatómico desde el tímpano y la cóclea hasta el cerebro.",
       "datosClave": [
         {
-          "icono": "🐦",
-          "etiqueta": "Sonido 1",
-          "valor": "Canto de un pájaro"
+          "icono": "⏱️",
+          "etiqueta": "TIEMPO",
+          "valor": "1 sesión de 60 min"
         },
         {
-          "icono": "💧",
-          "etiqueta": "Sonido 2",
-          "valor": "Agua corriendo"
+          "icono": "🎵",
+          "etiqueta": "ESTÍMULOS",
+          "valor": "Pájaro, Agua, Campana y Lluvia"
         },
         {
-          "icono": "🔔",
-          "etiqueta": "Sonido 3",
-          "valor": "Sonido de una campana"
-        },
-        {
-          "icono": "🌧️",
-          "etiqueta": "Extensión",
-          "valor": "Sonido de lluvia (Clima de Sopó)"
+          "icono": "🧠",
+          "etiqueta": "ÓRGANO CLAVE",
+          "valor": "Cóclea → Nervio Auditivo → Lóbulo Temporal"
         }
       ],
-      "importanciaEducativa": "Etapa 2 (Agosto): Activar el canal sensorial auditivo sin requerir motricidad fina, permitiendo respuestas gestuales (mirada, sonrisa) o verbales directas al docente.",
-      "sabiasQue": "Cuando escuchas el canto de un pájaro o la lluvia de Sopó, el oído convierte las ondas del aire en señales eléctricas que llegan al cerebro en milésimas de segundo.",
-      "instruccionTip": "Acción obligatoria: Ubicarse frente a María Paula y preguntarle: «María Paula, ¿escuchaste el pájaro? Muéstrame con tus ojos o una sonrisa si te gustó». Mamá Piedad registra la respuesta gestual."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 2
+      "importanciaEducativa": "Activar el canal sensorial auditivo (que no exige motricidad fina) para evaluar discriminación acústica, neurobiología de la audición y asociación climática con Sopó.",
+      "sabiasQue": "Dentro de tu oído interno hay un órgano en forma de caracol llamado cóclea con más de 15.000 células ciliadas microscópicas que bailan con cada sonido.",
+      "instruccionTip": "Mamá Piedad registra el tipo de respuesta gestual (mirada, parpadeo o sonrisa) mientras María Paula escucha cada pista y resuelve los 5 desafíos.",
+      "hotspots": [
+        {
+          "id": "hs-m2-1",
+          "nombre": "Corteza Auditiva Primaria",
+          "descripcion": "Ubicada en el lóbulo temporal: distingue el timbre agudo del pájaro frente al repique metálico de la campana.",
+          "xPercent": 54,
+          "yPercent": 62
+        },
+        {
+          "id": "hs-m2-2",
+          "nombre": "Sistema Límbico (Emoción Sonora)",
+          "descripcion": "Conecta los sonidos del agua y la lluvia con sensaciones de bienestar, calma o alegría expresadas en tu sonrisa.",
+          "xPercent": 46,
+          "yPercent": 50
+        }
+      ],
+      "tarjetasRecursos": [
+        {
+          "tipo": "notas_clinicas",
+          "etiquetaCategoria": "REGISTRO FAMILIAR EN BITÁCORA",
+          "titulo": "Observación de Mamá Piedad",
+          "itemsLista": [
+            "1. Reproducir cada sonido en volumen moderado (altavoz o audífonos cómodos).",
+            "2. Observar si María Paula fija la mirada, sonríe, parpadea o vocaliza.",
+            "3. Completar la secuencia anatómica del viaje del sonido al cerebro."
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "seed-maria-3",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 3,
+    "tipo": "clasificar",
     "titulo": "Etapa 2 (Agosto) · Act. 2.2: Sentir el clima del mundo",
     "imagen_url": "/multimedia/img/oso_polar.jpg",
+    "video_url": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
-          "tipo": "seleccion",
+          "tipo": "identificar",
           "datos": {
-            "id": "preg-m3a",
-            "instruccion": "❄️ Experiencia térmica (Paño fresco): Mientras sientes el paño ligeramente fresco en tus manos o mejilla, María Paula: «Mira el animal que vive en el FRÍO».",
-            "imagenUrl": "/multimedia/img/hielo.jpg",
-            "opciones": [
+            "id": "pm3-q1",
+            "instruccion": "🧊 EXPERIENCIA TÉRMICA DIRIGIDA: Mientras sientes el paño ligeramente fresco en tus manos o mejilla, el docente te pide: \"Mira y selecciona los 2 elementos que corresponden al FRÍO EXTREMO (el estímulo térmico frío y el animal adaptado a vivir en la nieve)\":",
+            "elementos": [
               {
-                "id": "op-m3a-1",
-                "texto": "Oso polar en la nieve (Frío) 🐻❄️",
+                "id": "el-oso",
+                "nombre": "Oso Polar en el hielo ártico (Pelaje denso y capa de grasa térmica)",
                 "imagenUrl": "/multimedia/img/oso_polar.jpg",
-                "esCorrecta": true
+                "esCorrecto": true
               },
               {
-                "id": "op-m3a-2",
-                "texto": "León en la sabana (Calor) 🦁☀️",
+                "id": "el-hielo",
+                "nombre": "Hielo y agua glacial (Activa los corpúsculos de Krause del frío en la piel)",
+                "imagenUrl": "/multimedia/img/hielo.jpg",
+                "esCorrecto": true
+              },
+              {
+                "id": "el-leon",
+                "nombre": "León en la sabana cálida africana (Adaptado a altas temperaturas)",
                 "imagenUrl": "/multimedia/img/leon.jpg",
-                "esCorrecta": false
+                "esCorrecto": false
+              },
+              {
+                "id": "el-desierto",
+                "nombre": "Dunas ardientes del desierto bajo radiación solar intensa",
+                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
+                "esCorrecto": false
               }
             ]
           }
         },
         {
-          "tipo": "seleccion",
+          "tipo": "clasificar",
           "datos": {
-            "id": "preg-m3b",
-            "instruccion": "☀️ Experiencia térmica (Paño tibio): Ahora siente suavemente el paño tibio en tus manos o mejilla. María Paula: «Mira el animal que vive en el CALOR».",
-            "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
-            "opciones": [
+            "id": "pm3-q2",
+            "instruccion": "🌡️ LABORATORIO DE TERMORRECEPCIÓN Y BIOGEOGRAFÍA: Clasifica cada estímulo térmico, paisaje y especie animal en el cajón científico que le corresponde:",
+            "categorias": [
               {
-                "id": "op-m3b-1",
-                "texto": "León en la sabana (Calor) 🦁☀️",
-                "imagenUrl": "/multimedia/img/leon.jpg",
-                "esCorrecta": true
+                "id": "cat-frio",
+                "nombre": "❄️ Frío Polar · Corpúsculos de Krause (Paño Fresco)"
               },
               {
-                "id": "op-m3b-2",
-                "texto": "Oso polar en la nieve (Frío) 🐻❄️",
+                "id": "cat-calor",
+                "nombre": "☀️ Calor de Sabana y Desierto · Corpúsculos de Ruffini (Paño Tibio)"
+              }
+            ],
+            "elementos": [
+              {
+                "id": "t1",
+                "texto": "Oso Polar (Ursus maritimus) con gruesa capa de grasa subcutánea",
                 "imagenUrl": "/multimedia/img/oso_polar.jpg",
-                "esCorrecta": false
+                "categoriaId": "cat-frio"
+              },
+              {
+                "id": "t2",
+                "texto": "León africano (Panthera leo) de pelaje corto en la sabana soleada",
+                "imagenUrl": "/multimedia/img/leon.jpg",
+                "categoriaId": "cat-calor"
+              },
+              {
+                "id": "t3",
+                "texto": "Cubo de hielo y paño fresco que disminuyen la temperatura de la piel",
+                "imagenUrl": "/multimedia/img/hielo.jpg",
+                "categoriaId": "cat-frio"
+              },
+              {
+                "id": "t4",
+                "texto": "Paisaje blanco de glaciares y banquisa polar bajo cero",
+                "imagenUrl": "/multimedia/img/paisaje_polo.jpg",
+                "categoriaId": "cat-frio"
+              },
+              {
+                "id": "t5",
+                "texto": "Camello dromedario y paño tibio que activan receptores de calor",
+                "imagenUrl": "/multimedia/img/camello.jpg",
+                "categoriaId": "cat-calor"
+              },
+              {
+                "id": "t6",
+                "texto": "Paisaje amarillo árido con temperaturas superiores a 35 °C",
+                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
+                "categoriaId": "cat-calor"
               }
             ]
           }
         },
         {
-          "tipo": "seleccion",
+          "tipo": "ordenar",
           "datos": {
-            "id": "preg-m3c",
-            "instruccion": "🖐️ ¿Qué órgano de tus sentidos te permitió sentir el paño fresco y el paño tibio en tus manos o mejilla?",
-            "imagenUrl": "/multimedia/img/piel.jpg",
-            "opciones": [
+            "id": "pm3-q3",
+            "instruccion": "📈 GRADIENTE TÉRMICO DEL PLANETA: Ordena estos 4 ecosistemas desde el MÁS FRÍO (1°) hasta el MÁS CALUROSO (4°) según su temperatura promedio:",
+            "elementos": [
               {
-                "id": "op-m3c-1",
-                "texto": "La piel (Sentido del tacto) ✋",
-                "imagenUrl": "/multimedia/img/piel.jpg",
-                "esCorrecta": true
+                "id": "grad-1",
+                "texto": "1° Casquete Polar Ártico (-30 °C): Hielo perpetuo donde habita el oso polar.",
+                "imagenUrl": "/multimedia/img/paisaje_polo.jpg",
+                "ordenCorrecto": 1
               },
               {
-                "id": "op-m3c-2",
-                "texto": "Las uñas",
-                "esCorrecta": false
+                "id": "grad-2",
+                "texto": "2° Sabana Altoandina de Sopó (14 °C): Clima frío de montaña con neblina y praderas verdes.",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+                "ordenCorrecto": 2
+              },
+              {
+                "id": "grad-3",
+                "texto": "3° Sabana Africana (28 °C): Llanuras cálidas estacionales donde caza el león.",
+                "imagenUrl": "/multimedia/img/leon.jpg",
+                "ordenCorrecto": 3
+              },
+              {
+                "id": "grad-4",
+                "texto": "4° Desierto Cálido Extremo (42 °C): Dunas áridas de máxima radiación solar donde vive el camello.",
+                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
+                "ordenCorrecto": 4
               }
             ]
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "pm3-q4",
+            "instruccion": "🧠 NEUROBIOLOGÍA DE LA TEMPERATURA: Completa la explicación científica sobre cómo tu piel y tu cerebro perciben el frío y el calor:",
+            "oracionConHuecos": "En la [piel] existen [termorreceptores] que detectan el frío del paño fresco y el calor del paño tibio, enviando señales al [hipotálamo] en el cerebro para regular nuestra [temperatura].",
+            "palabrasOpciones": [
+              "piel",
+              "termorreceptores",
+              "hipotálamo",
+              "temperatura",
+              "rodilla",
+              "digestión"
+            ],
+            "respuestasCorrectas": {
+              "0": "piel",
+              "1": "termorreceptores",
+              "2": "hipotálamo",
+              "3": "temperatura"
+            }
           }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Punto de Partida — Experiencia térmica dirigida (1 sesión de 60 min)",
-      "materia": "Biogeografía Elemental — Climas y Animales",
-      "resumenBreve": "El docente o acudiente (sombra) acerca suavemente a las manos o mejilla de María Paula un paño ligeramente fresco (agua con hielo) y luego un paño tibio, mostrándole dos imágenes en tamaño gigante o en la tablet: un oso en la nieve (Frío) y un león en la sabana (Calor).",
+      "subtituloPoetico": "TERMORRECEPCIÓN CUTÁNEA Y ADAPTACIONES CLIMÁTICAS",
+      "materia": "Biología · Etapa 2: Punto de Partida (Agosto)",
+      "iconoMateria": "🌡️",
+      "resumenBreve": "Con un paño ligeramente fresco y uno tibio acercados suavemente a tus manos o mejilla, conectamos la respuesta de los termorreceptores de tu piel con las adaptaciones de los grandes mamíferos al frío polar y al calor de la sabana.",
       "datosClave": [
         {
           "icono": "❄️",
-          "etiqueta": "Paño fresco",
-          "valor": "Agua con hielo → Oso polar en la nieve"
+          "etiqueta": "ESTÍMULO FRÍO",
+          "valor": "Paño fresco → Corpúsculos de Krause → Oso Polar"
         },
         {
           "icono": "☀️",
-          "etiqueta": "Paño tibio",
-          "valor": "Calor suave → León en la sabana"
+          "etiqueta": "ESTÍMULO CÁLIDO",
+          "valor": "Paño tibio → Corpúsculos de Ruffini → León en la Sabana"
         },
         {
-          "icono": "👀",
-          "etiqueta": "Validación",
-          "valor": "El docente sigue la dirección de la mirada de María Paula"
-        },
-        {
-          "icono": "✋",
-          "etiqueta": "Canal",
-          "valor": "Térmico y visual (Cero fatiga motriz)"
+          "icono": "👁️",
+          "etiqueta": "VALIDACIÓN",
+          "valor": "Dirección de la mirada y selección digital"
         }
       ],
-      "importanciaEducativa": "Conectar la sensación térmica real en la piel con el hábitat climático del animal permite construir conceptos de biogeografía desde la experiencia corporal directa.",
-      "sabiasQue": "El oso polar tiene una capa de grasa y pelaje denso que lo abriga en el hielo del Ártico, mientras que el león tiene pelo corto para soportar el sol de la sabana.",
-      "instruccionTip": "Acción obligatoria: Mostrar las dos láminas grandes (Oso en la nieve y León en la sabana) y pedir: «Mira el animal que vive en el frío». Validar siguiendo la dirección de su mirada."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 3
+      "importanciaEducativa": "Vincular la experiencia táctil-térmica directa con el análisis biogeográfico de gradientes térmicos y adaptaciones evolutivas.",
+      "sabiasQue": "El pelaje del oso polar no es blanco por pigmento: cada pelo es un tubo transparente hueco que atrapa el calor del sol y lo lleva directo a su piel negra para conservar el calor.",
+      "instruccionTip": "Explora los puntos interactivos sobre el video del oso polar en el Ártico y luego supera los 4 retos térmicos.",
+      "hotspots": [
+        {
+          "id": "hs-m3-1",
+          "nombre": "Pelaje Translúcido y Grasa Subcutánea",
+          "descripcion": "El oso polar tiene hasta 11 cm de grasa bajo la piel para no perder calor corporal en aguas heladas.",
+          "xPercent": 48,
+          "yPercent": 52
+        },
+        {
+          "id": "hs-m3-2",
+          "nombre": "Almohadillas Plantares Antideslizantes",
+          "descripcion": "Sus patas anchas tienen pequeñas papilas dérmicas que aumentan la fricción sobre el hielo resbaladizo.",
+          "xPercent": 60,
+          "yPercent": 80
+        },
+        {
+          "id": "hs-m3-3",
+          "nombre": "Banquisa Polar Ártica (-30 °C)",
+          "descripcion": "Ecosistema marino congelado cuyos estímulos de frío extremo activarían al máximo los termorreceptores de Krause.",
+          "xPercent": 25,
+          "yPercent": 72
+        }
+      ]
+    }
   },
   {
     "id": "seed-maria-4",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "emparejar",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 4,
+    "tipo": "memoria",
     "titulo": "Etapa 3 (Septiembre) · Act. 3.1: Emparejamiento digital de los sentidos",
     "imagen_url": "/multimedia/img/ojo.jpg",
+    "video_url": "/multimedia/Human_eye_pupil_reacting_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
           "tipo": "emparejar",
           "datos": {
-            "id": "preg-m4a",
-            "instruccion": "Con asistencia de mamá Piedad o toque directo en la tablet, asocia cada órgano grande con su estímulo: el ojo al lado de la linterna brillante y la oreja al lado de la guitarra.",
-            "imagenUrl": "/multimedia/img/ojo.jpg",
+            "id": "pm4-q1",
+            "instruccion": "🔦 ASOCIACIÓN MULTISENSORIAL CIENTÍFICA: Con asistencia leve de mamá Piedad o toque directo, une cada órgano sensorial con su estímulo específico y el mecanismo neurobiológico que activa:",
             "parejas": [
               {
-                "id": "p-m4a-1",
+                "id": "p-ojo",
                 "origen": "/multimedia/img/ojo.jpg",
                 "origenTipo": "imagen",
-                "origenAlt": "Ojo grande (Vista)",
+                "origenAlt": "Ojo (Órgano de la visión)",
                 "destino": "/multimedia/img/linterna.jpg",
                 "destinoTipo": "imagen",
-                "destinoAlt": "Linterna brillante (Luz)"
+                "destinoAlt": "Linterna brillante · La pupila se contrae y la retina capta los fotones de luz"
               },
               {
-                "id": "p-m4a-2",
+                "id": "p-oreja",
                 "origen": "/multimedia/img/oreja.jpg",
                 "origenTipo": "imagen",
-                "origenAlt": "Oreja grande (Oído)",
+                "origenAlt": "Oreja (Órgano de la audición)",
                 "destino": "/multimedia/img/guitarra.jpg",
                 "destinoTipo": "imagen",
-                "destinoAlt": "Guitarra (Sonido)"
+                "destinoAlt": "Guitarra acústica · Las cuerdas vibran y activan la cóclea del oído interno"
+              },
+              {
+                "id": "p-piel",
+                "origen": "/multimedia/img/piel.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Piel (Órgano del tacto y termorrecepción)",
+                "destino": "/multimedia/img/hielo.jpg",
+                "destinoTipo": "imagen",
+                "destinoAlt": "Cubo de hielo · Los termorreceptores cutáneos detectan el descenso de temperatura"
+              },
+              {
+                "id": "p-olfato",
+                "origen": "/multimedia/img/flor.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Flor aromática (Estímulo químico)",
+                "destino": "Quimiorreceptores olfativos · Detectan moléculas aromáticas volátiles en el aire",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "memoria",
+          "datos": {
+            "id": "pm4-q2",
+            "instruccion": "🃏 MEMORIA NEURO-SENSORIAL: Voltea las tarjetas gigantes y encuentra las 3 parejas científicas entre el órgano de los sentidos y su estímulo correspondiente:",
+            "cartas": [
+              {
+                "id": "c1",
+                "valor": "/multimedia/img/ojo.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-vista"
+              },
+              {
+                "id": "c2",
+                "valor": "🔦 Luz de la linterna · Fotorreceptores de la retina",
+                "tipo": "texto",
+                "parejaId": "par-vista"
+              },
+              {
+                "id": "c3",
+                "valor": "/multimedia/img/oreja.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-oido"
+              },
+              {
+                "id": "c4",
+                "valor": "🎸 Sonido de la guitarra · Mecanorreceptores de la cóclea",
+                "tipo": "texto",
+                "parejaId": "par-oido"
+              },
+              {
+                "id": "c5",
+                "valor": "/multimedia/img/piel.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-tacto"
+              },
+              {
+                "id": "c6",
+                "valor": "🧊 Frío del hielo · Termorreceptores de la piel",
+                "tipo": "texto",
+                "parejaId": "par-tacto"
               }
             ]
           }
@@ -2869,109 +3274,148 @@
         {
           "tipo": "seleccion",
           "datos": {
-            "id": "preg-m4b",
-            "instruccion": "👁️ Acción obligatoria: Con la asistencia física de mamá Piedad guiando levemente tu brazo o mediante toque directo, selecciona el órgano que sirve para VER.",
+            "id": "pm4-q3",
+            "instruccion": "👁️ ANÁLISIS DEL VIDEO DE LA PUPILA: Observaste en el video cómo reacciona el ojo ante la luz de una linterna brillante. ¿Qué reflejo automático ejecuta tu sistema nervioso cuando aumenta la luz?",
             "imagenUrl": "/multimedia/img/linterna.jpg",
             "opciones": [
               {
-                "id": "op-m4b-1",
-                "texto": "El ojo 👁️ (Órgano de la vista)",
+                "id": "a",
+                "texto": "👁️ Reflejo fotomotor pupilar: El iris contrae la pupila (miosis) para proteger la retina del exceso de luz y enfocar mejor la imagen.",
                 "imagenUrl": "/multimedia/img/ojo.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m4b-2",
-                "texto": "La oreja 👂 (Órgano del oído)",
-                "imagenUrl": "/multimedia/img/oreja.jpg",
+                "id": "b",
+                "texto": "👂 El tímpano se cierra para no dejar pasar la luz de la linterna.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🦴 Los huesos del brazo captan los colores de la linterna sin usar el nervio óptico.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🌑 La pupila desaparece por completo y deja de enviar señales al cerebro.",
                 "esCorrecta": false
               }
             ]
           }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "pm4-q4",
+            "instruccion": "🧬 PRECISIÓN CIENTÍFICA: Completa las parejas anatómicas que convierten la luz de la linterna y la música de la guitarra en mensajes para el cerebro:",
+            "oracionConHuecos": "En el ojo, la [retina] capta la luz de la linterna y la envía por el nervio [óptico]; en el oído, la [cóclea] recibe la vibración de la guitarra y la transmite por el nervio [auditivo].",
+            "palabrasOpciones": [
+              "retina",
+              "óptico",
+              "cóclea",
+              "auditivo",
+              "estómago",
+              "fémur"
+            ],
+            "respuestasCorrectas": {
+              "0": "retina",
+              "1": "óptico",
+              "2": "cóclea",
+              "3": "auditivo"
+            }
+          }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Recolección de Información — Asociación visual de alta visibilidad (1 sesión de 60 min)",
-      "materia": "Sistema Nervioso — Órganos de los Sentidos",
-      "resumenBreve": "En la tablet o en lámina de cartón grande adaptada se presenta una asociación simple de alta visibilidad y baja demanda motriz: un ojo grande al lado de una linterna brillante, y una oreja al lado de una guitarra.",
+      "subtituloPoetico": "FOTORRECEPTORES, CÓCLEA Y MEMORIA SENSORIAL",
+      "materia": "Biología · Etapa 3: Recolección de Información (Septiembre)",
+      "iconoMateria": "👁️",
+      "resumenBreve": "Organizamos los conceptos científicos del Sistema Nervioso en macrotipos visuales de alta visibilidad: observa cómo reacciona la pupila humana ante la luz en el video y supera el emparejamiento, el juego de memoria, el análisis del reflejo pupilar y la síntesis anatómica.",
       "datosClave": [
         {
           "icono": "👁️",
-          "etiqueta": "Ojo grande",
-          "valor": "Se asocia con la linterna brillante (Ver la luz)"
+          "etiqueta": "VISIÓN",
+          "valor": "Ojo + Linterna → Retina y Nervio Óptico"
         },
         {
           "icono": "👂",
-          "etiqueta": "Oreja grande",
-          "valor": "Se asocia con la guitarra (Escuchar la música)"
+          "etiqueta": "AUDICIÓN",
+          "valor": "Oreja + Guitarra → Cóclea y Nervio Auditivo"
         },
         {
-          "icono": "🤝",
-          "etiqueta": "Andamiaje",
-          "valor": "Asistencia leve de mamá Piedad en el brazo o toque directo"
-        },
-        {
-          "icono": "👨‍🏫",
-          "etiqueta": "Supervisión",
-          "valor": "Acompañamiento uno a uno del docente Rafael Suárez"
+          "icono": "🖐️",
+          "etiqueta": "ANDAMIAJE",
+          "valor": "Toque directo o brazo guiado por mamá Piedad"
         }
       ],
-      "importanciaEducativa": "Etapa 3 (Septiembre): Organizar los conceptos científicos en formatos de alta visibilidad y baja demanda motriz (digital o macrotipos) para evitar la fatiga física.",
-      "sabiasQue": "La pupila del ojo se ajusta automáticamente cuando ve la luz brillante de una linterna para proteger la retina y enviar una imagen clara al cerebro.",
-      "instruccionTip": "Acción obligatoria: Con asistencia física de mamá Piedad para guiar levemente el brazo o mediante toque directo, María Paula selecciona el órgano que sirve para ver (ojo)."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 4
+      "importanciaEducativa": "Consolidar la diferenciación entre órganos receptores, estímulos físicos específicos y vías nerviosas mediante formatos de alta visibilidad y baja fatiga motriz.",
+      "sabiasQue": "Tus ojos pueden distinguir cerca de 10 millones de tonos diferentes de color gracias a tres tipos de células cono en tu retina.",
+      "instruccionTip": "Toca los puntos sobre el video del ojo humano para ver cómo funcionan la pupila, el iris y la retina antes de jugar al tablero de memoria.",
+      "hotspots": [
+        {
+          "id": "hs-m4-1",
+          "nombre": "Pupila (Ventana de Luz)",
+          "descripcion": "Abertura central que regula cuánta luz de la linterna entra al interior del globo ocular.",
+          "xPercent": 50,
+          "yPercent": 50
+        },
+        {
+          "id": "hs-m4-2",
+          "nombre": "Iris (Diafragma Muscular)",
+          "descripcion": "Anillo pigmentado cuyos músculos se contraen o dilatan automáticamente por orden del sistema nervioso autónomo.",
+          "xPercent": 36,
+          "yPercent": 48
+        },
+        {
+          "id": "hs-m4-3",
+          "nombre": "Retina y Nervio Óptico (Fondo Ocular)",
+          "descripcion": "Capa de fotorreceptores al fondo del ojo que transforma la luz en impulsos eléctricos hacia el cerebro.",
+          "xPercent": 68,
+          "yPercent": 52
+        }
+      ]
+    }
   },
   {
     "id": "seed-maria-5",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 5,
+    "tipo": "clasificar",
     "titulo": "Etapa 3 (Septiembre) · Act. 3.2: El mapa de los climas del planeta",
     "imagen_url": "/multimedia/img/paisaje_polo.jpg",
+    "video_url": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
           "tipo": "seleccion",
           "datos": {
-            "id": "preg-m5a",
-            "instruccion": "🐧 Acción obligatoria: «María Paula, parpadea o señala con tu mirada en cuál paisaje debe vivir el PINGÜINO». Mamá Piedad pegará la figura donde fijes tu mirada.",
+            "id": "pm5-q1",
+            "instruccion": "🐧 DECISIÓN BIOGEOGRÁFICA CON LA MIRADA: El docente te muestra el Paisaje Blanco (Polo) y el Paisaje Amarillo (Desierto) y te pregunta: \"María Paula, parpadea o señala con tu mirada en cuál paisaje debe vivir el pingüino y por qué su cuerpo está adaptado a ese lugar\":",
             "imagenUrl": "/multimedia/img/pinguino.jpg",
             "opciones": [
               {
-                "id": "op-m5a-1",
-                "texto": "Paisaje Blanco — El Polo (Hielo y frío) ❄️",
+                "id": "a",
+                "texto": "❄️ En el Paisaje Blanco (Polo): el pingüino posee plumas impermeables tupidas, capa de grasa aislante y alas transformadas en aletas para nadar en aguas heladas.",
                 "imagenUrl": "/multimedia/img/paisaje_polo.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m5a-2",
-                "texto": "Paisaje Amarillo — El Desierto (Arena y calor) ☀️",
+                "id": "b",
+                "texto": "🏜️ En el Paisaje Amarillo (Desierto): porque el pingüino almacena agua en una joroba de grasa para soportar 45 °C.",
                 "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
                 "esCorrecta": false
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m5b",
-            "instruccion": "🐪 Ahora observa la tarjeta grande del CAMELLO. Parpadea o señala con tu mirada en cuál paisaje debe vivir el camello.",
-            "imagenUrl": "/multimedia/img/camello.jpg",
-            "opciones": [
-              {
-                "id": "op-m5b-1",
-                "texto": "Paisaje Amarillo — El Desierto (Arena y calor) ☀️",
-                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
-                "esCorrecta": true
               },
               {
-                "id": "op-m5b-2",
-                "texto": "Paisaje Blanco — El Polo (Hielo y frío) ❄️",
-                "imagenUrl": "/multimedia/img/paisaje_polo.jpg",
+                "id": "c",
+                "texto": "🌴 En la copa de los árboles de la selva cálida: porque vuela grandes distancias entre lianas.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🌋 Dentro de cráteres volcánicos de alta temperatura sin agua líquida.",
                 "esCorrecta": false
               }
             ]
@@ -2980,419 +3424,822 @@
         {
           "tipo": "clasificar",
           "datos": {
-            "id": "preg-m5c",
-            "instruccion": "Clasifica cada tarjeta de animal en su paisaje del planeta según la decisión científica de María Paula:",
-            "imagenUrl": "/multimedia/img/paisaje_polo.jpg",
+            "id": "pm5-q2",
+            "instruccion": "🗺️ CLASIFICACIÓN DE BIOMAS DEL PLANETA: Ubica cada especie y característica ecológica en su bioma correspondiente (Polo Blanco, Desierto/Sabana Amarilla o Valle Verde Andino de Sopó):",
             "categorias": [
               {
-                "id": "polo_blanco",
-                "nombre": "Paisaje Blanco · Polo ❄️"
+                "id": "bioma-polo",
+                "nombre": "❄️ Bioma Polar (Paisaje Blanco · Hielo)"
               },
               {
-                "id": "desierto_amarillo",
-                "nombre": "Paisaje Amarillo · Desierto y Sabana ☀️"
+                "id": "bioma-arido",
+                "nombre": "☀️ Bioma Desértico y Sabana Cálida (Paisaje Amarillo)"
+              },
+              {
+                "id": "bioma-sopo",
+                "nombre": "🌿 Bioma Altoandino de Sopó (Paisaje Verde de Montaña)"
               }
             ],
             "elementos": [
               {
-                "id": "el-m5c-1",
-                "texto": "Pingüino",
-                "categoriaId": "polo_blanco",
-                "imagenUrl": "/multimedia/img/pinguino.jpg"
+                "id": "b1",
+                "texto": "Pingüino antártico nadador de aguas glaciales",
+                "imagenUrl": "/multimedia/img/pinguino.jpg",
+                "categoriaId": "bioma-polo"
               },
               {
-                "id": "el-m5c-2",
-                "texto": "Oso Polar",
-                "categoriaId": "polo_blanco",
-                "imagenUrl": "/multimedia/img/oso_polar.jpg"
+                "id": "b2",
+                "texto": "Camello dromedario resistente a la sequía extrema",
+                "imagenUrl": "/multimedia/img/camello.jpg",
+                "categoriaId": "bioma-arido"
               },
               {
-                "id": "el-m5c-3",
-                "texto": "Camello",
-                "categoriaId": "desierto_amarillo",
-                "imagenUrl": "/multimedia/img/camello.jpg"
+                "id": "b3",
+                "texto": "Oso polar cazador sobre la banquisa de hielo ártico",
+                "imagenUrl": "/multimedia/img/oso_polar.jpg",
+                "categoriaId": "bioma-polo"
               },
               {
-                "id": "el-m5c-4",
-                "texto": "León",
-                "categoriaId": "desierto_amarillo",
-                "imagenUrl": "/multimedia/img/leon.jpg"
+                "id": "b4",
+                "texto": "León africano corredor de pastizales cálidos y secos",
+                "imagenUrl": "/multimedia/img/leon.jpg",
+                "categoriaId": "bioma-arido"
+              },
+              {
+                "id": "b5",
+                "texto": "Vaca lechera en praderas frescas de neblina a 2.600 metros de altitud",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+                "categoriaId": "bioma-sopo"
+              },
+              {
+                "id": "b6",
+                "texto": "Dunas de arena con escasa precipitación y sol intenso todo el año",
+                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
+                "categoriaId": "bioma-arido"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "pm5-q3",
+            "instruccion": "🧬 ADAPTACIONES EVOLUTIVAS AL CLIMA: Une cada animal con el mecanismo fisiológico o anatómico que le permite sobrevivir en su ecosistema:",
+            "parejas": [
+              {
+                "id": "ad-1",
+                "origen": "/multimedia/img/pinguino.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Pingüino",
+                "destino": "Plumaje denso aceitoso y circulación sanguínea a contracorriente en las patas para no congelarse en el hielo",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "ad-2",
+                "origen": "/multimedia/img/camello.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Camello",
+                "destino": "Joroba de reserva energética, pestañas dobles contra la arena y riñones que ahorran casi toda el agua",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "ad-3",
+                "origen": "/multimedia/img/oso_polar.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Oso Polar",
+                "destino": "Orejas pequeñas para no perder calor, piel negra bajo pelaje translúcido y 11 cm de grasa térmica",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "ad-4",
+                "origen": "/multimedia/img/vaca_sopo.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Vaca de la Sabana de Sopó",
+                "destino": "Adaptada al clima frío-templado altoandino (14 °C) y a la digestión de pastos verdes húmedos de montaña",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "memoria",
+          "datos": {
+            "id": "pm5-q4",
+            "instruccion": "🃏 MEMORIA DE PAISAJES Y FAUNA: Encuentra las 3 parejas entre el habitante animal y su paisaje climático en el mapa del planeta:",
+            "cartas": [
+              {
+                "id": "mc1",
+                "valor": "/multimedia/img/pinguino.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-polo"
+              },
+              {
+                "id": "mc2",
+                "valor": "/multimedia/img/paisaje_polo.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-polo"
+              },
+              {
+                "id": "mc3",
+                "valor": "/multimedia/img/camello.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-desierto"
+              },
+              {
+                "id": "mc4",
+                "valor": "/multimedia/img/paisaje_desierto.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-desierto"
+              },
+              {
+                "id": "mc5",
+                "valor": "/multimedia/img/vaca_sopo.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-sopo"
+              },
+              {
+                "id": "mc6",
+                "valor": "🌿 Pradera verde altoandina de Sopó · Clima frío húmedo de montaña",
+                "tipo": "texto",
+                "parejaId": "par-sopo"
               }
             ]
           }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Recolección de Información — Decisión científica con la mirada (1 sesión de 60 min)",
-      "materia": "Biogeografía Elemental — El Mapa de los Climas",
-      "resumenBreve": "Se presenta en pantalla o lámina un paisaje totalmente blanco (Polo) y uno amarillo (Desierto). El acudiente sostiene dos tarjetas grandes: un pingüino y un camello. María Paula toma la decisión científica con su mirada o parpadeo y su mamá pega la figura en el paisaje elegido.",
+      "subtituloPoetico": "DEL HIELO ANTÁRTICO Y LAS DUNAS AL VALLE DE SOPÓ",
+      "materia": "Biología · Etapa 3: Recolección de Información (Septiembre)",
+      "iconoMateria": "🗺️",
+      "resumenBreve": "María Paula toma las decisiones científicas con su mirada y parpadeo voluntario mientras mamá Piedad coloca las láminas en el paisaje blanco (Polo), el paisaje amarillo (Desierto) y el paisaje verde de Sopó.",
       "datosClave": [
         {
-          "icono": "❄️",
-          "etiqueta": "Paisaje Blanco (Polo)",
-          "valor": "Hogar del pingüino y del oso polar"
+          "icono": "🐧",
+          "etiqueta": "PAISAJE BLANCO",
+          "valor": "Polo → Pingüino y Oso Polar (Adaptación al hielo)"
         },
         {
-          "icono": "🏜️",
-          "etiqueta": "Paisaje Amarillo (Desierto)",
-          "valor": "Hogar del camello y animales de clima cálido"
+          "icono": "🐪",
+          "etiqueta": "PAISAJE AMARILLO",
+          "valor": "Desierto y Sabana → Camello y León (Adaptación al calor)"
         },
         {
-          "icono": "👁️",
-          "etiqueta": "Autonomía",
-          "valor": "María Paula decide con su mirada o parpadeo"
-        },
-        {
-          "icono": "🙌",
-          "etiqueta": "Ejecución física",
-          "valor": "Mamá Piedad pega la figura donde María Paula indica"
+          "icono": "🐄",
+          "etiqueta": "PAISAJE VERDE",
+          "valor": "Sabana de Sopó → Clima altoandino húmedo"
         }
       ],
-      "importanciaEducativa": "Garantiza que María Paula sea quien tome la decisión científica, manteniéndose ocupada en el análisis visual sin desgastarse físicamente.",
-      "sabiasQue": "Los pingüinos tienen plumas muy tupidas y una capa de grasa que les permite nadar en aguas heladas, mientras los camellos almacenan energía en su joroba para cruzar el desierto.",
-      "instruccionTip": "Acción obligatoria: «María Paula, parpadea o señala con tu mirada en cuál paisaje debe vivir el pingüino». Cuando fije la mirada en el paisaje blanco, su mamá pega la figura."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 5
+      "importanciaEducativa": "Garantizar que la estudiante lidere el análisis científico comparativo de biomas y adaptaciones fisiológicas sin desgaste motriz.",
+      "sabiasQue": "Los camellos pueden perder hasta el 25% del agua de su cuerpo sin deshidratarse y beber más de 100 litros de agua en solo 10 minutos cuando encuentran un oasis.",
+      "instruccionTip": "Fija la mirada en el paisaje correcto para que mamá Piedad valide tu elección y avancen por las 4 pruebas biogeográficas."
+    }
   },
   {
     "id": "seed-maria-6",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 6,
+    "tipo": "ordenar",
     "titulo": "Etapa 4 (Octubre) · Act. 4.1: Mi circuito de estímulos asistido",
     "imagen_url": "/multimedia/img/cuerpo_cerebro.jpg",
+    "video_url": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
           "tipo": "seleccion",
           "datos": {
-            "id": "preg-m6a",
-            "instruccion": "🔴 Sesión 1 (60 min): Mamá Piedad coloca sobre la mesa la silueta humana de cartón grande, te muestra el botón de plástico rojo brillante y te pregunta: «¿Pegamos el cerebro en la cabeza o en los pies?»",
+            "id": "pm6-q1",
+            "instruccion": "🔴 SESIÓN 1 · EL CENTRO DE CONTROL EN LA SILUETA HUMANA: Mamá Piedad coloca sobre tu mesa la silueta humana de cartón grande, te muestra el botón rojo brillante y pregunta: \"¿Pegamos el cerebro en la cabeza o en los pies?\". ¿Dónde se ubica el encéfalo y por qué?",
             "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg",
             "opciones": [
               {
-                "id": "op-m6a-1",
-                "texto": "En la CABEZA 🧠🔴 (Mamá aplica pegamento y guía tu mano para pegarlo en la cabeza)",
+                "id": "a",
+                "texto": "🔴 En la cabeza (protegido por el cráneo): allí el cerebro actúa como centro de control del Sistema Nervioso Central, cerca de los ojos y los oídos.",
                 "imagenUrl": "/multimedia/img/cerebro.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m6a-2",
-                "texto": "En los pies 🦶",
+                "id": "b",
+                "texto": "🦶 En la planta de los pies: porque el cerebro está fuera del cráneo.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🦵 En las rodillas: porque allí se procesan las imágenes del nervio óptico.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "✋ En las uñas de las manos: lejos de la médula espinal.",
                 "esCorrecta": false
               }
             ]
           }
         },
         {
-          "tipo": "seleccion",
+          "tipo": "ordenar",
           "datos": {
-            "id": "preg-m6b",
-            "instruccion": "💛 Sesión 2 (60 min): Usando tiras de cinta de tela amarilla gruesa, papá o mamá completan los 'cables' desde la cabeza hacia el cuerpo bajo tu estricta dirección visual. ¿Qué son esos cables amarillos?",
-            "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg",
+            "id": "pm6-q2",
+            "instruccion": "🧶 SESIÓN 1 Y 2 · CONSTRUCCIÓN DIRIGIDA DEL CIRCUITO NERVIOSO: Como directora científica de la mesa, ordena del 1° al 4° los pasos con los que tú, mamá Piedad y papá construyen y validan el circuito de estímulos:",
+            "elementos": [
+              {
+                "id": "cir-1",
+                "texto": "1° Fijar el Centro de Control (SNC): Con mano asistida por mamá Piedad, pegar el botón rojo brillante en la cabeza de la silueta (Cerebro).",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "ordenCorrecto": 1
+              },
+              {
+                "id": "cir-2",
+                "texto": "2° Trazar las Vías Aferentes (Nervios Sensoriales): Bajo la dirección visual de María Paula, pegar cintas amarillas desde los ojos y oídos hacia el botón rojo.",
+                "imagenUrl": "/multimedia/img/ojo.jpg",
+                "ordenCorrecto": 2
+              },
+              {
+                "id": "cir-3",
+                "texto": "3° Conectar las Vías Eferentes y Táctiles: Extender las cintas amarillas de nervios desde el cerebro y la médula hacia las manos y la piel de la silueta.",
+                "imagenUrl": "/multimedia/img/piel.jpg",
+                "ordenCorrecto": 3
+              },
+              {
+                "id": "cir-4",
+                "texto": "4° Evaluación en caliente con el Docente Rafael: Fijar la mirada en el botón rojo para demostrar cómo el centro de control gobierna todo el circuito.",
+                "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg",
+                "ordenCorrecto": 4
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "pm6-q3",
+            "instruccion": "🔌 DEL MODELO DE CARTÓN A LA NEUROANATOMÍA REAL: Une cada elemento físico de tu maqueta escolar con la estructura real del sistema nervioso humano que representa:",
+            "parejas": [
+              {
+                "id": "m-1",
+                "origen": "🔴 Botón plástico rojo brillante en la cabeza de la silueta",
+                "origenTipo": "texto",
+                "destino": "Encéfalo / Cerebro (Centro de control del Sistema Nervioso Central)",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "m-2",
+                "origen": "🎗️ Tiras de cinta de tela amarilla gruesa que recorren el cuerpo",
+                "origenTipo": "texto",
+                "destino": "Nervios periféricos y axones neuronales (Cables bioeléctricos que transmiten impulsos)",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "m-3",
+                "origen": "👁️🖐️ Ojos, oídos y manos dibujados en la silueta de cartón",
+                "origenTipo": "texto",
+                "destino": "Órganos receptores y efectores conectados con el mundo exterior",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "m-4",
+                "origen": "👩‍🔬 Mirada y gestos de María Paula guiando a mamá y papá",
+                "origenTipo": "texto",
+                "destino": "Función ejecutiva de la corteza cerebral dirigiendo la acción",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "pm6-q4",
+            "instruccion": "⚡ EL ARCO SENSORIAL Y MOTOR COMPLETO: Completa el recorrido científico que representaste con el botón rojo y las cintas amarillas:",
+            "oracionConHuecos": "En nuestro circuito, el [botón rojo] representa el [cerebro] en la cabeza, mientras que las cintas [amarillas] representan los [nervios] que llevan impulsos eléctricos por todo el cuerpo.",
+            "palabrasOpciones": [
+              "botón rojo",
+              "cerebro",
+              "amarillas",
+              "nervios",
+              "alveolos",
+              "tendones"
+            ],
+            "respuestasCorrectas": {
+              "0": "botón rojo",
+              "1": "cerebro",
+              "2": "amarillas",
+              "3": "nervios"
+            }
+          }
+        }
+      ]
+    },
+    "atelier": {
+      "subtituloPoetico": "CO-CREACIÓN ASISTIDA · MARÍA PAULA DIRECTORA DE LA OBRA",
+      "materia": "Biología · Etapa 4: Desarrollo de la Habilidad (Octubre)",
+      "iconoMateria": "🧩",
+      "resumenBreve": "En 2 sesiones de 60 minutos construimos tu Circuito de Estímulos sobre una silueta humana de cartón grande: el botón rojo brillante en la cabeza es el Cerebro y las cintas de tela amarilla gruesa son los nervios que tú diriges con tu mirada.",
+      "datosClave": [
+        {
+          "icono": "🔴",
+          "etiqueta": "SESIÓN 1 (60 MIN)",
+          "valor": "Botón rojo brillante → Cerebro en la cabeza (mano asistida)"
+        },
+        {
+          "icono": "🎗️",
+          "etiqueta": "SESIÓN 2 (60 MIN)",
+          "valor": "Cintas amarillas gruesas → Cables de los nervios (dirección visual)"
+        },
+        {
+          "icono": "🎯",
+          "etiqueta": "EVALUACIÓN",
+          "valor": "Mirar fijamente el centro de control ante el docente"
+        }
+      ],
+      "importanciaEducativa": "Consolidar el aprendizaje mediante la co-creación física y digital donde la estudiante ejerce el rol de directora científica del proyecto escolar.",
+      "sabiasQue": "Si pusieras todos los nervios y axones de tu cuerpo en fila (como las cintas amarillas de tu silueta), medirían más de 150.000 kilómetros: ¡darían casi cuatro vueltas a la Tierra!",
+      "instruccionTip": "Toca los puntos sobre el video neuronal y luego resuelve las 4 pruebas de construcción y neuroanatomía del circuito.",
+      "hotspots": [
+        {
+          "id": "hs-m6-1",
+          "nombre": "Centro de Control (Botón Rojo)",
+          "descripcion": "Representa el encéfalo dentro del cráneo: integra la información visual, auditiva y térmica.",
+          "xPercent": 50,
+          "yPercent": 35
+        },
+        {
+          "id": "hs-m6-2",
+          "nombre": "Red de Nervios Periféricos (Cintas Amarillas)",
+          "descripcion": "Conectan el botón rojo central con los ojos, los oídos, las manos y el resto del cuerpo.",
+          "xPercent": 52,
+          "yPercent": 68
+        }
+      ]
+    }
+  },
+  {
+    "id": "seed-maria-7",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 7,
+    "tipo": "memoria",
+    "titulo": "Etapa 4 (Octubre) · Act. 4.2: El álbum virtual de los biomas",
+    "imagen_url": "/multimedia/img/vaca_sopo.jpg",
+    "video_url": "/multimedia/Polar_bear_walking_on_ice_202608082048.mp4",
+    "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
+      "preguntas": [
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm7-q1",
+            "instruccion": "🌴 SESIÓN 1 · SONIDOS DE LA BIODIVERSIDAD COLOMBIANA PARA QUE MAMÁ Y PAPÁ ADIVINEN: Activa el sonido en tu tablet. ¿A qué grupo de fauna pertenece este canto y en qué ecosistemas de Colombia habita?",
+            "audioPreguntaUrl": "/multimedia/audios/pajaro.wav",
+            "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
             "opciones": [
               {
-                "id": "op-m6b-1",
-                "texto": "Los NERVIOS que conectan el cerebro con los sentidos y el cuerpo ⚡",
+                "id": "a",
+                "texto": "🐦 Aves silvestres de Colombia (el país con más especies de aves del planeta): habitan tanto en la selva húmeda tropical como en los bosques y humedales de Sopó.",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+                "esCorrecta": true
+              },
+              {
+                "id": "b",
+                "texto": "🐧 Pingüinos emperadores que viven únicamente en el hielo de la Antártida.",
+                "imagenUrl": "/multimedia/img/pinguino.jpg",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🐪 Camellos que cruzan las dunas del desierto de Arabia.",
+                "imagenUrl": "/multimedia/img/camello.jpg",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🔔 El timbre metálico de un reloj despertador.",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "pm7-q2",
+            "instruccion": "🌿 SESIÓN 2 · ASOCIACIÓN DEL ENTORNO VERDE DE SOPÓ Y LOS BIOMAS DEL MUNDO: Clasifica cada elemento en su página correspondiente del Álbum Virtual de Biomas:",
+            "categorias": [
+              {
+                "id": "alb-sopo",
+                "nombre": "🐄🌿 Entorno Verde Altoandino de Sopó y Biodiversidad Colombiana"
+              },
+              {
+                "id": "alb-extremos",
+                "nombre": "❄️☀️ Biomas Extremos del Planeta (Polo Helado y Desierto Árido)"
+              }
+            ],
+            "elementos": [
+              {
+                "id": "al-1",
+                "texto": "Vaca lechera pastando en las praderas verdes húmedas de Sopó",
+                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+                "categoriaId": "alb-sopo"
+              },
+              {
+                "id": "al-2",
+                "texto": "Aves canoras y flora silvestre de montaña y selva colombiana",
+                "imagenUrl": "/multimedia/img/flor.jpg",
+                "categoriaId": "alb-sopo"
+              },
+              {
+                "id": "al-3",
+                "texto": "Oso polar sobre glaciares árticos a temperaturas bajo cero",
+                "imagenUrl": "/multimedia/img/oso_polar.jpg",
+                "categoriaId": "alb-extremos"
+              },
+              {
+                "id": "al-4",
+                "texto": "Camello dromedario en las dunas secas del desierto",
+                "imagenUrl": "/multimedia/img/camello.jpg",
+                "categoriaId": "alb-extremos"
+              },
+              {
+                "id": "al-5",
+                "texto": "Pingüino en la banquisa blanca de la Antártida",
+                "imagenUrl": "/multimedia/img/pinguino.jpg",
+                "categoriaId": "alb-extremos"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "memoria",
+          "datos": {
+            "id": "pm7-q3",
+            "instruccion": "📸 ÁLBUM INTERACTIVO DE MEMORIA (NOTA DIGITAL DEL PERIODO): Toca las cartas en tu tablet para unir cada animal del álbum con su entorno ecológico:",
+            "cartas": [
+              {
+                "id": "alb-c1",
+                "valor": "/multimedia/img/vaca_sopo.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-vaca-sopo"
+              },
+              {
+                "id": "alb-c2",
+                "valor": "🌿 Entorno verde de Sopó · Praderas altoandinas de Cundinamarca (14 °C)",
+                "tipo": "texto",
+                "parejaId": "par-vaca-sopo"
+              },
+              {
+                "id": "alb-c3",
+                "valor": "/multimedia/img/oso_polar.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-oso-polo"
+              },
+              {
+                "id": "alb-c4",
+                "valor": "/multimedia/img/paisaje_polo.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-oso-polo"
+              },
+              {
+                "id": "alb-c5",
+                "valor": "/multimedia/img/camello.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-camello-des"
+              },
+              {
+                "id": "alb-c6",
+                "valor": "/multimedia/img/paisaje_desierto.jpg",
+                "tipo": "imagen",
+                "parejaId": "par-camello-des"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "completar",
+          "datos": {
+            "id": "pm7-q4",
+            "instruccion": "✍️ REGISTRO CIENTÍFICO DEL ÁLBUM DE BIOMAS: Completa la conclusión biogeográfica sobre nuestro municipio de Sopó y la biodiversidad de Colombia:",
+            "oracionConHuecos": "En el municipio de [Sopó] el paisaje es [verde] gracias a las lluvias y al clima frío de montaña, donde habitan [vacas] y aves, mientras que la [selva] colombiana alberga una enorme biodiversidad tropical.",
+            "palabrasOpciones": [
+              "Sopó",
+              "verde",
+              "vacas",
+              "selva",
+              "glaciar",
+              "camellos"
+            ],
+            "respuestasCorrectas": {
+              "0": "Sopó",
+              "1": "verde",
+              "2": "vacas",
+              "3": "selva"
+            }
+          }
+        }
+      ]
+    },
+    "atelier": {
+      "subtituloPoetico": "DE LA SELVA TROPICAL A LAS PRADERAS VERDES DE SOPÓ",
+      "materia": "Biología · Etapa 4: Desarrollo de la Habilidad (Octubre)",
+      "iconoMateria": "🌿",
+      "resumenBreve": "En la Sesión 1 María Paula activa sonidos de animales en su tablet para que mamá Piedad y papá adivinen la especie; en la Sesión 2 asocia la vaca y las aves de Sopó con su entorno verde altoandino en el Álbum Virtual de Biomas.",
+      "datosClave": [
+        {
+          "icono": "🎬",
+          "etiqueta": "SESIÓN 1 (60 MIN)",
+          "valor": "Sonidos de fauna colombiana · Mamá y papá adivinan"
+        },
+        {
+          "icono": "🐄",
+          "etiqueta": "SESIÓN 2 (60 MIN)",
+          "valor": "Asociar vaca y aves de Sopó con su entorno verde"
+        },
+        {
+          "icono": "🏅",
+          "etiqueta": "LOGRO",
+          "valor": "Registro de la nota digital del periodo con el docente"
+        }
+      ],
+      "importanciaEducativa": "Promover el rol activo de María Paula en la mesa familiar mediante adivinanzas acústicas y consolidar el reconocimiento del bioma local de Sopó frente a otros biomas del planeta.",
+      "sabiasQue": "Colombia es el país número uno del mundo en diversidad de aves, con más de 1.950 especies registradas desde las selvas húmedas hasta los cerros de Sopó.",
+      "instruccionTip": "Reproduce el reto sonoro para que tus padres adivinen y luego completa la clasificación y el álbum de memoria."
+    }
+  },
+  {
+    "id": "seed-maria-8",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 8,
+    "tipo": "escuchar_responder",
+    "titulo": "Etapa 5 (Noviembre) · Act. 5.1: El cuidado de mi cuerpo en el hogar",
+    "imagen_url": "/multimedia/img/emocion_calma.jpg",
+    "video_url": "/multimedia/Human_heart_beating_rhythmically_202608082048.mp4",
+    "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
+      "preguntas": [
+        {
+          "tipo": "escuchar_responder",
+          "datos": {
+            "id": "pm8-q1",
+            "instruccion": "🌬️ RUTINA EN CASA 1 · EL VIENTO FRESCO DE SOPÓ AL ABRIR LA VENTANA: Escucha el sonido del viento. Cuando mamá Piedad o papá abren la ventana en casa, ¿cómo reacciona tu sistema nervioso ante este cambio de estímulo?",
+            "audioPreguntaUrl": "/multimedia/audios/viento.wav",
+            "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
+            "opciones": [
+              {
+                "id": "a",
+                "texto": "🌬️ Los termorreceptores y mecanorreceptores de mi piel sienten la brisa fresca de Sopó, mis oídos escuchan el viento y mi sistema nervioso despierta un estado de alerta suave y conexión con el entorno.",
                 "imagenUrl": "/multimedia/img/piel.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m6b-2",
-                "texto": "Cordones de zapatos",
+                "id": "b",
+                "texto": "🔥 La piel siente calor de desierto de 45 °C al abrir la ventana en Sopó.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "🔇 Ningún receptor del cuerpo detecta ni el sonido ni la temperatura del aire.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🎸 El viento produce el sonido de una campana escolar metálica.",
                 "esCorrecta": false
               }
             ]
           }
         },
         {
-          "tipo": "seleccion",
+          "tipo": "escuchar_responder",
           "datos": {
-            "id": "preg-m6c",
-            "instruccion": "🎯 Evaluación en caliente con el docente Rafael: Mira fijamente el «centro de control» (botón rojo) de tu trabajo terminado.",
-            "imagenUrl": "/multimedia/img/cerebro.jpg",
-            "opciones": [
-              {
-                "id": "op-m6c-1",
-                "texto": "🔴 El CEREBRO en la cabeza (Botón rojo brillante — Centro de control)",
-                "imagenUrl": "/multimedia/img/cerebro.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m6c-2",
-                "texto": "La mano",
-                "esCorrecta": false
-              }
-            ]
-          }
-        }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
-    },
-    "atelier": {
-      "subtituloPoetico": "Desarrollo de la Habilidad — María Paula como directora del proyecto (2 sesiones de 60 min)",
-      "materia": "Sistema Nervioso — Co-creación física y digital",
-      "resumenBreve": "Sesión 1: En una silueta humana de cartón grande, María Paula indica que el botón rojo brillante (Cerebro) va en la cabeza y lo pega con mano asistida por mamá Piedad. Sesión 2: Con tiras de cinta de tela amarilla gruesa, papá o mamá trazan los 'cables' de los nervios bajo la dirección visual de María Paula.",
-      "datosClave": [
-        {
-          "icono": "🔴",
-          "etiqueta": "Botón rojo grande",
-          "valor": "El cerebro (Centro de control en la cabeza)"
-        },
-        {
-          "icono": "🎗️",
-          "etiqueta": "Cinta amarilla gruesa",
-          "valor": "Los cables de los nervios por el cuerpo"
-        },
-        {
-          "icono": "🎬",
-          "etiqueta": "Rol de María Paula",
-          "valor": "Directora visual que valida cada paso con su cabeza"
-        },
-        {
-          "icono": "✅",
-          "etiqueta": "Evaluación",
-          "valor": "Mirar fijamente el botón rojo (centro de control)"
-        }
-      ],
-      "importanciaEducativa": "Etapa 4 (Octubre): Consolidar el aprendizaje mediante la co-creación guiada de un proyecto físico y digital básico, donde la estudiante ejerza el rol de directora de la actividad escolar.",
-      "sabiasQue": "El cerebro y los nervios forman una red continua: cada vez que miras, escuchas o sientes algo en la piel, el mensaje viaja por esos 'cables' hasta el centro de control.",
-      "instruccionTip": "Al terminar las cintas amarillas bajo la dirección de María Paula, el docente evalúa en caliente pidiéndole que mire fijamente el «centro de control» (botón rojo)."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 6
-  },
-  {
-    "id": "seed-maria-7",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
-    "titulo": "Etapa 4 (Octubre) · Act. 4.2: El álbum virtual de los biomas",
-    "imagen_url": "/multimedia/img/vaca_sopo.jpg",
-    "configuracion": {
-      "preguntas": [
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m7a",
-            "instruccion": "🌴 Sesión 1 (60 min · Selva colombiana): Después de explorar los animales de la selva en tu tablet, toca este sonido para que mamá Piedad y papá adivinen qué animal canta:",
-            "audioUrl": "/multimedia/audios/pajaro.wav",
-            "imagenUrl": "/multimedia/img/flor.jpg",
-            "opciones": [
-              {
-                "id": "op-m7a-1",
-                "texto": "🐦 ¡Un ave cantora de los bosques y selvas de Colombia! (Papá y mamá adivinaron)",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m7a-2",
-                "texto": "🐧 Un pingüino del hielo polar",
-                "imagenUrl": "/multimedia/img/pinguino.jpg",
-                "esCorrecta": false
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m7b",
-            "instruccion": "🐄 Sesión 2 (60 min · Entorno verde de Sopó): Toca la pantalla para asociar el animal común de Sopó con su entorno verde y registrar tu nota digital del periodo con el docente Rafael.",
-            "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
-            "opciones": [
-              {
-                "id": "op-m7b-1",
-                "texto": "La vaca de Sopó en su prado verde de montaña 🐄🌿",
-                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m7b-2",
-                "texto": "El camello en el desierto amarillo sin pasto 🐪🏜️",
-                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
-                "esCorrecta": false
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m7c",
-            "instruccion": "🌿 ¿Qué hace especial al paisaje donde viven las vacas y los pájaros de Sopó?",
-            "audioUrl": "/multimedia/audios/agua_corriendo.wav",
-            "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
-            "opciones": [
-              {
-                "id": "op-m7c-1",
-                "texto": "Tiene prados verdes, agua fresca y clima frío de sabana 🌿💧",
-                "imagenUrl": "/multimedia/img/vaca_sopo.jpg",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m7c-2",
-                "texto": "Está cubierto solo de arena caliente",
-                "imagenUrl": "/multimedia/img/paisaje_desierto.jpg",
-                "esCorrecta": false
-              }
-            ]
-          }
-        }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
-    },
-    "atelier": {
-      "subtituloPoetico": "Desarrollo de la Habilidad — De la selva colombiana a los prados verdes de Sopó (2 sesiones de 60 min)",
-      "materia": "Biogeografía Elemental — Biomas de Colombia y Sopó",
-      "resumenBreve": "Sesión 1: Con la mediación de sus padres, María Paula explora los animales de la selva colombiana y elige sonidos en pantalla para que sus padres adivinen qué animal es. Sesión 2: Toca la pantalla para asociar la foto de una vaca o un pájaro de Sopó con su entorno verde, registrando la nota digital del periodo.",
-      "datosClave": [
-        {
-          "icono": "🌴",
-          "etiqueta": "Sesión 1",
-          "valor": "Selva colombiana y juego de adivinar sonidos en familia"
-        },
-        {
-          "icono": "🐄",
-          "etiqueta": "Sesión 2",
-          "valor": "Asociar la vaca o pájaro de Sopó con su entorno verde"
-        },
-        {
-          "icono": "🌟",
-          "etiqueta": "Rol activo",
-          "valor": "María Paula reta a sus padres con sonidos de animales"
-        },
-        {
-          "icono": "📝",
-          "etiqueta": "Registro",
-          "valor": "Nota digital del periodo con el docente Rafael Suárez"
-        }
-      ],
-      "importanciaEducativa": "Reconocer la fauna cercana del municipio de Sopó (la vaca en el prado verde y las aves locales) conecta la biogeografía mundial con el territorio cotidiano de María Paula.",
-      "sabiasQue": "La sabana de Sopó hace parte del altiplano cundiboyacense: sus prados siempre verdes se alimentan de la lluvia y la niebla de los cerros orientales.",
-      "instruccionTip": "Sesión 2: María Paula toca la pantalla para asociar la foto de la vaca o pájaro de Sopó con su entorno verde, registrando la nota digital del periodo."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 7
-  },
-  {
-    "id": "seed-maria-8",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
-    "tipo": "seleccion",
-    "titulo": "Etapa 5 (Noviembre) · Act. 5.1: El cuidado de mi cuerpo en el hogar",
-    "imagen_url": "/multimedia/img/emocion_calma.jpg",
-    "configuracion": {
-      "preguntas": [
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m8a",
-            "instruccion": "🌬️ Rutina en casa 1 (Viento de Sopó): La señora Piedad Arévalo y el papá abren la ventana para sentir la brisa fresca de Sopó. Escucha el sonido del viento y registra la respuesta de María Paula:",
-            "audioUrl": "/multimedia/audios/viento.wav",
-            "imagenUrl": "/multimedia/img/piel.jpg",
-            "opciones": [
-              {
-                "id": "op-m8a-1",
-                "texto": "😊 Respuesta de alerta atenta y agrado al sentir la brisa fresca de Sopó en su piel",
-                "esCorrecta": true
-              },
-              {
-                "id": "op-m8a-2",
-                "texto": "😌 Respuesta de calma y bienestar ante el cambio suave de estímulo térmico",
-                "esCorrecta": true
-              }
-            ]
-          }
-        },
-        {
-          "tipo": "seleccion",
-          "datos": {
-            "id": "preg-m8b",
-            "instruccion": "🎶 Rutina en casa 2 (Música suave relajante): En familia escuchamos esta melodía tranquila. ¿Cómo interactúa el sistema nervioso de María Paula con este estímulo del hogar?",
-            "audioUrl": "/multimedia/audios/musica_relajante.wav",
+            "id": "pm8-q2",
+            "instruccion": "🎵 RUTINA EN CASA 2 · MÚSICA SUAVE Y REGULACIÓN AUTÓNOMA: Escucha la música suave relajante. ¿Qué efecto produce este estímulo en tu cerebro y en el latido de tu corazón (que ves en el video)?",
+            "audioPreguntaUrl": "/multimedia/audios/musica_relajante.wav",
             "imagenUrl": "/multimedia/img/emocion_calma.jpg",
             "opciones": [
               {
-                "id": "op-m8b-1",
-                "texto": "💚 Se relaja, sonríe y disfruta el ambiente tranquilo junto a mamá Piedad y papá",
+                "id": "a",
+                "texto": "😌💚 Activa la respuesta de calma y bienestar (sistema nervioso parasimpático): la respiración se vuelve serena, el corazón late con ritmo tranquilo y el cuerpo descansa.",
+                "imagenUrl": "/multimedia/img/emocion_calma.jpg",
                 "esCorrecta": true
               },
               {
-                "id": "op-m8b-2",
-                "texto": "👀 Sigue el sonido con atención tranquila y contacto visual con su familia",
-                "esCorrecta": true
+                "id": "b",
+                "texto": "⚡ Provoca un sobresalto de alarma extrema como una sirena de emergencia.",
+                "esCorrecta": false
+              },
+              {
+                "id": "c",
+                "texto": "❄️ Congela la piel como si estuviéramos en el Polo Norte.",
+                "esCorrecta": false
+              },
+              {
+                "id": "d",
+                "texto": "🔦 Hace que la pupila reciba un destello de linterna brillante.",
+                "esCorrecta": false
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "clasificar",
+          "datos": {
+            "id": "pm8-q3",
+            "instruccion": "🏠 CLASIFICACIÓN DE ESTÍMULOS DEL HOGAR (OBSERVACIÓN DE MAMÁ PIEDAD Y PAPÁ): Clasifica cada experiencia cotidiana según el tipo de respuesta que genera en el sistema nervioso de María Paula:",
+            "categorias": [
+              {
+                "id": "cat-relajacion",
+                "nombre": "😌💚 Respuesta de Relajación, Calma y Descanso"
+              },
+              {
+                "id": "cat-alerta",
+                "nombre": "👀⚡ Respuesta de Atención y Alerta Sensorial Activa"
+              }
+            ],
+            "elementos": [
+              {
+                "id": "h1",
+                "texto": "Escuchar música suave relajante en casa con mamá Piedad y papá",
+                "imagenUrl": "/multimedia/img/emocion_calma.jpg",
+                "categoriaId": "cat-relajacion"
+              },
+              {
+                "id": "h2",
+                "texto": "Sentir una cobija tibia y el murmullo tranquilo del agua corriendo",
+                "imagenUrl": "/multimedia/img/vaso_agua.jpg",
+                "categoriaId": "cat-relajacion"
+              },
+              {
+                "id": "h3",
+                "texto": "Escuchar el repique claro de una campana o un sonido nuevo en la habitación",
+                "imagenUrl": "/multimedia/img/oreja.jpg",
+                "categoriaId": "cat-alerta"
+              },
+              {
+                "id": "h4",
+                "texto": "Abrir la ventana para sentir la ráfaga de viento frío de Sopó y la luz de la mañana",
+                "imagenUrl": "/multimedia/img/linterna.jpg",
+                "categoriaId": "cat-alerta"
+              }
+            ]
+          }
+        },
+        {
+          "tipo": "ordenar",
+          "datos": {
+            "id": "pm8-q4",
+            "instruccion": "📝 PROTOCOLO FAMILIAR EN EL HOGAR: Ordena los 4 pasos que realizan la señora Piedad Arévalo, el papá y María Paula para completar esta experiencia de bienestar en casa:",
+            "elementos": [
+              {
+                "id": "hog-1",
+                "texto": "1° Preparar el ambiente en casa: Elegir un momento cómodo respetando los ritmos de salud y descanso de María Paula.",
+                "imagenUrl": "/multimedia/img/emocion_calma.jpg",
+                "ordenCorrecto": 1
+              },
+              {
+                "id": "hog-2",
+                "texto": "2° Presentar los cambios de estímulo: Abrir la ventana para sentir el viento fresco de Sopó y luego reproducir música suave relajante.",
+                "imagenUrl": "/multimedia/img/piel.jpg",
+                "ordenCorrecto": 2
+              },
+              {
+                "id": "hog-3",
+                "texto": "3° Observar la respuesta del Sistema Nervioso: Identificar los gestos de alerta, sonrisa, mirada o relajación profunda de María Paula.",
+                "imagenUrl": "/multimedia/img/emocion_alegria.jpg",
+                "ordenCorrecto": 3
+              },
+              {
+                "id": "hog-4",
+                "texto": "4° Registrar en la tablet familiar: Escribir un párrafo corto sobre cómo interactuó María Paula con los estímulos de su hogar.",
+                "imagenUrl": "/multimedia/img/cerebro.jpg",
+                "ordenCorrecto": 4
               }
             ]
           }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Relación con el Hogar — Rutinas familiares de bienestar sensorial (Trabajo en casa)",
-      "materia": "Sistema Nervioso y Bienestar en Casa",
-      "resumenBreve": "En casa, la señora Piedad Arévalo y el papá realizan rutinas de cambios de estímulos (abrir la ventana para sentir el viento de Sopó o escuchar música suave relajante), observando las respuestas de relajación o alerta de María Paula y registrando en la tablet cómo interactúa con su entorno doméstico.",
+      "subtituloPoetico": "CIENCIA, SALUD Y BIENESTAR EN EL HOGAR DE SOPÓ",
+      "materia": "Biología · Etapa 5: Relación y Autoevaluación (Noviembre)",
+      "iconoMateria": "🏠",
+      "resumenBreve": "En casa, la señora Piedad Arévalo y el papá realizan rutinas de cambios de estímulos (abrir la ventana para sentir el viento de Sopó y escuchar música suave relajante), observando cómo el sistema nervioso de María Paula regula las respuestas de alerta y relajación.",
       "datosClave": [
         {
+          "icono": "🏡",
+          "etiqueta": "MODALIDAD",
+          "valor": "Trabajo en casa con Mamá Piedad y Papá"
+        },
+        {
           "icono": "🌬️",
-          "etiqueta": "Estímulo 1",
-          "valor": "Abrir la ventana para sentir el viento de Sopó"
+          "etiqueta": "ESTÍMULOS",
+          "valor": "Viento fresco de Sopó y Música suave relajante"
         },
         {
-          "icono": "🎵",
-          "etiqueta": "Estímulo 2",
-          "valor": "Escuchar música suave relajante en casa"
-        },
-        {
-          "icono": "👨‍👩‍👧",
-          "etiqueta": "Observadores",
-          "valor": "Mamá Piedad Arévalo y papá"
-        },
-        {
-          "icono": "📲",
-          "etiqueta": "Registro",
-          "valor": "Respuestas de relajación o alerta en la tablet"
+          "icono": "💓",
+          "etiqueta": "REGULACIÓN",
+          "valor": "Equilibrio entre Alerta Sensorial y Calma"
         }
       ],
-      "importanciaEducativa": "Etapa 5 (Noviembre): Conectar el proceso escolar con las rutinas de bienestar del hogar y valorar la participación de la estudiante respetando sus ritmos de salud.",
-      "sabiasQue": "La música suave y el aire fresco activan la respuesta de calma del sistema nervioso, ayudando a regular el ritmo cardíaco y el descanso en casa.",
-      "instruccionTip": "Descripción para la familia: Observar las respuestas de relajación o alerta de María Paula ante el viento de Sopó y la música suave, y registrarlas en la tablet."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 8
+      "importanciaEducativa": "Conectar el aprendizaje del sistema nervioso y el clima de Sopó con las rutinas reales de bienestar, salud y autorregulación en el hogar.",
+      "sabiasQue": "Cuando escuchas música relajante junto a tu familia, tu cerebro libera endorfinas y oxitocina, y el nervio vago envía señales al corazón para latir con calma y armonía.",
+      "instruccionTip": "Escucha los dos audios del hogar, clasifica los estímulos de calma vs. alerta y ordena el protocolo de observación familiar.",
+      "hotspots": [
+        {
+          "id": "hs-m8-1",
+          "nombre": "Ritmo Cardíaco Regulado por el Sistema Nervioso",
+          "descripcion": "El corazón adapta su frecuencia según los estímulos que recibe el cerebro: se activa ante la alerta y se serena con la música suave.",
+          "xPercent": 50,
+          "yPercent": 48
+        },
+        {
+          "id": "hs-m8-2",
+          "nombre": "Conexión Nervio Vago - Corazón",
+          "descripcion": "Vía principal del sistema nervioso parasimpático que produce tranquilidad y bienestar en el hogar.",
+          "xPercent": 45,
+          "yPercent": 28
+        }
+      ]
+    }
   },
   {
     "id": "seed-maria-9",
-    "profesor_id": "00000000-0000-0000-0000-000000000001",
+    "profesor_id": "mock-prof-1",
+    "etapa_id": "etapa-maria",
+    "orden": 9,
     "tipo": "autoevaluacion",
     "titulo": "Etapa 5 (Noviembre) · Act. 5.2: Mi tablero de sonrisas logradas",
     "imagen_url": "/multimedia/img/emocion_alegria.jpg",
+    "video_url": "/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4",
     "configuracion": {
+      "mostrarFelicitacion": true,
+      "vozSintetica": true,
       "preguntas": [
         {
+          "tipo": "emparejar",
+          "datos": {
+            "id": "pm9-q0",
+            "instruccion": "🏆 GRAN RETO INTEGRAL DEL SEMESTRE: Antes de marcar tus corazones de cierre, demuestra todo lo que aprendiste uniendo cada logro científico con su descubrimiento en Biología:",
+            "parejas": [
+              {
+                "id": "fin-1",
+                "origen": "/multimedia/img/cerebro.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Cerebro (Botón rojo del circuito)",
+                "destino": "Centro de control que recibe por los nervios amarillos lo que ven mis ojos, oyen mis oídos y siente mi piel",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "fin-2",
+                "origen": "/multimedia/img/oso_polar.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Oso polar y Pingüino",
+                "destino": "Fauna adaptada al frío extremo del Paisaje Blanco (Polo) con grasa térmica y pelaje/plumaje aislante",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "fin-3",
+                "origen": "/multimedia/img/camello.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Camello y León",
+                "destino": "Fauna adaptada al calor intenso del Paisaje Amarillo (Desierto y Sabana cálida)",
+                "destinoTipo": "texto"
+              },
+              {
+                "id": "fin-4",
+                "origen": "/multimedia/img/vaca_sopo.jpg",
+                "origenTipo": "imagen",
+                "origenAlt": "Pradera verde de Sopó",
+                "destino": "Nuestro ecosistema altoandino cundinamarqués de clima fresco, lluvia, viento y naturaleza verde",
+                "destinoTipo": "texto"
+              }
+            ]
+          }
+        },
+        {
           "tipo": "autoevaluacion",
           "datos": {
-            "id": "preg-m9a",
-            "instruccion": "Logro 1 del semestre — El docente Rafael lee al nivel de los ojos de María Paula y mamá Piedad marca un corazón digital por su respuesta:",
-            "reflexion": "«¡Logré usar mi tablet y mis videos de sonidos para aprender en las clases de biología!» (😃 / 😐)",
+            "id": "pm9-q1",
+            "instruccion": "💖 LOGRO 1 DEL SEMESTRE: El docente Rafael Suárez lee pausadamente al nivel de tus ojos. Responde con un parpadeo voluntario, una sonrisa o un sonido afirmativo para que mamá Piedad marque tu corazón digital: \"¡Logré usar mi tablet y mis videos de sonidos para aprender en las clases de biología!\"",
             "audioUrl": "/multimedia/audios/pajaro.wav",
             "imagenUrl": "/multimedia/img/emocion_alegria.jpg",
+            "reflexion": "¡Logré usar mi tablet y mis videos de sonidos para aprender en las clases de biología!",
             "escala": [
               {
-                "id": "logrado_1",
-                "etiqueta": "❤️ ¡Sí, lo logré! (Parpadeo / Sonrisa)",
+                "id": "logro-1-si",
+                "etiqueta": "😃 ❤️ ¡Sí, lo logré con alegría!",
                 "emoji": "😃",
-                "color": "#22c55e"
+                "color": "bg-rose-100 border-rose-500 text-rose-900"
               },
               {
-                "id": "proceso_1",
-                "etiqueta": "En proceso",
+                "id": "logro-1-proceso",
+                "etiqueta": "😐 En proceso · Sigo explorando a mi ritmo",
                 "emoji": "😐",
-                "color": "#f59e0b"
+                "color": "bg-amber-100 border-amber-500 text-amber-900"
               }
             ]
           }
@@ -3400,23 +4247,23 @@
         {
           "tipo": "autoevaluacion",
           "datos": {
-            "id": "preg-m9b",
-            "instruccion": "Logro 2 del semestre — Responde con un parpadeo voluntario, una sonrisa o un sonido afirmativo:",
-            "reflexion": "«¡Exploré con mis ojos, mis oídos y mis manos asistidas el cuerpo humano y los climas del planeta!» (😃 / 😐)",
-            "audioUrl": "/multimedia/audios/campana.wav",
+            "id": "pm9-q2",
+            "instruccion": "💖 LOGRO 2 DEL SEMESTRE: \"¡Exploré con mis ojos, mis oídos y mis manos asistidas el cuerpo humano y los climas del planeta!\"",
+            "audioUrl": "/multimedia/audios/agua_corriendo.wav",
             "imagenUrl": "/multimedia/img/cuerpo_cerebro.jpg",
+            "reflexion": "¡Exploré con mis ojos, mis oídos y mis manos asistidas el cuerpo humano y los climas del planeta!",
             "escala": [
               {
-                "id": "logrado_2",
-                "etiqueta": "❤️ ¡Sí, lo logré! (Parpadeo / Sonrisa)",
+                "id": "logro-2-si",
+                "etiqueta": "😃 ❤️ ¡Sí, exploré mis sentidos y los biomas!",
                 "emoji": "😃",
-                "color": "#22c55e"
+                "color": "bg-emerald-100 border-emerald-500 text-emerald-900"
               },
               {
-                "id": "proceso_2",
-                "etiqueta": "En proceso",
+                "id": "logro-2-proceso",
+                "etiqueta": "😐 En proceso · Sigo practicando",
                 "emoji": "😐",
-                "color": "#f59e0b"
+                "color": "bg-amber-100 border-amber-500 text-amber-900"
               }
             ]
           }
@@ -3424,63 +4271,55 @@
         {
           "tipo": "autoevaluacion",
           "datos": {
-            "id": "preg-m9c",
-            "instruccion": "Logro 3 del semestre — Cierre y reconocimiento de tu esfuerzo, constancia y motivación:",
-            "reflexion": "«¡Trabajé feliz con el docente y con el apoyo amoroso de mi mamá Piedad y mi papá!» (😃 / 😐)",
+            "id": "pm9-q3",
+            "instruccion": "💖 LOGRO 3 DEL SEMESTRE: \"¡Trabajé feliz con el docente Rafael Suárez y con el apoyo amoroso de mi mamá Piedad y mi papá!\"",
             "audioUrl": "/multimedia/audios/musica_relajante.wav",
-            "imagenUrl": "/multimedia/img/emocion_alegria.jpg",
+            "imagenUrl": "/multimedia/img/emocion_calma.jpg",
+            "reflexion": "¡Trabajé feliz con el docente y con el apoyo amoroso de mi mamá Piedad y mi papá!",
             "escala": [
               {
-                "id": "logrado_3",
-                "etiqueta": "❤️ ¡Sí, lo logré! (Parpadeo / Sonrisa)",
+                "id": "logro-3-si",
+                "etiqueta": "😃 ❤️ ¡Sí, trabajé muy feliz en equipo!",
                 "emoji": "😃",
-                "color": "#22c55e"
+                "color": "bg-purple-100 border-purple-500 text-purple-900"
               },
               {
-                "id": "proceso_3",
-                "etiqueta": "En proceso",
+                "id": "logro-3-proceso",
+                "etiqueta": "😐 En proceso",
                 "emoji": "😐",
-                "color": "#f59e0b"
+                "color": "bg-amber-100 border-amber-500 text-amber-900"
               }
             ]
           }
         }
-      ],
-      "mostrarFelicitacion": true,
-      "vozSintetica": true
+      ]
     },
     "atelier": {
-      "subtituloPoetico": "Autoevaluación y Cierre Semestral — Reconocimiento de su participación (1 sesión de 60 min)",
-      "materia": "Biología Grado 901 — Autoevaluación PIAR",
-      "resumenBreve": "El docente Rafael Suárez se ubica al nivel de los ojos de María Paula y lee de forma pausada cada logro del semestre. María Paula responde con un parpadeo voluntario, una sonrisa o un sonido afirmativo, y su mamá Piedad marca un corazón digital en la tablet por cada respuesta positiva.",
+      "subtituloPoetico": "CIERRE DEL SEMESTRE · RECONOCIMIENTO Y CORAZONES DIGITALES",
+      "materia": "Biología · Etapa 5: Relación y Autoevaluación (Noviembre)",
+      "iconoMateria": "💖",
+      "resumenBreve": "Cerramos las 18 semanas de Biología (Grado 901) con un reto integrador de síntesis científica y nuestro Tablero de Sonrisas Logradas junto al docente Rafael Suárez Martínez, mamá Piedad Arévalo y papá.",
       "datosClave": [
         {
-          "icono": "❤️",
-          "etiqueta": "Logro 1",
-          "valor": "Usé mi tablet y mis videos de sonidos en biología"
+          "icono": "👩‍🎓",
+          "etiqueta": "ESTUDIANTE",
+          "valor": "María Paula Peñuela · Grado 901"
+        },
+        {
+          "icono": "👨‍🏫",
+          "etiqueta": "DOCENTE",
+          "valor": "Rafael Suárez Martínez · Biología"
         },
         {
           "icono": "❤️",
-          "etiqueta": "Logro 2",
-          "valor": "Exploré el cuerpo humano y los climas del planeta"
-        },
-        {
-          "icono": "❤️",
-          "etiqueta": "Logro 3",
-          "valor": "Trabajé feliz con el docente, mamá Piedad y papá"
-        },
-        {
-          "icono": "😃",
-          "etiqueta": "Respuesta",
-          "valor": "Parpadeo voluntario, sonrisa o sonido afirmativo"
+          "etiqueta": "FAMILIA",
+          "valor": "Señora Piedad Arévalo y Papá"
         }
       ],
-      "importanciaEducativa": "Valorar el esfuerzo, la constancia y la motivación de María Paula durante las 18 semanas del semestre, reconociendo su protagonismo y el acompañamiento amoroso de su familia.",
-      "sabiasQue": "Cada corazón digital marcado en este tablero celebra una conquista sensorial, científica y familiar lograda entre julio y noviembre.",
-      "instruccionTip": "Leer de forma pausada al nivel de los ojos de María Paula y marcar un corazón digital (😃) por cada respuesta afirmativa."
-    },
-    "etapa_id": "etapa-maria",
-    "orden": 9
+      "importanciaEducativa": "Valorar el dominio conceptual alcanzado, el esfuerzo, la constancia y la participación activa de María Paula durante todo el semestre respetando sus ritmos de salud.",
+      "sabiasQue": "Cada vez que celebras un logro con una sonrisa, tu cerebro fortalece las conexiones sinápticas de la memoria a largo plazo gracias a la dopamina.",
+      "instruccionTip": "Resuelve primero el Gran Reto Integral de emparejamiento y luego marca con mamá Piedad cada corazón digital de tu Tablero de Sonrisas."
+    }
   },
   {
     "id": "seed-emociones-1",

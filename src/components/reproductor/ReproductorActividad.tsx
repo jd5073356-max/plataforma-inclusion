@@ -36,6 +36,19 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // Completar:
   const [completadosHuecos, setCompletadosHuecos] = useState<{ [index: number]: string }>({});
 
+  // Ordenar (secuencia paso a paso):
+  const [ordenDisponible, setOrdenDisponible] = useState<any[]>([]);
+  const [ordenElegido, setOrdenElegido] = useState<any[]>([]);
+
+  // Memoria (parejas de cartas):
+  const [cartasBarajadas, setCartasBarajadas] = useState<any[]>([]);
+  const [cartasVolteadas, setCartasVolteadas] = useState<string[]>([]);
+  const [parejasResueltas, setParejasResueltas] = useState<string[]>([]);
+  const [bloqueoMemoria, setBloqueoMemoria] = useState(false);
+
+  // Identificar (selección múltiple o focalizada en tarjetas visuales):
+  const [identificadosIds, setIdentificadosIds] = useState<string[]>([]);
+
   const config = actividad.configuracion;
   const pregunta = config.preguntas[currentPreguntaIndex];
 
@@ -43,22 +56,45 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // replica el orden de la A y el ejercicio se resuelve pulsando en línea recta sin leer.
   const [destinosBarajados, setDestinosBarajados] = useState<EmparejarPregunta['parejas']>([]);
 
+  const barajarLista = <T extends { id: string }>(original: T[]): T[] => {
+    let copia = [...original];
+    for (let intento = 0; intento < 5; intento++) {
+      copia = [...original];
+      for (let i = copia.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+      }
+      if (copia.some((el, idx) => el.id !== original[idx].id)) break;
+    }
+    return copia;
+  };
+
   useEffect(() => {
     if (!pregunta || pregunta.tipo !== 'emparejar') {
       setDestinosBarajados([]);
-      return;
+    } else {
+      setDestinosBarajados(barajarLista(pregunta.datos.parejas));
     }
-    const original = pregunta.datos.parejas;
-    let barajado = original;
-    for (let intento = 0; intento < 5; intento++) {
-      barajado = [...original];
-      for (let i = barajado.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [barajado[i], barajado[j]] = [barajado[j], barajado[i]];
-      }
-      if (barajado.some((p, i) => p.id !== original[i].id)) break;
+
+    if (pregunta && pregunta.tipo === 'ordenar') {
+      setOrdenDisponible(barajarLista((pregunta.datos as any).elementos || []));
+      setOrdenElegido([]);
+    } else {
+      setOrdenDisponible([]);
+      setOrdenElegido([]);
     }
-    setDestinosBarajados(barajado);
+
+    if (pregunta && pregunta.tipo === 'memoria') {
+      setCartasBarajadas(barajarLista((pregunta.datos as any).cartas || []));
+      setCartasVolteadas([]);
+      setParejasResueltas([]);
+      setBloqueoMemoria(false);
+    } else {
+      setCartasBarajadas([]);
+      setCartasVolteadas([]);
+      setParejasResueltas([]);
+      setBloqueoMemoria(false);
+    }
   }, [currentPreguntaIndex, actividad]);
 
   useEffect(() => {
@@ -71,6 +107,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setClasificado({});
     setSelectedElementoId(null);
     setCompletadosHuecos({});
+    setIdentificadosIds([]);
 
     // TTS Voice instruction
     if (pregunta && !muted) {
@@ -80,9 +117,10 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
 
   const speakInstruction = () => {
     const text = pregunta.datos.instruccion;
-    if (pregunta.datos.audioUrl) {
+    const audioSrc = pregunta.datos.audioUrl || (pregunta.datos as any).audioPreguntaUrl;
+    if (audioSrc) {
       // Use teacher's audio recording if available
-      const audio = new Audio(pregunta.datos.audioUrl);
+      const audio = new Audio(audioSrc);
       audio.play().catch(() => {
         // Fallback to TTS if block
         ttsFallback(text);
@@ -115,7 +153,18 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // nunca se activa 'intentado' → el botón de avance no aparece y el estudiante
   // queda atrapado. Esto pasa con filas obsoletas de la BD (por ejemplo
   // explorador_3d, eliminado del código). Se degrada con honestidad y permite seguir.
-  const TIPOS_CON_RENDERER = ['seleccion', 'emparejar', 'clasificar', 'completar', 'reconocer_emociones', 'autoevaluacion'];
+  const TIPOS_CON_RENDERER = [
+    'seleccion',
+    'emparejar',
+    'clasificar',
+    'completar',
+    'reconocer_emociones',
+    'autoevaluacion',
+    'escuchar_responder',
+    'ordenar',
+    'memoria',
+    'identificar'
+  ];
   const tipoConocido = TIPOS_CON_RENDERER.includes(pregunta.tipo);
 
   // ACCESSIBILITY ADJUSTMENTS / THEMES based on 'ajuste'
@@ -170,6 +219,72 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     setSelectedOpcionId(null);
     setIsCorrect(null);
     setIntentado(false);
+    if (pregunta.tipo === 'ordenar') {
+      setOrdenDisponible(barajarLista((pregunta.datos as any).elementos || []));
+      setOrdenElegido([]);
+    }
+    if (pregunta.tipo === 'identificar') {
+      setIdentificadosIds([]);
+    }
+    if (pregunta.tipo === 'memoria') {
+      setCartasBarajadas(barajarLista((pregunta.datos as any).cartas || []));
+      setCartasVolteadas([]);
+      setParejasResueltas([]);
+      setBloqueoMemoria(false);
+    }
+  };
+
+  const verificarOrdenar = async () => {
+    const todasCorrectas = ordenElegido.every((el, idx) => el.ordenCorrecto === idx + 1);
+    setIsCorrect(todasCorrectas);
+    setIntentado(true);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    }
+  };
+
+  const verificarIdentificar = async () => {
+    const elementos = ((pregunta.datos as any).elementos || []) as any[];
+    const correctosIds = elementos.filter(e => e.esCorrecto).map(e => e.id).sort();
+    const elegidosSort = [...identificadosIds].sort();
+    const todasCorrectas =
+      correctosIds.length === elegidosSort.length &&
+      correctosIds.every((id, i) => id === elegidosSort[i]);
+    setIsCorrect(todasCorrectas);
+    setIntentado(true);
+    if (!modoPreview) {
+      await db.registrarIntento(estudianteId, actividad.id, todasCorrectas);
+    }
+  };
+
+  const voltearCartaMemoria = (carta: any) => {
+    if (intentado || bloqueoMemoria) return;
+    if (parejasResueltas.includes(carta.parejaId) || cartasVolteadas.includes(carta.id)) return;
+
+    const nuevasVolteadas = [...cartasVolteadas, carta.id];
+    setCartasVolteadas(nuevasVolteadas);
+
+    if (nuevasVolteadas.length === 2) {
+      setBloqueoMemoria(true);
+      const c1 = cartasBarajadas.find(c => c.id === nuevasVolteadas[0]);
+      const c2 = cartasBarajadas.find(c => c.id === nuevasVolteadas[1]);
+      if (c1 && c2 && c1.parejaId === c2.parejaId) {
+        const nuevasParejas = [...parejasResueltas, c1.parejaId];
+        setParejasResueltas(nuevasParejas);
+        setCartasVolteadas([]);
+        setBloqueoMemoria(false);
+
+        const totalParejas = new Set(cartasBarajadas.map(c => c.parejaId)).size;
+        if (nuevasParejas.length >= totalParejas) {
+          verificarSeleccion('memoria-completa', true);
+        }
+      } else {
+        setTimeout(() => {
+          setCartasVolteadas([]);
+          setBloqueoMemoria(false);
+        }, 950);
+      }
+    }
   };
 
   const verificarEmparejar = async () => {
@@ -744,6 +859,311 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
               <p className="text-center text-sm text-gray-500 font-semibold">
                 Marca cómo te sentiste al terminar la actividad.
               </p>
+            </div>
+          )}
+
+          {/* 7. ESCUCHAR Y RESPONDER (Laboratorio auditivo interactivo) */}
+          {pregunta.tipo === 'escuchar_responder' && (
+            <div className="space-y-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shrink-0">
+                    <Volume2 className="w-8 h-8 animate-pulse" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-blue-700 block">
+                      Estímulo Auditivo de Laboratorio
+                    </span>
+                    <p className="text-sm font-bold text-gray-800">
+                      Escucha con atención el sonido real y analiza su recorrido o su origen.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const src = (pregunta.datos as any).audioPreguntaUrl || pregunta.datos.audioUrl;
+                    if (src) {
+                      const a = new Audio(src);
+                      a.play();
+                    }
+                  }}
+                  className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-xl shadow flex items-center gap-2 shrink-0 transition"
+                >
+                  <Volume2 className="w-5 h-5" /> Reproducir estímulo
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
+                {((pregunta.datos as any).opciones || []).map((op: any) => {
+                  const isSelected = selectedOpcionId === op.id;
+                  const showCorrect = intentado && op.esCorrecta;
+                  const showIncorrect = intentado && isSelected && !op.esCorrecta;
+                  return (
+                    <button
+                      key={op.id}
+                      type="button"
+                      disabled={intentado}
+                      onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
+                      className={`
+                        w-full p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
+                        ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
+                        ${showCorrect
+                          ? 'border-green-500 bg-green-50 text-green-950'
+                          : showIncorrect
+                            ? 'border-red-400 bg-red-50 text-red-950'
+                            : isSelected
+                              ? 'border-blue-600 bg-blue-50 text-blue-950'
+                              : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800'}
+                      `}
+                    >
+                      {op.imagenUrl ? (
+                        <img
+                          src={op.imagenUrl}
+                          alt=""
+                          aria-hidden="true"
+                          className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
+                        />
+                      ) : (
+                        <span className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 bg-gray-100 border-gray-300">
+                          {op.texto[0].toUpperCase()}
+                        </span>
+                      )}
+                      <span className="flex-1">{op.texto}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 8. ORDENAR (Secuencia lógica y científica paso a paso) */}
+          {pregunta.tipo === 'ordenar' && (
+            <div className="space-y-6">
+              {/* Secuencia armada por el estudiante */}
+              <div className="p-5 rounded-2xl bg-blue-50/50 border-2 border-blue-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-blue-800">
+                    Secuencia construida ({ordenElegido.length} de {((pregunta.datos as any).elementos || []).length} pasos):
+                  </span>
+                  {ordenElegido.length > 0 && !intentado && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOrdenDisponible(barajarLista((pregunta.datos as any).elementos || []));
+                        setOrdenElegido([]);
+                      }}
+                      className="text-xs font-bold text-red-600 hover:underline flex items-center gap-1"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" /> Reiniciar orden
+                    </button>
+                  )}
+                </div>
+
+                {ordenElegido.length === 0 ? (
+                  <p className="text-sm font-semibold text-gray-500 py-4 text-center">
+                    Toca las tarjetas de abajo en el orden correcto (Paso 1, Paso 2, Paso 3...).
+                  </p>
+                ) : (
+                  <div className="space-y-2.5">
+                    {ordenElegido.map((el, idx) => (
+                      <button
+                        key={el.id}
+                        type="button"
+                        disabled={intentado}
+                        onClick={() => {
+                          setOrdenElegido(prev => prev.filter(x => x.id !== el.id));
+                          setOrdenDisponible(prev => [...prev, el]);
+                        }}
+                        className="w-full p-4 rounded-xl bg-white border-2 border-blue-400 shadow-sm flex items-center gap-3 text-left font-bold hover:border-red-400 transition"
+                      >
+                        <span className="w-9 h-9 rounded-full bg-blue-600 text-white font-black flex items-center justify-center shrink-0">
+                          {idx + 1}
+                        </span>
+                        {el.imagenUrl && (
+                          <img src={el.imagenUrl} alt="" className="w-12 h-12 rounded-lg object-cover border shrink-0" />
+                        )}
+                        <span className="flex-1 text-gray-900">{el.texto}</span>
+                        {!intentado && <span className="text-xs text-gray-400 font-semibold">Quitar ✕</span>}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Tarjetas disponibles para elegir */}
+              {ordenDisponible.length > 0 && (
+                <div className="space-y-2.5">
+                  <span className="block text-xs font-bold text-gray-500 uppercase">
+                    Toca el siguiente paso de la secuencia:
+                  </span>
+                  <div className="grid grid-cols-1 gap-3">
+                    {ordenDisponible.map((el: any) => (
+                      <button
+                        key={el.id}
+                        type="button"
+                        disabled={intentado}
+                        onClick={() => {
+                          setOrdenDisponible(prev => prev.filter(x => x.id !== el.id));
+                          setOrdenElegido(prev => [...prev, el]);
+                        }}
+                        className="w-full p-4 rounded-2xl bg-white border-4 border-gray-300 hover:border-blue-500 hover:bg-blue-50/30 font-bold flex items-center gap-4 text-left transition shadow-sm"
+                      >
+                        {el.imagenUrl && (
+                          <img src={el.imagenUrl} alt="" className="w-14 h-14 rounded-xl object-cover border shrink-0" />
+                        )}
+                        <span className="flex-1 text-lg text-gray-800">{el.texto}</span>
+                        <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold">
+                          + Paso {ordenElegido.length + 1}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {!intentado && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={verificarOrdenar}
+                    disabled={ordenDisponible.length > 0}
+                    className="px-6 py-3.5 bg-blue-600 text-white font-extrabold rounded-xl shadow hover:bg-blue-700 disabled:opacity-50 transition"
+                  >
+                    Comprobar secuencia
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* 9. MEMORIA (Tablero interactivo de parejas científicas) */}
+          {pregunta.tipo === 'memoria' && (
+            <div className="space-y-5">
+              <div className="flex items-center justify-between bg-amber-50 border border-amber-200 px-4 py-2.5 rounded-xl">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-amber-900">
+                  🧠 Reto de Memoria Científica: Encuentra todas las parejas
+                </span>
+                <span className="text-xs font-black text-amber-900">
+                  Parejas: {parejasResueltas.length} / {new Set(cartasBarajadas.map(c => c.parejaId)).size}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {cartasBarajadas.map((carta: any, idx: number) => {
+                  const descubierta =
+                    cartasVolteadas.includes(carta.id) || parejasResueltas.includes(carta.parejaId);
+                  const resuelta = parejasResueltas.includes(carta.parejaId);
+                  return (
+                    <button
+                      key={carta.id}
+                      type="button"
+                      disabled={intentado || descubierta}
+                      onClick={() => voltearCartaMemoria(carta)}
+                      className={`min-h-[140px] p-4 rounded-2xl border-4 font-bold transition flex flex-col items-center justify-center gap-2 text-center shadow-sm ${
+                        resuelta
+                          ? 'border-green-500 bg-green-50 text-green-950'
+                          : descubierta
+                            ? 'border-blue-600 bg-blue-50 text-blue-950 scale-[1.02]'
+                            : 'border-gray-300 bg-gradient-to-br from-[#FBF9F5] to-[#EFECE6] hover:border-[#EE7C6A] text-gray-700'
+                      }`}
+                    >
+                      {descubierta ? (
+                        <>
+                          {carta.tipo === 'imagen' ? (
+                            <img
+                              src={carta.valor}
+                              alt="Carta"
+                              className="w-20 h-20 rounded-xl object-cover border border-gray-200"
+                            />
+                          ) : (
+                            <span className="text-base md:text-lg font-extrabold leading-snug">
+                              {carta.valor}
+                            </span>
+                          )}
+                          {resuelta && (
+                            <span className="text-[11px] font-extrabold text-green-700 bg-green-100 px-2.5 py-0.5 rounded-full">
+                              ✓ ¡Pareja!
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <span className="w-12 h-12 rounded-2xl bg-[#EE7C6A]/15 text-[#EE7C6A] font-black text-xl flex items-center justify-center">
+                            {idx + 1}
+                          </span>
+                          <span className="text-xs font-bold text-gray-500">Toca para descubrir</span>
+                        </>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 10. IDENTIFICAR (Selección visual en cuadrícula de macrotipos) */}
+          {pregunta.tipo === 'identificar' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {((pregunta.datos as any).elementos || []).map((el: any) => {
+                  const marcado = identificadosIds.includes(el.id);
+                  const mostrarOk = intentado && el.esCorrecto;
+                  const mostrarError = intentado && marcado && !el.esCorrecto;
+                  return (
+                    <button
+                      key={el.id}
+                      type="button"
+                      disabled={intentado}
+                      onClick={() => {
+                        setIdentificadosIds(prev =>
+                          prev.includes(el.id) ? prev.filter(x => x !== el.id) : [...prev, el.id]
+                        );
+                      }}
+                      className={`p-5 rounded-2xl border-4 transition flex flex-col items-center text-center gap-3 font-bold shadow-sm ${
+                        mostrarOk
+                          ? 'border-green-500 bg-green-50 text-green-950'
+                          : mostrarError
+                            ? 'border-red-400 bg-red-50 text-red-950'
+                            : marcado
+                              ? 'border-blue-600 bg-blue-50 text-blue-950 ring-4 ring-blue-200'
+                              : 'border-gray-300 bg-white hover:border-blue-300 text-gray-800'
+                      }`}
+                    >
+                      {el.imagenUrl && (
+                        <img
+                          src={el.imagenUrl}
+                          alt={el.nombre}
+                          className="w-full max-h-44 object-cover rounded-xl border border-gray-200"
+                        />
+                      )}
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs ${
+                            marcado ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-400'
+                          }`}
+                        >
+                          {marcado ? '✓' : ''}
+                        </span>
+                        <span className="text-lg">{el.nombre}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {!intentado && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={verificarIdentificar}
+                    disabled={identificadosIds.length === 0}
+                    className="px-6 py-3.5 bg-blue-600 text-white font-extrabold rounded-xl shadow hover:bg-blue-700 disabled:opacity-50 transition"
+                  >
+                    Comprobar selección ({identificadosIds.length})
+                  </button>
+                </div>
+              )}
             </div>
           )}
 

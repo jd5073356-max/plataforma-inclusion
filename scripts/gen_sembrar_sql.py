@@ -170,7 +170,7 @@ def main():
     # 3. Insertar
     W("-- 3. Siembra las actividades nuevas.")
     W("INSERT INTO actividades")
-    W("  (id, profesor_id, etapa_id, orden, tipo, titulo, imagen_url, configuracion, atelier, creado_en)")
+    W("  (id, profesor_id, etapa_id, orden, tipo, titulo, imagen_url, video_url, configuracion, atelier, creado_en)")
     W("VALUES")
     filas = []
     for a in actividades:
@@ -186,6 +186,7 @@ def main():
             lit(a["tipo"]),
             lit(a["titulo"]),
             lit(a["imagen_url"]) if a.get("imagen_url") else "NULL",
+            lit(a["video_url"]) if a.get("video_url") else "NULL",
             jsonb(a["configuracion"]) + "::jsonb",
             jsonb(a["atelier"]) + "::jsonb" if a.get("atelier") else "NULL",
             "NOW()",
@@ -199,14 +200,26 @@ def main():
     W("  tipo          = EXCLUDED.tipo,")
     W("  titulo        = EXCLUDED.titulo,")
     W("  imagen_url    = EXCLUDED.imagen_url,")
+    W("  video_url     = EXCLUDED.video_url,")
     W("  configuracion = EXCLUDED.configuracion,")
     W("  atelier       = EXCLUDED.atelier;")
     W("")
 
-    # 4. Verificación
-    W("-- 4. Resumen para confirmar tras el COMMIT:")
+    # 4. Si existe el perfil del docente Rafael Suárez Martínez, vincular la ruta de María Paula
+    W("-- 4. Vincular la ruta de María Paula al docente Rafael Suárez Martínez si existe en perfiles:")
+    W("UPDATE etapas SET profesor_id = p.id")
+    W("FROM perfiles p")
+    W("WHERE etapas.id = '00000000-0000-0000-0000-000000000204'")
+    W("  AND p.rol = 'profesor' AND p.nombre ILIKE '%Rafael Suárez%';")
+    W("")
+    W("UPDATE actividades SET profesor_id = p.id")
+    W("FROM perfiles p")
+    W("WHERE actividades.etapa_id = '00000000-0000-0000-0000-000000000204'")
+    W("  AND p.rol = 'profesor' AND p.nombre ILIKE '%Rafael Suárez%';")
+    W("")
+    W("-- 5. Resumen para confirmar tras el COMMIT:")
     W("--   SELECT etapa_id, count(*), min(orden), max(orden) FROM actividades")
-    W("--   WHERE profesor_id = " + lit(PROFESOR) + " GROUP BY etapa_id ORDER BY etapa_id;")
+    W("--   WHERE etapa_id IS NOT NULL GROUP BY etapa_id ORDER BY etapa_id;")
     W("")
     W("COMMIT;")
 
