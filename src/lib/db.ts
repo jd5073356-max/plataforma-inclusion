@@ -332,6 +332,38 @@ export const db = {
     }
   },
 
+  async signInEstudiante(nombre: string, curso: string) {
+    const emailGenerado = correoInterno(nombre, curso);
+    if (usarSupabase()) {
+      const { data: emailResuelto } = await supabase.rpc('resolver_email_estudiante', {
+        p_nombre: nombre.trim(),
+        p_curso: curso.trim()
+      });
+      const emailFinal = (typeof emailResuelto === 'string' && emailResuelto.trim())
+        ? emailResuelto.trim().toLowerCase()
+        : emailGenerado;
+      return this.signIn(emailFinal, '123456');
+    } else {
+      const norm = (t: string) =>
+        t.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const nInput = norm(nombre);
+      const cInput = norm(curso).replace(/\s+/g, '');
+      const perfiles = getStored<Perfil[]>('perfiles', []);
+      const userProfile = perfiles.find(p => {
+        if (p.rol !== 'estudiante') return false;
+        const cPerf = norm(p.curso || '').replace(/\s+/g, '');
+        const nPerf = norm(p.nombre);
+        return cPerf === cInput && (nPerf === nInput || nPerf.startsWith(nInput) || nInput.startsWith(nPerf));
+      });
+      if (!userProfile) {
+        throw new Error('No encontramos un estudiante con ese nombre y curso. Verifica con tu docente.');
+      }
+      const sessionObj = { id: userProfile.id, email: emailGenerado, userProfile };
+      setStored('currentUser', sessionObj);
+      return { user: { id: userProfile.id, email: emailGenerado }, profile: userProfile };
+    }
+  },
+
   async getCurrentUser() {
     if (usarSupabase()) {
       const { data: { user } } = await supabase.auth.getUser();

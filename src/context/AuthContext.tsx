@@ -59,19 +59,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (emailOrName: string, pass: string, course?: string) => {
     setLoading(true);
     try {
-      let email = emailOrName;
-      if (course) {
-        // If course is provided, it's a student login, resolve internal email
-        email = correoInterno(emailOrName, course);
-      }
       let data: Awaited<ReturnType<typeof db.signIn>>;
       try {
-        data = await db.signIn(email, pass);
+        data = course
+          ? await db.signInEstudiante(emailOrName, course)
+          : await db.signIn(emailOrName, pass);
       } catch (err) {
         if (!esFalloDeRed(err)) throw err;
         // Supabase inalcanzable → conmutar a mock y reintentar
         activarModoMock();
-        data = await db.signIn(email, pass);
+        data = course
+          ? await db.signInEstudiante(emailOrName, course)
+          : await db.signIn(emailOrName, pass);
       }
       setUser(data.user);
       setProfile(data.profile);

@@ -104,13 +104,15 @@ ON CONFLICT (id) DO UPDATE SET
   nombre = 'Rafael Suárez Martínez',
   curso = 'Biología 901';
 
--- 4. Asegurar contraseña conocida (123456) y metadatos GoTrue en todas las cuentas existentes
+-- 4. Asegurar contraseña estándar ('123456') en todos los estudiantes y cuentas docentes de prueba
 UPDATE auth.users
 SET
   encrypted_password = extensions.crypt('123456', extensions.gen_salt('bf')),
   email_confirmed_at = COALESCE(email_confirmed_at, NOW()),
   updated_at = NOW()
-WHERE email IN ('profesor@inclusion.com', 'admin@inclusion.com', 'maria-paula.901@inclusion.local', 'rafael.suarez@inclusion.com');
+WHERE email LIKE '%@inclusion.local'
+   OR email IN ('profesor@inclusion.com', 'admin@inclusion.com', 'rafael.suarez@inclusion.com')
+   OR id IN (SELECT id FROM public.perfiles WHERE rol = 'estudiante');
 
 UPDATE auth.users
 SET
@@ -177,7 +179,7 @@ ON CONFLICT (id) DO UPDATE SET
   etapa_id = EXCLUDED.etapa_id,
   ajuste = EXCLUDED.ajuste;
 
--- 6. Actualizar RPC crear_estudiante para que funcione con el trigger on_auth_user_created y GoTrue
+-- 6. Actualizar RPC crear_estudiante (contraseña interna automática '123456') y añadir RPC resolver_email_estudiante
 CREATE OR REPLACE FUNCTION public.crear_estudiante(
   p_nombre text,
   p_curso text,
@@ -191,6 +193,7 @@ SECURITY DEFINER
 AS $$
 DECLARE
   v_user_id uuid;
+  v_pass text := COALESCE(NULLIF(trim(p_password), ''), '123456');
 BEGIN
   SELECT id INTO v_user_id FROM auth.users WHERE email = lower(trim(p_email)) LIMIT 1;
 
@@ -205,7 +208,7 @@ BEGIN
       phone_change, phone_change_token, reauthentication_token, is_sso_user, is_anonymous
     ) VALUES (
       '00000000-0000-0000-0000-000000000000', v_user_id, 'authenticated', 'authenticated',
-      lower(trim(p_email)), extensions.crypt(p_password, extensions.gen_salt('bf')), NOW(),
+      lower(trim(p_email)), extensions.crypt(v_pass, extensions.gen_salt('bf')), NOW(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       jsonb_build_object('sub', v_user_id::text, 'email', lower(trim(p_email)), 'nombre', p_nombre, 'rol', 'estudiante', 'curso', p_curso, 'email_verified', true, 'phone_verified', false),
       NOW(), NOW(),
@@ -219,6 +222,11 @@ BEGIN
       NOW(), NOW(), NOW()
     )
     ON CONFLICT DO NOTHING;
+  ELSE
+    UPDATE auth.users
+    SET encrypted_password = extensions.crypt(v_pass, extensions.gen_salt('bf')),
+        updated_at = NOW()
+    WHERE id = v_user_id;
   END IF;
 
   INSERT INTO public.perfiles (id, rol, nombre, curso, profesor_id)
@@ -232,6 +240,44 @@ BEGIN
   RETURN v_user_id;
 END;
 $$;
+
+-- Función para resolver el correo interno de un estudiante a partir de su nombre y curso (sin pedir contraseña)
+CREATE OR REPLACE FUNCTION public.resolver_email_estudiante(
+  p_nombre text,
+  p_curso text
+)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_email text;
+  v_nombre_norm text;
+  v_curso_norm text;
+BEGIN
+  v_nombre_norm := translate(lower(trim(p_nombre)), 'áéíóúÁÉÍÓÚñÑüÜ', 'aeiouaeiounnuu');
+  v_curso_norm  := lower(regexp_replace(trim(p_curso), '\s+', '', 'g'));
+
+  SELECT u.email INTO v_email
+  FROM public.perfiles p
+  JOIN auth.users u ON u.id = p.id
+  WHERE p.rol = 'estudiante'
+    AND lower(regexp_replace(COALESCE(p.curso, ''), '\s+', '', 'g')) = v_curso_norm
+    AND (
+      translate(lower(trim(p.nombre)), 'áéíóúÁÉÍÓÚñÑüÜ', 'aeiouaeiounnuu') = v_nombre_norm
+      OR translate(lower(trim(p.nombre)), 'áéíóúÁÉÍÓÚñÑüÜ', 'aeiouaeiounnuu') LIKE v_nombre_norm || '%'
+      OR v_nombre_norm LIKE translate(lower(trim(p.nombre)), 'áéíóúÁÉÍÓÚñÑüÜ', 'aeiouaeiounnuu') || '%'
+    )
+  ORDER BY
+    CASE WHEN translate(lower(trim(p.nombre)), 'áéíóúÁÉÍÓÚñÑüÜ', 'aeiouaeiounnuu') = v_nombre_norm THEN 0 ELSE 1 END,
+    p.creado_en ASC
+  LIMIT 1;
+
+  RETURN v_email;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.resolver_email_estudiante(text, text) TO anon, authenticated;
 
 -- 7. Ampliar políticas RLS para que cualquier docente autenticado (ej. Rafael Suárez o Profesor Demo) pueda gestionar rutas, actividades, estudiantes y asignaciones
 DROP POLICY IF EXISTS "Profesores gestionan sus etapas" ON public.etapas;

@@ -24,7 +24,7 @@ export default function Login() {
         if (!nombre.trim() || !curso.trim()) {
           throw new Error('Por favor, ingresa tu nombre y curso.');
         }
-        await login(nombre, password || '123456', curso);
+        await login(nombre, '123456', curso);
         navigate('/estudiante');
       } else {
         if (!email.trim() || !password.trim()) {
@@ -126,30 +126,11 @@ export default function Login() {
                     </div>
                     <input
                       type="text"
-                      placeholder="Ej: 3A o 4B"
+                      placeholder="Ej: 901, 3A o 4B"
                       value={curso}
                       onChange={(e) => setCurso(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
                       required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-[#78716C] uppercase tracking-wider mb-2 flex justify-between">
-                    Contraseña 
-                    <span className="text-[#A8A29E] font-normal normal-case">(Opcional si es "123456")</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
-                      <Lock className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="password"
-                      placeholder="Contraseña"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
                     />
                   </div>
                 </div>

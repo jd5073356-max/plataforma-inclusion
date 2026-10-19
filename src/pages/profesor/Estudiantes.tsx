@@ -15,7 +15,6 @@ export default function Estudiantes() {
   // Create Student Form state
   const [nombre, setNombre] = useState('');
   const [curso, setCurso] = useState('');
-  const [contrasena, setContrasena] = useState('123456'); // Default simple password
 
   // Assign Route state
   const [selectedEstudianteId, setSelectedEstudianteId] = useState<string | null>(null);
@@ -51,14 +50,13 @@ export default function Estudiantes() {
     setLoading(true);
 
     try {
-      if (!nombre.trim() || !curso.trim() || !contrasena.trim()) {
-        throw new Error('Todos los campos son requeridos');
+      if (!nombre.trim() || !curso.trim()) {
+        throw new Error('Ingresa el nombre y el curso del estudiante');
       }
-      await db.crearEstudiante(nombre.trim(), curso.trim(), contrasena, profile!.id);
-      setMsg({ error: '', success: '¡Estudiante registrado y listo para entrar!' });
+      await db.crearEstudiante(nombre.trim(), curso.trim(), '123456', profile!.id);
+      setMsg({ error: '', success: '¡Estudiante registrado! Ya puede entrar solo con su nombre y curso.' });
       setNombre('');
       setCurso('');
-      setContrasena('123456');
       await loadData();
     } catch (err) {
       setMsg({ error: err instanceof Error ? err.message : 'Error al registrar estudiante', success: '' });
@@ -113,7 +111,7 @@ export default function Estudiantes() {
               <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Nombre Completo</label>
               <input
                 type="text"
-                placeholder="Ej: Carlos Andrés"
+                placeholder="Ej: María Paula Peñuela"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
@@ -124,20 +122,9 @@ export default function Estudiantes() {
               <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Curso o Nivel</label>
               <input
                 type="text"
-                placeholder="Ej: 3A, 4B, etc."
+                placeholder="Ej: 901, 3A, 4B"
                 value={curso}
                 onChange={(e) => setCurso(e.target.value)}
-                className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Contraseña</label>
-              <input
-                type="password"
-                placeholder="Contraseña"
-                value={contrasena}
-                onChange={(e) => setContrasena(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
                 required
               />
@@ -251,7 +238,7 @@ export default function Estudiantes() {
                       <span className="font-bold text-[#1C1917] text-sm">{est.nombre}</span>
                       <span className="px-2.5 py-0.5 text-[11px] font-bold bg-[#EE7C6A]/10 text-[#EE7C6A] rounded-full">{est.curso}</span>
                     </div>
-                    <p className="text-xs text-[#78716C] mt-1">Acceso: {est.nombre.toLowerCase().replace(/\s+/g, '-')}.{est.curso?.toLowerCase()}@inclusion.local</p>
+                    <p className="text-xs text-[#78716C] mt-1">Ingreso: Nombre <b>{est.nombre}</b> · Curso <b>{est.curso}</b> (sin contraseña)</p>
                   </div>
 
                   <div className="flex-1 max-w-md">
