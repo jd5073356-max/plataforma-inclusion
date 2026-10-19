@@ -960,6 +960,36 @@ export const db = {
     }
   },
 
+  async reiniciarProgresoRuta(estudianteId: string, etapaId: string) {
+    if (usarSupabase()) {
+      const { error: rpcError } = await supabase.rpc('reiniciar_progreso_ruta', {
+        p_estudiante_id: estudianteId,
+        p_etapa_id: etapaId
+      });
+
+      if (rpcError) {
+        const pasos = await this.getPasosDeEtapa(etapaId);
+        const actividadIds = pasos.map(p => p.id);
+        if (actividadIds.length > 0) {
+          await supabase
+            .from('progreso')
+            .delete()
+            .eq('estudiante_id', estudianteId)
+            .in('actividad_id', actividadIds);
+        }
+      }
+    }
+
+    try {
+      const pasos = await this.getPasosDeEtapa(etapaId);
+      const actividadIds = pasos.map(p => p.id);
+      const progs = getStored<Progreso[]>('progreso', []);
+      setStored('progreso', progs.filter(p => !(p.estudiante_id === estudianteId && actividadIds.includes(p.actividad_id))));
+    } catch {
+      // Ignorar fallback si localStorage no está disponible
+    }
+  },
+
   // --- RECURSOS (IMÁGENES & AUDIOS GRABADOS) ---
   async subirRecurso(file: File | Blob, tipo: 'imagen' | 'audio', profesorId: string): Promise<string> {
     const aDataUrl = (blob: Blob): Promise<string> =>

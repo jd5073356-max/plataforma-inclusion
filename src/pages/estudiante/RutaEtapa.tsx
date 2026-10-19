@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Actividad, Asignacion, Progreso } from '../../types/actividad';
 import {
-  ArrowLeft, CheckCircle2, Lock, Play, RefreshCw, MapPin, Trophy, Sparkles
+  ArrowLeft, CheckCircle2, Lock, Play, RefreshCw, MapPin, Trophy, Sparkles, RotateCcw
 } from 'lucide-react';
 
 interface RutaAsignada extends Asignacion {
@@ -37,6 +37,7 @@ export default function RutaEtapa() {
   const [ruta, setRuta] = useState<RutaAsignada | null>(null);
   const [progresos, setProgresos] = useState<Progreso[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reiniciando, setReiniciando] = useState(false);
   const [error, setError] = useState('');
 
   const loadData = async () => {
@@ -66,6 +67,25 @@ export default function RutaEtapa() {
   }, [profile, etapaId]);
 
   if (!profile) return null;
+
+  const handleReiniciarRuta = async () => {
+    if (!profile || !ruta) return;
+    const seguro = window.confirm(
+      `¿Deseas reiniciar las actividades de «${ruta.etapa.nombre}»?\n\nTu avance volverá al Paso 1 para que puedas comenzar de nuevo.`
+    );
+    if (!seguro) return;
+
+    try {
+      setReiniciando(true);
+      await db.reiniciarProgresoRuta(profile.id, ruta.etapa.id);
+      await loadData();
+    } catch (err) {
+      console.error('Error al reiniciar ruta:', err);
+      alert('No se pudo reiniciar la ruta. Por favor intenta de nuevo.');
+    } finally {
+      setReiniciando(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -112,14 +132,29 @@ export default function RutaEtapa() {
         >
           <ArrowLeft className="w-4 h-4" /> Mis rutas
         </button>
-        <button
-          type="button"
-          onClick={loadData}
-          className="p-2.5 bg-white border border-[#EFECE6] rounded-full text-[#78716C] hover:text-[#1C1917] transition shadow-sm"
-          title="Actualizar progreso"
-        >
-          <RefreshCw className="w-4 h-4" />
-        </button>
+
+        <div className="flex items-center gap-2">
+          {terminados > 0 && (
+            <button
+              type="button"
+              onClick={handleReiniciarRuta}
+              disabled={reiniciando}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-[#FFF2F0] hover:bg-[#FFE8E6] text-[#D9363E] border border-[#FFCCC7] rounded-full text-xs font-bold transition shadow-sm disabled:opacity-50"
+              title="Reiniciar actividades de esta ruta"
+            >
+              <RotateCcw className={`w-3.5 h-3.5 ${reiniciando ? 'animate-spin' : ''}`} />
+              <span>Reiniciar actividades</span>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={loadData}
+            className="p-2.5 bg-white border border-[#EFECE6] rounded-full text-[#78716C] hover:text-[#1C1917] transition shadow-sm"
+            title="Actualizar progreso"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
       </header>
 
       <main className="max-w-3xl w-full mx-auto p-4 md:p-8">
@@ -142,6 +177,23 @@ export default function RutaEtapa() {
           {rutaCompleta && (
             <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-[#F59E0B]/20 text-[#F59E0B] rounded-full text-xs font-bold">
               <Trophy className="w-3.5 h-3.5" /> ¡Ruta completa! Puedes repetir los pasos que quieras
+            </div>
+          )}
+
+          {terminados > 0 && (
+            <div className="mt-4 pt-4 border-t border-[#44403C] flex flex-wrap items-center justify-between gap-3">
+              <span className="text-xs text-[#A8A29E]">
+                {rutaCompleta ? '🎉 ¡Completaste todos los pasos!' : `Vas en el paso ${indiceActual + 1}.`}
+              </span>
+              <button
+                type="button"
+                onClick={handleReiniciarRuta}
+                disabled={reiniciando}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#EE7C6A]/20 hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white rounded-full text-xs font-bold transition border border-[#EE7C6A]/30"
+              >
+                <RotateCcw className={`w-3.5 h-3.5 ${reiniciando ? 'animate-spin' : ''}`} />
+                <span>Reiniciar ruta desde el Paso 1</span>
+              </button>
             </div>
           )}
         </div>

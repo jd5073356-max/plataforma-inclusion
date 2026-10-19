@@ -17,7 +17,8 @@ import {
   Plus,
   Eye,
   CheckSquare,
-  Square
+  Square,
+  RotateCcw
 } from 'lucide-react';
 
 export default function Estudiantes() {
@@ -129,6 +130,21 @@ export default function Estudiantes() {
       await loadData();
     } catch (err) {
       console.error('Error al desasignar:', err);
+    }
+  };
+
+  const handleReiniciarProgresoRuta = async (estudianteId: string, etapaId: string, nombreRuta: string) => {
+    const seguro = window.confirm(
+      `¿Deseas reiniciar las actividades de «${nombreRuta}» para este estudiante?\n\nSu avance volverá al Paso 1 y todas las actividades de esta ruta quedarán pendientes.`
+    );
+    if (!seguro) return;
+
+    try {
+      await db.reiniciarProgresoRuta(estudianteId, etapaId);
+      setMsg({ error: '', success: `Progreso de la ruta «${nombreRuta}» reiniciado con éxito.` });
+      await loadData();
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al reiniciar ruta', success: '' });
     }
   };
 
@@ -419,6 +435,14 @@ export default function Estudiantes() {
                                   title="Previsualizar actividades de esta ruta"
                                 >
                                   <Eye className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleReiniciarProgresoRuta(est.id, asig.etapa_id, etapa.nombre)}
+                                  className="text-[#78716C] hover:text-[#EE7C6A] transition ml-0.5 p-0.5 rounded"
+                                  title="Reiniciar actividades de esta ruta para este estudiante"
+                                >
+                                  <RotateCcw className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"

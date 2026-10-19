@@ -5,7 +5,7 @@ import { Progreso } from '../../types/actividad';
 import { useNavigate } from 'react-router-dom';
 import {
   LogOut, Play, CheckCircle2, RefreshCw, Compass, MapPin, Trophy, Sparkles,
-  ChevronDown, ChevronUp, Eye
+  ChevronDown, ChevronUp, Eye, RotateCcw
 } from 'lucide-react';
 
 const msgErr = (err: unknown) => (err instanceof Error ? err.message : 'Ocurrió un error inesperado');
@@ -41,6 +41,23 @@ export default function PanelEstudiante() {
   const [rutaDetalleId, setRutaDetalleId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleReiniciarRuta = async (e: React.MouseEvent, etapaId: string, etapaNombre: string) => {
+    e.stopPropagation();
+    if (!profile) return;
+    const seguro = window.confirm(
+      `¿Deseas reiniciar las actividades de «${etapaNombre}»?\n\nTu avance volverá al Paso 1 para que puedas comenzar de nuevo.`
+    );
+    if (!seguro) return;
+
+    try {
+      await db.reiniciarProgresoRuta(profile.id, etapaId);
+      await loadStudentData();
+    } catch (err) {
+      console.error('Error al reiniciar ruta:', err);
+      alert('No se pudo reiniciar la ruta.');
+    }
+  };
 
   const loadStudentData = async () => {
     if (!profile) return;
@@ -261,19 +278,32 @@ export default function PanelEstudiante() {
                         </div>
                       </div>
 
-                      <div className="px-6 py-4 bg-[#FBF9F5] border-t border-[#EFECE6] flex items-center justify-between gap-4">
+                      <div className="px-6 py-4 bg-[#FBF9F5] border-t border-[#EFECE6] flex items-center justify-between gap-3 flex-wrap">
                         <span className="text-xs font-bold text-[#78716C]">
                           {completa ? 'Puedes repetir los pasos 🔄' : terminados > 0 ? `Vas por el paso ${terminados + 1}` : 'Comienza el camino ✨'}
                         </span>
-                        <button
-                          onClick={() => navigate(`/estudiante/ruta/${ruta.etapa.id}`)}
-                          className={`flex items-center gap-1.5 px-5 py-2.5 font-bold text-xs rounded-full transition shadow-sm text-white ${
-                            completa ? 'bg-[#10B981] hover:bg-[#0EA371]' : 'bg-[#EE7C6A] hover:bg-[#E46653]'
-                          }`}
-                        >
-                          {completa ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-                          {completa ? 'Repasar' : terminados > 0 ? 'Continuar' : 'Comenzar'}
-                        </button>
+                        <div className="flex items-center gap-2">
+                          {terminados > 0 && (
+                            <button
+                              type="button"
+                              onClick={(e) => handleReiniciarRuta(e, ruta.etapa.id, ruta.etapa.nombre)}
+                              className="flex items-center gap-1.5 px-3 py-2 bg-white hover:bg-[#FFF2F0] text-[#78716C] hover:text-[#D9363E] border border-[#EFECE6] hover:border-[#FFCCC7] rounded-full text-xs font-bold transition shadow-xs"
+                              title="Reiniciar actividades de esta ruta"
+                            >
+                              <RotateCcw className="w-3.5 h-3.5" />
+                              <span className="hidden sm:inline">Reiniciar</span>
+                            </button>
+                          )}
+                          <button
+                            onClick={() => navigate(`/estudiante/ruta/${ruta.etapa.id}`)}
+                            className={`flex items-center gap-1.5 px-5 py-2.5 font-bold text-xs rounded-full transition shadow-sm text-white ${
+                              completa ? 'bg-[#10B981] hover:bg-[#0EA371]' : 'bg-[#EE7C6A] hover:bg-[#E46653]'
+                            }`}
+                          >
+                            {completa ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
+                            {completa ? 'Repasar' : terminados > 0 ? 'Continuar' : 'Comenzar'}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
