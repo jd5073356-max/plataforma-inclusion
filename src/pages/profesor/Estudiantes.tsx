@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Perfil, Etapa, Asignacion, Actividad, Progreso } from '../../types/actividad';
+import ModalGestionarRutasEstudiante from '../../components/comunes/ModalGestionarRutasEstudiante';
+import ModalPrevisualizarRuta from '../../components/comunes/ModalPrevisualizarRuta';
 import {
   UserPlus,
   Trash2,
@@ -11,7 +13,11 @@ import {
   CheckCircle2,
   MessageSquare,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Plus,
+  Eye,
+  CheckSquare,
+  Square
 } from 'lucide-react';
 
 export default function Estudiantes() {
@@ -23,13 +29,17 @@ export default function Estudiantes() {
   const [progresos, setProgresos] = useState<Progreso[]>([]);
   const [detalleAbiertoId, setDetalleAbiertoId] = useState<string | null>(null);
 
+  // Modales
+  const [estudianteGestionandoRutas, setEstudianteGestionandoRutas] = useState<Perfil | null>(null);
+  const [rutaPrevisualizando, setRutaPrevisualizando] = useState<Etapa | null>(null);
+
   // Create Student Form state
   const [nombre, setNombre] = useState('');
   const [curso, setCurso] = useState('');
 
-  // Assign Route state
+  // Assign Route state (soporta selección múltiple de rutas)
   const [selectedEstudianteId, setSelectedEstudianteId] = useState<string | null>(null);
-  const [selectedEtapaId, setSelectedEtapaId] = useState('');
+  const [selectedEtapaIds, setSelectedEtapaIds] = useState<string[]>([]);
   const [ajuste, setAjuste] = useState<'cognitiva' | 'motriz' | 'tea' | ''>('cognitiva');
 
   const [loading, setLoading] = useState(false);
@@ -94,16 +104,19 @@ export default function Estudiantes() {
   const handleAsignar = async (e: React.FormEvent) => {
     e.preventDefault();
     setMsg({ error: '', success: '' });
-    if (!selectedEstudianteId || !selectedEtapaId) {
-      setMsg({ error: 'Debes seleccionar un estudiante y una ruta', success: '' });
+    if (!selectedEstudianteId || selectedEtapaIds.length === 0) {
+      setMsg({ error: 'Debes seleccionar un estudiante y al menos una ruta', success: '' });
       return;
     }
 
     try {
-      await db.asignarRuta(selectedEstudianteId, selectedEtapaId, ajuste || undefined);
-      const nombreRuta = etapas.find(e => e.id === selectedEtapaId)?.nombre || 'la ruta';
-      setMsg({ error: '', success: `Ruta «${nombreRuta}» asignada correctamente.` });
-      setSelectedEtapaId('');
+      await db.asignarMultiplesRutas(
+        selectedEstudianteId,
+        selectedEtapaIds.map(etapaId => ({ etapaId, ajuste: ajuste || undefined }))
+      );
+      const nombreEst = estudiantes.find(e => e.id === selectedEstudianteId)?.nombre || 'el estudiante';
+      setMsg({ error: '', success: `¡Se asignaron ${selectedEtapaIds.length} ruta(s) a ${nombreEst} correctamente!` });
+      setSelectedEtapaIds([]);
       await loadData();
     } catch (err) {
       setMsg({ error: err instanceof Error ? err.message : 'Error al asignar', success: '' });
@@ -190,10 +203,10 @@ export default function Estudiantes() {
           </form>
         </div>
 
-        {/* Asignación de Rutas */}
+        {/* Asignación de Múltiples Rutas */}
         <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm">
           <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917] mb-4 flex items-center gap-2">
-            <ClipboardCheck className="w-5 h-5 text-[#7294B9]" /> Asignar Ruta
+            <ClipboardCheck className="w-5 h-5 text-[#7294B9]" /> Asignar Rutas
           </h2>
           <form onSubmit={handleAsignar} className="space-y-4">
             <div>
@@ -212,18 +225,50 @@ export default function Estudiantes() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Ruta de aprendizaje</label>
-              <select
-                value={selectedEtapaId}
-                onChange={(e) => setSelectedEtapaId(e.target.value)}
-                className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
-                required
-              >
-                <option value="">Selecciona una ruta</option>
-                {etapas.map(et => (
-                  <option key={et.id} value={et.id}>{et.nombre}</option>
-                ))}
-              </select>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-bold text-[#78716C] uppercase">
+                  Rutas de aprendizaje ({selectedEtapaIds.length} sel.)
+                </label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedEtapaIds.length === etapas.length) {
+                      setSelectedEtapaIds([]);
+                    } else {
+                      setSelectedEtapaIds(etapas.map(e => e.id));
+                    }
+                  }}
+                  className="text-[11px] font-bold text-[#EE7C6A] hover:underline"
+                >
+                  {selectedEtapaIds.length === etapas.length ? 'Desmarcar todas' : 'Marcar todas'}
+                </button>
+              </div>
+
+              <div className="space-y-1.5 max-h-48 overflow-y-auto p-2 bg-[#FBF9F5] border border-[#EFECE6] rounded-2xl">
+                {etapas.map(et => {
+                  const check = selectedEtapaIds.includes(et.id);
+                  return (
+                    <label
+                      key={et.id}
+                      className="flex items-center gap-2 p-2 rounded-xl hover:bg-white cursor-pointer transition text-xs font-medium text-[#1C1917]"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={check}
+                        onChange={() => {
+                          if (check) {
+                            setSelectedEtapaIds(prev => prev.filter(id => id !== et.id));
+                          } else {
+                            setSelectedEtapaIds(prev => [...prev, et.id]);
+                          }
+                        }}
+                        className="rounded text-[#EE7C6A] focus:ring-[#EE7C6A]"
+                      />
+                      <span className="truncate">{et.nombre}</span>
+                    </label>
+                  );
+                })}
+              </div>
             </div>
 
             <div>
@@ -244,7 +289,7 @@ export default function Estudiantes() {
               type="submit"
               className="w-full py-3 bg-[#7294B9] hover:bg-[#5C7D9E] text-white rounded-2xl font-bold transition text-xs shadow-sm"
             >
-              Asignar Ruta
+              Asignar {selectedEtapaIds.length > 0 ? `${selectedEtapaIds.length} Ruta(s)` : 'Ruta'}
             </button>
           </form>
         </div>
@@ -323,13 +368,34 @@ export default function Estudiantes() {
                     </div>
 
                     <div className="flex-1 max-w-md">
-                      <span className="block text-[10px] font-bold text-[#78716C] uppercase tracking-wider mb-1.5">
-                        Rutas asignadas ({activeAsigs.length})
-                      </span>
-                      {activeAsigs.length === 0 ? (
-                        <span className="text-xs font-bold text-[#B45309] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#FFE8D0]">
-                          Sin rutas
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="text-[10px] font-bold text-[#78716C] uppercase tracking-wider">
+                          Rutas asignadas ({activeAsigs.length})
                         </span>
+                        <button
+                          type="button"
+                          onClick={() => setEstudianteGestionandoRutas(est)}
+                          className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#EE7C6A]/10 hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white text-[11px] font-bold transition shadow-xs"
+                          title="Gestionar o asignar múltiples rutas a este estudiante"
+                        >
+                          <Plus className="w-3 h-3" />
+                          <span>Asignar Rutas</span>
+                        </button>
+                      </div>
+
+                      {activeAsigs.length === 0 ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-[#B45309] bg-[#FFF8F0] px-2.5 py-1 rounded-full border border-[#FFE8D0]">
+                            Sin rutas
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setEstudianteGestionandoRutas(est)}
+                            className="text-xs font-bold text-[#EE7C6A] hover:underline"
+                          >
+                            + Asignar primera ruta
+                          </button>
+                        </div>
                       ) : (
                         <div className="flex flex-wrap gap-1.5">
                           {activeAsigs.map((asig) => {
@@ -348,8 +414,16 @@ export default function Estudiantes() {
                                 )}
                                 <button
                                   type="button"
+                                  onClick={() => setRutaPrevisualizando(etapa)}
+                                  className="text-[#57534E] hover:text-[#EE7C6A] transition ml-0.5 p-0.5 rounded"
+                                  title="Previsualizar actividades de esta ruta"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  type="button"
                                   onClick={() => handleDesasignar(est.id, asig.etapa_id)}
-                                  className="text-[#A8A29E] hover:text-[#D9363E] transition ml-1"
+                                  className="text-[#A8A29E] hover:text-[#D9363E] transition ml-0.5 p-0.5 rounded"
                                   title="Desasignar ruta"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
@@ -433,6 +507,28 @@ export default function Estudiantes() {
           </div>
         )}
       </div>
+
+      {/* MODAL GESTIONAR Y ASIGNAR MÚLTIPLES RUTAS A UN ESTUDIANTE */}
+      {estudianteGestionandoRutas && (
+        <ModalGestionarRutasEstudiante
+          isOpen={!!estudianteGestionandoRutas}
+          onClose={() => setEstudianteGestionandoRutas(null)}
+          estudiante={estudianteGestionandoRutas}
+          etapas={etapas}
+          asignacionesActuales={asignaciones}
+          onGuardado={loadData}
+          onPrevisualizarRuta={(et) => setRutaPrevisualizando(et)}
+        />
+      )}
+
+      {/* MODAL PREVISUALIZAR ACTIVIDADES DE LA RUTA */}
+      {rutaPrevisualizando && (
+        <ModalPrevisualizarRuta
+          isOpen={!!rutaPrevisualizando}
+          onClose={() => setRutaPrevisualizando(null)}
+          etapa={rutaPrevisualizando}
+        />
+      )}
     </div>
   );
 }

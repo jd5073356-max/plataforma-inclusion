@@ -4,10 +4,28 @@ import { db } from '../../lib/db';
 import { Progreso } from '../../types/actividad';
 import { useNavigate } from 'react-router-dom';
 import {
-  LogOut, Play, CheckCircle2, RefreshCw, Compass, MapPin, Trophy, Sparkles
+  LogOut, Play, CheckCircle2, RefreshCw, Compass, MapPin, Trophy, Sparkles,
+  ChevronDown, ChevronUp, Eye
 } from 'lucide-react';
 
 const msgErr = (err: unknown) => (err instanceof Error ? err.message : 'Ocurrió un error inesperado');
+
+const tipoEmoji = (tipo: string): string => {
+  const mapa: Record<string, string> = {
+    seleccion: '✅',
+    emparejar: '🔗',
+    clasificar: '🗂️',
+    completar: '🧩',
+    escuchar_responder: '🎧',
+    ordenar: '🔢',
+    memoria: '🃏',
+    identificar: '🔍',
+    trazar_colorear: '🎨',
+    reconocer_emociones: '😊',
+    autoevaluacion: '🌟'
+  };
+  return mapa[tipo] || '⭐';
+};
 
 interface RutaAsignada {
   id: string;
@@ -20,6 +38,7 @@ export default function PanelEstudiante() {
   const navigate = useNavigate();
   const [rutas, setRutas] = useState<RutaAsignada[]>([]);
   const [progresos, setProgresos] = useState<Progreso[]>([]);
+  const [rutaDetalleId, setRutaDetalleId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -192,6 +211,53 @@ export default function PanelEstudiante() {
                               style={{ width: `${pct}%` }}
                             />
                           </div>
+                        </div>
+
+                        {/* Botón para previsualizar lista de actividades */}
+                        <div className="pt-2">
+                          <button
+                            type="button"
+                            onClick={() => setRutaDetalleId(rutaDetalleId === ruta.id ? null : ruta.id)}
+                            className="flex items-center gap-1.5 text-xs font-bold text-[#57534E] hover:text-[#EE7C6A] transition p-1"
+                          >
+                            <Eye className="w-3.5 h-3.5 text-[#EE7C6A]" />
+                            <span>{rutaDetalleId === ruta.id ? 'Ocultar actividades' : `Ver actividades de la ruta (${total})`}</span>
+                            {rutaDetalleId === ruta.id ? <ChevronUp className="w-3.5 h-3.5 ml-0.5" /> : <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
+                          </button>
+
+                          {rutaDetalleId === ruta.id && (
+                            <div className="mt-2.5 p-3 bg-[#FBF9F5] border border-[#EFECE6] rounded-2xl space-y-1.5 max-h-56 overflow-y-auto">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#78716C] block mb-1">
+                                Actividades en este camino:
+                              </span>
+                              {ruta.pasos.map((paso, pIdx) => {
+                                const listo = progresos.some(pr => pr.actividad_id === paso.id && pr.completado);
+                                const esSiguiente = !listo && (pIdx === 0 || progresos.some(pr => pr.actividad_id === ruta.pasos[pIdx - 1]?.id && pr.completado));
+
+                                return (
+                                  <div
+                                    key={paso.id}
+                                    className={`flex items-center justify-between gap-2 p-2 rounded-xl text-xs transition ${
+                                      listo
+                                        ? 'bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]/60'
+                                        : esSiguiente
+                                        ? 'bg-white text-[#1C1917] border border-[#EE7C6A]/30 shadow-xs'
+                                        : 'bg-white/60 text-[#78716C] border border-[#EFECE6]'
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <span className="shrink-0">{tipoEmoji(paso.tipo)}</span>
+                                      <span className="font-bold shrink-0">#{pIdx + 1}</span>
+                                      <span className="truncate font-medium">{paso.titulo}</span>
+                                    </div>
+                                    <span className="text-[10px] font-bold shrink-0">
+                                      {listo ? '✓ Listo' : esSiguiente ? '▶ Tu turno' : '⏳ Pendiente'}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
                         </div>
                       </div>
 

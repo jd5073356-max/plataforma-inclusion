@@ -675,7 +675,11 @@ export const db = {
 
   async asignarRuta(estudianteId: string, etapaId: string, ajuste: 'cognitiva' | 'motriz' | 'tea' | undefined) {
     if (usarSupabase()) {
-      const { data, error } = await supabase.from('asignaciones').insert({ estudiante_id: estudianteId, etapa_id: etapaId, ajuste }).select().single();
+      const { data, error } = await supabase
+        .from('asignaciones')
+        .upsert({ estudiante_id: estudianteId, etapa_id: etapaId, ajuste }, { onConflict: 'estudiante_id,etapa_id' })
+        .select()
+        .single();
       if (error) throw error;
       return data;
     } else {
@@ -691,6 +695,141 @@ export const db = {
       filtered.push(newAsig);
       setStored('asignaciones', filtered);
       return newAsig;
+    }
+  },
+
+  async asignarMultiplesRutas(
+    estudianteId: string,
+    rutas: { etapaId: string; ajuste?: 'cognitiva' | 'motriz' | 'tea' }[]
+  ) {
+    if (rutas.length === 0) return [];
+    if (usarSupabase()) {
+      const records = rutas.map(r => ({
+        estudiante_id: estudianteId,
+        etapa_id: r.etapaId,
+        ajuste: r.ajuste
+      }));
+      const { data, error } = await supabase
+        .from('asignaciones')
+        .upsert(records, { onConflict: 'estudiante_id,etapa_id' })
+        .select();
+      if (error) throw error;
+      return data || [];
+    } else {
+      const asigs = getStored<Asignacion[]>('asignaciones', []);
+      let result = [...asigs];
+      for (const r of rutas) {
+        result = result.filter(a => !(a.estudiante_id === estudianteId && a.etapa_id === r.etapaId));
+        result.push({
+          id: `asig-${Math.random().toString(36).substr(2, 9)}`,
+          estudiante_id: estudianteId,
+          etapa_id: r.etapaId,
+          ajuste: r.ajuste,
+          creado_en: new Date().toISOString()
+        });
+      }
+      setStored('asignaciones', result);
+      return result.filter(a => a.estudiante_id === estudianteId);
+    }
+  },
+
+  async sincronizarRutasEstudiante(
+    estudianteId: string,
+    rutas: { etapaId: string; ajuste?: 'cognitiva' | 'motriz' | 'tea' }[]
+  ) {
+    if (usarSupabase()) {
+      const etapaIdsSeleccionadas = rutas.map(r => r.etapaId);
+      const { data: actuales } = await supabase
+        .from('asignaciones')
+        .select('id, etapa_id')
+        .eq('estudiante_id', estudianteId);
+
+      const porEliminar = ((actuales || []) as { id: string; etapa_id: string }[])
+        .filter(a => a.etapa_id && !etapaIdsSeleccionadas.includes(a.etapa_id))
+        .map(a => a.etapa_id);
+
+      if (porEliminar.length > 0) {
+        await supabase
+          .from('asignaciones')
+          .delete()
+          .eq('estudiante_id', estudianteId)
+          .in('etapa_id', porEliminar);
+      }
+
+      if (rutas.length > 0) {
+        const records = rutas.map(r => ({
+          estudiante_id: estudianteId,
+          etapa_id: r.etapaId,
+          ajuste: r.ajuste
+        }));
+        const { error } = await supabase
+          .from('asignaciones')
+          .upsert(records, { onConflict: 'estudiante_id,etapa_id' });
+        if (error) throw error;
+      }
+    } else {
+      let asigs = getStored<Asignacion[]>('asignaciones', []);
+      asigs = asigs.filter(a => a.estudiante_id !== estudianteId);
+      for (const r of rutas) {
+        asigs.push({
+          id: `asig-${Math.random().toString(36).substr(2, 9)}`,
+          estudiante_id: estudianteId,
+          etapa_id: r.etapaId,
+          ajuste: r.ajuste,
+          creado_en: new Date().toISOString()
+        });
+      }
+      setStored('asignaciones', asigs);
+    }
+  },
+
+  async sincronizarEstudiantesDeRuta(
+    etapaId: string,
+    estudiantesConAjuste: { estudianteId: string; ajuste?: 'cognitiva' | 'motriz' | 'tea' }[]
+  ) {
+    if (usarSupabase()) {
+      const studentIds = estudiantesConAjuste.map(e => e.estudianteId);
+      const { data: actuales } = await supabase
+        .from('asignaciones')
+        .select('id, estudiante_id')
+        .eq('etapa_id', etapaId);
+
+      const porEliminar = ((actuales || []) as { id: string; estudiante_id: string }[])
+        .filter(a => a.estudiante_id && !studentIds.includes(a.estudiante_id))
+        .map(a => a.estudiante_id);
+
+      if (porEliminar.length > 0) {
+        await supabase
+          .from('asignaciones')
+          .delete()
+          .eq('etapa_id', etapaId)
+          .in('estudiante_id', porEliminar);
+      }
+
+      if (estudiantesConAjuste.length > 0) {
+        const records = estudiantesConAjuste.map(e => ({
+          estudiante_id: e.estudianteId,
+          etapa_id: etapaId,
+          ajuste: e.ajuste
+        }));
+        const { error } = await supabase
+          .from('asignaciones')
+          .upsert(records, { onConflict: 'estudiante_id,etapa_id' });
+        if (error) throw error;
+      }
+    } else {
+      let asigs = getStored<Asignacion[]>('asignaciones', []);
+      asigs = asigs.filter(a => a.etapa_id !== etapaId);
+      for (const e of estudiantesConAjuste) {
+        asigs.push({
+          id: `asig-${Math.random().toString(36).substr(2, 9)}`,
+          estudiante_id: e.estudianteId,
+          etapa_id: etapaId,
+          ajuste: e.ajuste,
+          creado_en: new Date().toISOString()
+        });
+      }
+      setStored('asignaciones', asigs);
     }
   },
 

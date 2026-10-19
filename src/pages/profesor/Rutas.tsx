@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
-import { Etapa, Actividad } from '../../types/actividad';
+import { Etapa, Actividad, Perfil, Asignacion } from '../../types/actividad';
 import Actividades from './Actividades';
 import ReproductorEnfocado from '../../components/reproductor/ReproductorEnfocado';
+import ModalPrevisualizarRuta from '../../components/comunes/ModalPrevisualizarRuta';
+import ModalAsignarEstudiantesARuta from '../../components/comunes/ModalAsignarEstudiantesARuta';
 import {
   Layers, Plus, ArrowUp, ArrowDown, Trash2, ChevronDown, ChevronRight,
-  RefreshCw, PlusCircle, Recycle, Route, FileEdit, Eye, X, Mic
+  RefreshCw, PlusCircle, Recycle, Route, FileEdit, Eye, X, Mic, Users, Play
 } from 'lucide-react';
 
 // Pestaña Rutas: cada etapa es un camino lineal de pasos (actividades ordenadas).
@@ -17,6 +19,12 @@ export default function Rutas() {
   const [pasos, setPasos] = useState<Actividad[]>([]);
   const [cargandoPasos, setCargandoPasos] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Previsualización y Asignación de Rutas
+  const [rutaPrevisualizando, setRutaPrevisualizando] = useState<Etapa | null>(null);
+  const [rutaAsignandoEstudiantes, setRutaAsignandoEstudiantes] = useState<Etapa | null>(null);
+  const [estudiantes, setEstudiantes] = useState<Perfil[]>([]);
+  const [asignaciones, setAsignaciones] = useState<Asignacion[]>([]);
 
   // Nueva ruta
   const [nuevoNombre, setNuevoNombre] = useState('');
@@ -29,12 +37,27 @@ export default function Rutas() {
   const [pasoPreview, setPasoPreview] = useState<Actividad | null>(null);
   const [msg, setMsg] = useState({ error: '', success: '' });
 
+  const loadDataGeneral = async () => {
+    if (!profile) return;
+    try {
+      const [ests, asigs] = await Promise.all([
+        db.getEstudiantesPorProfesor(profile.id),
+        db.getAsignacionesDeProfesor(profile.id)
+      ]);
+      setEstudiantes(ests);
+      setAsignaciones(asigs);
+    } catch (e) {
+      console.error('Error cargando estudiantes y asignaciones:', e);
+    }
+  };
+
   const loadRutas = async () => {
     if (!profile) return;
     try {
       setLoading(true);
       const ets = await db.getEtapas(profile.id);
       setEtapas(ets.sort((a, b) => a.orden - b.orden));
+      await loadDataGeneral();
     } catch (err) {
       console.error('Error cargando rutas:', err);
     } finally {
@@ -220,6 +243,32 @@ export default function Rutas() {
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setRutaPrevisualizando(etapa);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EE7C6A]/10 hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white text-xs font-bold transition shadow-xs"
+                      title="Previsualizar todas las actividades de esta ruta"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Previsualizar</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setRutaAsignandoEstudiantes(etapa);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#7294B9]/10 hover:bg-[#7294B9] text-[#7294B9] hover:text-white text-xs font-bold transition shadow-xs"
+                      title="Asignar esta ruta a uno o varios estudiantes"
+                    >
+                      <Users className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Asignar</span>
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={(e) => handleEliminarRuta(etapa, e)}
                       className="p-2 rounded-full text-[#A8A29E] hover:text-[#D9363E] hover:bg-[#FFF2F0] transition"
                       title="Eliminar ruta completa"
@@ -233,6 +282,25 @@ export default function Rutas() {
                 {/* Editor de pasos */}
                 {abierta && (
                   <div className="border-t border-[#EFECE6] p-5 bg-[#FBF9F5] space-y-3">
+                    {/* Barra de acciones de la ruta abierta */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-[#EFECE6]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-[#1C1917]">
+                          Pasos de la ruta: <span className="text-[#EE7C6A]">{pasos.length} actividades</span>
+                        </span>
+                      </div>
+                      {pasos.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setRutaPrevisualizando(etapa)}
+                          className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#EE7C6A] hover:bg-[#E46653] text-white rounded-full text-xs font-bold transition shadow-xs"
+                        >
+                          <Play className="w-3.5 h-3.5 fill-current" />
+                          <span>Previsualizar Ruta Completa</span>
+                        </button>
+                      )}
+                    </div>
+
                     {cargandoPasos ? (
                       <div className="flex justify-center py-6">
                         <RefreshCw className="w-6 h-6 text-[#EE7C6A] animate-spin" />
@@ -404,6 +472,27 @@ export default function Rutas() {
             />
           </div>
         </div>
+      )}
+
+      {/* MODAL PREVISUALIZAR RUTA COMPLETA */}
+      {rutaPrevisualizando && (
+        <ModalPrevisualizarRuta
+          etapa={rutaPrevisualizando}
+          isOpen={!!rutaPrevisualizando}
+          onClose={() => setRutaPrevisualizando(null)}
+        />
+      )}
+
+      {/* MODAL ASIGNAR ESTUDIANTES A ESTA RUTA */}
+      {rutaAsignandoEstudiantes && (
+        <ModalAsignarEstudiantesARuta
+          etapa={rutaAsignandoEstudiantes}
+          isOpen={!!rutaAsignandoEstudiantes}
+          onClose={() => setRutaAsignandoEstudiantes(null)}
+          estudiantes={estudiantes}
+          asignacionesActuales={asignaciones}
+          onGuardado={loadDataGeneral}
+        />
       )}
     </div>
   );
