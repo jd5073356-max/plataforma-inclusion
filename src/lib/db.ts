@@ -426,7 +426,33 @@ export const db = {
   },
 
   async crearProfesor(nombre: string, email: string, contrasena: string) {
+    if (usarSupabase()) {
+      const { data, error } = await supabase.rpc('crear_profesor', {
+        p_nombre: nombre.trim(),
+        p_email: email.trim().toLowerCase(),
+        p_password: contrasena
+      });
+      if (!error && data) {
+        return { id: data as string, email: email.trim().toLowerCase() };
+      }
+    }
     return this.signUp(email, contrasena, nombre, 'profesor');
+  },
+
+  async eliminarPerfil(userId: string) {
+    if (usarSupabase()) {
+      const { error } = await supabase.rpc('eliminar_usuario', { p_user_id: userId });
+      if (error) {
+        await supabase.from('progreso').delete().eq('estudiante_id', userId);
+        await supabase.from('asignaciones').delete().eq('estudiante_id', userId);
+        const { error: delErr } = await supabase.from('perfiles').delete().eq('id', userId);
+        if (delErr) throw delErr;
+      }
+    } else {
+      setStored('progreso', getStored<Progreso[]>('progreso', []).filter(p => p.estudiante_id !== userId));
+      setStored('asignaciones', getStored<Asignacion[]>('asignaciones', []).filter(a => a.estudiante_id !== userId));
+      setStored('perfiles', getStored<Perfil[]>('perfiles', []).filter(p => p.id !== userId));
+    }
   },
 
   // --- ETAPAS ---
@@ -461,20 +487,27 @@ export const db = {
     }
   },
 
+  async eliminarEtapa(etapaId: string) {
+    if (usarSupabase()) {
+      await supabase.from('asignaciones').delete().eq('etapa_id', etapaId);
+      await supabase.from('actividades').delete().eq('etapa_id', etapaId);
+      const { error } = await supabase.from('etapas').delete().eq('id', etapaId);
+      if (error) throw error;
+    } else {
+      setStored('asignaciones', getStored<Asignacion[]>('asignaciones', []).filter(a => a.etapa_id !== etapaId));
+      setStored('actividades', getStored<Actividad[]>('actividades', []).filter(a => a.etapa_id !== etapaId));
+      setStored('etapas', getStored<Etapa[]>('etapas', []).filter(e => e.id !== etapaId));
+    }
+  },
+
   // --- ACTIVIDADES ---
   async getActividades(profesorId: string): Promise<Actividad[]> {
     if (usarSupabase()) {
       const { data, error } = await supabase.from('actividades').select('*');
       if (error) {
-        // Sin conexión a la BD se muestran las plantillas del bundle, como antes
         console.warn('Supabase fetch error, fallback to seed:', error);
         return SEED_ACTIVITIES;
       }
-      // La BD ya tiene el contenido sembrado con ids UUID; los ids del seed del
-      // bundle son strings ("seed-banco-1"), así que el dedupe por id nunca
-      // casaba y el profesor veía cada actividad dos veces (BD + bundle).
-      // En modo Supabase la BD es la única fuente; el merge solo queda como
-      // fallback de conexión, igual que en getBanco/getActividadesDeEtapa.
       return (data || []) as Actividad[];
     } else {
       const acts = getStored<Actividad[]>('actividades', []);
@@ -602,9 +635,10 @@ export const db = {
     await this.guardarActividad({ ...b, orden: a.orden ?? idx + 1 } as Actividad);
   },
 
-  // Eliminar un paso de una ruta (solo pasos con etapa; el banco no se toca)
+  // Eliminar un paso de una ruta o plantilla del banco
   async eliminarPaso(pasoId: string) {
     if (usarSupabase()) {
+      await supabase.from('progreso').delete().eq('actividad_id', pasoId);
       const { error } = await supabase.from('actividades').delete().eq('id', pasoId);
       if (error) throw error;
     } else {
@@ -697,21 +731,35 @@ export const db = {
     }
   },
 
-  async registrarIntento(estudianteId: string, actividadId: string, completado: boolean) {
+  async getTodoElProgreso(): Promise<Progreso[]> {
     if (usarSupabase()) {
-      // Fetch existing
+      const { data, error } = await supabase.from('progreso').select('*');
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getStored<Progreso[]>('progreso', []);
+    }
+  },
+
+  async registrarIntento(estudianteId: string, actividadId: string, completado: boolean, notaFamiliar?: string) {
+    if (usarSupabase()) {
       const { data: existing } = await supabase.from('progreso').select('*').eq('estudiante_id', estudianteId).eq('actividad_id', actividadId).single();
       const intentos = (existing?.intentos || 0) + 1;
       const yaCompletado = existing?.completado || completado;
+      const notaFinal = notaFamiliar !== undefined && notaFamiliar.trim() !== ''
+        ? notaFamiliar.trim()
+        : existing?.nota_familiar;
 
-      const { data, error } = await supabase.from('progreso').upsert({
+      const payload: Record<string, any> = {
         estudiante_id: estudianteId,
         actividad_id: actividadId,
         completado: yaCompletado,
         intentos,
         actualizado_en: new Date().toISOString()
-      }, { onConflict: 'estudiante_id,actividad_id' }).select().single();
-      
+      };
+      if (notaFinal !== undefined) payload.nota_familiar = notaFinal;
+
+      const { data, error } = await supabase.from('progreso').upsert(payload, { onConflict: 'estudiante_id,actividad_id' }).select().single();
       if (error) throw error;
       return data;
     } else {
@@ -720,6 +768,7 @@ export const db = {
       if (idx !== -1) {
         progs[idx].intentos += 1;
         if (completado) progs[idx].completado = true;
+        if (notaFamiliar && notaFamiliar.trim()) progs[idx].nota_familiar = notaFamiliar.trim();
         progs[idx].actualizado_en = new Date().toISOString();
       } else {
         progs.push({
@@ -728,6 +777,7 @@ export const db = {
           actividad_id: actividadId,
           completado,
           intentos: 1,
+          nota_familiar: notaFamiliar?.trim() || undefined,
           actualizado_en: new Date().toISOString()
         });
       }
@@ -735,48 +785,94 @@ export const db = {
     }
   },
 
-  // --- RECURSOS (IMÁGENES & AUDIOS) ---
-  async subirRecurso(file: File, tipo: 'imagen' | 'audio', profesorId: string): Promise<string> {
+  async guardarNotaFamiliar(estudianteId: string, actividadId: string, notaFamiliar: string) {
+    const nota = notaFamiliar.trim();
+    if (!nota) return;
     if (usarSupabase()) {
-      const bucket = tipo === 'imagen' ? 'imagenes' : 'audios';
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${profesorId}/${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file);
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
-      
-      // Save record in recursos table
-      await supabase.from('recursos').insert({
-        profesor_id: profesorId,
-        url: data.publicUrl,
-        tipo
-      });
-
-      return data.publicUrl;
+      const { data: existing } = await supabase.from('progreso').select('*').eq('estudiante_id', estudianteId).eq('actividad_id', actividadId).single();
+      const { data, error } = await supabase.from('progreso').upsert({
+        estudiante_id: estudianteId,
+        actividad_id: actividadId,
+        completado: existing?.completado ?? false,
+        intentos: existing?.intentos ?? 1,
+        nota_familiar: nota,
+        actualizado_en: new Date().toISOString()
+      }, { onConflict: 'estudiante_id,actividad_id' }).select().single();
+      if (error) throw error;
+      return data;
     } else {
-      // In localStorage mode, convert to base64 so it can be stored and previewed!
-      return new Promise((resolve, reject) => {
+      const progs = getStored<Progreso[]>('progreso', []);
+      const idx = progs.findIndex(p => p.estudiante_id === estudianteId && p.actividad_id === actividadId);
+      if (idx !== -1) {
+        progs[idx].nota_familiar = nota;
+        progs[idx].actualizado_en = new Date().toISOString();
+      } else {
+        progs.push({
+          id: `prog-${Math.random().toString(36).substr(2, 9)}`,
+          estudiante_id: estudianteId,
+          actividad_id: actividadId,
+          completado: false,
+          intentos: 1,
+          nota_familiar: nota,
+          actualizado_en: new Date().toISOString()
+        });
+      }
+      setStored('progreso', progs);
+    }
+  },
+
+  // --- RECURSOS (IMÁGENES & AUDIOS GRABADOS) ---
+  async subirRecurso(file: File | Blob, tipo: 'imagen' | 'audio', profesorId: string): Promise<string> {
+    const aDataUrl = (blob: Blob): Promise<string> =>
+      new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64String = reader.result as string;
-          // Save resource reference
-          const recursos = getStored<Recurso[]>('recursos', []);
-          recursos.push({
-            id: `rec-${Math.random().toString(36).substr(2, 9)}`,
-            profesor_id: profesorId,
-            url: base64String,
-            tipo,
-            creado_en: new Date().toISOString()
-          });
-          setStored('recursos', recursos);
-          resolve(base64String);
-        };
+        reader.onloadend = () => resolve(reader.result as string);
         reader.onerror = reject;
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(blob);
       });
+
+    if (usarSupabase()) {
+      try {
+        const bucket = tipo === 'imagen' ? 'imagenes' : 'audios';
+        const rawName = (file as File).name || '';
+        const extFromName = rawName.includes('.') ? rawName.split('.').pop() : '';
+        const extFromMime = file.type
+          ? file.type.split('/')[1]?.split(';')[0]?.replace('mpeg', 'mp3')
+          : '';
+        const fileExt = extFromName || extFromMime || (tipo === 'audio' ? 'webm' : 'png');
+        const filePath = `${profesorId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file, {
+          contentType: file.type || (tipo === 'audio' ? 'audio/webm' : 'image/png'),
+          upsert: true
+        });
+        if (uploadError) throw uploadError;
+
+        const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+
+        await supabase.from('recursos').insert({
+          profesor_id: profesorId,
+          url: data.publicUrl,
+          tipo
+        });
+
+        return data.publicUrl;
+      } catch (err) {
+        console.warn('Fallback de subida multimedia a DataURL:', err);
+        return aDataUrl(file);
+      }
+    } else {
+      const base64String = await aDataUrl(file);
+      const recursos = getStored<Recurso[]>('recursos', []);
+      recursos.push({
+        id: `rec-${Math.random().toString(36).substr(2, 9)}`,
+        profesor_id: profesorId,
+        url: base64String,
+        tipo,
+        creado_en: new Date().toISOString()
+      });
+      setStored('recursos', recursos);
+      return base64String;
     }
   }
 };

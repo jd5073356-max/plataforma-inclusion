@@ -235,6 +235,7 @@ export interface Progreso {
   actividad_id: string;
   completado: boolean;
   intentos: number;
+  nota_familiar?: string;
   actualizado_en?: string;
 }
 

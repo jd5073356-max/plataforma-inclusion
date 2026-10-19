@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Etapa, Actividad } from '../../types/actividad';
+import Actividades from './Actividades';
+import ReproductorEnfocado from '../../components/reproductor/ReproductorEnfocado';
 import {
   Layers, Plus, ArrowUp, ArrowDown, Trash2, ChevronDown, ChevronRight,
-  RefreshCw, PlusCircle, Recycle, Route
+  RefreshCw, PlusCircle, Recycle, Route, FileEdit, Eye, X, Mic
 } from 'lucide-react';
-
-const msgErr = (err: unknown) => (err instanceof Error ? err.message : 'Ocurrió un error inesperado');
 
 // Pestaña Rutas: cada etapa es un camino lineal de pasos (actividades ordenadas).
 export default function Rutas() {
@@ -22,9 +22,11 @@ export default function Rutas() {
   const [nuevoNombre, setNuevoNombre] = useState('');
   const [creando, setCreando] = useState(false);
 
-  // Añadir paso desde el Banco
+  // Añadir paso desde el Banco o editar un paso existente
   const [banco, setBanco] = useState<Actividad[]>([]);
   const [mostrandoBanco, setMostrandoBanco] = useState(false);
+  const [pasoEditando, setPasoEditando] = useState<Actividad | null>(null);
+  const [pasoPreview, setPasoPreview] = useState<Actividad | null>(null);
   const [msg, setMsg] = useState({ error: '', success: '' });
 
   const loadRutas = async () => {
@@ -84,6 +86,21 @@ export default function Rutas() {
     }
   };
 
+  const handleEliminarRuta = async (etapa: Etapa, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!window.confirm(`¿Eliminar la ruta «${etapa.nombre}» y todos sus pasos?`)) return;
+    try {
+      await db.eliminarEtapa(etapa.id);
+      if (etapaAbiertaId === etapa.id) {
+        setEtapaAbiertaId(null);
+        setPasos([]);
+      }
+      await loadRutas();
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al eliminar la ruta', success: '' });
+    }
+  };
+
   const abrirBanco = async () => {
     if (!profile) return;
     setMostrandoBanco(true);
@@ -114,6 +131,7 @@ export default function Rutas() {
 
   const eliminar = async (pasoId: string) => {
     if (!etapaAbiertaId) return;
+    if (!window.confirm('¿Quitar este paso de la ruta?')) return;
     try {
       await db.eliminarPaso(pasoId);
       await loadPasos(etapaAbiertaId);
@@ -121,6 +139,21 @@ export default function Rutas() {
       console.error('Error eliminando paso:', err);
     }
   };
+
+  if (pasoEditando) {
+    return (
+      <Actividades
+        actividadInicialEditar={pasoEditando}
+        onCerrarEdicionExterna={async () => {
+          const etapaIdActual = pasoEditando.etapa_id;
+          setPasoEditando(null);
+          if (etapaIdActual) {
+            await loadPasos(etapaIdActual);
+          }
+        }}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 font-sans-atelier">
@@ -130,7 +163,7 @@ export default function Rutas() {
           <Route className="w-5 h-5 text-[#F59E0B]" /> Rutas de Aprendizaje
         </h2>
         <p className="text-xs text-[#78716C] mb-4">
-          Cada ruta es un camino lineal: los pasos se completan en orden y el siguiente se desbloquea al terminar el anterior.
+          Cada ruta es un camino lineal: los pasos se completan en orden y puedes editar o grabar audio en cualquier paso.
         </p>
 
         <form onSubmit={handleCrearRuta} className="flex flex-col sm:flex-row gap-3">
@@ -171,10 +204,9 @@ export default function Rutas() {
             return (
               <div key={etapa.id} className="bg-white rounded-[24px] border border-[#EFECE6] shadow-sm overflow-hidden">
                 {/* Cabecera de la ruta */}
-                <button
-                  type="button"
+                <div
                   onClick={() => toggleEtapa(etapa.id)}
-                  className="w-full p-5 flex items-center justify-between gap-4 hover:bg-[#FBF9F5] transition text-left"
+                  className="w-full p-5 flex items-center justify-between gap-4 hover:bg-[#FBF9F5] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="w-9 h-9 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center font-black text-sm shrink-0">
@@ -182,11 +214,21 @@ export default function Rutas() {
                     </span>
                     <div className="min-w-0">
                       <h3 className="font-serif-atelier font-bold text-[#1C1917] truncate">{etapa.nombre}</h3>
-                      <p className="text-[11px] text-[#78716C]">Ruta #{etapa.orden} · toca para {abierta ? 'cerrar' : 'editar pasos'}</p>
+                      <p className="text-[11px] text-[#78716C]">Ruta #{etapa.orden} · toca para {abierta ? 'cerrar' : 'editar pasos y audios'}</p>
                     </div>
                   </div>
-                  {abierta ? <ChevronDown className="w-5 h-5 text-[#78716C] shrink-0" /> : <ChevronRight className="w-5 h-5 text-[#78716C] shrink-0" />}
-                </button>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={(e) => handleEliminarRuta(etapa, e)}
+                      className="p-2 rounded-full text-[#A8A29E] hover:text-[#D9363E] hover:bg-[#FFF2F0] transition"
+                      title="Eliminar ruta completa"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    {abierta ? <ChevronDown className="w-5 h-5 text-[#78716C]" /> : <ChevronRight className="w-5 h-5 text-[#78716C]" />}
+                  </div>
+                </div>
 
                 {/* Editor de pasos */}
                 {abierta && (
@@ -197,55 +239,83 @@ export default function Rutas() {
                       </div>
                     ) : pasos.length === 0 ? (
                       <p className="text-xs font-semibold text-[#78716C] text-center py-6 border border-dashed rounded-2xl border-[#EFECE6] bg-white">
-                        Esta ruta no tiene pasos todavía. Añade el primero desde el Banco o crea plantillas nuevas en esa pestaña.
+                        Esta ruta no tiene pasos todavía. Añade el primero desde el Banco o crea actividades en esa pestaña.
                       </p>
                     ) : (
-                      pasos.map((paso, idx) => (
-                        <div
-                          key={paso.id}
-                          className="flex items-center gap-3 p-3.5 bg-white border border-[#EFECE6] rounded-2xl"
-                        >
-                          <span className="w-7 h-7 rounded-full bg-[#EE7C6A] text-white flex items-center justify-center text-xs font-black shrink-0">
-                            {idx + 1}
-                          </span>
+                      pasos.map((paso, idx) => {
+                        const tieneAudio = paso.configuracion.preguntas.some(
+                          p => Boolean(p.datos.audioUrl || (p.datos as any).audioPreguntaUrl)
+                        );
+                        return (
+                          <div
+                            key={paso.id}
+                            className="flex flex-wrap items-center gap-3 p-3.5 bg-white border border-[#EFECE6] rounded-2xl"
+                          >
+                            <span className="w-7 h-7 rounded-full bg-[#EE7C6A] text-white flex items-center justify-center text-xs font-black shrink-0">
+                              {idx + 1}
+                            </span>
 
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#A8A29E]">
-                              {paso.tipo.replace(/_/g, ' ')}
-                            </p>
-                            <p className="font-bold text-sm text-[#1C1917] truncate">{paso.titulo}</p>
-                          </div>
+                            <div className="flex-1 min-w-[180px]">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#A8A29E]">
+                                  {paso.tipo.replace(/_/g, ' ')} · {paso.configuracion.preguntas.length} preg.
+                                </span>
+                                {tieneAudio && (
+                                  <span className="text-[10px] font-bold text-[#065F46] bg-[#ECFDF5] px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <Mic className="w-2.5 h-2.5" /> Audio
+                                  </span>
+                                )}
+                              </div>
+                              <p className="font-bold text-sm text-[#1C1917] truncate">{paso.titulo}</p>
+                            </div>
 
-                          <div className="flex items-center gap-1 shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => mover(paso.id, 'arriba')}
-                              disabled={idx === 0}
-                              className="p-1.5 rounded-full hover:bg-[#F5F2EC] text-[#78716C] disabled:opacity-30 transition"
-                              title="Subir"
-                            >
-                              <ArrowUp className="w-4 h-4" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => mover(paso.id, 'abajo')}
-                              disabled={idx === pasos.length - 1}
-                              className="p-1.5 rounded-full hover:bg-[#F5F2EC] text-[#78716C] disabled:opacity-30 transition"
-                              title="Bajar"
-                            >
-                              <ArrowDown className="w-4 h-4" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => eliminar(paso.id)}
-                              className="p-1.5 rounded-full hover:bg-[#FFF2F0] text-[#A8A29E] hover:text-[#D9363E] transition"
-                              title="Quitar de la ruta"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
+                            <div className="flex items-center gap-1 shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => setPasoPreview(paso)}
+                                className="px-2.5 py-1.5 rounded-full bg-[#FBF9F5] border border-[#EFECE6] hover:text-[#EE7C6A] text-xs font-bold text-[#57534E] flex items-center gap-1 transition"
+                                title="Probar paso"
+                              >
+                                <Eye className="w-3.5 h-3.5" /> Probar
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setPasoEditando(paso)}
+                                className="px-2.5 py-1.5 rounded-full bg-[#F5F2EC] hover:bg-[#EBE8E0] text-xs font-bold text-[#1C1917] flex items-center gap-1 transition"
+                                title="Editar preguntas o grabar audio"
+                              >
+                                <FileEdit className="w-3.5 h-3.5" /> Editar / Audio
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => mover(paso.id, 'arriba')}
+                                disabled={idx === 0}
+                                className="p-1.5 rounded-full hover:bg-[#F5F2EC] text-[#78716C] disabled:opacity-30 transition"
+                                title="Subir"
+                              >
+                                <ArrowUp className="w-4 h-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => mover(paso.id, 'abajo')}
+                                disabled={idx === pasos.length - 1}
+                                className="p-1.5 rounded-full hover:bg-[#F5F2EC] text-[#78716C] disabled:opacity-30 transition"
+                                title="Bajar"
+                              >
+                                <ArrowDown className="w-4 h-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => eliminar(paso.id)}
+                                className="p-1.5 rounded-full hover:bg-[#FFF2F0] text-[#A8A29E] hover:text-[#D9363E] transition"
+                                title="Quitar de la ruta"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        );
+                      })
                     )}
 
                     {/* Añadir paso desde el Banco */}
@@ -302,6 +372,37 @@ export default function Rutas() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* PREVIEW DE PASO */}
+      {pasoPreview && (
+        <div className="fixed inset-0 z-50 bg-[#FBF9F5] flex flex-col overflow-auto">
+          <div className="sticky top-0 z-50 bg-white/90 border-b border-[#EFECE6] px-6 py-3 flex items-center justify-between shadow-sm backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <span className="font-serif-atelier font-bold text-lg text-[#1C1917]">ECO INCLUSIVO✦</span>
+              <span className="text-xs bg-[#EE7C6A]/10 text-[#EE7C6A] px-2.5 py-0.5 rounded-full font-bold">
+                Vista Previa de Paso
+              </span>
+            </div>
+            <button
+              onClick={() => setPasoPreview(null)}
+              className="flex items-center gap-1.5 px-4 py-2 bg-[#F5F2EC] hover:bg-[#EBE8E0] text-[#57534E] rounded-full text-xs font-bold transition"
+            >
+              <X className="w-4 h-4" /> Cerrar Vista Previa
+            </button>
+          </div>
+          <div className="flex-1">
+            <ReproductorEnfocado
+              actividad={pasoPreview}
+              estudianteId="preview"
+              pasoActual={1}
+              totalPasos={1}
+              onCompletado={() => setPasoPreview(null)}
+              onVolver={() => setPasoPreview(null)}
+              modoPreview={true}
+            />
+          </div>
         </div>
       )}
     </div>

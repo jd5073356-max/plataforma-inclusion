@@ -49,6 +49,17 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
   // Identificar (selección múltiple o focalizada en tarjetas visuales):
   const [identificadosIds, setIdentificadosIds] = useState<string[]>([]);
 
+  // Trazar / Colorear (lienzo HTML5):
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const [dibujando, setDibujando] = useState(false);
+  const [colorPincel, setColorPincel] = useState('#EE7C6A');
+  const [grosorPincel, setGrosorPincel] = useState(10);
+  const [trazosRealizados, setTrazosRealizados] = useState(0);
+
+  // Bitácora Familiar (observación en casa / acudiente):
+  const [notaFamiliar, setNotaFamiliar] = useState('');
+  const [notaGuardada, setNotaGuardada] = useState(false);
+
   const config = actividad.configuracion;
   const pregunta = config.preguntas[currentPreguntaIndex];
 
@@ -95,7 +106,66 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
       setParejasResueltas([]);
       setBloqueoMemoria(false);
     }
+
+    if (pregunta && pregunta.tipo === 'trazar_colorear') {
+      setColorPincel((pregunta.datos as any).colorSugerido || '#EE7C6A');
+      setTrazosRealizados(0);
+      setTimeout(() => inicializarLienzo(), 60);
+    }
   }, [currentPreguntaIndex, actividad]);
+
+  const inicializarLienzo = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !pregunta || pregunta.tipo !== 'trazar_colorear') return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const datos = pregunta.datos as any;
+    const dibujarPuntosGuia = () => {
+      if (Array.isArray(datos.puntosDeTrazo) && datos.puntosDeTrazo.length > 0) {
+        ctx.save();
+        ctx.strokeStyle = '#94A3B8';
+        ctx.setLineDash([8, 8]);
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        datos.puntosDeTrazo.forEach((pt: { x: number; y: number }, i: number) => {
+          if (i === 0) ctx.moveTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+        datos.puntosDeTrazo.forEach((pt: { x: number; y: number }, i: number) => {
+          ctx.fillStyle = i === 0 ? '#10B981' : '#3B82F6';
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 12, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = 'bold 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(String(i + 1), pt.x, pt.y);
+        });
+        ctx.restore();
+      }
+    };
+
+    if (datos.lienzoFondoUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        ctx.globalAlpha = 0.35;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+        dibujarPuntosGuia();
+      };
+      img.onerror = () => dibujarPuntosGuia();
+      img.src = datos.lienzoFondoUrl;
+    } else {
+      dibujarPuntosGuia();
+    }
+  };
 
   useEffect(() => {
     // Reset responses on changing question
@@ -149,10 +219,6 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     );
   }
 
-  // Una pregunta cuyo tipo no tenga renderer no pinta opciones, y sin opciones
-  // nunca se activa 'intentado' → el botón de avance no aparece y el estudiante
-  // queda atrapado. Esto pasa con filas obsoletas de la BD (por ejemplo
-  // explorador_3d, eliminado del código). Se degrada con honestidad y permite seguir.
   const TIPOS_CON_RENDERER = [
     'seleccion',
     'emparejar',
@@ -163,7 +229,8 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
     'escuchar_responder',
     'ordenar',
     'memoria',
-    'identificar'
+    'identificar',
+    'trazar_colorear'
   ];
   const tipoConocido = TIPOS_CON_RENDERER.includes(pregunta.tipo);
 
@@ -421,15 +488,20 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
           </h1>
           
           {pregunta.datos.audioUrl && (
-            <button
-              onClick={() => {
-                const a = new Audio(pregunta.datos.audioUrl);
-                a.play();
-              }}
-              className="mt-3 flex items-center gap-2 text-sm text-blue-600 font-bold hover:underline"
-            >
-              <Volume2 className="w-4 h-4" /> Escuchar de nuevo
-            </button>
+            <div className="mt-4 p-4 rounded-2xl bg-[#FFF8F0] border-2 border-[#EE7C6A]/40 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+              <button
+                type="button"
+                onClick={() => {
+                  const a = new Audio(pregunta.datos.audioUrl);
+                  a.play();
+                }}
+                className="flex items-center gap-3 px-5 py-2.5 bg-[#EE7C6A] hover:bg-[#E46653] text-white font-extrabold rounded-xl shadow transition text-sm"
+              >
+                <Volume2 className="w-5 h-5 animate-pulse" />
+                🎙️ Escuchar audio del profesor
+              </button>
+              <audio src={pregunta.datos.audioUrl} controls className="h-10 flex-1 min-w-[200px]" />
+            </div>
           )}
         </div>
 
@@ -1167,6 +1239,152 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
             </div>
           )}
 
+          {/* 11. TRAZAR O COLOREAR (Lienzo interactivo táctil y de mouse) */}
+          {pregunta.tipo === 'trazar_colorear' && (
+            <div className="space-y-5">
+              {/* Barra de herramientas del lienzo */}
+              <div className="p-4 rounded-2xl bg-[#FBF9F5] border-2 border-[#EFECE6] flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs font-extrabold uppercase text-gray-600 mr-1">Color:</span>
+                  {['#EE7C6A', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#1C1917'].map((col) => (
+                    <button
+                      key={col}
+                      type="button"
+                      disabled={intentado}
+                      onClick={() => setColorPincel(col)}
+                      className={`w-9 h-9 rounded-full border-4 transition ${
+                        colorPincel === col ? 'border-gray-900 scale-110 shadow' : 'border-white'
+                      }`}
+                      style={{ backgroundColor: col }}
+                      title={`Elegir color ${col}`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <label className="text-xs font-extrabold text-gray-600 flex items-center gap-2">
+                    Grosor:
+                    <input
+                      type="range"
+                      min={4}
+                      max={28}
+                      value={grosorPincel}
+                      disabled={intentado}
+                      onChange={(e) => setGrosorPincel(Number(e.target.value))}
+                      className="w-24 accent-[#EE7C6A]"
+                    />
+                  </label>
+                  {!intentado && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTrazosRealizados(0);
+                        inicializarLienzo();
+                      }}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-gray-300 text-xs font-bold text-gray-700 hover:text-red-600 transition"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" /> Limpiar lienzo
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Lienzo HTML5 */}
+              <div className="flex justify-center">
+                <canvas
+                  ref={canvasRef}
+                  width={680}
+                  height={380}
+                  onMouseDown={(e) => {
+                    if (intentado) return;
+                    const canvas = canvasRef.current;
+                    if (!canvas) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) * canvas.width) / rect.width;
+                    const y = ((e.clientY - rect.top) * canvas.height) / rect.height;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+                    ctx.strokeStyle = colorPincel;
+                    ctx.lineWidth = grosorPincel;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    setDibujando(true);
+                    setTrazosRealizados((t) => t + 1);
+                  }}
+                  onMouseMove={(e) => {
+                    if (!dibujando || intentado) return;
+                    const canvas = canvasRef.current;
+                    if (!canvas) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) * canvas.width) / rect.width;
+                    const y = ((e.clientY - rect.top) * canvas.height) / rect.height;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                  }}
+                  onMouseUp={() => setDibujando(false)}
+                  onMouseLeave={() => setDibujando(false)}
+                  onTouchStart={(e) => {
+                    if (intentado) return;
+                    const canvas = canvasRef.current;
+                    if (!canvas) return;
+                    const touch = e.touches[0];
+                    const rect = canvas.getBoundingClientRect();
+                    const x = ((touch.clientX - rect.left) * canvas.width) / rect.width;
+                    const y = ((touch.clientY - rect.top) * canvas.height) / rect.height;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+                    ctx.strokeStyle = colorPincel;
+                    ctx.lineWidth = grosorPincel;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    setDibujando(true);
+                    setTrazosRealizados((t) => t + 1);
+                  }}
+                  onTouchMove={(e) => {
+                    if (!dibujando || intentado) return;
+                    const canvas = canvasRef.current;
+                    if (!canvas) return;
+                    const touch = e.touches[0];
+                    const rect = canvas.getBoundingClientRect();
+                    const x = ((touch.clientX - rect.left) * canvas.width) / rect.width;
+                    const y = ((touch.clientY - rect.top) * canvas.height) / rect.height;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                  }}
+                  onTouchEnd={() => setDibujando(false)}
+                  className="w-full max-w-[680px] h-auto rounded-2xl border-4 border-dashed border-blue-300 bg-white shadow-inner cursor-crosshair touch-none"
+                />
+              </div>
+
+              {!intentado && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    disabled={trazosRealizados === 0}
+                    onClick={async () => {
+                      setIsCorrect(true);
+                      setIntentado(true);
+                      if (!modoPreview) {
+                        await db.registrarIntento(estudianteId, actividad.id, true);
+                      }
+                    }}
+                    className="px-6 py-3.5 bg-blue-600 text-white font-extrabold rounded-xl shadow hover:bg-blue-700 disabled:opacity-50 transition"
+                  >
+                    ¡Terminé mi trazo y coloreado!
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Ramas agotadas: tipo de pregunta sin renderer disponible */}
           {!tipoConocido && (
             <div className="text-center space-y-5 py-6">
@@ -1191,7 +1409,7 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
 
         {/* FEEDBACK & CONTINUATION PANEL */}
         {intentado && (
-          <div className={`p-6 rounded-2xl border-4 ${
+          <div className={`p-6 rounded-2xl border-4 space-y-4 ${
             isCorrect 
               ? 'border-green-500 bg-green-50/50 text-green-950 dark:bg-green-950/20' 
               : 'border-red-400 bg-red-50/30 text-red-950 dark:bg-red-950/10'
@@ -1236,6 +1454,38 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                 </button>
               </div>
             </div>
+
+            {/* Bitácora de observación familiar / hogar en el último paso o en autoevaluación */}
+            {!modoPreview && (currentPreguntaIndex === config.preguntas.length - 1 || pregunta.tipo === 'autoevaluacion') && (
+              <div className="pt-4 border-t border-green-200/80 space-y-2">
+                <label className="block text-xs font-extrabold uppercase tracking-wider text-gray-700">
+                  📝 Bitácora Familiar / Observación del Acudiente o Estudiante (Opcional):
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="text"
+                    value={notaFamiliar}
+                    onChange={(e) => {
+                      setNotaFamiliar(e.target.value);
+                      setNotaGuardada(false);
+                    }}
+                    placeholder="Ej: María Paula sonrió y dirigió la mirada al sonido del pájaro con apoyo de mamá Piedad..."
+                    className="flex-1 px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900"
+                  />
+                  <button
+                    type="button"
+                    disabled={!notaFamiliar.trim() || notaGuardada}
+                    onClick={async () => {
+                      await db.guardarNotaFamiliar(estudianteId, actividad.id, notaFamiliar);
+                      setNotaGuardada(true);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-extrabold transition shrink-0"
+                  >
+                    {notaGuardada ? '✓ Observación guardada' : 'Guardar en bitácora'}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
