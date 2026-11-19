@@ -4,6 +4,7 @@ import { db } from '../../lib/db';
 import { Perfil, Etapa, Asignacion, Actividad, Progreso } from '../../types/actividad';
 import ModalGestionarRutasEstudiante from '../../components/comunes/ModalGestionarRutasEstudiante';
 import ModalPrevisualizarRuta from '../../components/comunes/ModalPrevisualizarRuta';
+import ModalCargueMasivoEstudiantes from '../../components/comunes/ModalCargueMasivoEstudiantes';
 import {
   UserPlus,
   Trash2,
@@ -18,7 +19,9 @@ import {
   Eye,
   CheckSquare,
   Square,
-  RotateCcw
+  RotateCcw,
+  FileSpreadsheet,
+  UploadCloud
 } from 'lucide-react';
 
 export default function Estudiantes() {
@@ -33,6 +36,7 @@ export default function Estudiantes() {
   // Modales
   const [estudianteGestionandoRutas, setEstudianteGestionandoRutas] = useState<Perfil | null>(null);
   const [rutaPrevisualizando, setRutaPrevisualizando] = useState<Etapa | null>(null);
+  const [modalCargueMasivoAbierto, setModalCargueMasivoAbierto] = useState(false);
 
   // Create Student Form state
   const [nombre, setNombre] = useState('');
@@ -179,9 +183,20 @@ export default function Estudiantes() {
       <div className="space-y-8">
         {/* Formulario Estudiante */}
         <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm">
-          <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917] mb-4 flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-[#EE7C6A]" /> Registrar Estudiante
-          </h2>
+          <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
+            <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917] flex items-center gap-2">
+              <UserPlus className="w-5 h-5 text-[#EE7C6A]" /> Registrar Estudiante
+            </h2>
+            <button
+              type="button"
+              onClick={() => setModalCargueMasivoAbierto(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EE7C6A]/10 hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white rounded-full text-xs font-bold transition shadow-xs"
+              title="Importar muchos estudiantes desde un archivo CSV o Excel"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span>Cargue Masivo (CSV)</span>
+            </button>
+          </div>
           <form onSubmit={handleCrearEstudiante} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Nombre Completo</label>
@@ -216,6 +231,17 @@ export default function Estudiantes() {
             >
               Registrar Estudiante
             </button>
+
+            <div className="pt-1 text-center">
+              <button
+                type="button"
+                onClick={() => setModalCargueMasivoAbierto(true)}
+                className="text-xs font-bold text-[#EE7C6A] hover:underline inline-flex items-center justify-center gap-1.5 py-1"
+              >
+                <UploadCloud className="w-3.5 h-3.5" />
+                <span>¿Tienes varios estudiantes? Subir archivo CSV / Excel</span>
+              </button>
+            </div>
           </form>
         </div>
 
@@ -313,7 +339,7 @@ export default function Estudiantes() {
 
       {/* Col 2 & 3: Students, Progress, and Family Bitácora */}
       <div className="bg-white p-6 rounded-[24px] border border-[#EFECE6] shadow-sm lg:col-span-2">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917] flex items-center gap-2">
               <GraduationCap className="w-5 h-5 text-[#EE7C6A]" /> Estudiantes, Progreso y Bitácora ({estudiantes.length})
@@ -322,20 +348,44 @@ export default function Estudiantes() {
               Supervisa los pasos completados, intentos y observaciones familiares de cada estudiante.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={loadData}
-            className="p-2 border border-[#EFECE6] rounded-full hover:bg-[#F5F2EC] text-[#78716C]"
-            title="Sincronizar progreso"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2 self-start sm:self-center">
+            <button
+              type="button"
+              onClick={() => setModalCargueMasivoAbierto(true)}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#EE7C6A] hover:bg-[#E46653] text-white rounded-full text-xs font-bold transition shadow-xs"
+              title="Importar lista masiva de estudiantes desde archivo CSV o Excel"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span>Cargue Masivo (CSV)</span>
+            </button>
+            <button
+              type="button"
+              onClick={loadData}
+              className="p-2 border border-[#EFECE6] rounded-full hover:bg-[#F5F2EC] text-[#78716C]"
+              title="Sincronizar progreso"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {estudiantes.length === 0 ? (
-          <div className="text-center py-16 border border-dashed rounded-2xl border-[#EFECE6]">
-            <GraduationCap className="w-12 h-12 text-[#A8A29E] mx-auto mb-2 opacity-50" />
-            <p className="text-xs font-semibold text-[#78716C]">Aún no has registrado ningún estudiante.</p>
+          <div className="text-center py-16 px-4 border border-dashed rounded-2xl border-[#EFECE6] space-y-3">
+            <GraduationCap className="w-12 h-12 text-[#A8A29E] mx-auto opacity-50" />
+            <div>
+              <p className="text-sm font-bold text-[#1C1917]">Aún no has registrado ningún estudiante.</p>
+              <p className="text-xs text-[#78716C] mt-0.5">
+                Puedes registrarlos uno a uno o subir un archivo CSV / Excel con toda la lista del curso.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setModalCargueMasivoAbierto(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#EE7C6A] hover:bg-[#E46653] text-white rounded-full text-xs font-bold transition shadow-sm"
+            >
+              <UploadCloud className="w-4 h-4" />
+              <span>Subir lista masiva de estudiantes (CSV)</span>
+            </button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -551,6 +601,17 @@ export default function Estudiantes() {
           isOpen={!!rutaPrevisualizando}
           onClose={() => setRutaPrevisualizando(null)}
           etapa={rutaPrevisualizando}
+        />
+      )}
+
+      {/* MODAL CARGUE MASIVO DE ESTUDIANTES (CSV) */}
+      {modalCargueMasivoAbierto && (
+        <ModalCargueMasivoEstudiantes
+          isOpen={modalCargueMasivoAbierto}
+          onClose={() => setModalCargueMasivoAbierto(false)}
+          profesorId={profile?.id || ''}
+          etapas={etapas}
+          onCompletado={loadData}
         />
       )}
     </div>

@@ -439,6 +439,103 @@ export const db = {
     return this.signUp(email, contrasena, nombre, 'profesor');
   },
 
+  async crearEstudiantesMasivo(
+    estudiantes: {
+      nombre: string;
+      curso: string;
+      ajuste?: 'cognitiva' | 'motriz' | 'tea';
+      rutasIds?: string[];
+    }[],
+    profesorId: string,
+    onProgreso?: (actual: number, total: number, itemNombre: string) => void
+  ): Promise<{
+    creados: number;
+    errores: { nombre: string; error: string }[];
+    detalles: { id: string; nombre: string; curso: string; email: string }[];
+  }> {
+    const total = estudiantes.length;
+    let creados = 0;
+    const errores: { nombre: string; error: string }[] = [];
+    const detalles: { id: string; nombre: string; curso: string; email: string }[] = [];
+
+    for (let i = 0; i < total; i++) {
+      const est = estudiantes[i];
+      if (onProgreso) {
+        onProgreso(i + 1, total, est.nombre);
+      }
+      try {
+        const res = await this.crearEstudiante(est.nombre.trim(), est.curso.trim(), '123456', profesorId);
+        creados++;
+        detalles.push({
+          id: res.id,
+          nombre: est.nombre.trim(),
+          curso: est.curso.trim(),
+          email: res.email
+        });
+
+        // Asignar rutas si están indicadas
+        if (est.rutasIds && est.rutasIds.length > 0) {
+          for (const etapaId of est.rutasIds) {
+            try {
+              await this.asignarRuta(res.id, etapaId, est.ajuste);
+            } catch (asigErr) {
+              console.warn(`Error al asignar ruta ${etapaId} a ${est.nombre}:`, asigErr);
+            }
+          }
+        }
+      } catch (err) {
+        errores.push({
+          nombre: est.nombre,
+          error: err instanceof Error ? err.message : 'Error al registrar estudiante'
+        });
+      }
+    }
+
+    return { creados, errores, detalles };
+  },
+
+  async crearProfesoresMasivo(
+    profesores: {
+      nombre: string;
+      email: string;
+      contrasena?: string;
+    }[],
+    onProgreso?: (actual: number, total: number, itemNombre: string) => void
+  ): Promise<{
+    creados: number;
+    errores: { nombre: string; error: string }[];
+    detalles: { id: string; nombre: string; email: string }[];
+  }> {
+    const total = profesores.length;
+    let creados = 0;
+    const errores: { nombre: string; error: string }[] = [];
+    const detalles: { id: string; nombre: string; email: string }[] = [];
+
+    for (let i = 0; i < total; i++) {
+      const prof = profesores[i];
+      if (onProgreso) {
+        onProgreso(i + 1, total, prof.nombre);
+      }
+      try {
+        const pass = prof.contrasena || 'Profesor2026*';
+        const res = await this.crearProfesor(prof.nombre.trim(), prof.email.trim(), pass);
+        creados++;
+        detalles.push({
+          id: res.id,
+          nombre: prof.nombre.trim(),
+          email: res.email
+        });
+      } catch (err) {
+        errores.push({
+          nombre: prof.nombre,
+          error: err instanceof Error ? err.message : 'Error al registrar profesor'
+        });
+      }
+    }
+
+    return { creados, errores, detalles };
+  },
+
   async eliminarPerfil(userId: string) {
     if (usarSupabase()) {
       const { error } = await supabase.rpc('eliminar_usuario', { p_user_id: userId });

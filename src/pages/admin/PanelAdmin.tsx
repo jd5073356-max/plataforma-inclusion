@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../lib/db';
 import { Perfil } from '../../types/actividad';
+import ModalCargueMasivoProfesores from '../../components/comunes/ModalCargueMasivoProfesores';
 import {
   UserPlus,
   Users,
@@ -14,7 +15,8 @@ import {
   Lock,
   GraduationCap,
   Route,
-  RefreshCw
+  RefreshCw,
+  FileSpreadsheet
 } from 'lucide-react';
 
 export default function PanelAdmin() {
@@ -29,6 +31,7 @@ export default function PanelAdmin() {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [modalCargueProfesores, setModalCargueProfesores] = useState(false);
 
   const cargarDatosAdmin = async () => {
     try {
@@ -179,9 +182,20 @@ export default function PanelAdmin() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Form to create teacher */}
           <div className="bg-white p-6 md:p-8 rounded-[24px] border border-[#EFECE6] shadow-sm h-fit">
-            <div className="flex items-center gap-2 mb-6">
-              <UserPlus className="w-5 h-5 text-[#EE7C6A]" />
-              <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917]">Registrar Nuevo Profesor</h2>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <UserPlus className="w-5 h-5 text-[#EE7C6A]" />
+                <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917]">Registrar Nuevo Profesor</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setModalCargueProfesores(true)}
+                className="text-[11px] font-bold text-[#10B981] hover:underline flex items-center gap-1 bg-[#ECFDF5] px-2.5 py-1 rounded-lg border border-[#A7F3D0]"
+                title="Cargar varios profesores vía CSV"
+              >
+                <FileSpreadsheet className="w-3.5 h-3.5" />
+                <span>Cargue CSV</span>
+              </button>
             </div>
 
             <form onSubmit={handleCrearProfesor} className="space-y-4">
@@ -264,6 +278,14 @@ export default function PanelAdmin() {
                   Profesores Registrados ({profesores.length})
                 </h2>
               </div>
+              <button
+                type="button"
+                onClick={() => setModalCargueProfesores(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#FBF9F5] border border-[#EFECE6] hover:border-[#10B981] hover:bg-[#ECFDF5] text-[#1C1917] hover:text-[#10B981] font-bold text-xs rounded-xl transition"
+              >
+                <FileSpreadsheet className="w-4 h-4 text-[#10B981]" />
+                <span>Cargue Masivo (CSV)</span>
+              </button>
             </div>
 
             {profesores.length === 0 ? (
@@ -311,6 +333,14 @@ export default function PanelAdmin() {
           </div>
         </div>
       </main>
+
+      {modalCargueProfesores && (
+        <ModalCargueMasivoProfesores
+          isOpen={modalCargueProfesores}
+          onClose={() => setModalCargueProfesores(false)}
+          onCompletado={cargarDatosAdmin}
+        />
+      )}
     </div>
   );
 }
