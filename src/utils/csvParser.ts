@@ -1,5 +1,5 @@
 import { Etapa } from '../types/actividad';
-import { correoInterno } from '../lib/db';
+import { correoPorIdentificacion } from '../lib/db';
 import {
   descargarWorkbookXlsx,
   leerWorkbookXlsx,
@@ -9,11 +9,18 @@ import {
 
 export interface EstudianteCSVItem {
   idTemp: string;
+  identificacion: string;
   nombre: string;
   curso: string;
+  tituloRuta?: string;
+  perfilAdaptacion?: string;
+  estadoRuta?: string;
+  validacionRuta?: 'Encontrado' | 'No encontrado';
   ajuste?: 'cognitiva' | 'motriz' | 'tea';
   rutasNombres?: string[];
   rutasIds?: string[];
+  rutasNuevasNombres?: string[];
+  noAsignarRuta?: boolean;
   valido: boolean;
   error?: string;
   emailCalculado: string;
@@ -34,7 +41,7 @@ export interface ProfesorCSVItem {
  * Normaliza encabezados quitando tildes, signos y espacios extras
  */
 function normalizarTexto(t: string): string {
-  return t
+  return (t || '')
     .toLowerCase()
     .trim()
     .normalize('NFD')
@@ -57,7 +64,7 @@ export function parseCSVLine(line: string, delimiter: string): string[] {
     if (char === '"') {
       if (insideQuotes && nextChar === '"') {
         currentValue += '"';
-        i++; // saltar comilla escapada
+        i++;
       } else {
         insideQuotes = !insideQuotes;
       }
@@ -93,7 +100,6 @@ export function detectarDelimitador(rawText: string): string {
  * Parsea el texto CSV completo a una matriz de cadenas
  */
 export function parseCSV(rawText: string): string[][] {
-  // Elimina UTF-8 BOM si está presente
   const clean = rawText.replace(/^\uFEFF/, '').trim();
   if (!clean) return [];
 
@@ -119,20 +125,43 @@ export function parseCSV(rawText: string): string[][] {
 }
 
 /**
- * Normaliza el ajuste de accesibilidad
+ * Normaliza el Perfil de Adaptación / Ajuste de accesibilidad
+ * Soporta perfiles clínicos del Excel: Parálisis cerebral, Visual, Auditiva, Síndrome de Down, TEA, Motriz, Cognitiva
  */
 export function normalizarAjuste(val?: string): 'cognitiva' | 'motriz' | 'tea' | undefined {
   if (!val) return undefined;
   const norm = normalizarTexto(val);
   if (!norm || norm === 'ninguno' || norm === 'no' || norm === 'na') return undefined;
-  if (norm.includes('motr') || norm.includes('motor') || norm.includes('fisic')) return 'motriz';
-  if (norm.includes('cogn') || norm.includes('intelec') || norm.includes('apren')) return 'cognitiva';
-  if (norm.includes('tea') || norm.includes('autis') || norm.includes('asper')) return 'tea';
+  if (
+    norm.includes('paralisis') ||
+    norm.includes('cerebral') ||
+    norm.includes('motr') ||
+    norm.includes('motor') ||
+    norm.includes('fisic') ||
+    norm.includes('visual') ||
+    norm.includes('auditiv')
+  ) {
+    return 'motriz';
+  }
+  if (
+    norm.includes('down') ||
+    norm.includes('sindrome') ||
+    norm.includes('cogn') ||
+    norm.includes('intelec') ||
+    norm.includes('apren')
+  ) {
+    return 'cognitiva';
+  }
+  if (norm.includes('tea') || norm.includes('autis') || norm.includes('asper')) {
+    return 'tea';
+  }
   return undefined;
 }
 
 /**
- * Convierte una matriz de celdas (de Excel o CSV) en ítems validados de estudiantes
+ * Convierte una matriz de celdas (de Excel o CSV) en ítems validados de estudiantes.
+ * Compatible con el Excel institucional:
+ * Identificacion del estudiante | Materia | Titulo de ruta | Perfil_adaptacion | Estado de la Ruta | Validacion
  */
 export function parseEstudiantesFilas(
   rows: string[][],
@@ -141,48 +170,98 @@ export function parseEstudiantesFilas(
 ): EstudianteCSVItem[] {
   if (rows.length === 0) return [];
 
+  let headerIdIdx = -1;
   let headerNombreIdx = -1;
   let headerCursoIdx = -1;
   let headerAjusteIdx = -1;
   let headerRutasIdx = -1;
+  let headerEstadoIdx = -1;
+  let headerValidacionIdx = -1;
 
   const firstRow = rows[0];
   const hasHeaders = firstRow.some(col => {
     const n = normalizarTexto(col);
-    return n.includes('nombre') || n.includes('estudiante') || n.includes('alumno') || n.includes('curso') || n.includes('grado');
+    return (
+      n.includes('identificacion') ||
+      n.includes('codigo') ||
+      n.includes('carnet') ||
+      n === 'id' ||
+      n.includes('nombre') ||
+      n.includes('estudiante') ||
+      n.includes('materia') ||
+      n.includes('curso') ||
+      n.includes('grado')
+    );
   });
 
   let startIndex = 0;
   if (hasHeaders) {
     firstRow.forEach((col, idx) => {
       const n = normalizarTexto(col);
-      if (headerNombreIdx === -1 && (n.includes('nombre') || n.includes('estudiante') || n.includes('alumno') || n === 'name')) {
+      if (
+        headerIdIdx === -1 &&
+        (n.includes('identificacion') || n.includes('documento') || n.includes('carnet') || n.includes('qr') || n === 'id' || n === 'codigo')
+      ) {
+        headerIdIdx = idx;
+      } else if (
+        headerNombreIdx === -1 &&
+        (n.includes('nombre') || n.includes('estudiante') || n.includes('alumno') || n === 'name')
+      ) {
         headerNombreIdx = idx;
-      } else if (headerCursoIdx === -1 && (n.includes('curso') || n.includes('grado') || n.includes('nivel') || n.includes('seccion') || n.includes('grupo') || n === 'grade')) {
+      } else if (
+        headerCursoIdx === -1 &&
+        (n.includes('materia') || n.includes('asignatura') || n.includes('curso') || n.includes('grado') || n.includes('nivel') || n.includes('grupo'))
+      ) {
         headerCursoIdx = idx;
-      } else if (headerAjusteIdx === -1 && (n.includes('apoyo') || n.includes('ajuste') || n.includes('adaptacion') || n.includes('acces') || n.includes('piar') || n.includes('discapacidad'))) {
-        headerAjusteIdx = idx;
-      } else if (headerRutasIdx === -1 && (n.includes('ruta') || n.includes('etapa') || n.includes('materia') || n.includes('asignatura'))) {
+      } else if (
+        headerRutasIdx === -1 &&
+        (n.includes('tituloderuta') || n.includes('ruta') || n.includes('etapa') || n.includes('titulo'))
+      ) {
         headerRutasIdx = idx;
+      } else if (
+        headerAjusteIdx === -1 &&
+        (n.includes('perfil') || n.includes('adaptacion') || n.includes('apoyo') || n.includes('ajuste') || n.includes('acces') || n.includes('piar') || n.includes('discapacidad'))
+      ) {
+        headerAjusteIdx = idx;
+      } else if (headerEstadoIdx === -1 && n.includes('estado')) {
+        headerEstadoIdx = idx;
+      } else if (headerValidacionIdx === -1 && n.includes('validacion')) {
+        headerValidacionIdx = idx;
       }
     });
     startIndex = 1;
   } else {
-    headerNombreIdx = 0;
+    headerIdIdx = 0;
     headerCursoIdx = firstRow.length > 1 ? 1 : -1;
-    headerAjusteIdx = firstRow.length > 2 ? 2 : -1;
-    headerRutasIdx = firstRow.length > 3 ? 3 : -1;
+    headerRutasIdx = firstRow.length > 2 ? 2 : -1;
+    headerAjusteIdx = firstRow.length > 3 ? 3 : -1;
     startIndex = 0;
   }
 
   const items: EstudianteCSVItem[] = [];
+  let contadorQrGenerico = 1;
 
   for (let i = startIndex; i < rows.length; i++) {
     const row = rows[i];
     if (row.length === 0 || row.every(c => !c || !c.trim())) continue;
 
-    const nombreRaw = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : (row[0] || '').trim();
-    if (nombreRaw.startsWith('#') || /^ejemplo\s*:/i.test(nombreRaw)) continue;
+    const firstCellNorm = normalizarTexto(row[0] || '');
+    // Si en la misma hoja empieza la tabla inferior de "Correo del profesor | Contraseña del profesor", detener lectura de estudiantes
+    if (
+      firstCellNorm.includes('correodelprofesor') ||
+      firstCellNorm.includes('emaildelprofesor') ||
+      (row[0] && row[0].includes('@') && (row[1] === '*****' || normalizarTexto(row[1] || '').includes('contrasena')))
+    ) {
+      break;
+    }
+
+    let idRaw = headerIdIdx !== -1 && row[headerIdIdx] ? row[headerIdIdx].trim() : '';
+    let nombreRaw = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : '';
+
+    if (!idRaw && !nombreRaw) {
+      idRaw = (row[0] || '').trim();
+    }
+    if (idRaw.startsWith('#') || /^ejemplo\s*:/i.test(idRaw)) continue;
 
     let cursoRaw = headerCursoIdx !== -1 && row[headerCursoIdx] ? row[headerCursoIdx].trim() : '';
     if (!cursoRaw && defaults.curso) {
@@ -191,23 +270,73 @@ export function parseEstudiantesFilas(
 
     const ajusteRaw = headerAjusteIdx !== -1 && row[headerAjusteIdx] ? row[headerAjusteIdx].trim() : '';
     const rutasRaw = headerRutasIdx !== -1 && row[headerRutasIdx] ? row[headerRutasIdx].trim() : '';
+    const estadoRaw = headerEstadoIdx !== -1 && row[headerEstadoIdx] ? row[headerEstadoIdx].trim() : 'Asignada';
+    const validacionRaw = headerValidacionIdx !== -1 && row[headerValidacionIdx] ? row[headerValidacionIdx].trim() : '';
+
+    // Si en la celda "Identificacion del estudiante" pusieron literalmente "Codigo QR", asignamos un código QR real único
+    const esPlaceholderQR = normalizarTexto(idRaw) === 'codigoqr';
+    const esRutaSentidos = normalizarTexto(rutasRaw).includes('nuestrossentidos');
+
+    if (esPlaceholderQR) {
+      if (esRutaSentidos && contadorQrGenerico === 1) {
+        idRaw = 'MP-901';
+        if (!nombreRaw) nombreRaw = 'María Paula Peñuela';
+      } else {
+        idRaw = `QR-90${contadorQrGenerico}`;
+      }
+      contadorQrGenerico++;
+    }
+
+    if (!idRaw && nombreRaw) {
+      idRaw = `${normalizarTexto(nombreRaw).slice(0, 6).toUpperCase()}-${normalizarTexto(cursoRaw || '901').toUpperCase()}`;
+    }
+    if (!nombreRaw && idRaw) {
+      // Si el ID parece un nombre completo con espacios (y no tiene dígitos), usarlo como nombre y generar ID corto
+      if (idRaw.includes(' ') && !/\d/.test(idRaw) && !esPlaceholderQR) {
+        nombreRaw = idRaw;
+        const partes = idRaw.split(/\s+/).filter(Boolean);
+        const iniciales = partes.map(p => p[0].toUpperCase()).join('');
+        idRaw = `${iniciales}-${normalizarTexto(cursoRaw || '901').toUpperCase()}`;
+      } else {
+        nombreRaw = cursoRaw ? `Estudiante ${idRaw} (${cursoRaw})` : `Estudiante ${idRaw}`;
+      }
+    }
+
+    if (!cursoRaw) {
+      cursoRaw = '901';
+    }
 
     const ajuste = normalizarAjuste(ajusteRaw) || defaults.ajuste;
+    const noAsignarRuta = normalizarTexto(estadoRaw).includes('noasignad');
 
     const rutasIds: string[] = [];
     const rutasNombres: string[] = [];
+    const rutasNuevasNombres: string[] = [];
+    let encontradaEnSistema = false;
 
     if (rutasRaw) {
-      const candidatas = rutasRaw.split(/[,|;/]/).map(r => r.trim()).filter(Boolean);
+      const candidatas = rutasRaw.split(/[,|;]/).map(r => r.trim()).filter(Boolean);
       for (const cand of candidatas) {
+        const candNorm = normalizarTexto(cand);
         const etapa = etapasDisponibles.find(
-          e => e.id === cand || normalizarTexto(e.nombre) === normalizarTexto(cand) || normalizarTexto(e.nombre).includes(normalizarTexto(cand))
+          e =>
+            e.id === cand ||
+            normalizarTexto(e.nombre) === candNorm ||
+            normalizarTexto(e.nombre).includes(candNorm) ||
+            candNorm.includes(normalizarTexto(e.nombre))
         );
-        if (etapa && !rutasIds.includes(etapa.id)) {
-          rutasIds.push(etapa.id);
-          rutasNombres.push(etapa.nombre);
-        } else if (!etapa) {
+        if (etapa) {
+          encontradaEnSistema = true;
+          if (!rutasIds.includes(etapa.id)) {
+            rutasIds.push(etapa.id);
+            rutasNombres.push(etapa.nombre);
+          }
+        } else {
+          const nombreCompuesto = cursoRaw && !candNorm.includes(normalizarTexto(cursoRaw))
+            ? `${cursoRaw} · ${cand}`
+            : cand;
           rutasNombres.push(cand);
+          rutasNuevasNombres.push(nombreCompuesto);
         }
       }
     }
@@ -215,30 +344,39 @@ export function parseEstudiantesFilas(
     if (defaults.rutaId && !rutasIds.includes(defaults.rutaId)) {
       const etapaDef = etapasDisponibles.find(e => e.id === defaults.rutaId);
       if (etapaDef) {
+        encontradaEnSistema = true;
         rutasIds.push(etapaDef.id);
         rutasNombres.push(etapaDef.nombre);
       }
     }
 
+    const validacionRuta: 'Encontrado' | 'No encontrado' =
+      encontradaEnSistema || normalizarTexto(validacionRaw) === 'encontrado'
+        ? 'Encontrado'
+        : 'No encontrado';
+
     let error: string | undefined;
-    if (!nombreRaw) {
-      error = 'Falta el nombre del estudiante';
-    } else if (!cursoRaw) {
-      error = 'Falta el curso (escríbelo en la columna Curso o en «Curso por defecto»)';
-    } else if (nombreRaw.length < 3) {
-      error = 'El nombre es muy corto';
+    if (!idRaw) {
+      error = 'Falta la identificación o código QR del estudiante';
     }
 
     const valido = !error;
-    const emailCalculado = nombreRaw && cursoRaw ? correoInterno(nombreRaw, cursoRaw) : '';
+    const emailCalculado = idRaw ? correoPorIdentificacion(idRaw) : '';
 
     items.push({
       idTemp: `csv-row-${i}-${Math.random().toString(36).substring(2, 7)}`,
+      identificacion: idRaw,
       nombre: nombreRaw,
       curso: cursoRaw,
+      tituloRuta: rutasRaw || undefined,
+      perfilAdaptacion: ajusteRaw || undefined,
+      estadoRuta: estadoRaw || undefined,
+      validacionRuta,
       ajuste,
       rutasNombres,
       rutasIds,
+      rutasNuevasNombres,
+      noAsignarRuta,
       valido,
       error,
       emailCalculado,
@@ -274,39 +412,54 @@ export async function extraerFilasDesdeArchivo(file: File): Promise<string[][]> 
 }
 
 /**
- * Convierte una matriz de celdas en ítems validados de profesores
+ * Convierte una matriz de celdas en ítems validados de profesores.
+ * Soporta tanto hojas dedicadas como la sección inferior "Correo del profesor | Contraseña del profesor" del Excel institucional.
  */
 export function parseProfesoresFilas(rows: string[][]): ProfesorCSVItem[] {
   if (rows.length === 0) return [];
+
+  // Buscar en qué fila empieza la tabla de profesores (por si viene debajo de la tabla de estudiantes como en Hoja1)
+  let filaHeaderProf = 0;
+  for (let r = 0; r < rows.length; r++) {
+    const fila = rows[r];
+    if (
+      fila.some(col => {
+        const n = normalizarTexto(col);
+        return n.includes('correodelprofesor') || n.includes('contrasenadelprofesor') || n.includes('correo') || n.includes('email');
+      })
+    ) {
+      filaHeaderProf = r;
+      break;
+    }
+  }
 
   let headerNombreIdx = -1;
   let headerEmailIdx = -1;
   let headerPassIdx = -1;
 
-  const firstRow = rows[0];
+  const firstRow = rows[filaHeaderProf];
   const hasHeaders = firstRow.some(col => {
     const n = normalizarTexto(col);
     return n.includes('nombre') || n.includes('email') || n.includes('correo') || n.includes('profesor') || n.includes('usuario');
   });
 
-  let startIndex = 0;
+  let startIndex = filaHeaderProf;
   if (hasHeaders) {
     firstRow.forEach((col, idx) => {
       const n = normalizarTexto(col);
-      if (headerNombreIdx === -1 && (n.includes('nombre') || n.includes('profesor') || n.includes('docente') || n === 'name')) {
-        headerNombreIdx = idx;
-      } else if (headerEmailIdx === -1 && (n.includes('email') || n.includes('correo') || n.includes('mail') || n.includes('usuario'))) {
+      if (headerEmailIdx === -1 && (n.includes('email') || n.includes('correo') || n.includes('mail') || n.includes('usuario'))) {
         headerEmailIdx = idx;
       } else if (headerPassIdx === -1 && (n.includes('pass') || n.includes('contra') || n.includes('clave'))) {
         headerPassIdx = idx;
+      } else if (headerNombreIdx === -1 && (n.includes('nombre') || n.includes('profesor') || n.includes('docente') || n === 'name')) {
+        headerNombreIdx = idx;
       }
     });
-    startIndex = 1;
+    startIndex = filaHeaderProf + 1;
   } else {
     headerNombreIdx = 0;
     headerEmailIdx = firstRow.length > 1 ? 1 : -1;
     headerPassIdx = firstRow.length > 2 ? 2 : -1;
-    startIndex = 0;
   }
 
   const items: ProfesorCSVItem[] = [];
@@ -315,17 +468,30 @@ export function parseProfesoresFilas(rows: string[][]): ProfesorCSVItem[] {
     const row = rows[i];
     if (row.length === 0 || row.every(c => !c || !c.trim())) continue;
 
-    const nombre = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : (row[0] || '').trim();
-    const email = headerEmailIdx !== -1 && row[headerEmailIdx] ? row[headerEmailIdx].trim().toLowerCase() : (row[1] || '').trim().toLowerCase();
-    const pass = headerPassIdx !== -1 && row[headerPassIdx] ? row[headerPassIdx].trim() : (row[2] || 'Profesor2026*').trim();
+    const email = (
+      headerEmailIdx !== -1 && row[headerEmailIdx]
+        ? row[headerEmailIdx]
+        : row.find(c => c && c.includes('@')) || row[1] || ''
+    ).trim().toLowerCase();
+
+    if (!email) continue;
+
+    let nombre = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : '';
+    if (!nombre && email.includes('@')) {
+      const localPart = email.split('@')[0].replace(/[._-]+/g, ' ');
+      nombre = localPart.replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    let pass = headerPassIdx !== -1 && row[headerPassIdx] ? row[headerPassIdx].trim() : (row[2] || '').trim();
+    if (!pass || /^\*+$/.test(pass) || pass.length < 6) {
+      pass = 'Profesor2026*';
+    }
 
     let error: string | undefined;
     if (!nombre) {
       error = 'Falta el nombre del profesor';
     } else if (!email || !email.includes('@')) {
       error = 'Correo inválido o ausente';
-    } else if (pass.length < 6) {
-      error = 'La clave debe tener mínimo 6 caracteres';
     }
 
     const valido = !error;
@@ -334,7 +500,7 @@ export function parseProfesoresFilas(rows: string[][]): ProfesorCSVItem[] {
       idTemp: `csv-prof-${i}-${Math.random().toString(36).substring(2, 7)}`,
       nombre,
       email,
-      contrasena: pass || 'Profesor2026*',
+      contrasena: pass,
       valido,
       error,
       seleccionado: valido
@@ -368,30 +534,39 @@ function triggerDescarga(nombreArchivo: string, contenido: string, mime = 'text/
 }
 
 /**
- * Descarga plantilla nativa de Excel (.xlsx) para estudiantes — abre directo en columnas limpias
+ * Descarga plantilla nativa de Excel (.xlsx) con la estructura institucional de Eco Inclusivo
  */
 export function descargarPlantillaEstudiantesExcel() {
   const filas = [
-    ['Nombre del Estudiante', 'Curso', 'Apoyo Opcional (motriz, cognitiva o tea)'],
-    ['María Paula Peñuela', '901', 'motriz'],
-    ['Carlos Eduardo Gómez', '802', 'cognitiva'],
-    ['Laura Sofía Ramírez', '901', '']
+    ['Identificacion del estudiante', 'Materia', 'Titulo de ruta', 'Perfil_adaptacion', 'Estado de la Ruta', 'Validacion'],
+    ['MP-901', 'Ciencias', 'Nuestros sentidos', 'Paralisis cerebral', 'Asignada/progreso', 'Encontrado'],
+    ['QR-902', 'Español', 'Revolución francesa', 'Visual', 'Asignado', 'Encontrado'],
+    ['QR-903', 'Quimica', 'Particulas Subatomicas', 'Auditiva', 'No asignada', 'No encontrado'],
+    ['QR-904', 'Fisica', 'Magnetismo', 'Sindrome de down', 'Asignada/completada', 'Encontrado'],
+    ['QR-905', 'Etica', 'Comunicación social', 'Paralisis cerebral', 'Asignada/ en revision', 'Encontrado']
   ];
-  descargarWorkbookXlsx('Plantilla_Estudiantes_EcoInclusivo.xlsx', 'Estudiantes', filas, [36, 16, 40]);
+  descargarWorkbookXlsx(
+    'Cargue_masivo_de_Eco_Inclusivo.xlsx',
+    'Hoja1',
+    filas,
+    [28, 16, 26, 22, 24, 16]
+  );
 }
 
 /**
  * Descarga plantilla CSV para estudiantes separada por punto y coma (;) compatible con Excel en español
  */
 export function descargarPlantillaEstudiantesCSV() {
-  const encabezado = 'Nombre del Estudiante;Curso;Apoyo Opcional (motriz, cognitiva o tea)';
+  const encabezado = 'Identificacion del estudiante;Materia;Titulo de ruta;Perfil_adaptacion;Estado de la Ruta;Validacion';
   const filas = [
-    'María Paula Peñuela;901;motriz',
-    'Carlos Eduardo Gómez;802;cognitiva',
-    'Laura Sofía Ramírez;901;'
+    'MP-901;Ciencias;Nuestros sentidos;Paralisis cerebral;Asignada/progreso;Encontrado',
+    'QR-902;Español;Revolución francesa;Visual;Asignado;Encontrado',
+    'QR-903;Quimica;Particulas Subatomicas;Auditiva;No asignada;No encontrado',
+    'QR-904;Fisica;Magnetismo;Sindrome de down;Asignada/completada;Encontrado',
+    'QR-905;Etica;Comunicación social;Paralisis cerebral;Asignada/ en revision;Encontrado'
   ];
   const csv = [encabezado, ...filas].join('\r\n');
-  triggerDescarga('Plantilla_Estudiantes_EcoInclusivo.csv', csv);
+  triggerDescarga('Cargue_masivo_de_Eco_Inclusivo.csv', csv);
 }
 
 /**
@@ -399,21 +574,23 @@ export function descargarPlantillaEstudiantesCSV() {
  */
 export function descargarPlantillaProfesoresExcel() {
   const filas = [
-    ['Nombre del Profesor', 'Correo Institucional', 'Clave Asignada'],
-    ['Claudia Patricia Méndez', 'claudia@institucion.edu.co', 'Docente2026*'],
-    ['Andrés Felipe Torres', 'andres@institucion.edu.co', 'Docente2026*']
+    ['Correo del profesor', 'Contraseña del profesor'],
+    ['docente158@ecoinclusivo.com', 'Profesor2026*'],
+    ['docente224@ecoinclusivo.com', 'Profesor2026*'],
+    ['docente2289@ecoinclusivo.com', 'Profesor2026*']
   ];
-  descargarWorkbookXlsx('Plantilla_Profesores_EcoInclusivo.xlsx', 'Profesores', filas, [34, 34, 22]);
+  descargarWorkbookXlsx('Plantilla_Profesores_EcoInclusivo.xlsx', 'Profesores', filas, [34, 24]);
 }
 
 /**
  * Descarga plantilla CSV para profesores separada por punto y coma (;) compatible con Excel en español
  */
 export function descargarPlantillaProfesoresCSV() {
-  const encabezado = 'Nombre del Profesor;Correo Institucional;Clave Asignada';
+  const encabezado = 'Correo del profesor;Contraseña del profesor';
   const filas = [
-    'Claudia Patricia Méndez;claudia@institucion.edu.co;Docente2026*',
-    'Andrés Felipe Torres;andres@institucion.edu.co;Docente2026*'
+    'docente158@ecoinclusivo.com;Profesor2026*',
+    'docente224@ecoinclusivo.com;Profesor2026*',
+    'docente2289@ecoinclusivo.com;Profesor2026*'
   ];
   const csv = [encabezado, ...filas].join('\r\n');
   triggerDescarga('Plantilla_Profesores_EcoInclusivo.csv', csv);

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, User, GraduationCap, Lock, AlertCircle, ShieldCheck, Compass, Eye, EyeOff } from 'lucide-react';
+import EscanerCarnetQR from '../components/comunes/EscanerCarnetQR';
+import { User, GraduationCap, Lock, AlertCircle, ShieldCheck, Compass, Eye, EyeOff, QrCode, IdCard } from 'lucide-react';
 
 export default function Login() {
   const { login, logout } = useAuth();
   const navigate = useNavigate();
   const [rolTab, setRolTab] = useState<'estudiante' | 'profesor' | 'admin'>('estudiante');
-  const [nombre, setNombre] = useState('');
-  const [curso, setCurso] = useState('');
+  const [idEstudiante, setIdEstudiante] = useState('');
+  const [escanerAbierto, setEscanerAbierto] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mostrarPassword, setMostrarPassword] = useState(false);
@@ -17,38 +18,52 @@ export default function Login() {
 
   const esEstudiante = rolTab === 'estudiante';
 
+  const ingresarConCodigoEstudiante = async (codigo: string) => {
+    setError('');
+    setCargando(true);
+    try {
+      if (!codigo.trim()) {
+        throw new Error('Por favor, ingresa tu ID de carnet o escanea tu código QR.');
+      }
+      await login(codigo.trim(), '123456', '__ID__');
+      navigate('/estudiante');
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'No encontramos un estudiante con ese ID o código QR.');
+    } finally {
+      setCargando(false);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (esEstudiante) {
+      await ingresarConCodigoEstudiante(idEstudiante);
+      return;
+    }
+
     setError('');
     setCargando(true);
 
     try {
-      if (esEstudiante) {
-        if (!nombre.trim() || !curso.trim()) {
-          throw new Error('Por favor, ingresa tu nombre y curso.');
-        }
-        await login(nombre, '123456', curso);
-        navigate('/estudiante');
+      if (!email.trim() || !password.trim()) {
+        throw new Error('Por favor, ingresa tu correo y contraseña.');
+      }
+      await login(email, password);
+
+      const { db } = await import('../lib/db');
+      const userData = await db.getCurrentUser();
+      if (rolTab === 'admin' && userData?.profile?.rol !== 'admin') {
+        await logout();
+        throw new Error(
+          'Esta cuenta tiene rol de Profesor, no de Administrador. Usa la pestaña «Profesor» o ingresa con la cuenta de Administrador institucional para crear docentes.'
+        );
+      }
+
+      if (userData?.profile?.rol === 'admin') {
+        navigate('/admin');
       } else {
-        if (!email.trim() || !password.trim()) {
-          throw new Error('Por favor, ingresa tu correo y contraseña.');
-        }
-        await login(email, password);
-
-        const { db } = await import('../lib/db');
-        const userData = await db.getCurrentUser();
-        if (rolTab === 'admin' && userData?.profile?.rol !== 'admin') {
-          await logout();
-          throw new Error(
-            'Esta cuenta tiene rol de Profesor, no de Administrador. Usa la pestaña «Profesor» o ingresa con la cuenta de Administrador institucional para crear docentes.'
-          );
-        }
-
-        if (userData?.profile?.rol === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/profesor');
-        }
+        navigate('/profesor');
       }
     } catch (err: any) {
       console.error(err);
@@ -92,7 +107,7 @@ export default function Login() {
             </button>
             <button
               type="button"
-              onClick={() => { setRolTab('profesor'); setError(''); }}
+              onClick={() => { setRolTab('profesor'); setEscanerAbierto(false); setError(''); }}
               className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-xs font-bold transition-all ${
                 rolTab === 'profesor'
                   ? 'bg-white text-[#1C1917] shadow-sm'
@@ -104,7 +119,7 @@ export default function Login() {
             </button>
             <button
               type="button"
-              onClick={() => { setRolTab('admin'); setError(''); }}
+              onClick={() => { setRolTab('admin'); setEscanerAbierto(false); setError(''); }}
               className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-xs font-bold transition-all ${
                 rolTab === 'admin'
                   ? 'bg-white text-[#1C1917] shadow-sm'
@@ -125,39 +140,58 @@ export default function Login() {
           <form onSubmit={handleLogin} className="space-y-5">
             {esEstudiante ? (
               <>
-                <div>
-                  <label className="block text-xs font-bold text-[#78716C] uppercase tracking-wider mb-2">
-                    Tu nombre completo
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
-                      <GraduationCap className="w-5 h-5" />
+                {/* Botón para abrir lector QR del carnet */}
+                {!escanerAbierto ? (
+                  <button
+                    type="button"
+                    onClick={() => { setEscanerAbierto(true); setError(''); }}
+                    className="w-full py-4 px-4 rounded-2xl border-2 border-dashed border-[#EE7C6A] bg-[#FFF8F6] hover:bg-[#EE7C6A]/10 text-[#1C1917] font-bold text-xs flex items-center justify-center gap-2.5 transition shadow-xs"
+                  >
+                    <div className="p-2 rounded-xl bg-[#EE7C6A] text-white">
+                      <QrCode className="w-5 h-5" />
                     </div>
-                    <input
-                      type="text"
-                      placeholder="Ej: María Clara"
-                      value={nombre}
-                      onChange={(e) => setNombre(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
-                      required
-                    />
-                  </div>
+                    <div className="text-left">
+                      <span className="block text-sm font-extrabold text-[#1C1917]">
+                        Escanear Código QR del Carnet
+                      </span>
+                      <span className="block text-[11px] text-[#78716C] font-medium">
+                        Usa la cámara o sube la imagen del QR estudiantil
+                      </span>
+                    </div>
+                  </button>
+                ) : (
+                  <EscanerCarnetQR
+                    onDetectado={(codigoDetectado) => {
+                      setIdEstudiante(codigoDetectado);
+                      setEscanerAbierto(false);
+                      ingresarConCodigoEstudiante(codigoDetectado);
+                    }}
+                    onCerrar={() => setEscanerAbierto(false)}
+                  />
+                )}
+
+                <div className="relative flex py-0.5 items-center">
+                  <div className="flex-grow border-t border-[#EFECE6]"></div>
+                  <span className="flex-shrink mx-3 text-[11px] font-bold uppercase text-[#A8A29E]">
+                    o escribe tu ID de carnet
+                  </span>
+                  <div className="flex-grow border-t border-[#EFECE6]"></div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-[#78716C] uppercase tracking-wider mb-2">
-                    Tu curso o clase
+                    ID del Estudiante / Código de Carnet
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
-                      <BookOpen className="w-5 h-5" />
+                      <IdCard className="w-5 h-5" />
                     </div>
                     <input
                       type="text"
-                      placeholder="Ej: 901, 3A o 4B"
-                      value={curso}
-                      onChange={(e) => setCurso(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
+                      placeholder="Ej: MP-901, 901 o número de documento"
+                      value={idEstudiante}
+                      onChange={(e) => setIdEstudiante(e.target.value)}
+                      className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-bold placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
                       required
                     />
                   </div>

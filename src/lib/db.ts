@@ -9,18 +9,86 @@ const SEED_ACTIVITIES: Actividad[] = (seedActivitiesRaw as any[]).map((a, i) => 
 }));
 
 // Helper for generating student emails internally
+export function limpiarSlug(t: string): string {
+  return t
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+}
+
 export function correoInterno(nombre: string, curso: string): string {
-  const limpio = (t: string) =>
-    t.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-  return `${limpio(nombre)}.${limpio(curso)}@inclusion.local`;
+  return `${limpiarSlug(nombre)}.${limpiarSlug(curso)}@inclusion.local`;
+}
+
+export function correoPorIdentificacion(identificacion: string): string {
+  return `id.${limpiarSlug(identificacion)}@inclusion.local`;
+}
+
+export function formatearCursoConId(curso: string, identificacion?: string): string {
+  const c = (curso || '').trim();
+  const id = (identificacion || '').trim();
+  if (!id) return c;
+  if (/\[?ID:/i.test(c)) return c;
+  if (!c || c.toLowerCase() === id.toLowerCase()) return `ID:${id}`;
+  return `${c} · ID:${id}`;
+}
+
+export function obtenerIdEstudiante(perfil: { nombre?: string; curso?: string }): string {
+  const c = (perfil.curso || '').trim();
+  const match = c.match(/ID:\s*([^\s\]·|]+)/i);
+  if (match && match[1]) return match[1].trim();
+  const n = limpiarSlug(perfil.nombre || '');
+  if (n.startsWith('maria-paula')) return 'MP-901';
+  if (c) return c;
+  return n.slice(0, 10).toUpperCase() || 'EST-01';
+}
+
+export function obtenerCursoLimpio(perfil: { curso?: string }): string {
+  const c = (perfil.curso || '').trim();
+  const limpio = c.replace(/\s*·?\s*\[?ID:\s*[^\s\]·|]+\]?/i, '').trim();
+  return limpio || c;
+}
+
+export function normalizarCodigoQR(raw: string): string {
+  const texto = (raw || '').trim();
+  if (!texto) return '';
+  // Si el QR contiene un JSON: {"id":"..."}
+  if (texto.startsWith('{') && texto.endsWith('}')) {
+    try {
+      const obj = JSON.parse(texto);
+      const cand = obj.id || obj.identificacion || obj.documento || obj.codigo || obj.qr;
+      if (cand) return String(cand).trim();
+    } catch {
+      // continuar
+    }
+  }
+  // Si el QR contiene una URL con ?id=... o ?qr=...
+  if (/^https?:\/\//i.test(texto)) {
+    try {
+      const u = new URL(texto);
+      const param = u.searchParams.get('id') || u.searchParams.get('qr') || u.searchParams.get('codigo');
+      if (param) return param.trim();
+      const seg = u.pathname.split('/').filter(Boolean).pop();
+      if (seg) return seg.trim();
+    } catch {
+      // continuar
+    }
+  }
+  // Prefijos como "ECOINCLUSIVO:MP-901" o "ID:103456"
+  const pref = texto.match(/^(?:ecoinclusivo|carnet|id|qr)\s*[:|-]\s*(.+)$/i);
+  if (pref && pref[1]) return pref[1].trim();
+  return texto;
 }
 
 // Initial mock data if localStorage is empty
 const MOCK_PROFILES: Perfil[] = [
   { id: 'profesor-1', rol: 'profesor', nombre: 'Profesor', curso: 'General' },
-  { id: 'estudiante-maria', rol: 'estudiante', nombre: 'María Paula Peñuela', curso: '901', profesor_id: 'profesor-1' },
-  { id: 'estudiante-1', rol: 'estudiante', nombre: 'Estudiante Ejemplo', curso: '3A', profesor_id: 'profesor-1' },
-  { id: 'estudiante-2', rol: 'estudiante', nombre: 'Estudiante Ejemplo 2', curso: '4B', profesor_id: 'profesor-1' },
+  { id: 'estudiante-maria', rol: 'estudiante', nombre: 'María Paula Peñuela', curso: '901 · ID:MP-901', profesor_id: 'profesor-1' },
+  { id: 'estudiante-1', rol: 'estudiante', nombre: 'Estudiante Ejemplo', curso: '3A · ID:EST-3A', profesor_id: 'profesor-1' },
+  { id: 'estudiante-2', rol: 'estudiante', nombre: 'Estudiante Ejemplo 2', curso: '4B · ID:EST-4B', profesor_id: 'profesor-1' },
   { id: 'admin-1', rol: 'admin', nombre: 'Administrador' }
 ];
 
@@ -172,6 +240,7 @@ const MOCK_PROGRESO: Progreso[] = [
 
 // LocalStorage helpers
 function getStored<T>(key: string, fallback: T): T {
+  if (typeof localStorage === 'undefined' || !localStorage?.getItem) return fallback;
   const val = localStorage.getItem(key);
   if (!val) {
     localStorage.setItem(key, JSON.stringify(fallback));
@@ -181,6 +250,7 @@ function getStored<T>(key: string, fallback: T): T {
 }
 
 function setStored<T>(key: string, val: T) {
+  if (typeof localStorage === 'undefined' || !localStorage?.setItem) return;
   localStorage.setItem(key, JSON.stringify(val));
 }
 
@@ -340,11 +410,89 @@ export const db = {
     }
   },
 
-  async signInEstudiante(nombre: string, curso: string) {
-    const emailGenerado = correoInterno(nombre, curso);
+  async signInEstudiantePorId(codigoInput: string) {
+    const limpioRaw = normalizarCodigoQR(codigoInput);
+    const slug = limpiarSlug(limpioRaw);
+    if (!slug) {
+      throw new Error('Ingresa el ID de tu carnet o escanea tu código QR.');
+    }
+
+    if (usarSupabase()) {
+      const candidatos = [
+        correoPorIdentificacion(limpioRaw),
+        `${slug}@inclusion.local`
+      ];
+
+      // Alias compatibles con María Paula Peñuela (Grado 901) y cuentas existentes
+      if (
+        slug === '901' ||
+        slug === 'mp-901' ||
+        slug === 'mp901' ||
+        slug === '1001' ||
+        slug === 'codigo-qr' ||
+        slug.startsWith('maria-paula')
+      ) {
+        candidatos.unshift('maria-paula.901@inclusion.local');
+      }
+
+      for (const emailCand of candidatos) {
+        try {
+          return await this.signIn(emailCand, '123456');
+        } catch {
+          // Intentar siguiente candidato
+        }
+      }
+
+      // Fallback RPC si ingresaron nombre o curso existente
+      try {
+        const { data: emailResuelto } = await supabase.rpc('resolver_email_estudiante', {
+          p_nombre: limpioRaw,
+          p_curso: '901'
+        });
+        if (typeof emailResuelto === 'string' && emailResuelto.trim()) {
+          return await this.signIn(emailResuelto.trim().toLowerCase(), '123456');
+        }
+      } catch {
+        // continuar
+      }
+
+      throw new Error('No encontramos un estudiante con ese ID o código QR. Verifica el número de tu carnet con tu docente.');
+    } else {
+      const perfiles = getStored<Perfil[]>('perfiles', []);
+      const userProfile = perfiles.find(p => {
+        if (p.rol !== 'estudiante') return false;
+        const idEst = limpiarSlug(obtenerIdEstudiante(p));
+        const cursoLimp = limpiarSlug(obtenerCursoLimpio(p));
+        const nomSlug = limpiarSlug(p.nombre);
+        return (
+          idEst === slug ||
+          limpiarSlug(p.id) === slug ||
+          cursoLimp === slug ||
+          nomSlug === slug ||
+          nomSlug.startsWith(slug) ||
+          (slug === 'codigo-qr' && nomSlug.startsWith('maria-paula'))
+        );
+      });
+
+      if (!userProfile) {
+        throw new Error('No encontramos un estudiante con ese ID o código QR. Verifica el carnet con tu docente.');
+      }
+
+      const emailFinal = correoPorIdentificacion(obtenerIdEstudiante(userProfile));
+      const sessionObj = { id: userProfile.id, email: emailFinal, userProfile };
+      setStored('currentUser', sessionObj);
+      return { user: { id: userProfile.id, email: emailFinal }, profile: userProfile };
+    }
+  },
+
+  async signInEstudiante(nombreOCodigo: string, curso?: string) {
+    if (!curso || !curso.trim() || curso === '__ID__') {
+      return this.signInEstudiantePorId(nombreOCodigo);
+    }
+    const emailGenerado = correoInterno(nombreOCodigo, curso);
     if (usarSupabase()) {
       const { data: emailResuelto } = await supabase.rpc('resolver_email_estudiante', {
-        p_nombre: nombre.trim(),
+        p_nombre: nombreOCodigo.trim(),
         p_curso: curso.trim()
       });
       const emailFinal = (typeof emailResuelto === 'string' && emailResuelto.trim())
@@ -352,23 +500,7 @@ export const db = {
         : emailGenerado;
       return this.signIn(emailFinal, '123456');
     } else {
-      const norm = (t: string) =>
-        t.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const nInput = norm(nombre);
-      const cInput = norm(curso).replace(/\s+/g, '');
-      const perfiles = getStored<Perfil[]>('perfiles', []);
-      const userProfile = perfiles.find(p => {
-        if (p.rol !== 'estudiante') return false;
-        const cPerf = norm(p.curso || '').replace(/\s+/g, '');
-        const nPerf = norm(p.nombre);
-        return cPerf === cInput && (nPerf === nInput || nPerf.startsWith(nInput) || nInput.startsWith(nPerf));
-      });
-      if (!userProfile) {
-        throw new Error('No encontramos un estudiante con ese nombre y curso. Verifica con tu docente.');
-      }
-      const sessionObj = { id: userProfile.id, email: emailGenerado, userProfile };
-      setStored('currentUser', sessionObj);
-      return { user: { id: userProfile.id, email: emailGenerado }, profile: userProfile };
+      return this.signInEstudiantePorId(nombreOCodigo);
     }
   },
 
@@ -419,21 +551,24 @@ export const db = {
     }
   },
 
-  async crearEstudiante(nombre: string, curso: string, contrasena: string, profesorId: string) {
-    const email = correoInterno(nombre, curso);
+  async crearEstudiante(nombre: string, curso: string, contrasena: string, profesorId: string, identificacion?: string) {
+    const idFinal = (identificacion || '').trim() || `${limpiarSlug(nombre).slice(0, 6).toUpperCase()}-${limpiarSlug(curso || '01').toUpperCase()}`;
+    const cursoConId = formatearCursoConId(curso, idFinal);
+    const email = correoPorIdentificacion(idFinal);
     if (usarSupabase()) {
       const { data, error } = await supabase.rpc('crear_estudiante', {
         p_nombre: nombre,
-        p_curso: curso,
+        p_curso: cursoConId,
         p_email: email,
-        p_password: contrasena,
+        p_password: contrasena || '123456',
         p_profesor_id: profesorId
       });
       if (!error && data) {
-        return { id: data as string, email };
+        return { id: data as string, email, identificacion: idFinal };
       }
     }
-    return this.signUp(email, contrasena, nombre, 'estudiante', { curso, profesor_id: profesorId });
+    const res = await this.signUp(email, contrasena || '123456', nombre, 'estudiante', { curso: cursoConId, profesor_id: profesorId });
+    return { id: res.id, email, identificacion: idFinal };
   },
 
   async crearProfesor(nombre: string, email: string, contrasena: string) {
@@ -452,10 +587,13 @@ export const db = {
 
   async crearEstudiantesMasivo(
     estudiantes: {
+      identificacion?: string;
       nombre: string;
       curso: string;
       ajuste?: 'cognitiva' | 'motriz' | 'tea';
       rutasIds?: string[];
+      rutasNuevasNombres?: string[];
+      noAsignarRuta?: boolean;
     }[],
     profesorId: string,
     onProgreso?: (actual: number, total: number, itemNombre: string) => void
@@ -468,14 +606,21 @@ export const db = {
     let creados = 0;
     const errores: { nombre: string; error: string }[] = [];
     const detalles: { id: string; nombre: string; curso: string; email: string }[] = [];
+    const rutasNuevasCache = new Map<string, string>();
 
     for (let i = 0; i < total; i++) {
       const est = estudiantes[i];
       if (onProgreso) {
-        onProgreso(i + 1, total, est.nombre);
+        onProgreso(i + 1, total, est.identificacion ? `${est.nombre} (${est.identificacion})` : est.nombre);
       }
       try {
-        const res = await this.crearEstudiante(est.nombre.trim(), est.curso.trim(), '123456', profesorId);
+        const res = await this.crearEstudiante(
+          est.nombre.trim(),
+          est.curso.trim(),
+          '123456',
+          profesorId,
+          est.identificacion?.trim()
+        );
         creados++;
         detalles.push({
           id: res.id,
@@ -484,9 +629,34 @@ export const db = {
           email: res.email
         });
 
-        // Asignar rutas si están indicadas
-        if (est.rutasIds && est.rutasIds.length > 0) {
-          for (const etapaId of est.rutasIds) {
+        if (!est.noAsignarRuta) {
+          const idsParaAsignar = [...(est.rutasIds || [])];
+
+          // Si el Excel trae un título de ruta que aún no existía, crearla automáticamente
+          if (est.rutasNuevasNombres && est.rutasNuevasNombres.length > 0) {
+            for (const nombreNueva of est.rutasNuevasNombres) {
+              const key = limpiarSlug(nombreNueva);
+              if (!key) continue;
+              let nuevaEtapaId = rutasNuevasCache.get(key);
+              if (!nuevaEtapaId) {
+                try {
+                  const creada = await this.crearEtapa(nombreNueva, i + 10, profesorId);
+                  if (creada?.id) {
+                    const cid = String(creada.id);
+                    nuevaEtapaId = cid;
+                    rutasNuevasCache.set(key, cid);
+                  }
+                } catch (e) {
+                  console.warn('No se pudo crear ruta nueva desde Excel:', nombreNueva, e);
+                }
+              }
+              if (nuevaEtapaId && !idsParaAsignar.includes(nuevaEtapaId)) {
+                idsParaAsignar.push(nuevaEtapaId);
+              }
+            }
+          }
+
+          for (const etapaId of idsParaAsignar) {
             try {
               await this.asignarRuta(res.id, etapaId, est.ajuste);
             } catch (asigErr) {
@@ -496,7 +666,7 @@ export const db = {
         }
       } catch (err) {
         errores.push({
-          nombre: est.nombre,
+          nombre: est.identificacion ? `${est.nombre} (${est.identificacion})` : est.nombre,
           error: err instanceof Error ? err.message : 'Error al registrar estudiante'
         });
       }

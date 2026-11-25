@@ -129,10 +129,13 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
       setResultado(null);
 
       const payload = itemsSeleccionados.map(it => ({
+        identificacion: it.identificacion,
         nombre: it.nombre,
         curso: it.curso,
         ajuste: it.ajuste,
-        rutasIds: it.rutasIds
+        rutasIds: it.rutasIds,
+        rutasNuevasNombres: it.rutasNuevasNombres,
+        noAsignarRuta: it.noAsignarRuta
       }));
 
       const res = await db.crearEstudiantesMasivo(
@@ -295,27 +298,36 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                     </div>
                   </div>
                   <p className="text-xs text-[#57534E]">
-                    <b>1.</b> Descarga la plantilla de Excel · <b>2.</b> Escribe el <b>Nombre</b> y el <b>Curso</b> de cada estudiante en sus columnas · <b>3.</b> Guarda y sube el mismo archivo Excel aquí:
+                    <b>1.</b> Descarga la plantilla de Excel · <b>2.</b> Completa la <b>Identificación (ID o Código QR)</b>, <b>Materia</b>, <b>Título de ruta</b> y <b>Perfil de adaptación</b> · <b>3.</b> Sube el archivo Excel aquí:
                   </p>
                   <div className="overflow-x-auto rounded-xl border border-[#EFECE6] bg-white">
                     <table className="w-full text-left text-[11px] border-collapse">
                       <thead>
                         <tr className="bg-[#EE7C6A] text-white font-bold">
-                          <th className="py-1.5 px-3 border-r border-white/20">Columna A: Nombre del Estudiante</th>
-                          <th className="py-1.5 px-3 border-r border-white/20">Columna B: Curso</th>
-                          <th className="py-1.5 px-3">Columna C: Apoyo (Opcional)</th>
+                          <th className="py-1.5 px-2.5 border-r border-white/20">Identificacion del estudiante</th>
+                          <th className="py-1.5 px-2.5 border-r border-white/20">Materia</th>
+                          <th className="py-1.5 px-2.5 border-r border-white/20">Titulo de ruta</th>
+                          <th className="py-1.5 px-2.5 border-r border-white/20">Perfil_adaptacion</th>
+                          <th className="py-1.5 px-2.5 border-r border-white/20">Estado de la Ruta</th>
+                          <th className="py-1.5 px-2.5">Validacion</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#EFECE6] text-[#44403C]">
                         <tr>
-                          <td className="py-1.5 px-3 border-r border-[#EFECE6] font-semibold">María Paula Peñuela</td>
-                          <td className="py-1.5 px-3 border-r border-[#EFECE6]">901</td>
-                          <td className="py-1.5 px-3 text-[#78716C]">motriz</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6] font-mono font-bold">MP-901</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Ciencias</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Nuestros sentidos</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Paralisis cerebral</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Asignada/progreso</td>
+                          <td className="py-1.5 px-2.5 text-[#10B981] font-bold">Encontrado</td>
                         </tr>
                         <tr>
-                          <td className="py-1.5 px-3 border-r border-[#EFECE6] font-semibold">Laura Sofía Ramírez</td>
-                          <td className="py-1.5 px-3 border-r border-[#EFECE6]">901</td>
-                          <td className="py-1.5 px-3 text-[#A8A29E] italic">(puede quedar vacío)</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6] font-mono font-bold">QR-904</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Fisica</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Magnetismo</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Sindrome de down</td>
+                          <td className="py-1.5 px-2.5 border-r border-[#EFECE6]">Asignada/completada</td>
+                          <td className="py-1.5 px-2.5 text-[#10B981] font-bold">Encontrado</td>
                         </tr>
                       </tbody>
                     </table>
@@ -540,17 +552,16 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                         <thead className="bg-[#FBF9F5] border-b border-[#EFECE6] sticky top-0 z-10 text-[#78716C] font-bold uppercase text-[10px] tracking-wider">
                           <tr>
                             <th className="p-3 w-10 text-center">Sel.</th>
-                            <th className="p-3 w-12 text-center">#</th>
-                            <th className="p-3">Nombre Completo</th>
-                            <th className="p-3">Curso</th>
-                            <th className="p-3">Email Interno</th>
-                            <th className="p-3">Ajuste</th>
-                            <th className="p-3">Ruta</th>
-                            <th className="p-3">Estado</th>
+                            <th className="p-3">Identificación (ID / QR)</th>
+                            <th className="p-3">Materia</th>
+                            <th className="p-3">Título de Ruta</th>
+                            <th className="p-3">Perfil Adaptación</th>
+                            <th className="p-3">Estado de la Ruta</th>
+                            <th className="p-3">Validación</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-[#EFECE6]">
-                          {items.map((it, idx) => (
+                          {items.map((it) => (
                             <tr
                               key={it.idTemp}
                               className={`hover:bg-[#FBF9F5] transition ${
@@ -575,11 +586,13 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                                   )}
                                 </button>
                               </td>
-                              <td className="p-3 text-center font-bold text-[#A8A29E]">
-                                {idx + 1}
-                              </td>
-                              <td className="p-3 font-bold text-[#1C1917]">
-                                {it.nombre || <span className="text-[#D9363E] italic">Vacío</span>}
+                              <td className="p-3">
+                                <span className="font-mono font-extrabold text-[#1C1917] bg-[#F5F2EC] px-2 py-0.5 rounded-md">
+                                  {it.identificacion}
+                                </span>
+                                <span className="block text-[10px] text-[#78716C] mt-0.5">
+                                  {it.nombre}
+                                </span>
                               </td>
                               <td className="p-3 font-semibold text-[#57534E]">
                                 {it.curso ? (
@@ -587,38 +600,42 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                                     {it.curso}
                                   </span>
                                 ) : (
-                                  <span className="text-[#D9363E] italic">Sin curso</span>
+                                  <span className="text-[#A8A29E]">-</span>
                                 )}
                               </td>
-                              <td className="p-3 font-mono text-[11px] text-[#78716C]">
-                                {it.emailCalculado || '-'}
+                              <td className="p-3 font-semibold text-[#1C1917]">
+                                {it.tituloRuta || (it.rutasNombres && it.rutasNombres.length > 0 ? it.rutasNombres.join(', ') : '-')}
                               </td>
                               <td className="p-3">
-                                {it.ajuste ? (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#EE7C6A]/10 text-[#EE7C6A]">
-                                    {it.ajuste}
+                                {it.perfilAdaptacion || it.ajuste ? (
+                                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EE7C6A]/10 text-[#EE7C6A]">
+                                    {it.perfilAdaptacion ? `${it.perfilAdaptacion}${it.ajuste ? ` (${it.ajuste})` : ''}` : it.ajuste}
                                   </span>
                                 ) : (
                                   <span className="text-[#A8A29E]">-</span>
                                 )}
                               </td>
                               <td className="p-3">
-                                {it.rutasNombres && it.rutasNombres.length > 0 ? (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#7294B9]/10 text-[#7294B9] truncate max-w-[130px] inline-block">
-                                    {it.rutasNombres.join(', ')}
-                                  </span>
-                                ) : (
-                                  <span className="text-[#A8A29E]">-</span>
-                                )}
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  it.noAsignarRuta
+                                    ? 'bg-gray-100 text-gray-600'
+                                    : 'bg-[#7294B9]/15 text-[#7294B9]'
+                                }`}>
+                                  {it.estadoRuta || 'Asignada'}
+                                </span>
                               </td>
                               <td className="p-3">
-                                {it.valido ? (
-                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#10B981]">
-                                    <Check className="w-3.5 h-3.5" /> Listo
-                                  </span>
-                                ) : (
+                                {!it.valido ? (
                                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#D9363E]" title={it.error}>
                                     <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {it.error}
+                                  </span>
+                                ) : it.validacionRuta === 'Encontrado' ? (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#10B981]">
+                                    <Check className="w-3.5 h-3.5" /> Encontrado
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#F59E0B]">
+                                    No encontrado (Se creará ruta)
                                   </span>
                                 )}
                               </td>

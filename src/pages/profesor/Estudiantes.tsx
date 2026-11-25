@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { db } from '../../lib/db';
+import { db, obtenerIdEstudiante, obtenerCursoLimpio } from '../../lib/db';
 import { Perfil, Etapa, Asignacion, Actividad, Progreso } from '../../types/actividad';
 import ModalGestionarRutasEstudiante from '../../components/comunes/ModalGestionarRutasEstudiante';
 import ModalPrevisualizarRuta from '../../components/comunes/ModalPrevisualizarRuta';
 import ModalCargueMasivoEstudiantes from '../../components/comunes/ModalCargueMasivoEstudiantes';
+import ModalCarnetQR from '../../components/comunes/ModalCarnetQR';
 import {
   UserPlus,
   Trash2,
@@ -21,7 +22,8 @@ import {
   Square,
   RotateCcw,
   FileSpreadsheet,
-  UploadCloud
+  UploadCloud,
+  QrCode
 } from 'lucide-react';
 
 export default function Estudiantes() {
@@ -37,8 +39,10 @@ export default function Estudiantes() {
   const [estudianteGestionandoRutas, setEstudianteGestionandoRutas] = useState<Perfil | null>(null);
   const [rutaPrevisualizando, setRutaPrevisualizando] = useState<Etapa | null>(null);
   const [modalCargueMasivoAbierto, setModalCargueMasivoAbierto] = useState(false);
+  const [estudianteCarnetQR, setEstudianteCarnetQR] = useState<Perfil | null>(null);
 
   // Create Student Form state
+  const [identificacion, setIdentificacion] = useState('');
   const [nombre, setNombre] = useState('');
   const [curso, setCurso] = useState('');
 
@@ -80,11 +84,21 @@ export default function Estudiantes() {
     setLoading(true);
 
     try {
-      if (!nombre.trim() || !curso.trim()) {
-        throw new Error('Ingresa el nombre y el curso del estudiante');
+      if (!identificacion.trim() || !nombre.trim()) {
+        throw new Error('Ingresa el ID del carnet y el nombre del estudiante.');
       }
-      await db.crearEstudiante(nombre.trim(), curso.trim(), '123456', profile!.id);
-      setMsg({ error: '', success: '¡Estudiante registrado! Ya puede entrar solo con su nombre y curso.' });
+      const res = await db.crearEstudiante(
+        nombre.trim(),
+        curso.trim() || '901',
+        '123456',
+        profile!.id,
+        identificacion.trim()
+      );
+      setMsg({
+        error: '',
+        success: `¡Estudiante registrado! Ya puede ingresar con su ID «${res.identificacion}» o escaneando su carnet QR.`
+      });
+      setIdentificacion('');
       setNombre('');
       setCurso('');
       await loadData();
@@ -199,7 +213,20 @@ export default function Estudiantes() {
           </div>
           <form onSubmit={handleCrearEstudiante} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Nombre Completo</label>
+              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">
+                ID / Código de Carnet (QR)
+              </label>
+              <input
+                type="text"
+                placeholder="Ej: MP-901, 1034567890 o QR-902"
+                value={identificacion}
+                onChange={(e) => setIdentificacion(e.target.value)}
+                className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs font-bold bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Nombre del Estudiante</label>
               <input
                 type="text"
                 placeholder="Ej: María Paula Peñuela"
@@ -210,14 +237,13 @@ export default function Estudiantes() {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Curso o Nivel</label>
+              <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">Materia o Curso</label>
               <input
                 type="text"
-                placeholder="Ej: 901, 3A, 4B"
+                placeholder="Ej: Ciencias, 901, Español"
                 value={curso}
                 onChange={(e) => setCurso(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
-                required
               />
             </div>
 
@@ -395,14 +421,20 @@ export default function Estudiantes() {
               const pct = resumen.totalPasos > 0 ? Math.round((resumen.completados / resumen.totalPasos) * 100) : 0;
               const abierto = detalleAbiertoId === est.id;
 
+              const idCarnet = obtenerIdEstudiante(est);
+              const cursoLimpio = obtenerCursoLimpio(est);
+
               return (
                 <div key={est.id} className="border rounded-2xl border-[#EFECE6] bg-[#FBF9F5] overflow-hidden">
                   <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-bold text-[#1C1917] text-sm">{est.nombre}</span>
+                        <span className="px-2.5 py-0.5 text-[11px] font-mono font-extrabold bg-[#1C1917] text-white rounded-full">
+                          ID: {idCarnet}
+                        </span>
                         <span className="px-2.5 py-0.5 text-[11px] font-bold bg-[#EE7C6A]/10 text-[#EE7C6A] rounded-full">
-                          Curso {est.curso}
+                          {cursoLimpio}
                         </span>
                         {resumen.notasFamiliares.length > 0 && (
                           <span className="px-2.5 py-0.5 text-[11px] font-bold bg-[#ECFDF5] text-[#065F46] rounded-full flex items-center gap-1">
@@ -411,7 +443,7 @@ export default function Estudiantes() {
                         )}
                       </div>
                       <p className="text-xs text-[#78716C]">
-                        Ingreso rápido: <b>{est.nombre}</b> · Curso <b>{est.curso}</b>
+                        Ingreso del estudiante: ID <b>{idCarnet}</b> o escaneando su <b>Carnet QR</b>
                       </p>
 
                       {/* Barra de progreso en tiempo real */}
@@ -510,6 +542,15 @@ export default function Estudiantes() {
                     </div>
 
                     <div className="flex items-center gap-1.5 self-end md:self-center">
+                      <button
+                        type="button"
+                        onClick={() => setEstudianteCarnetQR(est)}
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#1C1917] hover:bg-[#292524] text-white text-xs font-bold transition shadow-xs"
+                        title="Ver o descargar Carnet QR de acceso del estudiante"
+                      >
+                        <QrCode className="w-3.5 h-3.5 text-[#EE7C6A]" />
+                        <span>Carnet QR</span>
+                      </button>
                       {resumen.totalPasos > 0 && (
                         <button
                           type="button"
@@ -604,7 +645,7 @@ export default function Estudiantes() {
         />
       )}
 
-      {/* MODAL CARGUE MASIVO DE ESTUDIANTES (CSV) */}
+      {/* MODAL CARGUE MASIVO DE ESTUDIANTES (CSV / EXCEL) */}
       {modalCargueMasivoAbierto && (
         <ModalCargueMasivoEstudiantes
           isOpen={modalCargueMasivoAbierto}
@@ -612,6 +653,14 @@ export default function Estudiantes() {
           profesorId={profile?.id || ''}
           etapas={etapas}
           onCompletado={loadData}
+        />
+      )}
+
+      {/* MODAL CARNET QR DEL ESTUDIANTE */}
+      {estudianteCarnetQR && (
+        <ModalCarnetQR
+          estudiante={estudianteCarnetQR}
+          onClose={() => setEstudianteCarnetQR(null)}
         />
       )}
     </div>
