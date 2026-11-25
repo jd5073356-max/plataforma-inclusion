@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, CheckCircle, AlertCircle, ArrowRight, Star, Award, Heart, Shield, RefreshCw } from 'lucide-react';
 import { Actividad, PreguntaConfig, EmparejarPregunta } from '../../types/actividad';
 import { db } from '../../lib/db';
+import { obtenerInfoVideo, esUrlDeVideo } from '../../utils/videoHelper';
 
 interface ReproductorActividadProps {
   actividad: Actividad;
@@ -206,6 +207,15 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'es-ES';
       window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const reproducirAudioOpcion = (op: { texto: string; audioUrl?: string }) => {
+    if (op.audioUrl) {
+      const audio = new Audio(op.audioUrl);
+      audio.play().catch(() => ttsFallback(op.texto));
+    } else if (op.texto) {
+      ttsFallback(op.texto);
     }
   };
 
@@ -508,20 +518,34 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
         {/* Optional Question-level image or video */}
         {pregunta.datos.imagenUrl && (
           <div className="mb-6 flex justify-center">
-            {/\.(mp4|webm)$/i.test(pregunta.datos.imagenUrl) ? (
-              <video 
-                src={pregunta.datos.imagenUrl} 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="max-h-64 object-contain rounded-xl border border-gray-100 shadow" 
-              />
-            ) : (
-              <img 
-                src={pregunta.datos.imagenUrl} 
-                alt="Instrucción visual" 
-                className="max-h-64 object-contain rounded-xl border border-gray-100 shadow" 
+            {esUrlDeVideo(pregunta.datos.imagenUrl) ? (() => {
+              const info = obtenerInfoVideo(pregunta.datos.imagenUrl);
+              if (info?.tipo === 'embed') {
+                return (
+                  <div className="w-full max-w-2xl aspect-video rounded-xl overflow-hidden border border-gray-200 shadow bg-black">
+                    <iframe
+                      src={info.embedUrl}
+                      title="Video de instrucción"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full border-0"
+                    />
+                  </div>
+                );
+              }
+              return (
+                <video
+                  src={pregunta.datos.imagenUrl}
+                  controls
+                  playsInline
+                  className="max-h-64 object-contain rounded-xl border border-gray-100 shadow"
+                />
+              );
+            })() : (
+              <img
+                src={pregunta.datos.imagenUrl}
+                alt="Instrucción visual"
+                className="max-h-64 object-contain rounded-xl border border-gray-100 shadow"
               />
             )}
           </div>
@@ -537,40 +561,54 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                 const isSelected = selectedOpcionId === op.id;
                 const showCorrect = intentado && op.esCorrecta;
                 const showIncorrect = intentado && isSelected && !op.esCorrecta;
+                const mostrarBotonAudio = Boolean(op.conAudio || op.audioUrl);
                 return (
-                  <button
-                    key={op.id}
-                    type="button"
-                    disabled={intentado}
-                    onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
-                    className={`
-                      w-full p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
-                      ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
-                      ${showCorrect
-                        ? 'border-green-500 bg-green-50 text-green-950'
-                        : showIncorrect
-                          ? 'border-red-400 bg-red-50 text-red-950'
-                          : isSelected
-                            ? 'border-blue-600 bg-blue-50 text-blue-950 dark:bg-blue-950/20 dark:text-blue-300'
-                            : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'}
-                    `}
-                  >
-                    {op.imagenUrl ? (
-                      <img
-                        src={op.imagenUrl}
-                        alt=""
-                        aria-hidden="true"
-                        className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
-                      />
-                    ) : (
-                      <span className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 ${
-                        showCorrect ? 'bg-green-100 border-green-400 text-green-700' : showIncorrect ? 'bg-red-100 border-red-400 text-red-700' : 'bg-gray-100 dark:bg-gray-800 border-gray-300'
-                      }`}>
-                        {op.texto[0].toUpperCase()}
-                      </span>
+                  <div key={op.id} className="flex items-stretch gap-2.5">
+                    <button
+                      type="button"
+                      disabled={intentado}
+                      onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
+                      className={`
+                        flex-1 p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
+                        ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
+                        ${showCorrect
+                          ? 'border-green-500 bg-green-50 text-green-950'
+                          : showIncorrect
+                            ? 'border-red-400 bg-red-50 text-red-950'
+                            : isSelected
+                              ? 'border-blue-600 bg-blue-50 text-blue-950 dark:bg-blue-950/20 dark:text-blue-300'
+                              : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'}
+                      `}
+                    >
+                      {op.imagenUrl ? (
+                        <img
+                          src={op.imagenUrl}
+                          alt=""
+                          aria-hidden="true"
+                          className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
+                        />
+                      ) : (
+                        <span className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 ${
+                          showCorrect ? 'bg-green-100 border-green-400 text-green-700' : showIncorrect ? 'bg-red-100 border-red-400 text-red-700' : 'bg-gray-100 dark:bg-gray-800 border-gray-300'
+                        }`}>
+                          {(op.texto || '?')[0].toUpperCase()}
+                        </span>
+                      )}
+                      <span className="flex-1">{op.texto}</span>
+                    </button>
+
+                    {mostrarBotonAudio && (
+                      <button
+                        type="button"
+                        onClick={() => reproducirAudioOpcion(op)}
+                        title="Escuchar opción en voz alta"
+                        className="px-4 sm:px-5 rounded-2xl border-4 border-[#EE7C6A]/40 bg-[#FFF8F5] hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white font-extrabold flex flex-col items-center justify-center gap-1 transition shadow-sm shrink-0"
+                      >
+                        <Volume2 className="w-6 h-6" />
+                        <span className="text-[11px] uppercase tracking-wide">Escuchar</span>
+                      </button>
                     )}
-                    <span className="flex-1">{op.texto}</span>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -971,38 +1009,52 @@ export const ReproductorActividad: React.FC<ReproductorActividadProps> = ({
                   const isSelected = selectedOpcionId === op.id;
                   const showCorrect = intentado && op.esCorrecta;
                   const showIncorrect = intentado && isSelected && !op.esCorrecta;
+                  const mostrarBotonAudio = Boolean(op.conAudio || op.audioUrl);
                   return (
-                    <button
-                      key={op.id}
-                      type="button"
-                      disabled={intentado}
-                      onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
-                      className={`
-                        w-full p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
-                        ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
-                        ${showCorrect
-                          ? 'border-green-500 bg-green-50 text-green-950'
-                          : showIncorrect
-                            ? 'border-red-400 bg-red-50 text-red-950'
-                            : isSelected
-                              ? 'border-blue-600 bg-blue-50 text-blue-950'
-                              : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800'}
-                      `}
-                    >
-                      {op.imagenUrl ? (
-                        <img
-                          src={op.imagenUrl}
-                          alt=""
-                          aria-hidden="true"
-                          className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
-                        />
-                      ) : (
-                        <span className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 bg-gray-100 border-gray-300">
-                          {op.texto[0].toUpperCase()}
-                        </span>
+                    <div key={op.id} className="flex items-stretch gap-2.5">
+                      <button
+                        type="button"
+                        disabled={intentado}
+                        onClick={() => verificarSeleccion(op.id, op.esCorrecta)}
+                        className={`
+                          flex-1 p-6 text-left rounded-2xl border-4 transition font-bold shadow-sm flex items-center gap-4
+                          ${isMotriz ? 'text-2xl py-8' : isCognitiva ? 'text-xl' : 'text-lg'}
+                          ${showCorrect
+                            ? 'border-green-500 bg-green-50 text-green-950'
+                            : showIncorrect
+                              ? 'border-red-400 bg-red-50 text-red-950'
+                              : isSelected
+                                ? 'border-blue-600 bg-blue-50 text-blue-950'
+                                : 'border-gray-300 hover:border-blue-300 bg-white hover:bg-gray-50 text-gray-800'}
+                        `}
+                      >
+                        {op.imagenUrl ? (
+                          <img
+                            src={op.imagenUrl}
+                            alt=""
+                            aria-hidden="true"
+                            className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-xl object-cover border-2 border-gray-200"
+                          />
+                        ) : (
+                          <span className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-lg font-bold border-2 bg-gray-100 border-gray-300">
+                            {(op.texto || '?')[0].toUpperCase()}
+                          </span>
+                        )}
+                        <span className="flex-1">{op.texto}</span>
+                      </button>
+
+                      {mostrarBotonAudio && (
+                        <button
+                          type="button"
+                          onClick={() => reproducirAudioOpcion(op)}
+                          title="Escuchar opción en voz alta"
+                          className="px-4 sm:px-5 rounded-2xl border-4 border-[#EE7C6A]/40 bg-[#FFF8F5] hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white font-extrabold flex flex-col items-center justify-center gap-1 transition shadow-sm shrink-0"
+                        >
+                          <Volume2 className="w-6 h-6" />
+                          <span className="text-[11px] uppercase tracking-wide">Escuchar</span>
+                        </button>
                       )}
-                      <span className="flex-1">{op.texto}</span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>

@@ -17,7 +17,7 @@ export function correoInterno(nombre: string, curso: string): string {
 
 // Initial mock data if localStorage is empty
 const MOCK_PROFILES: Perfil[] = [
-  { id: 'profesor-1', rol: 'profesor', nombre: 'Rafael Suárez Martínez', curso: 'Biología 901' },
+  { id: 'profesor-1', rol: 'profesor', nombre: 'Profesor', curso: 'General' },
   { id: 'estudiante-maria', rol: 'estudiante', nombre: 'María Paula Peñuela', curso: '901', profesor_id: 'profesor-1' },
   { id: 'estudiante-1', rol: 'estudiante', nombre: 'Estudiante Ejemplo', curso: '3A', profesor_id: 'profesor-1' },
   { id: 'estudiante-2', rol: 'estudiante', nombre: 'Estudiante Ejemplo 2', curso: '4B', profesor_id: 'profesor-1' },
@@ -289,6 +289,10 @@ export const db = {
         const { data, error } = await supabase.auth.signInWithPassword({ email: candidato, password: pass });
         if (!error && data.user) {
           const { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
+          if (candidato === 'profesor@inclusion.com' && profile && profile.nombre !== 'Profesor') {
+            profile.nombre = 'Profesor';
+            supabase.from('perfiles').update({ nombre: 'Profesor' }).eq('id', data.user.id).then(() => {});
+          }
           return { user: data.user, profile };
         }
         lastError = error;
@@ -312,18 +316,22 @@ export const db = {
             const gen = correoInterno(p.nombre, p.curso || '');
             return gen === emailLimpio || (emailLimpio === 'maria-paula.901@inclusion.local' && gen === 'maria-paula-penuela.901@inclusion.local');
           });
-          if (matchStudent && pass === '123456') { // default mock password
+          if (matchStudent && pass === '123456') {
             userProfile = matchStudent;
           }
-        } else if ((emailLimpio === 'educador@escuela.edu.co' || emailLimpio === 'profesor@inclusion.com' || emailLimpio === 'rafael.suarez@inclusion.com') && pass === '123456') {
-          userProfile = perfiles.find(p => p.id === 'profesor-1');
+        } else if ((emailLimpio === 'educador@escuela.edu.co' || emailLimpio === 'profesor@inclusion.com') && pass === '123456') {
+          const baseProf = perfiles.find(p => p.id === 'profesor-1');
+          userProfile = baseProf ? { ...baseProf, nombre: 'Profesor' } : undefined;
+        } else if (emailLimpio === 'rafael.suarez@inclusion.com' && pass === '123456') {
+          const baseProf = perfiles.find(p => p.id === 'profesor-1');
+          userProfile = baseProf ? { ...baseProf, nombre: 'Rafael Suárez Martínez' } : undefined;
         } else if (emailLimpio === 'admin@inclusion.com' && pass === '123456') {
           userProfile = perfiles.find(p => p.id === 'admin-1');
         }
       }
 
       if (!userProfile) {
-        throw new Error('Credenciales incorrectas (Usa contraseña "123456" para usuarios predeterminados)');
+        throw new Error('Credenciales incorrectas. Verifica tu correo y contraseña.');
       }
 
       const sessionObj = { id: userProfile.id, email: emailLimpio, userProfile };
@@ -369,6 +377,9 @@ export const db = {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
       const { data: profile } = await supabase.from('perfiles').select('*').eq('id', user.id).single();
+      if (user.email?.toLowerCase() === 'profesor@inclusion.com' && profile) {
+        profile.nombre = 'Profesor';
+      }
       return { user, profile };
     } else {
       const current = getStored<any>('currentUser', null);
@@ -1087,8 +1098,8 @@ export const db = {
     }
   },
 
-  // --- RECURSOS (IMÁGENES & AUDIOS GRABADOS) ---
-  async subirRecurso(file: File | Blob, tipo: 'imagen' | 'audio', profesorId: string): Promise<string> {
+  // --- RECURSOS (IMÁGENES, AUDIOS Y VIDEOS) ---
+  async subirRecurso(file: File | Blob, tipo: 'imagen' | 'audio' | 'video', profesorId: string): Promise<string> {
     const aDataUrl = (blob: Blob): Promise<string> =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -1099,28 +1110,36 @@ export const db = {
 
     if (usarSupabase()) {
       try {
-        const bucket = tipo === 'imagen' ? 'imagenes' : 'audios';
+        // Los buckets públicos con RLS habilitado son 'imagenes' y 'audios'
+        const bucket = tipo === 'audio' ? 'audios' : 'imagenes';
         const rawName = (file as File).name || '';
         const extFromName = rawName.includes('.') ? rawName.split('.').pop() : '';
         const extFromMime = file.type
           ? file.type.split('/')[1]?.split(';')[0]?.replace('mpeg', 'mp3')
           : '';
-        const fileExt = extFromName || extFromMime || (tipo === 'audio' ? 'webm' : 'png');
-        const filePath = `${profesorId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
+        const defaultExt = tipo === 'audio' ? 'webm' : tipo === 'video' ? 'mp4' : 'png';
+        const defaultMime = tipo === 'audio' ? 'audio/webm' : tipo === 'video' ? 'video/mp4' : 'image/png';
+        const fileExt = extFromName || extFromMime || defaultExt;
+        const folder = tipo === 'video' ? `videos/${profesorId}` : profesorId;
+        const filePath = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
 
         const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file, {
-          contentType: file.type || (tipo === 'audio' ? 'audio/webm' : 'image/png'),
+          contentType: file.type || defaultMime,
           upsert: true
         });
         if (uploadError) throw uploadError;
 
         const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
 
-        await supabase.from('recursos').insert({
-          profesor_id: profesorId,
-          url: data.publicUrl,
-          tipo
-        });
+        try {
+          await supabase.from('recursos').insert({
+            profesor_id: profesorId,
+            url: data.publicUrl,
+            tipo: tipo === 'video' ? 'imagen' : tipo
+          });
+        } catch {
+          // No bloquear si la tabla recursos solo registra imagen/audio
+        }
 
         return data.publicUrl;
       } catch (err) {

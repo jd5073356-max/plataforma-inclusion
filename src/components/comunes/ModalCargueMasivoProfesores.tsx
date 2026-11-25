@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { db } from '../../lib/db';
 import {
   parseProfesoresCSV,
+  parseProfesoresFilas,
+  extraerFilasDesdeArchivo,
   descargarPlantillaProfesoresCSV,
+  descargarPlantillaProfesoresExcel,
   ProfesorCSVItem
 } from '../../utils/csvParser';
 import {
@@ -58,17 +61,17 @@ export const ModalCargueMasivoProfesores: React.FC<ModalCargueMasivoProfesoresPr
 
   if (!isOpen) return null;
 
-  const handleCargarArchivo = (file: File) => {
+  const handleCargarArchivo = async (file: File) => {
     if (!file) return;
     setNombreArchivo(file.name);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = (e.target?.result as string) || '';
-      const parsed = parseProfesoresCSV(text);
-      setItems(parsed);
+    try {
+      const filas = await extraerFilasDesdeArchivo(file);
+      setItems(parseProfesoresFilas(filas));
       setResultado(null);
-    };
-    reader.readAsText(file, 'utf-8');
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'No se pudo leer el archivo.');
+      setItems([]);
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -168,12 +171,12 @@ export const ModalCargueMasivoProfesores: React.FC<ModalCargueMasivoProfesoresPr
           <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
-              onClick={() => descargarPlantillaProfesoresCSV()}
+              onClick={() => descargarPlantillaProfesoresExcel()}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#EFECE6] text-xs font-bold text-[#57534E] hover:text-[#7294B9] hover:bg-[#F5F2EC] transition shadow-xs"
               title="Descargar plantilla de ejemplo para profesores"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Plantilla Profesores CSV</span>
+              <span>Plantilla Excel (.xlsx)</span>
             </button>
 
             <button
@@ -251,7 +254,7 @@ export const ModalCargueMasivoProfesores: React.FC<ModalCargueMasivoProfesoresPr
                     }`}
                   >
                     <UploadCloud className="w-3.5 h-3.5" />
-                    <span>Subir archivo .CSV</span>
+                    <span>Subir Excel (.xlsx) o CSV</span>
                   </button>
                   <button
                     type="button"
@@ -269,10 +272,10 @@ export const ModalCargueMasivoProfesores: React.FC<ModalCargueMasivoProfesoresPr
 
                 <button
                   type="button"
-                  onClick={() => descargarPlantillaProfesoresCSV()}
+                  onClick={() => descargarPlantillaProfesoresExcel()}
                   className="sm:hidden flex items-center gap-1.5 text-xs font-bold text-[#7294B9] hover:underline"
                 >
-                  <Download className="w-3.5 h-3.5" /> Descargar Plantilla CSV
+                  <Download className="w-3.5 h-3.5" /> Plantilla Excel (.xlsx)
                 </button>
               </div>
 
@@ -294,7 +297,7 @@ export const ModalCargueMasivoProfesores: React.FC<ModalCargueMasivoProfesoresPr
                   <input
                     ref={fileInputRef}
                     type="file"
-                    accept=".csv,text/csv,text/plain"
+                    accept=".xlsx,.csv,.txt"
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files[0]) {

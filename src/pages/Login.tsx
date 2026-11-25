@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, User, GraduationCap, Lock, AlertCircle, Sparkles, Compass } from 'lucide-react';
+import { BookOpen, User, GraduationCap, Lock, AlertCircle, ShieldCheck, Compass, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
-  const [esEstudiante, setEsEstudiante] = useState(true);
+  const [rolTab, setRolTab] = useState<'estudiante' | 'profesor' | 'admin'>('estudiante');
   const [nombre, setNombre] = useState('');
   const [curso, setCurso] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mostrarPassword, setMostrarPassword] = useState(false);
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
+
+  const esEstudiante = rolTab === 'estudiante';
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +34,16 @@ export default function Login() {
           throw new Error('Por favor, ingresa tu correo y contraseña.');
         }
         await login(email, password);
-        
+
         const { db } = await import('../lib/db');
         const userData = await db.getCurrentUser();
+        if (rolTab === 'admin' && userData?.profile?.rol !== 'admin') {
+          await logout();
+          throw new Error(
+            'Esta cuenta tiene rol de Profesor, no de Administrador. Usa la pestaña «Profesor» o ingresa con la cuenta de Administrador institucional para crear docentes.'
+          );
+        }
+
         if (userData?.profile?.rol === 'admin') {
           navigate('/admin');
         } else {
@@ -67,12 +77,12 @@ export default function Login() {
 
         <div className="p-6 md:p-8">
           {/* Selector de Rol Atelier */}
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#F5F2EC] rounded-full mb-8 border border-[#EBE8E0]">
+          <div className="grid grid-cols-3 gap-1.5 p-1.5 bg-[#F5F2EC] rounded-full mb-6 border border-[#EBE8E0]">
             <button
               type="button"
-              onClick={() => { setEsEstudiante(true); setError(''); }}
-              className={`flex items-center justify-center gap-2 py-2.5 rounded-full text-xs font-bold transition-all ${
-                esEstudiante
+              onClick={() => { setRolTab('estudiante'); setError(''); }}
+              className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                rolTab === 'estudiante'
                   ? 'bg-white text-[#1C1917] shadow-sm'
                   : 'text-[#78716C] hover:text-[#1C1917]'
               }`}
@@ -82,17 +92,35 @@ export default function Login() {
             </button>
             <button
               type="button"
-              onClick={() => { setEsEstudiante(false); setError(''); }}
-              className={`flex items-center justify-center gap-2 py-2.5 rounded-full text-xs font-bold transition-all ${
-                !esEstudiante
+              onClick={() => { setRolTab('profesor'); setError(''); }}
+              className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                rolTab === 'profesor'
                   ? 'bg-white text-[#1C1917] shadow-sm'
                   : 'text-[#78716C] hover:text-[#1C1917]'
               }`}
             >
               <User className="w-4 h-4 text-[#7294B9]" />
-              Educador / Admin
+              Profesor
+            </button>
+            <button
+              type="button"
+              onClick={() => { setRolTab('admin'); setError(''); }}
+              className={`flex items-center justify-center gap-1.5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                rolTab === 'admin'
+                  ? 'bg-white text-[#1C1917] shadow-sm'
+                  : 'text-[#78716C] hover:text-[#1C1917]'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4 text-[#10B981]" />
+              Admin
             </button>
           </div>
+
+          {rolTab === 'admin' && (
+            <div className="mb-5 px-3.5 py-2.5 rounded-xl bg-[#F5F2EC] border border-[#EFECE6] text-[11px] text-[#57534E] font-medium text-center">
+              Acceso exclusivo de coordinación para crear cuentas y claves de profesores.
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             {esEstudiante ? (
@@ -139,15 +167,15 @@ export default function Login() {
               <>
                 <div>
                   <label className="block text-xs font-bold text-[#78716C] uppercase tracking-wider mb-2">
-                    Correo Electrónico
+                    {rolTab === 'admin' ? 'Correo de Administrador' : 'Correo Institucional del Profesor'}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
-                      <User className="w-5 h-5" />
+                      {rolTab === 'admin' ? <ShieldCheck className="w-5 h-5" /> : <User className="w-5 h-5" />}
                     </div>
                     <input
                       type="email"
-                      placeholder="educador@escuela.edu.co"
+                      placeholder={rolTab === 'admin' ? 'coordinacion@institucion.edu.co' : 'profesor@institucion.edu.co'}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
@@ -165,13 +193,21 @@ export default function Login() {
                       <Lock className="w-5 h-5" />
                     </div>
                     <input
-                      type="password"
+                      type={mostrarPassword ? 'text' : 'password'}
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
+                      className="w-full pl-11 pr-11 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"
                       required
                     />
+                    <button
+                      type="button"
+                      onClick={() => setMostrarPassword(!mostrarPassword)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#A8A29E] hover:text-[#57534E]"
+                      title={mostrarPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
+                    >
+                      {mostrarPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
                   </div>
                 </div>
               </>
@@ -192,10 +228,6 @@ export default function Login() {
               {cargando ? 'Iniciando sesión...' : 'Entrar al Atelier'}
             </button>
           </form>
-          
-          <div className="mt-6 text-center text-xs text-[#78716C] font-medium">
-            Acceso predeterminado: <b className="text-[#1C1917]">educador@escuela.edu.co</b> / <b className="text-[#1C1917]">123456</b>
-          </div>
         </div>
       </div>
     </div>

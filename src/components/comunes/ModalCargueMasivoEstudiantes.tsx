@@ -3,6 +3,9 @@ import { db } from '../../lib/db';
 import { Etapa } from '../../types/actividad';
 import {
   parseEstudiantesCSV,
+  parseEstudiantesFilas,
+  extraerFilasDesdeArchivo,
+  descargarPlantillaEstudiantesExcel,
   descargarPlantillaEstudiantesCSV,
   EstudianteCSVItem
 } from '../../utils/csvParser';
@@ -29,7 +32,9 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
 }) => {
   const [metodo, setMetodo] = useState<'archivo' | 'pegar'>('archivo');
   const [textoPegado, setTextoPegado] = useState('');
+  const [filasArchivo, setFilasArchivo] = useState<string[][]>([]);
   const [nombreArchivo, setNombreArchivo] = useState('');
+  const [errorArchivo, setErrorArchivo] = useState('');
   const [items, setItems] = useState<EstudianteCSVItem[]>([]);
   const [dragOver, setDragOver] = useState(false);
 
@@ -50,17 +55,19 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Re-procesar cuando cambian los defaults o el texto pegado
+  // Re-procesar cuando cambian los defaults, las filas de archivo o el texto pegado
   useEffect(() => {
+    const opts = {
+      curso: cursoDefecto || undefined,
+      ajuste: ajusteDefecto || undefined,
+      rutaId: rutaDefectoId || undefined
+    };
     if (metodo === 'pegar' && textoPegado.trim()) {
-      const parsed = parseEstudiantesCSV(textoPegado, etapas, {
-        curso: cursoDefecto || undefined,
-        ajuste: ajusteDefecto || undefined,
-        rutaId: rutaDefectoId || undefined
-      });
-      setItems(parsed);
+      setItems(parseEstudiantesCSV(textoPegado, etapas, opts));
+    } else if (metodo === 'archivo' && filasArchivo.length > 0) {
+      setItems(parseEstudiantesFilas(filasArchivo, etapas, opts));
     }
-  }, [textoPegado, cursoDefecto, ajusteDefecto, rutaDefectoId, metodo, etapas]);
+  }, [textoPegado, filasArchivo, cursoDefecto, ajusteDefecto, rutaDefectoId, metodo, etapas]);
 
   // Cerrar con Escape
   useEffect(() => {
@@ -75,21 +82,19 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
 
   if (!isOpen) return null;
 
-  const handleCargarArchivo = (file: File) => {
+  const handleCargarArchivo = async (file: File) => {
     if (!file) return;
     setNombreArchivo(file.name);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = (e.target?.result as string) || '';
-      const parsed = parseEstudiantesCSV(text, etapas, {
-        curso: cursoDefecto || undefined,
-        ajuste: ajusteDefecto || undefined,
-        rutaId: rutaDefectoId || undefined
-      });
-      setItems(parsed);
+    setErrorArchivo('');
+    try {
+      const filas = await extraerFilasDesdeArchivo(file);
+      setFilasArchivo(filas);
       setResultado(null);
-    };
-    reader.readAsText(file, 'utf-8');
+    } catch (err) {
+      setErrorArchivo(err instanceof Error ? err.message : 'No se pudo leer el archivo seleccionado.');
+      setFilasArchivo([]);
+      setItems([]);
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -156,7 +161,9 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
 
   const limpiar = () => {
     setItems([]);
+    setFilasArchivo([]);
     setNombreArchivo('');
+    setErrorArchivo('');
     setTextoPegado('');
     setResultado(null);
     if (fileInputRef.current) {
@@ -168,7 +175,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
     <div className="fixed inset-0 z-50 bg-[#1C1917]/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 font-sans-atelier animate-fadeIn">
       <div className="bg-white rounded-[28px] max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-[#EFECE6] overflow-hidden">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-[#EFECE6] flex items-center justify-between bg-[#FBF9F5] shrink-0">
+        <div className="p-5 sm:p-6 border-b border-[#EFECE6] flex items-center justify-between bg-[#FBF9F5] shrink-0 gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <div className="bg-[#EE7C6A] text-white p-2.5 rounded-2xl shadow-sm shrink-0">
               <FileSpreadsheet className="w-6 h-6" />
@@ -179,7 +186,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                   Herramienta Masiva
                 </span>
                 <span className="text-xs font-bold text-[#78716C]">
-                  Formato CSV o Excel
+                  Excel (.xlsx) o CSV
                 </span>
               </div>
               <h2 className="text-lg sm:text-xl font-serif-atelier font-bold text-[#1C1917] truncate">
@@ -191,12 +198,12 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
           <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
-              onClick={() => descargarPlantillaEstudiantesCSV(etapas[0]?.nombre || 'Biología 901')}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#EFECE6] text-xs font-bold text-[#57534E] hover:text-[#EE7C6A] hover:bg-[#F5F2EC] transition shadow-xs"
-              title="Descargar plantilla de ejemplo lista para rellenar en Excel"
+              onClick={() => descargarPlantillaEstudiantesExcel()}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#10B981] hover:bg-[#0EA371] text-white text-xs font-bold transition shadow-xs"
+              title="Descargar archivo de Excel con columnas separadas listo para llenar"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Descargar Plantilla CSV</span>
+              <span>Descargar Plantilla Excel (.xlsx)</span>
             </button>
 
             <button
@@ -212,7 +219,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6">
+        <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-5">
           {/* Si ya terminó la importación con éxito */}
           {resultado ? (
             <div className="space-y-6 py-4">
@@ -263,6 +270,59 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
             </div>
           ) : (
             <>
+              {/* Guía visual rápida de cómo llenar el Excel */}
+              {items.length === 0 && (
+                <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#EFECE6] space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs font-extrabold text-[#1C1917]">
+                      📋 ¿Cómo usar el cargue masivo en 3 pasos sencillos?
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => descargarPlantillaEstudiantesExcel()}
+                        className="text-xs font-extrabold text-[#10B981] hover:underline flex items-center gap-1"
+                      >
+                        <Download className="w-3.5 h-3.5" /> Plantilla Excel (.xlsx)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => descargarPlantillaEstudiantesCSV()}
+                        className="text-[11px] font-bold text-[#78716C] hover:underline"
+                      >
+                        Formato .CSV
+                      </button>
+                    </div>
+                  </div>
+                  <p className="text-xs text-[#57534E]">
+                    <b>1.</b> Descarga la plantilla de Excel · <b>2.</b> Escribe el <b>Nombre</b> y el <b>Curso</b> de cada estudiante en sus columnas · <b>3.</b> Guarda y sube el mismo archivo Excel aquí:
+                  </p>
+                  <div className="overflow-x-auto rounded-xl border border-[#EFECE6] bg-white">
+                    <table className="w-full text-left text-[11px] border-collapse">
+                      <thead>
+                        <tr className="bg-[#EE7C6A] text-white font-bold">
+                          <th className="py-1.5 px-3 border-r border-white/20">Columna A: Nombre del Estudiante</th>
+                          <th className="py-1.5 px-3 border-r border-white/20">Columna B: Curso</th>
+                          <th className="py-1.5 px-3">Columna C: Apoyo (Opcional)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#EFECE6] text-[#44403C]">
+                        <tr>
+                          <td className="py-1.5 px-3 border-r border-[#EFECE6] font-semibold">María Paula Peñuela</td>
+                          <td className="py-1.5 px-3 border-r border-[#EFECE6]">901</td>
+                          <td className="py-1.5 px-3 text-[#78716C]">motriz</td>
+                        </tr>
+                        <tr>
+                          <td className="py-1.5 px-3 border-r border-[#EFECE6] font-semibold">Laura Sofía Ramírez</td>
+                          <td className="py-1.5 px-3 border-r border-[#EFECE6]">901</td>
+                          <td className="py-1.5 px-3 text-[#A8A29E] italic">(puede quedar vacío)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
               {/* Selector de Entrada: Archivo o Pegar Texto */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="bg-[#F5F2EC] p-1 rounded-full flex items-center gap-1 border border-[#EFECE6] self-start">
@@ -276,7 +336,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                     }`}
                   >
                     <UploadCloud className="w-3.5 h-3.5" />
-                    <span>Subir archivo .CSV</span>
+                    <span>Subir Excel (.xlsx) o CSV</span>
                   </button>
                   <button
                     type="button"
@@ -288,18 +348,16 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                     }`}
                   >
                     <FileText className="w-3.5 h-3.5" />
-                    <span>Pegar texto de Excel</span>
+                    <span>Copiar y pegar desde Excel</span>
                   </button>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => descargarPlantillaEstudiantesCSV(etapas[0]?.nombre || 'Biología 901')}
-                  className="sm:hidden flex items-center gap-1.5 text-xs font-bold text-[#EE7C6A] hover:underline"
-                >
-                  <Download className="w-3.5 h-3.5" /> Descargar Plantilla CSV
-                </button>
               </div>
+
+              {errorArchivo && (
+                <div className="p-3 rounded-xl bg-[#FFF2F0] border border-[#FFCCC7] text-xs font-bold text-[#D9363E]">
+                  {errorArchivo}
+                </div>
+              )}
 
               {/* Zona de Drop o Textarea */}
               {metodo === 'archivo' ? (
@@ -310,7 +368,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                   }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-[24px] p-8 text-center transition-all cursor-pointer ${
+                  className={`border-2 border-dashed rounded-[24px] p-7 text-center transition-all cursor-pointer ${
                     dragOver
                       ? 'border-[#EE7C6A] bg-[#FFF8F7] scale-[1.01]'
                       : 'border-[#EFECE6] bg-[#FBF9F5] hover:bg-white hover:border-[#EE7C6A]/60'
@@ -320,7 +378,7 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                   <input
                     ref={fileInputRef}
                     type="file"
-                    accept=".csv,text/csv,text/plain"
+                    accept=".xlsx,.csv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain"
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files[0]) {
@@ -329,26 +387,26 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
                     }}
                   />
 
-                  <div className="w-14 h-14 rounded-2xl bg-[#EE7C6A]/10 text-[#EE7C6A] flex items-center justify-center mx-auto mb-3">
-                    <UploadCloud className="w-7 h-7" />
+                  <div className="w-12 h-12 rounded-2xl bg-[#EE7C6A]/10 text-[#EE7C6A] flex items-center justify-center mx-auto mb-2.5">
+                    <UploadCloud className="w-6 h-6" />
                   </div>
 
                   {nombreArchivo ? (
                     <div className="space-y-1">
                       <p className="text-sm font-bold text-[#1C1917]">
-                        Archivo seleccionado: <span className="text-[#EE7C6A]">{nombreArchivo}</span>
+                        Archivo cargado: <span className="text-[#EE7C6A]">{nombreArchivo}</span>
                       </p>
                       <p className="text-xs text-[#78716C]">
-                        Toca aquí si deseas cambiar el archivo.
+                        Haz clic aquí si deseas seleccionar otro archivo.
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-1">
                       <p className="text-sm font-bold text-[#1C1917]">
-                        Arrastra y suelta tu archivo CSV aquí, o <span className="text-[#EE7C6A] underline">explora tu equipo</span>
+                        Suelta aquí tu archivo de <span className="text-[#10B981]">Excel (.xlsx)</span> o CSV, o <span className="text-[#EE7C6A] underline">explora tu equipo</span>
                       </p>
                       <p className="text-xs text-[#78716C]">
-                        Compatible con archivos exportados de Excel, Google Sheets o texto separado por comas o punto y coma.
+                        Acepta archivos guardados directamente desde Excel (.xlsx) o archivos .csv.
                       </p>
                     </div>
                   )}
@@ -356,17 +414,17 @@ export const ModalCargueMasivoEstudiantes: React.FC<ModalCargueMasivoEstudiantes
               ) : (
                 <div className="space-y-2">
                   <label className="block text-xs font-bold text-[#78716C] uppercase">
-                    Pega las celdas copiadas directamente desde Excel o un bloc de notas:
+                    Selecciona las celdas en tu hoja de Excel (Ctrl+C) y pégalas aquí (Ctrl+V):
                   </label>
                   <textarea
                     rows={5}
                     value={textoPegado}
                     onChange={(e) => setTextoPegado(e.target.value)}
-                    placeholder="María Paula Peñuela, 901, motriz, Biología 901&#10;Carlos Gómez, 802, cognitiva&#10;Laura Ramírez, 901, tea"
+                    placeholder={"María Paula Peñuela\t901\tmotriz\nCarlos Eduardo Gómez\t802\tcognitiva\nLaura Sofía Ramírez\t901"}
                     className="w-full p-3.5 border border-[#EFECE6] rounded-2xl text-xs font-mono bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
                   />
                   <p className="text-[11px] text-[#78716C]">
-                    Tip: Si copias una columna de Excel con <b>Nombre</b> y otra con <b>Curso</b>, puedes pegarla directamente aquí.
+                    Puedes copiar directamente las columnas <b>Nombre</b> y <b>Curso</b> desde Excel o Google Sheets y pegarlas aquí.
                   </p>
                 </div>
               )}

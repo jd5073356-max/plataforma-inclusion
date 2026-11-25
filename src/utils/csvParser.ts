@@ -1,5 +1,11 @@
 import { Etapa } from '../types/actividad';
 import { correoInterno } from '../lib/db';
+import {
+  descargarWorkbookXlsx,
+  leerWorkbookXlsx,
+  decodificarTextoCSV,
+  esBufferZipXlsx
+} from './xlsxHelper';
 
 export interface EstudianteCSVItem {
   idTemp: string;
@@ -71,7 +77,7 @@ export function parseCSVLine(line: string, delimiter: string): string[] {
  */
 export function detectarDelimitador(rawText: string): string {
   const lineas = rawText.split(/\r?\n/).filter(l => l.trim().length > 0);
-  if (lineas.length === 0) return ',';
+  if (lineas.length === 0) return ';';
 
   const primera = lineas[0];
   const countComas = (primera.match(/,/g) || []).length;
@@ -79,7 +85,7 @@ export function detectarDelimitador(rawText: string): string {
   const countTabs = (primera.match(/\t/g) || []).length;
 
   if (countTabs > countComas && countTabs > countPuntoComas) return '\t';
-  if (countPuntoComas > countComas) return ';';
+  if (countPuntoComas >= countComas && countPuntoComas > 0) return ';';
   return ',';
 }
 
@@ -91,12 +97,22 @@ export function parseCSV(rawText: string): string[][] {
   const clean = rawText.replace(/^\uFEFF/, '').trim();
   if (!clean) return [];
 
-  const delimiter = detectarDelimitador(clean);
   const lineas = clean.split(/\r?\n/);
-  const rows: string[][] = [];
+  let delimiter = '';
+  let inicio = 0;
 
-  for (const l of lineas) {
-    if (!l.trim()) continue;
+  if (lineas[0] && /^sep=(.|\\t)\s*$/i.test(lineas[0].trim())) {
+    const m = lineas[0].trim().slice(4);
+    delimiter = m === '\\t' ? '\t' : m;
+    inicio = 1;
+  } else {
+    delimiter = detectarDelimitador(clean);
+  }
+
+  const rows: string[][] = [];
+  for (let i = inicio; i < lineas.length; i++) {
+    const l = lineas[i];
+    if (!l || !l.trim() || l.trim().startsWith('#')) continue;
     rows.push(parseCSVLine(l, delimiter));
   }
   return rows;
@@ -108,6 +124,7 @@ export function parseCSV(rawText: string): string[][] {
 export function normalizarAjuste(val?: string): 'cognitiva' | 'motriz' | 'tea' | undefined {
   if (!val) return undefined;
   const norm = normalizarTexto(val);
+  if (!norm || norm === 'ninguno' || norm === 'no' || norm === 'na') return undefined;
   if (norm.includes('motr') || norm.includes('motor') || norm.includes('fisic')) return 'motriz';
   if (norm.includes('cogn') || norm.includes('intelec') || norm.includes('apren')) return 'cognitiva';
   if (norm.includes('tea') || norm.includes('autis') || norm.includes('asper')) return 'tea';
@@ -115,14 +132,13 @@ export function normalizarAjuste(val?: string): 'cognitiva' | 'motriz' | 'tea' |
 }
 
 /**
- * Parsea un CSV de estudiantes y valida fila por fila
+ * Convierte una matriz de celdas (de Excel o CSV) en ítems validados de estudiantes
  */
-export function parseEstudiantesCSV(
-  rawText: string,
+export function parseEstudiantesFilas(
+  rows: string[][],
   etapasDisponibles: Etapa[] = [],
   defaults: { curso?: string; ajuste?: 'cognitiva' | 'motriz' | 'tea'; rutaId?: string } = {}
 ): EstudianteCSVItem[] {
-  const rows = parseCSV(rawText);
   if (rows.length === 0) return [];
 
   let headerNombreIdx = -1;
@@ -144,7 +160,7 @@ export function parseEstudiantesCSV(
         headerNombreIdx = idx;
       } else if (headerCursoIdx === -1 && (n.includes('curso') || n.includes('grado') || n.includes('nivel') || n.includes('seccion') || n.includes('grupo') || n === 'grade')) {
         headerCursoIdx = idx;
-      } else if (headerAjusteIdx === -1 && (n.includes('ajuste') || n.includes('acces') || n.includes('piar') || n.includes('discapacidad'))) {
+      } else if (headerAjusteIdx === -1 && (n.includes('apoyo') || n.includes('ajuste') || n.includes('adaptacion') || n.includes('acces') || n.includes('piar') || n.includes('discapacidad'))) {
         headerAjusteIdx = idx;
       } else if (headerRutasIdx === -1 && (n.includes('ruta') || n.includes('etapa') || n.includes('materia') || n.includes('asignatura'))) {
         headerRutasIdx = idx;
@@ -152,7 +168,6 @@ export function parseEstudiantesCSV(
     });
     startIndex = 1;
   } else {
-    // Si no tiene cabeceras, se asume col 0 = Nombre, col 1 = Curso, col 2 = Ajuste, col 3 = Rutas
     headerNombreIdx = 0;
     headerCursoIdx = firstRow.length > 1 ? 1 : -1;
     headerAjusteIdx = firstRow.length > 2 ? 2 : -1;
@@ -164,9 +179,11 @@ export function parseEstudiantesCSV(
 
   for (let i = startIndex; i < rows.length; i++) {
     const row = rows[i];
-    if (row.length === 0 || row.every(c => !c.trim())) continue;
+    if (row.length === 0 || row.every(c => !c || !c.trim())) continue;
 
     const nombreRaw = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : (row[0] || '').trim();
+    if (nombreRaw.startsWith('#') || /^ejemplo\s*:/i.test(nombreRaw)) continue;
+
     let cursoRaw = headerCursoIdx !== -1 && row[headerCursoIdx] ? row[headerCursoIdx].trim() : '';
     if (!cursoRaw && defaults.curso) {
       cursoRaw = defaults.curso.trim();
@@ -177,7 +194,6 @@ export function parseEstudiantesCSV(
 
     const ajuste = normalizarAjuste(ajusteRaw) || defaults.ajuste;
 
-    // Vincular rutas por nombre o id
     const rutasIds: string[] = [];
     const rutasNombres: string[] = [];
 
@@ -196,7 +212,6 @@ export function parseEstudiantesCSV(
       }
     }
 
-    // Si hay ruta por defecto y no se asignó ninguna específica
     if (defaults.rutaId && !rutasIds.includes(defaults.rutaId)) {
       const etapaDef = etapasDisponibles.find(e => e.id === defaults.rutaId);
       if (etapaDef) {
@@ -209,7 +224,7 @@ export function parseEstudiantesCSV(
     if (!nombreRaw) {
       error = 'Falta el nombre del estudiante';
     } else if (!cursoRaw) {
-      error = 'Falta el curso o nivel (asigna uno o defínelo en el CSV)';
+      error = 'Falta el curso (escríbelo en la columna Curso o en «Curso por defecto»)';
     } else if (nombreRaw.length < 3) {
       error = 'El nombre es muy corto';
     }
@@ -235,10 +250,33 @@ export function parseEstudiantesCSV(
 }
 
 /**
- * Parsea un CSV de profesores para el panel de administración
+ * Parsea un CSV de estudiantes y valida fila por fila
  */
-export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
+export function parseEstudiantesCSV(
+  rawText: string,
+  etapasDisponibles: Etapa[] = [],
+  defaults: { curso?: string; ajuste?: 'cognitiva' | 'motriz' | 'tea'; rutaId?: string } = {}
+): EstudianteCSVItem[] {
   const rows = parseCSV(rawText);
+  return parseEstudiantesFilas(rows, etapasDisponibles, defaults);
+}
+
+/**
+ * Lee un archivo subido (.xlsx de Excel o .csv/.txt) y extrae la matriz cruda de filas
+ */
+export async function extraerFilasDesdeArchivo(file: File): Promise<string[][]> {
+  const buffer = await file.arrayBuffer();
+  if (file.name.toLowerCase().endsWith('.xlsx') || esBufferZipXlsx(buffer)) {
+    return leerWorkbookXlsx(buffer);
+  }
+  const texto = decodificarTextoCSV(buffer);
+  return parseCSV(texto);
+}
+
+/**
+ * Convierte una matriz de celdas en ítems validados de profesores
+ */
+export function parseProfesoresFilas(rows: string[][]): ProfesorCSVItem[] {
   if (rows.length === 0) return [];
 
   let headerNombreIdx = -1;
@@ -248,7 +286,7 @@ export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
   const firstRow = rows[0];
   const hasHeaders = firstRow.some(col => {
     const n = normalizarTexto(col);
-    return n.includes('nombre') || n.includes('email') || n.includes('correo') || n.includes('profesor');
+    return n.includes('nombre') || n.includes('email') || n.includes('correo') || n.includes('profesor') || n.includes('usuario');
   });
 
   let startIndex = 0;
@@ -257,7 +295,7 @@ export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
       const n = normalizarTexto(col);
       if (headerNombreIdx === -1 && (n.includes('nombre') || n.includes('profesor') || n.includes('docente') || n === 'name')) {
         headerNombreIdx = idx;
-      } else if (headerEmailIdx === -1 && (n.includes('email') || n.includes('correo') || n.includes('mail'))) {
+      } else if (headerEmailIdx === -1 && (n.includes('email') || n.includes('correo') || n.includes('mail') || n.includes('usuario'))) {
         headerEmailIdx = idx;
       } else if (headerPassIdx === -1 && (n.includes('pass') || n.includes('contra') || n.includes('clave'))) {
         headerPassIdx = idx;
@@ -275,7 +313,7 @@ export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
 
   for (let i = startIndex; i < rows.length; i++) {
     const row = rows[i];
-    if (row.length === 0 || row.every(c => !c.trim())) continue;
+    if (row.length === 0 || row.every(c => !c || !c.trim())) continue;
 
     const nombre = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : (row[0] || '').trim();
     const email = headerEmailIdx !== -1 && row[headerEmailIdx] ? row[headerEmailIdx].trim().toLowerCase() : (row[1] || '').trim().toLowerCase();
@@ -285,9 +323,9 @@ export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
     if (!nombre) {
       error = 'Falta el nombre del profesor';
     } else if (!email || !email.includes('@')) {
-      error = 'Email inválido o ausente';
+      error = 'Correo inválido o ausente';
     } else if (pass.length < 6) {
-      error = 'La contraseña debe tener mínimo 6 caracteres';
+      error = 'La clave debe tener mínimo 6 caracteres';
     }
 
     const valido = !error;
@@ -307,7 +345,15 @@ export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
 }
 
 /**
- * Descarga archivo con BOM UTF-8 para garantizar apertura perfecta en Excel
+ * Parsea un CSV de profesores para el panel de administración
+ */
+export function parseProfesoresCSV(rawText: string): ProfesorCSVItem[] {
+  const rows = parseCSV(rawText);
+  return parseProfesoresFilas(rows);
+}
+
+/**
+ * Descarga archivo CSV con BOM UTF-8 y punto y coma (;) para apertura limpia por columnas en Excel en español
  */
 function triggerDescarga(nombreArchivo: string, contenido: string, mime = 'text/csv;charset=utf-8;') {
   const blob = new Blob(['\uFEFF' + contenido], { type: mime });
@@ -322,29 +368,53 @@ function triggerDescarga(nombreArchivo: string, contenido: string, mime = 'text/
 }
 
 /**
- * Descarga plantilla CSV de ejemplo para estudiantes
+ * Descarga plantilla nativa de Excel (.xlsx) para estudiantes — abre directo en columnas limpias
  */
-export function descargarPlantillaEstudiantesCSV(nombreRutaEjemplo = 'Biología 901') {
-  const encabezado = 'Nombre Completo,Curso,Ajuste de Accesibilidad,Ruta Asignada';
+export function descargarPlantillaEstudiantesExcel() {
   const filas = [
-    `María Paula Peñuela,901,motriz,${nombreRutaEjemplo}`,
-    'Carlos Eduardo Gómez,802,cognitiva,',
-    'Laura Sofía Ramírez,901,tea,',
-    'Andrés Felipe Torres,703,ninguno,'
+    ['Nombre del Estudiante', 'Curso', 'Apoyo Opcional (motriz, cognitiva o tea)'],
+    ['María Paula Peñuela', '901', 'motriz'],
+    ['Carlos Eduardo Gómez', '802', 'cognitiva'],
+    ['Laura Sofía Ramírez', '901', '']
   ];
-  const csv = [encabezado, ...filas].join('\r\n');
-  triggerDescarga('plantilla_estudiantes_ecoinclusivo.csv', csv);
+  descargarWorkbookXlsx('Plantilla_Estudiantes_EcoInclusivo.xlsx', 'Estudiantes', filas, [36, 16, 40]);
 }
 
 /**
- * Descarga plantilla CSV de ejemplo para profesores
+ * Descarga plantilla CSV para estudiantes separada por punto y coma (;) compatible con Excel en español
  */
-export function descargarPlantillaProfesoresCSV() {
-  const encabezado = 'Nombre Completo,Correo Institucional,Contraseña';
+export function descargarPlantillaEstudiantesCSV() {
+  const encabezado = 'Nombre del Estudiante;Curso;Apoyo Opcional (motriz, cognitiva o tea)';
   const filas = [
-    'Rafael Suárez Martínez,rafael@ecoinclusivo.edu.co,Profesor2026*',
-    'Claudia Patricia Méndez,claudia@ecoinclusivo.edu.co,Docente2026*'
+    'María Paula Peñuela;901;motriz',
+    'Carlos Eduardo Gómez;802;cognitiva',
+    'Laura Sofía Ramírez;901;'
   ];
   const csv = [encabezado, ...filas].join('\r\n');
-  triggerDescarga('plantilla_profesores_ecoinclusivo.csv', csv);
+  triggerDescarga('Plantilla_Estudiantes_EcoInclusivo.csv', csv);
+}
+
+/**
+ * Descarga plantilla nativa de Excel (.xlsx) para profesores
+ */
+export function descargarPlantillaProfesoresExcel() {
+  const filas = [
+    ['Nombre del Profesor', 'Correo Institucional', 'Clave Asignada'],
+    ['Claudia Patricia Méndez', 'claudia@institucion.edu.co', 'Docente2026*'],
+    ['Andrés Felipe Torres', 'andres@institucion.edu.co', 'Docente2026*']
+  ];
+  descargarWorkbookXlsx('Plantilla_Profesores_EcoInclusivo.xlsx', 'Profesores', filas, [34, 34, 22]);
+}
+
+/**
+ * Descarga plantilla CSV para profesores separada por punto y coma (;) compatible con Excel en español
+ */
+export function descargarPlantillaProfesoresCSV() {
+  const encabezado = 'Nombre del Profesor;Correo Institucional;Clave Asignada';
+  const filas = [
+    'Claudia Patricia Méndez;claudia@institucion.edu.co;Docente2026*',
+    'Andrés Felipe Torres;andres@institucion.edu.co;Docente2026*'
+  ];
+  const csv = [encabezado, ...filas].join('\r\n');
+  triggerDescarga('Plantilla_Profesores_EcoInclusivo.csv', csv);
 }

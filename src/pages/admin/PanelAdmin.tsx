@@ -16,7 +16,11 @@ import {
   GraduationCap,
   Route,
   RefreshCw,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Eye,
+  EyeOff,
+  Copy,
+  Check
 } from 'lucide-react';
 
 export default function PanelAdmin() {
@@ -28,6 +32,9 @@ export default function PanelAdmin() {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [ultimasCredenciales, setUltimasCredenciales] = useState<{ nombre: string; email: string; password: string } | null>(null);
+  const [copiado, setCopiado] = useState(false);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -58,6 +65,8 @@ export default function PanelAdmin() {
     e.preventDefault();
     setError('');
     setSuccess('');
+    setUltimasCredenciales(null);
+    setCopiado(false);
     setCargando(true);
 
     try {
@@ -68,8 +77,11 @@ export default function PanelAdmin() {
         throw new Error('La contraseña debe tener al menos 6 caracteres.');
       }
 
-      await db.crearProfesor(nombre, email, password);
-      setSuccess('¡Profesor creado exitosamente!');
+      const cleanNombre = nombre.trim();
+      const cleanEmail = email.trim().toLowerCase();
+      await db.crearProfesor(cleanNombre, cleanEmail, password);
+      setSuccess('¡Cuenta de profesor lista!');
+      setUltimasCredenciales({ nombre: cleanNombre, email: cleanEmail, password });
       setNombre('');
       setEmail('');
       setPassword('');
@@ -182,26 +194,26 @@ export default function PanelAdmin() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Form to create teacher */}
           <div className="bg-white p-6 md:p-8 rounded-[24px] border border-[#EFECE6] shadow-sm h-fit">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 gap-2">
               <div className="flex items-center gap-2">
                 <UserPlus className="w-5 h-5 text-[#EE7C6A]" />
-                <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917]">Registrar Nuevo Profesor</h2>
+                <h2 className="text-xl font-serif-atelier font-bold text-[#1C1917]">Crear Usuario de Profesor</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setModalCargueProfesores(true)}
-                className="text-[11px] font-bold text-[#10B981] hover:underline flex items-center gap-1 bg-[#ECFDF5] px-2.5 py-1 rounded-lg border border-[#A7F3D0]"
-                title="Cargar varios profesores vía CSV"
+                className="text-[11px] font-bold text-[#10B981] hover:underline flex items-center gap-1 bg-[#ECFDF5] px-2.5 py-1 rounded-lg border border-[#A7F3D0] shrink-0"
+                title="Cargar varios profesores desde Excel o CSV"
               >
                 <FileSpreadsheet className="w-3.5 h-3.5" />
-                <span>Cargue CSV</span>
+                <span>Excel / CSV</span>
               </button>
             </div>
 
             <form onSubmit={handleCrearProfesor} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">
-                  Nombre Completo
+                  Nombre Completo del Docente
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
@@ -209,7 +221,7 @@ export default function PanelAdmin() {
                   </div>
                   <input
                     type="text"
-                    placeholder="Ej: Rafael Suárez Martínez"
+                    placeholder="Ej: Claudia Patricia Méndez"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
@@ -220,7 +232,7 @@ export default function PanelAdmin() {
 
               <div>
                 <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">
-                  Correo Electrónico
+                  Usuario (Correo Electrónico)
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
@@ -228,7 +240,7 @@ export default function PanelAdmin() {
                   </div>
                   <input
                     type="email"
-                    placeholder="ejemplo@inclusion.com"
+                    placeholder="profesor@institucion.edu.co"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
@@ -239,32 +251,64 @@ export default function PanelAdmin() {
 
               <div>
                 <label className="block text-xs font-bold text-[#78716C] uppercase mb-1.5">
-                  Contraseña
+                  Clave Asignada
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
                     <Lock className="w-4 h-4" />
                   </div>
                   <input
-                    type="password"
+                    type={mostrarPassword ? 'text' : 'password'}
                     placeholder="Mínimo 6 caracteres"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
+                    className="w-full pl-10 pr-10 py-3 border border-[#EFECE6] rounded-2xl text-xs bg-[#FBF9F5] text-[#1C1917] focus:outline-none focus:border-[#EE7C6A]"
                     required
                   />
+                  <button
+                    type="button"
+                    onClick={() => setMostrarPassword(!mostrarPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#A8A29E] hover:text-[#57534E]"
+                    title={mostrarPassword ? 'Ocultar clave' : 'Ver clave'}
+                  >
+                    {mostrarPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
 
               {error && <p className="text-xs font-bold text-[#D9363E] bg-[#FFF2F0] p-3 rounded-xl border border-[#FFCCC7]">{error}</p>}
               {success && <p className="text-xs font-bold text-[#10B981] bg-[#ECFDF5] p-3 rounded-xl border border-[#A7F3D0]">{success}</p>}
 
+              {ultimasCredenciales && (
+                <div className="p-3.5 rounded-2xl bg-[#FBF9F5] border border-[#EFECE6] space-y-2 text-xs">
+                  <p className="font-extrabold text-[#1C1917]">Credenciales para entregar al docente:</p>
+                  <div className="space-y-1 text-[#57534E] font-mono text-[11px] bg-white p-2.5 rounded-xl border border-[#EFECE6]">
+                    <p><b className="font-sans">Docente:</b> {ultimasCredenciales.nombre}</p>
+                    <p><b className="font-sans">Usuario:</b> {ultimasCredenciales.email}</p>
+                    <p><b className="font-sans">Clave:</b> {ultimasCredenciales.password}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const texto = `ECO INCLUSIVO — Acceso Docente\nProfesor(a): ${ultimasCredenciales.nombre}\nUsuario: ${ultimasCredenciales.email}\nClave: ${ultimasCredenciales.password}\nEnlace: ${window.location.origin}`;
+                      navigator.clipboard?.writeText(texto);
+                      setCopiado(true);
+                      setTimeout(() => setCopiado(false), 2500);
+                    }}
+                    className="w-full py-2 bg-[#10B981] hover:bg-[#0EA371] text-white font-bold rounded-xl flex items-center justify-center gap-1.5 transition"
+                  >
+                    {copiado ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiado ? '¡Copiado al portapapeles!' : 'Copiar usuario y clave'}</span>
+                  </button>
+                </div>
+              )}
+
               <button
                 type="submit"
                 disabled={cargando}
                 className="w-full py-3 bg-[#EE7C6A] hover:bg-[#E46653] text-white font-bold text-xs rounded-2xl transition shadow-sm"
               >
-                {cargando ? 'Registrando...' : 'Registrar Profesor'}
+                {cargando ? 'Guardando...' : 'Crear Usuario y Clave'}
               </button>
             </form>
           </div>

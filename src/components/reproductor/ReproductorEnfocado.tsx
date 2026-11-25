@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { ArrowLeft, ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2, Sparkles, RotateCw } from 'lucide-react';
 import { Actividad, AtelierDatoClave, AtelierHotspot } from '../../types/actividad';
 import ReproductorActividad from './ReproductorActividad';
+import { obtenerInfoVideo, esUrlDeVideo } from '../../utils/videoHelper';
 
 interface ReproductorEnfocadoProps {
   actividad: Actividad;
@@ -40,15 +41,13 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
   const extraerMedia = (act: Actividad): { url?: string; tipo: 'video' | 'imagen' | 'ninguno' } => {
     if (act.video_url) return { url: act.video_url, tipo: 'video' };
     if (act.imagen_url) {
-      const esVid = /\.(mp4|webm)$/i.test(act.imagen_url);
-      return { url: act.imagen_url, tipo: esVid ? 'video' : 'imagen' };
+      return { url: act.imagen_url, tipo: esUrlDeVideo(act.imagen_url) ? 'video' : 'imagen' };
     }
     for (const p of act.configuracion?.preguntas || []) {
       const d = p.datos as unknown as Record<string, unknown>;
       const cand = (d.video_url || d.imagenUrl || d.rostroImagenUrl) as string | undefined;
       if (cand) {
-        const esVid = /\.(mp4|webm)$/i.test(cand);
-        return { url: cand, tipo: esVid ? 'video' : 'imagen' };
+        return { url: cand, tipo: esUrlDeVideo(cand) ? 'video' : 'imagen' };
       }
     }
     return { url: undefined, tipo: 'ninguno' };
@@ -110,46 +109,62 @@ export const ReproductorEnfocado: React.FC<ReproductorEnfocadoProps> = ({
           {tieneMedia && (
           <section className="lg:col-span-7">
             <div className="atelier-card p-2 relative min-h-[340px] overflow-hidden rounded-[24px] border border-[#EFECE6] bg-[#F7F4EE]">
-              {media.tipo === 'video' ? (
-                <div className="relative w-full h-full min-h-[340px] rounded-[20px] overflow-hidden bg-black flex items-center justify-center">
-                  <video
-                    ref={videoRef}
-                    src={media.url}
-                    autoPlay
-                    loop
-                    muted={videoMuted}
-                    playsInline
-                    className="w-full h-full max-h-[480px] object-contain"
-                  />
-                  {hotspots.map(hp => (
-                    <button
-                      key={hp.id}
-                      type="button"
-                      onClick={() => setHotspotDestacado(hp)}
-                      style={{ left: `${hp.xPercent}%`, top: `${hp.yPercent}%` }}
-                      className={`hotspot-dot absolute flex items-center justify-center text-[10px] font-bold text-white transition-all ${
-                        hotspotDestacado?.id === hp.id ? 'scale-125 bg-[#EE7C6A] ring-4 ring-[#EE7C6A]/40' : ''
-                      }`}
-                      title={hp.nombre}
-                    >
-                      •
-                    </button>
-                  ))}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 text-white z-10">
-                    <div className="flex items-center gap-1">
-                      <button type="button" onClick={() => { const v = videoRef.current; if (!v) return; if (videoPlaying) { v.pause(); } else { v.play(); } setVideoPlaying(!videoPlaying); }} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title={videoPlaying ? 'Pausar' : 'Reproducir'}>
-                        {videoPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+              {media.tipo === 'video' ? (() => {
+                const infoVid = obtenerInfoVideo(media.url);
+                if (infoVid?.tipo === 'embed') {
+                  return (
+                    <div className="relative w-full aspect-video min-h-[340px] rounded-[20px] overflow-hidden bg-black">
+                      <iframe
+                        src={infoVid.embedUrl}
+                        title={actividad.titulo}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full border-0"
+                      />
+                    </div>
+                  );
+                }
+                return (
+                  <div className="relative w-full h-full min-h-[340px] rounded-[20px] overflow-hidden bg-black flex items-center justify-center">
+                    <video
+                      ref={videoRef}
+                      src={media.url}
+                      autoPlay
+                      loop
+                      muted={videoMuted}
+                      playsInline
+                      className="w-full h-full max-h-[480px] object-contain"
+                    />
+                    {hotspots.map(hp => (
+                      <button
+                        key={hp.id}
+                        type="button"
+                        onClick={() => setHotspotDestacado(hp)}
+                        style={{ left: `${hp.xPercent}%`, top: `${hp.yPercent}%` }}
+                        className={`hotspot-dot absolute flex items-center justify-center text-[10px] font-bold text-white transition-all ${
+                          hotspotDestacado?.id === hp.id ? 'scale-125 bg-[#EE7C6A] ring-4 ring-[#EE7C6A]/40' : ''
+                        }`}
+                        title={hp.nombre}
+                      >
+                        •
                       </button>
-                      <button type="button" onClick={() => { const v = videoRef.current; if (!v) return; v.muted = !videoMuted; setVideoMuted(!videoMuted); }} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title={videoMuted ? 'Activar sonido' : 'Silenciar'}>
-                        {videoMuted ? <VolumeX className="w-4 h-4 text-[#EE7C6A]" /> : <Volume2 className="w-4 h-4" />}
+                    ))}
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 text-white z-10">
+                      <div className="flex items-center gap-1">
+                        <button type="button" onClick={() => { const v = videoRef.current; if (!v) return; if (videoPlaying) { v.pause(); } else { v.play(); } setVideoPlaying(!videoPlaying); }} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title={videoPlaying ? 'Pausar' : 'Reproducir'}>
+                          {videoPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                        </button>
+                        <button type="button" onClick={() => { const v = videoRef.current; if (!v) return; v.muted = !videoMuted; setVideoMuted(!videoMuted); }} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title={videoMuted ? 'Activar sonido' : 'Silenciar'}>
+                          {videoMuted ? <VolumeX className="w-4 h-4 text-[#EE7C6A]" /> : <Volume2 className="w-4 h-4" />}
+                        </button>
+                      </div>
+                      <button type="button" onClick={() => videoRef.current?.requestFullscreen?.()} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title="Pantalla completa">
+                        <Maximize2 className="w-4 h-4" />
                       </button>
                     </div>
-                    <button type="button" onClick={() => videoRef.current?.requestFullscreen?.()} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition" title="Pantalla completa">
-                      <Maximize2 className="w-4 h-4" />
-                    </button>
                   </div>
-                </div>
-              ) : (
+                );
+              })() : (
                 <div className="relative w-full h-full min-h-[340px] rounded-[20px] flex items-center justify-center p-4">
                   <img src={media.url} alt={actividad.titulo} className="max-h-[440px] w-auto object-contain rounded-2xl shadow-sm" />
                   {hotspots.map(hp => (

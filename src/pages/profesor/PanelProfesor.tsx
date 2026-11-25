@@ -18,8 +18,15 @@ import {
 } from 'lucide-react';
 
 export default function PanelProfesor() {
-  const { profile, logout } = useAuth();
+  const { user, profile, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<'resumen' | 'estudiantes' | 'rutas' | 'banco'>('resumen');
+
+  const emailActual = (user?.email || '').toLowerCase().trim();
+  const esCuentaGenerica =
+    emailActual === 'profesor@inclusion.com' ||
+    emailActual === 'educador@escuela.edu.co' ||
+    !profile?.nombre;
+  const nombreSaludo = esCuentaGenerica ? 'Profesor' : profile.nombre;
   
   // States for stats and data
   const [etapas, setEtapas] = useState<Etapa[]>([]);
@@ -70,7 +77,7 @@ export default function PanelProfesor() {
             <h1 className="text-2xl font-serif-atelier font-bold text-[#1C1917] leading-none flex items-center gap-1.5">
               Panel del Profesor <span className="text-[#EE7C6A] text-xs font-sans-atelier align-super">✦</span>
             </h1>
-            <p className="text-xs text-[#78716C] font-medium mt-0.5">ECO INCLUSIVO • Bienvenido, {profile?.nombre}</p>
+            <p className="text-xs text-[#78716C] font-medium mt-0.5">ECO INCLUSIVO • Bienvenido, {nombreSaludo}</p>
           </div>
         </div>
 
@@ -156,7 +163,7 @@ export default function PanelProfesor() {
                 <div className="bg-[#1C1917] rounded-[28px] p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#292524]">
                   <div className="space-y-2">
                     <h2 className="text-2xl md:text-3xl font-serif-atelier font-bold flex items-center gap-2">
-                      ¡Hola, {profile?.nombre}! <Sparkles className="w-6 h-6 text-[#EE7C6A] fill-[#EE7C6A] animate-pulse" />
+                      ¡Hola, {nombreSaludo}! <Sparkles className="w-6 h-6 text-[#EE7C6A] fill-[#EE7C6A] animate-pulse" />
                     </h2>
                     <p className="text-[#A8A29E] font-medium text-sm md:text-base max-w-xl">
                       Gestiona tus estudiantes, organiza las etapas de aprendizaje y asigna las actividades adaptadas a cada necesidad.

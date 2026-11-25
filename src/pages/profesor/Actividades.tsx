@@ -5,6 +5,7 @@ import { Actividad, ActividadTipo, Etapa, PreguntaConfig } from '../../types/act
 import ReproductorEnfocado from '../../components/reproductor/ReproductorEnfocado';
 import GrabadorVoz from '../../components/comunes/GrabadorVoz';
 import SubeImagen from '../../components/comunes/SubeImagen';
+import { obtenerInfoVideo } from '../../utils/videoHelper';
 import {
   PlusCircle,
   FileEdit,
@@ -17,7 +18,11 @@ import {
   ArrowRight,
   Trash2,
   Mic,
-  Plus
+  Plus,
+  Volume2,
+  Upload,
+  Link,
+  Video
 } from 'lucide-react';
 
 interface ActividadesProps {
@@ -53,6 +58,8 @@ export default function Actividades({
   const [mostrarFelicitacion, setMostrarFelicitacion] = useState(true);
   const [vozSintetica, setVozSintetica] = useState(true);
   const [videoUrlActividad, setVideoUrlActividad] = useState('');
+  const [modoVideo, setModoVideo] = useState<'enlace' | 'subir' | 'galeria'>('enlace');
+  const [subiendoVideo, setSubiendoVideo] = useState(false);
 
   // Multi-question support: guardamos las preguntas adicionales y editamos la activa
   const [preguntasGuardadas, setPreguntasGuardadas] = useState<PreguntaConfig[]>([]);
@@ -64,10 +71,16 @@ export default function Actividades({
   const [audioUrl, setAudioUrl] = useState('');
 
   // 1. Selección y Escuchar/Responder
-  const [opcionesSeleccion, setOpcionesSeleccion] = useState([
-    { texto: '', esCorrecta: true, imagenUrl: '' },
-    { texto: '', esCorrecta: false, imagenUrl: '' },
-    { texto: '', esCorrecta: false, imagenUrl: '' }
+  const [opcionesSeleccion, setOpcionesSeleccion] = useState<{
+    texto: string;
+    esCorrecta: boolean;
+    imagenUrl: string;
+    conAudio?: boolean;
+    audioUrl?: string;
+  }[]>([
+    { texto: '', esCorrecta: true, imagenUrl: '', conAudio: false, audioUrl: '' },
+    { texto: '', esCorrecta: false, imagenUrl: '', conAudio: false, audioUrl: '' },
+    { texto: '', esCorrecta: false, imagenUrl: '', conAudio: false, audioUrl: '' }
   ]);
   const [audioPreguntaUrl, setAudioPreguntaUrl] = useState('/multimedia/audios/pajaro.wav');
 
@@ -181,12 +194,24 @@ export default function Actividades({
 
     if (preg.tipo === 'seleccion') {
       setOpcionesSeleccion(
-        preg.datos.opciones.map(o => ({ texto: o.texto, esCorrecta: o.esCorrecta, imagenUrl: o.imagenUrl || '' }))
+        preg.datos.opciones.map(o => ({
+          texto: o.texto,
+          esCorrecta: o.esCorrecta,
+          imagenUrl: o.imagenUrl || '',
+          conAudio: Boolean(o.conAudio),
+          audioUrl: o.audioUrl || ''
+        }))
       );
     } else if (preg.tipo === 'escuchar_responder') {
       setAudioPreguntaUrl(preg.datos.audioPreguntaUrl || '/multimedia/audios/pajaro.wav');
       setOpcionesSeleccion(
-        preg.datos.opciones.map(o => ({ texto: o.texto, esCorrecta: o.esCorrecta, imagenUrl: o.imagenUrl || '' }))
+        preg.datos.opciones.map(o => ({
+          texto: o.texto,
+          esCorrecta: o.esCorrecta,
+          imagenUrl: o.imagenUrl || '',
+          conAudio: Boolean(o.conAudio),
+          audioUrl: o.audioUrl || ''
+        }))
       );
     } else if (preg.tipo === 'emparejar') {
       setParejasEmparejar(preg.datos.parejas.map(p => ({ origen: p.origen, destino: p.destino })));
@@ -241,15 +266,16 @@ export default function Actividades({
     setTitulo('');
     setTipo('seleccion');
     setVideoUrlActividad('');
+    setModoVideo('enlace');
     setInstruccion('');
     setImagenUrl('');
     setAudioUrl('');
     setPreguntasGuardadas([]);
     setPreguntaActivaIdx(0);
     setOpcionesSeleccion([
-      { texto: '', esCorrecta: true, imagenUrl: '' },
-      { texto: '', esCorrecta: false, imagenUrl: '' },
-      { texto: '', esCorrecta: false, imagenUrl: '' }
+      { texto: '', esCorrecta: true, imagenUrl: '', conAudio: false, audioUrl: '' },
+      { texto: '', esCorrecta: false, imagenUrl: '', conAudio: false, audioUrl: '' },
+      { texto: '', esCorrecta: false, imagenUrl: '', conAudio: false, audioUrl: '' }
     ]);
     setMsg({ error: '', success: '' });
   };
@@ -262,6 +288,7 @@ export default function Actividades({
     setTitulo(act.titulo);
     setTipo(act.tipo);
     setVideoUrlActividad(act.video_url || '');
+    setModoVideo(act.video_url?.startsWith('/multimedia/') ? 'galeria' : 'enlace');
     setMostrarFelicitacion(act.configuracion.mostrarFelicitacion);
     setVozSintetica(act.configuracion.vozSintetica);
 
@@ -291,6 +318,8 @@ export default function Actividades({
             id: `op-${idx + 1}`,
             texto: op.texto,
             imagenUrl: op.imagenUrl?.trim() || undefined,
+            conAudio: Boolean(op.conAudio || op.audioUrl?.trim()),
+            audioUrl: op.audioUrl?.trim() || undefined,
             esCorrecta: op.esCorrecta
           }))
         }
@@ -305,6 +334,8 @@ export default function Actividades({
             id: `op-${idx + 1}`,
             texto: op.texto,
             imagenUrl: op.imagenUrl?.trim() || undefined,
+            conAudio: Boolean(op.conAudio || op.audioUrl?.trim()),
+            audioUrl: op.audioUrl?.trim() || undefined,
             esCorrecta: op.esCorrecta
           }))
         }
@@ -536,6 +567,59 @@ export default function Actividades({
       setMsg({ error: '', success: '🖼️ ¡Imagen cargada correctamente!' });
     } catch (err) {
       setMsg({ error: err instanceof Error ? err.message : 'Error al subir la imagen.', success: '' });
+    }
+  };
+
+  const handleSubirVideo = async (file: File) => {
+    if (!profile || !file) return;
+    if (file.size > 50 * 1024 * 1024) {
+      setMsg({ error: 'El video supera los 50 MB. Usa un video más corto o pega un enlace de YouTube.', success: '' });
+      return;
+    }
+    try {
+      setSubiendoVideo(true);
+      const urlSubida = await db.subirRecurso(file, 'video', profile.id);
+      setVideoUrlActividad(urlSubida);
+      setMsg({ error: '', success: '🎬 ¡Video cargado y vinculado a la actividad!' });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al subir el video.', success: '' });
+    } finally {
+      setSubiendoVideo(false);
+    }
+  };
+
+  const handleSubirAudioOpcion = async (idx: number, file: File) => {
+    if (!profile || !file) return;
+    try {
+      const urlSubida = await db.subirRecurso(file, 'audio', profile.id);
+      setOpcionesSeleccion(prev => {
+        const next = [...prev];
+        if (next[idx]) {
+          next[idx] = { ...next[idx], audioUrl: urlSubida, conAudio: true };
+        }
+        return next;
+      });
+      setMsg({ error: '', success: `🔊 Audio vinculado a la opción ${idx + 1}.` });
+    } catch (err) {
+      setMsg({ error: err instanceof Error ? err.message : 'Error al subir el audio de la opción.', success: '' });
+    }
+  };
+
+  const probarVozOpcion = (op: { texto: string; audioUrl?: string }) => {
+    if (op.audioUrl) {
+      const a = new Audio(op.audioUrl);
+      a.play();
+      return;
+    }
+    if (!op.texto.trim()) {
+      setMsg({ error: 'Escribe primero el texto de la opción para escucharlo en audio.', success: '' });
+      return;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(op.texto.trim());
+      u.lang = 'es-ES';
+      window.speechSynthesis.speak(u);
     }
   };
 
@@ -787,52 +871,139 @@ export default function Actividades({
               </div>
             </div>
 
-            {/* Video científico opcional y switches de accesibilidad */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#FBF9F5] border border-[#EFECE6]">
-              <div>
-                <label className="block text-xs font-bold text-[#78716C] uppercase mb-1">
-                  🎬 Video de apoyo para el Atelier (Opcional)
-                </label>
-                <select
-                  value={videoUrlActividad}
-                  onChange={(e) => setVideoUrlActividad(e.target.value)}
-                  className="w-full px-3 py-2 border border-[#EFECE6] rounded-xl text-xs bg-white text-[#1C1917] font-semibold"
-                >
-                  <option value="">Sin video (usar imagen de portada)</option>
-                  <option value="/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4">
-                    🧠 Cerebro 3D con pulsos neuronales
-                  </option>
-                  <option value="/multimedia/Human_eye_pupil_reacting_202608082048.mp4">
-                    👁️ Pupila del ojo humano reaccionando a la luz
-                  </option>
-                  <option value="/multimedia/Polar_bear_walking_on_ice_202608082048.mp4">
-                    🐻‍❄️ Oso polar caminando en el hielo ártico
-                  </option>
-                  <option value="/multimedia/Human_heart_beating_rhythmically_202608082048.mp4">
-                    💓 Corazón humano latiendo rítmicamente
-                  </option>
-                </select>
-              </div>
+            {/* Video de apoyo flexible (YouTube, subir archivo MP4 o galería) y switches de accesibilidad */}
+            <div className="p-4 rounded-2xl bg-[#FBF9F5] border border-[#EFECE6] space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                <div className="md:col-span-7 space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <label className="text-xs font-bold text-[#78716C] uppercase flex items-center gap-1.5">
+                      <Video className="w-4 h-4 text-[#EE7C6A]" /> Video de apoyo para el Atelier (Opcional)
+                    </label>
+                    <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-[#EFECE6]">
+                      <button
+                        type="button"
+                        onClick={() => setModoVideo('enlace')}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
+                          modoVideo === 'enlace' ? 'bg-[#EE7C6A] text-white' : 'text-[#78716C] hover:text-[#1C1917]'
+                        }`}
+                      >
+                        <Link className="w-3 h-3" /> Enlace YouTube / MP4
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setModoVideo('subir')}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
+                          modoVideo === 'subir' ? 'bg-[#EE7C6A] text-white' : 'text-[#78716C] hover:text-[#1C1917]'
+                        }`}
+                      >
+                        <Upload className="w-3 h-3" /> Subir video
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setModoVideo('galeria')}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
+                          modoVideo === 'galeria' ? 'bg-[#EE7C6A] text-white' : 'text-[#78716C] hover:text-[#1C1917]'
+                        }`}
+                      >
+                        🎬 Galería
+                      </button>
+                    </div>
+                  </div>
 
-              <div className="flex flex-col justify-center space-y-2">
-                <label className="flex items-center gap-2 text-xs font-bold text-[#1C1917]">
-                  <input
-                    type="checkbox"
-                    checked={mostrarFelicitacion}
-                    onChange={(e) => setMostrarFelicitacion(e.target.checked)}
-                    className="w-4 h-4 accent-[#EE7C6A] rounded"
-                  />
-                  Refuerzo positivo al terminar (Celebración)
-                </label>
-                <label className="flex items-center gap-2 text-xs font-bold text-[#1C1917]">
-                  <input
-                    type="checkbox"
-                    checked={vozSintetica}
-                    onChange={(e) => setVozSintetica(e.target.checked)}
-                    className="w-4 h-4 accent-[#EE7C6A] rounded"
-                  />
-                  Síntesis de voz automática (TTS si no hay audio grabado)
-                </label>
+                  {modoVideo === 'enlace' && (
+                    <div className="space-y-1">
+                      <input
+                        type="text"
+                        placeholder="Pega cualquier enlace de YouTube, Vimeo, Drive o archivo .mp4"
+                        value={videoUrlActividad}
+                        onChange={(e) => setVideoUrlActividad(e.target.value)}
+                        className="w-full px-3.5 py-2.5 border border-[#EFECE6] rounded-xl text-xs bg-white text-[#1C1917] font-medium"
+                      />
+                      <p className="text-[11px] text-[#78716C]">
+                        Acepta enlaces de YouTube (watch, shorts o youtu.be), Vimeo, Google Drive o links directos .mp4.
+                      </p>
+                    </div>
+                  )}
+
+                  {modoVideo === 'subir' && (
+                    <label className="flex items-center justify-center gap-2 border-2 border-dashed border-[#D6D3CD] hover:border-[#EE7C6A] bg-white rounded-xl p-3.5 cursor-pointer transition text-xs font-bold text-[#1C1917]">
+                      <Upload className="w-4 h-4 text-[#EE7C6A]" />
+                      <span>{subiendoVideo ? 'Subiendo video...' : 'Seleccionar archivo de video (.mp4, .webm, .mov) desde tu equipo'}</span>
+                      <input
+                        type="file"
+                        accept="video/*"
+                        disabled={subiendoVideo}
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            handleSubirVideo(e.target.files[0]);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+                  )}
+
+                  {modoVideo === 'galeria' && (
+                    <select
+                      value={videoUrlActividad.startsWith('/multimedia/') ? videoUrlActividad : ''}
+                      onChange={(e) => setVideoUrlActividad(e.target.value)}
+                      className="w-full px-3 py-2.5 border border-[#EFECE6] rounded-xl text-xs bg-white text-[#1C1917] font-semibold"
+                    >
+                      <option value="">— Elegir un video de la galería escolar —</option>
+                      <option value="/multimedia/Brain_lobes_with_neural_pulses_202608082048.mp4">
+                        🧠 Cerebro 3D con pulsos neuronales
+                      </option>
+                      <option value="/multimedia/Human_eye_pupil_reacting_202608082048.mp4">
+                        👁️ Pupila del ojo humano reaccionando a la luz
+                      </option>
+                      <option value="/multimedia/Polar_bear_walking_on_ice_202608082048.mp4">
+                        🐻‍❄️ Oso polar caminando en el hielo ártico
+                      </option>
+                      <option value="/multimedia/Human_heart_beating_rhythmically_202608082048.mp4">
+                        💓 Corazón humano latiendo rítmicamente
+                      </option>
+                    </select>
+                  )}
+
+                  {videoUrlActividad && (() => {
+                    const info = obtenerInfoVideo(videoUrlActividad);
+                    return (
+                      <div className="p-2.5 bg-[#ECFDF5] border border-[#A7F3D0] rounded-xl flex items-center justify-between gap-3">
+                        <span className="text-xs font-bold text-[#065F46] truncate">
+                          ✓ Video activo: {info?.tipo === 'embed' ? `Video embebido (${info.proveedor.toUpperCase()})` : videoUrlActividad.split('/').pop()}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setVideoUrlActividad('')}
+                          className="text-[11px] font-bold text-[#D9363E] hover:underline shrink-0 flex items-center gap-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" /> Quitar video
+                        </button>
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                <div className="md:col-span-5 flex flex-col justify-center space-y-2.5 md:pt-6">
+                  <label className="flex items-center gap-2 text-xs font-bold text-[#1C1917]">
+                    <input
+                      type="checkbox"
+                      checked={mostrarFelicitacion}
+                      onChange={(e) => setMostrarFelicitacion(e.target.checked)}
+                      className="w-4 h-4 accent-[#EE7C6A] rounded"
+                    />
+                    Refuerzo positivo al terminar (Celebración)
+                  </label>
+                  <label className="flex items-center gap-2 text-xs font-bold text-[#1C1917]">
+                    <input
+                      type="checkbox"
+                      checked={vozSintetica}
+                      onChange={(e) => setVozSintetica(e.target.checked)}
+                      className="w-4 h-4 accent-[#EE7C6A] rounded"
+                    />
+                    Síntesis de voz automática (TTS si no hay audio grabado)
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -945,67 +1116,149 @@ export default function Actividades({
                       />
                     )}
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs font-bold text-[#EE7C6A] uppercase">
                         Opciones de Respuesta ({opcionesSeleccion.length})
                       </span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setOpcionesSeleccion([...opcionesSeleccion, { texto: '', esCorrecta: false, imagenUrl: '' }])
-                        }
-                        className="text-xs font-bold text-[#10B981] hover:underline flex items-center gap-1"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Añadir opción
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const activar = !opcionesSeleccion.every(o => o.conAudio);
+                            setOpcionesSeleccion(opcionesSeleccion.map(o => ({ ...o, conAudio: activar })));
+                          }}
+                          className="text-xs font-bold text-[#EE7C6A] hover:underline flex items-center gap-1"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                          {opcionesSeleccion.every(o => o.conAudio)
+                            ? 'Quitar audio en todas'
+                            : 'Activar texto a audio en todas'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpcionesSeleccion([
+                              ...opcionesSeleccion,
+                              { texto: '', esCorrecta: false, imagenUrl: '', conAudio: false, audioUrl: '' }
+                            ])
+                          }
+                          className="text-xs font-bold text-[#10B981] hover:underline flex items-center gap-1"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Añadir opción
+                        </button>
+                      </div>
                     </div>
 
                     {opcionesSeleccion.map((op, idx) => (
-                      <div key={idx} className="flex flex-wrap items-center gap-2 bg-[#FBF9F5] p-3 rounded-xl border border-[#EFECE6]">
-                        <input
-                          type="text"
-                          placeholder={`Texto de la opción ${idx + 1}`}
-                          value={op.texto}
-                          onChange={(e) => {
-                            const val = [...opcionesSeleccion];
-                            val[idx].texto = e.target.value;
-                            setOpcionesSeleccion(val);
-                          }}
-                          className="flex-1 min-w-[200px] px-3 py-2 border border-[#EFECE6] rounded-xl text-sm bg-white text-[#1C1917]"
-                          required
-                        />
-                        <input
-                          type="text"
-                          placeholder="Imagen URL opcional (/multimedia/img/...)"
-                          value={op.imagenUrl || ''}
-                          onChange={(e) => {
-                            const val = [...opcionesSeleccion];
-                            val[idx].imagenUrl = e.target.value;
-                            setOpcionesSeleccion(val);
-                          }}
-                          className="w-56 px-3 py-2 border border-[#EFECE6] rounded-xl text-xs bg-white text-[#78716C]"
-                        />
-                        <label className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-lg bg-white border border-[#EFECE6]">
+                      <div key={idx} className="bg-[#FBF9F5] p-3 rounded-xl border border-[#EFECE6] space-y-2.5">
+                        <div className="flex flex-wrap items-center gap-2">
                           <input
-                            type="radio"
-                            name="correct_radio"
-                            checked={op.esCorrecta}
-                            onChange={() => {
-                              const val = opcionesSeleccion.map((o, i) => ({ ...o, esCorrecta: i === idx }));
+                            type="text"
+                            placeholder={`Texto de la opción ${idx + 1}`}
+                            value={op.texto}
+                            onChange={(e) => {
+                              const val = [...opcionesSeleccion];
+                              val[idx].texto = e.target.value;
                               setOpcionesSeleccion(val);
                             }}
+                            className="flex-1 min-w-[200px] px-3 py-2 border border-[#EFECE6] rounded-xl text-sm bg-white text-[#1C1917]"
+                            required
                           />
-                          Correcta
-                        </label>
-                        {opcionesSeleccion.length > 2 && (
-                          <button
-                            type="button"
-                            onClick={() => setOpcionesSeleccion(opcionesSeleccion.filter((_, i) => i !== idx))}
-                            className="p-1.5 text-[#A8A29E] hover:text-[#D9363E]"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        )}
+                          <input
+                            type="text"
+                            placeholder="Imagen URL opcional (/multimedia/img/...)"
+                            value={op.imagenUrl || ''}
+                            onChange={(e) => {
+                              const val = [...opcionesSeleccion];
+                              val[idx].imagenUrl = e.target.value;
+                              setOpcionesSeleccion(val);
+                            }}
+                            className="w-56 px-3 py-2 border border-[#EFECE6] rounded-xl text-xs bg-white text-[#78716C]"
+                          />
+                          <label className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-2 rounded-xl bg-white border border-[#EFECE6] cursor-pointer">
+                            <input
+                              type="radio"
+                              name="correct_radio"
+                              checked={op.esCorrecta}
+                              onChange={() => {
+                                const val = opcionesSeleccion.map((o, i) => ({ ...o, esCorrecta: i === idx }));
+                                setOpcionesSeleccion(val);
+                              }}
+                            />
+                            Correcta
+                          </label>
+                          {opcionesSeleccion.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={() => setOpcionesSeleccion(opcionesSeleccion.filter((_, i) => i !== idx))}
+                              className="p-1.5 text-[#A8A29E] hover:text-[#D9363E]"
+                              title="Eliminar opción"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Casilla de Texto a Audio + Preescucha + Subida opcional de audio por opción */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#EFECE6]/70">
+                          <label className="flex items-center gap-2 text-xs font-bold text-[#1C1917] cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(op.conAudio || op.audioUrl)}
+                              onChange={(e) => {
+                                const val = [...opcionesSeleccion];
+                                val[idx].conAudio = e.target.checked;
+                                if (!e.target.checked) val[idx].audioUrl = '';
+                                setOpcionesSeleccion(val);
+                              }}
+                              className="w-4 h-4 accent-[#EE7C6A] rounded"
+                            />
+                            <Volume2 className="w-3.5 h-3.5 text-[#EE7C6A]" />
+                            <span>Incluir audio (convertir texto a voz)</span>
+                          </label>
+
+                          <div className="flex flex-wrap items-center gap-2">
+                            {(op.conAudio || op.audioUrl) && (
+                              <button
+                                type="button"
+                                onClick={() => probarVozOpcion(op)}
+                                className="px-2.5 py-1 rounded-lg bg-[#EE7C6A]/10 hover:bg-[#EE7C6A] text-[#EE7C6A] hover:text-white text-[11px] font-bold flex items-center gap-1 transition"
+                              >
+                                <Volume2 className="w-3 h-3" />
+                                {op.audioUrl ? 'Escuchar audio subido' : 'Probar audio del texto'}
+                              </button>
+                            )}
+
+                            <label className="px-2.5 py-1 rounded-lg bg-white border border-[#EFECE6] hover:border-[#EE7C6A] text-[#57534E] text-[11px] font-bold flex items-center gap-1 cursor-pointer transition">
+                              <Upload className="w-3 h-3 text-[#EE7C6A]" />
+                              <span>{op.audioUrl ? 'Cambiar MP3/WAV' : 'Subir audio propio (opcional)'}</span>
+                              <input
+                                type="file"
+                                accept="audio/*"
+                                onChange={(e) => {
+                                  if (e.target.files && e.target.files[0]) {
+                                    handleSubirAudioOpcion(idx, e.target.files[0]);
+                                  }
+                                }}
+                                className="hidden"
+                              />
+                            </label>
+
+                            {op.audioUrl && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const val = [...opcionesSeleccion];
+                                  val[idx].audioUrl = '';
+                                  setOpcionesSeleccion(val);
+                                }}
+                                className="text-[11px] font-bold text-[#D9363E] hover:underline"
+                              >
+                                Usar voz automática
+                              </button>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>

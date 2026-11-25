@@ -37,6 +37,8 @@ export interface SeleccionPregunta extends BasePregunta {
     id: string;
     texto: string;
     imagenUrl?: string;
+    conAudio?: boolean;
+    audioUrl?: string;
     esCorrecta: boolean;
   }[];
 }
@@ -72,6 +74,8 @@ export interface EscucharResponderPregunta extends BasePregunta {
     id: string;
     texto: string;
     imagenUrl?: string;
+    conAudio?: boolean;
+    audioUrl?: string;
     esCorrecta: boolean;
   }[];
 }
@@ -243,6 +247,6 @@ export interface Recurso {
   id: string;
   profesor_id: string;
   url: string;
-  tipo: 'imagen' | 'audio';
+  tipo: 'imagen' | 'audio' | 'video';
   creado_en?: string;
 }
