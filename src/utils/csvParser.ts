@@ -1,5 +1,5 @@
 import { Etapa } from '../types/actividad';
-import { correoPorIdentificacion } from '../lib/db';
+import { correoPorIdentificacion, normalizarCodigoQR } from '../lib/db';
 import {
   descargarWorkbookXlsx,
   leerWorkbookXlsx,
@@ -255,11 +255,11 @@ export function parseEstudiantesFilas(
       break;
     }
 
-    let idRaw = headerIdIdx !== -1 && row[headerIdIdx] ? row[headerIdIdx].trim() : '';
+    let idRaw = headerIdIdx !== -1 && row[headerIdIdx] ? normalizarCodigoQR(row[headerIdIdx]) : '';
     let nombreRaw = headerNombreIdx !== -1 && row[headerNombreIdx] ? row[headerNombreIdx].trim() : '';
 
     if (!idRaw && !nombreRaw) {
-      idRaw = (row[0] || '').trim();
+      idRaw = normalizarCodigoQR(row[0] || '');
     }
     if (idRaw.startsWith('#') || /^ejemplo\s*:/i.test(idRaw)) continue;
 
@@ -282,7 +282,7 @@ export function parseEstudiantesFilas(
         idRaw = 'MP-901';
         if (!nombreRaw) nombreRaw = 'María Paula Peñuela';
       } else {
-        idRaw = `QR-90${contadorQrGenerico}`;
+        idRaw = `107566584${contadorQrGenerico}`;
       }
       contadorQrGenerico++;
     }
@@ -540,10 +540,10 @@ export function descargarPlantillaEstudiantesExcel() {
   const filas = [
     ['Identificacion del estudiante', 'Materia', 'Titulo de ruta', 'Perfil_adaptacion', 'Estado de la Ruta', 'Validacion'],
     ['MP-901', 'Ciencias', 'Nuestros sentidos', 'Paralisis cerebral', 'Asignada/progreso', 'Encontrado'],
-    ['QR-902', 'Español', 'Revolución francesa', 'Visual', 'Asignado', 'Encontrado'],
-    ['QR-903', 'Quimica', 'Particulas Subatomicas', 'Auditiva', 'No asignada', 'No encontrado'],
-    ['QR-904', 'Fisica', 'Magnetismo', 'Sindrome de down', 'Asignada/completada', 'Encontrado'],
-    ['QR-905', 'Etica', 'Comunicación social', 'Paralisis cerebral', 'Asignada/ en revision', 'Encontrado']
+    ['1075665845', 'Español', 'Revolución francesa', 'Visual', 'Asignado', 'Encontrado'],
+    ['1076740105', 'Quimica', 'Particulas Subatomicas', 'Auditiva', 'No asignada', 'No encontrado'],
+    ['1141520156', 'Fisica', 'Magnetismo', 'Sindrome de down', 'Asignada/completada', 'Encontrado'],
+    ['1052218370', 'Etica', 'Comunicación social', 'Paralisis cerebral', 'Asignada/ en revision', 'Encontrado']
   ];
   descargarWorkbookXlsx(
     'Cargue_masivo_de_Eco_Inclusivo.xlsx',
@@ -560,10 +560,10 @@ export function descargarPlantillaEstudiantesCSV() {
   const encabezado = 'Identificacion del estudiante;Materia;Titulo de ruta;Perfil_adaptacion;Estado de la Ruta;Validacion';
   const filas = [
     'MP-901;Ciencias;Nuestros sentidos;Paralisis cerebral;Asignada/progreso;Encontrado',
-    'QR-902;Español;Revolución francesa;Visual;Asignado;Encontrado',
-    'QR-903;Quimica;Particulas Subatomicas;Auditiva;No asignada;No encontrado',
-    'QR-904;Fisica;Magnetismo;Sindrome de down;Asignada/completada;Encontrado',
-    'QR-905;Etica;Comunicación social;Paralisis cerebral;Asignada/ en revision;Encontrado'
+    '1075665845;Español;Revolución francesa;Visual;Asignado;Encontrado',
+    '1076740105;Quimica;Particulas Subatomicas;Auditiva;No asignada;No encontrado',
+    '1141520156;Fisica;Magnetismo;Sindrome de down;Asignada/completada;Encontrado',
+    '1052218370;Etica;Comunicación social;Paralisis cerebral;Asignada/ en revision;Encontrado'
   ];
   const csv = [encabezado, ...filas].join('\r\n');
   triggerDescarga('Cargue_masivo_de_Eco_Inclusivo.csv', csv);

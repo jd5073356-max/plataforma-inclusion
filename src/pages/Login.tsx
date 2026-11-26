@@ -180,7 +180,7 @@ export default function Login() {
 
                 <div>
                   <label className="block text-xs font-bold text-[#78716C] uppercase tracking-wider mb-2">
-                    ID del Estudiante / Código de Carnet
+                    Documento (T.I. / C.C.) o ID del Carnet EDUPASS
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#A8A29E]">
@@ -188,7 +188,7 @@ export default function Login() {
                     </div>
                     <input
                       type="text"
-                      placeholder="Ej: MP-901, 901 o número de documento"
+                      placeholder="Ej: 1075665845, TI: 1075665845 o MP-901"
                       value={idEstudiante}
                       onChange={(e) => setIdEstudiante(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-bold placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"

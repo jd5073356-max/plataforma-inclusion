@@ -117,23 +117,52 @@ export const EscanerCarnetQR: React.FC<EscanerCarnetQRProps> = ({ onDetectado, o
     const url = URL.createObjectURL(file);
     img.onload = () => {
       URL.revokeObjectURL(url);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.drawImage(img, 0, 0);
-      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(imgData.data, imgData.width, imgData.height, {
-        inversionAttempts: 'attemptBoth'
-      });
-      if (code && code.data && code.data.trim()) {
-        const limpio = normalizarCodigoQR(code.data);
-        detenerStream();
-        onDetectado(limpio);
-      } else {
-        setErrorCamara('No se detectó un código QR válido en la imagen seleccionada.');
+
+      // Intenta leer el QR en una región específica (sx, sy, sw, sh) escalada a targetMax
+      const intentarLectura = (sx: number, sy: number, sw: number, sh: number, targetMax = 1000): string | null => {
+        if (sw <= 10 || sh <= 10) return null;
+        const escala = Math.max(sw, sh) > targetMax ? targetMax / Math.max(sw, sh) : 1;
+        const cw = Math.max(1, Math.round(sw * escala));
+        const ch = Math.max(1, Math.round(sh * escala));
+        const canvas = document.createElement('canvas');
+        canvas.width = cw;
+        canvas.height = ch;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+        const imgData = ctx.getImageData(0, 0, cw, ch);
+        const code = jsQR(imgData.data, imgData.width, imgData.height, {
+          inversionAttempts: 'attemptBoth'
+        });
+        return code && code.data && code.data.trim() ? normalizarCodigoQR(code.data) : null;
+      };
+
+      const w = img.width;
+      const h = img.height;
+
+      // 1) Imagen completa a resolución nativa y escalada
+      // 2) Región media-izquierda (ubicación exacta del QR en el reverso del CARNET EDUPASS de IED CEIS Sopó)
+      // 3) Región central y superior/inferior
+      const regiones: Array<[number, number, number, number, number]> = [
+        [0, 0, w, h, 1400],
+        [0, 0, w, h, 800],
+        [0, Math.round(h * 0.2), Math.round(w * 0.7), Math.round(h * 0.55), 900],
+        [Math.round(w * 0.1), Math.round(h * 0.1), Math.round(w * 0.8), Math.round(h * 0.8), 900],
+        [0, 0, Math.round(w * 0.65), Math.round(h * 0.65), 900]
+      ];
+
+      for (const [sx, sy, sw, sh, maxDim] of regiones) {
+        const detectado = intentarLectura(sx, sy, sw, sh, maxDim);
+        if (detectado) {
+          detenerStream();
+          onDetectado(detectado);
+          return;
+        }
       }
+
+      setErrorCamara(
+        'No se detectó un código QR en la imagen. Asegúrate de subir la cara del carnet EDUPASS donde aparece el código QR.'
+      );
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);

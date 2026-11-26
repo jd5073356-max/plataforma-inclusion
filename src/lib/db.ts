@@ -29,7 +29,7 @@ export function correoPorIdentificacion(identificacion: string): string {
 
 export function formatearCursoConId(curso: string, identificacion?: string): string {
   const c = (curso || '').trim();
-  const id = (identificacion || '').trim();
+  const id = normalizarCodigoQR(identificacion || '');
   if (!id) return c;
   if (/\[?ID:/i.test(c)) return c;
   if (!c || c.toLowerCase() === id.toLowerCase()) return `ID:${id}`;
@@ -39,10 +39,10 @@ export function formatearCursoConId(curso: string, identificacion?: string): str
 export function obtenerIdEstudiante(perfil: { nombre?: string; curso?: string }): string {
   const c = (perfil.curso || '').trim();
   const match = c.match(/ID:\s*([^\s\]·|]+)/i);
-  if (match && match[1]) return match[1].trim();
+  if (match && match[1]) return normalizarCodigoQR(match[1].trim());
   const n = limpiarSlug(perfil.nombre || '');
   if (n.startsWith('maria-paula')) return 'MP-901';
-  if (c) return c;
+  if (c) return normalizarCodigoQR(c);
   return n.slice(0, 10).toUpperCase() || 'EST-01';
 }
 
@@ -53,14 +53,14 @@ export function obtenerCursoLimpio(perfil: { curso?: string }): string {
 }
 
 export function normalizarCodigoQR(raw: string): string {
-  const texto = (raw || '').trim();
+  let texto = (raw || '').trim();
   if (!texto) return '';
   // Si el QR contiene un JSON: {"id":"..."}
   if (texto.startsWith('{') && texto.endsWith('}')) {
     try {
       const obj = JSON.parse(texto);
       const cand = obj.id || obj.identificacion || obj.documento || obj.codigo || obj.qr;
-      if (cand) return String(cand).trim();
+      if (cand) texto = String(cand).trim();
     } catch {
       // continuar
     }
@@ -70,15 +70,18 @@ export function normalizarCodigoQR(raw: string): string {
     try {
       const u = new URL(texto);
       const param = u.searchParams.get('id') || u.searchParams.get('qr') || u.searchParams.get('codigo');
-      if (param) return param.trim();
-      const seg = u.pathname.split('/').filter(Boolean).pop();
-      if (seg) return seg.trim();
+      if (param) {
+        texto = param.trim();
+      } else {
+        const seg = u.pathname.split('/').filter(Boolean).pop();
+        if (seg) texto = seg.trim();
+      }
     } catch {
       // continuar
     }
   }
-  // Prefijos como "ECOINCLUSIVO:MP-901" o "ID:103456"
-  const pref = texto.match(/^(?:ecoinclusivo|carnet|id|qr)\s*[:|-]\s*(.+)$/i);
+  // Prefijos de carnet EDUPASS / Eco Inclusivo: "TI: 1075665845", "CC. 1020741860", "ID: 1075665845", "TI 1018447076", "ECOINCLUSIVO:MP-901"
+  const pref = texto.match(/^(?:ecoinclusivo|carnet|id|qr|t\.?i\.?|c\.?c\.?|documento|doc|rc)\s*[:.|\-\s]\s*(.+)$/i);
   if (pref && pref[1]) return pref[1].trim();
   return texto;
 }
