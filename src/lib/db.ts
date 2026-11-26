@@ -349,10 +349,17 @@ export const db = {
 
   async signIn(email: string, pass: string) {
     const emailLimpio = email.trim().toLowerCase();
+    const esEmailAdmin =
+      emailLimpio === 'admin@inclusion.com' ||
+      emailLimpio === 'coordinacion@institucion.edu.co' ||
+      emailLimpio === 'admin@ecoinclusivo.com';
+
     if (usarSupabase()) {
       const emailCandidatos = [emailLimpio];
       if (emailLimpio === 'educador@escuela.edu.co') {
         emailCandidatos.unshift('profesor@inclusion.com');
+      } else if (esEmailAdmin && emailLimpio !== 'admin@inclusion.com') {
+        emailCandidatos.unshift('admin@inclusion.com');
       } else if (emailLimpio === 'maria-paula-penuela.901@inclusion.local') {
         emailCandidatos.unshift('maria-paula.901@inclusion.local');
       }
@@ -361,15 +368,56 @@ export const db = {
       for (const candidato of emailCandidatos) {
         const { data, error } = await supabase.auth.signInWithPassword({ email: candidato, password: pass });
         if (!error && data.user) {
-          const { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
-          if (candidato === 'profesor@inclusion.com' && profile && profile.nombre !== 'Profesor') {
+          let { data: profile } = await supabase.from('perfiles').select('*').eq('id', data.user.id).single();
+
+          if (candidato === 'admin@inclusion.com' || esEmailAdmin) {
+            if (!profile || profile.rol !== 'admin') {
+              const adminProfile: Perfil = {
+                id: data.user.id,
+                rol: 'admin',
+                nombre: profile?.nombre || 'Administrador'
+              };
+              await supabase.from('perfiles').upsert(adminProfile);
+              profile = adminProfile;
+            }
+          } else if (candidato === 'profesor@inclusion.com' && profile && profile.nombre !== 'Profesor') {
             profile.nombre = 'Profesor';
             supabase.from('perfiles').update({ nombre: 'Profesor' }).eq('id', data.user.id).then(() => {});
           }
+
+          if (!profile) {
+            const fallbackProfile: Perfil = {
+              id: data.user.id,
+              rol: esEmailAdmin ? 'admin' : 'profesor',
+              nombre: esEmailAdmin ? 'Administrador' : 'Profesor'
+            };
+            await supabase.from('perfiles').upsert(fallbackProfile);
+            profile = fallbackProfile;
+          }
+
           return { user: data.user, profile };
         }
         lastError = error;
       }
+
+      // Auto-provisionamiento de cuenta admin institucional si la BD fue reiniciada
+      if (esEmailAdmin && pass === '123456') {
+        const { data: upData, error: upErr } = await supabase.auth.signUp({
+          email: 'admin@inclusion.com',
+          password: '123456',
+          options: { data: { nombre: 'Administrador', rol: 'admin' } }
+        });
+        if (!upErr && upData?.user) {
+          const adminProfile: Perfil = {
+            id: upData.user.id,
+            rol: 'admin',
+            nombre: 'Administrador'
+          };
+          await supabase.from('perfiles').upsert(adminProfile);
+          return { user: upData.user, profile: adminProfile };
+        }
+      }
+
       throw lastError || new Error('Credenciales incorrectas');
     } else {
       const mockCreds = getStored<any[]>('mock_creds', []);
@@ -398,8 +446,12 @@ export const db = {
         } else if (emailLimpio === 'rafael.suarez@inclusion.com' && pass === '123456') {
           const baseProf = perfiles.find(p => p.id === 'profesor-1');
           userProfile = baseProf ? { ...baseProf, nombre: 'Rafael Suárez Martínez' } : undefined;
-        } else if (emailLimpio === 'admin@inclusion.com' && pass === '123456') {
-          userProfile = perfiles.find(p => p.id === 'admin-1');
+        } else if (esEmailAdmin && pass === '123456') {
+          userProfile = perfiles.find(p => p.id === 'admin-1' || p.rol === 'admin') || {
+            id: 'admin-1',
+            rol: 'admin',
+            nombre: 'Administrador'
+          };
         }
       }
 
@@ -511,9 +563,31 @@ export const db = {
     if (usarSupabase()) {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
-      const { data: profile } = await supabase.from('perfiles').select('*').eq('id', user.id).single();
-      if (user.email?.toLowerCase() === 'profesor@inclusion.com' && profile) {
+      let { data: profile } = await supabase.from('perfiles').select('*').eq('id', user.id).single();
+      const userEmail = (user.email || '').toLowerCase();
+      const esAdmin =
+        userEmail === 'admin@inclusion.com' ||
+        userEmail === 'coordinacion@institucion.edu.co' ||
+        userEmail === 'admin@ecoinclusivo.com';
+
+      if (esAdmin && (!profile || profile.rol !== 'admin')) {
+        const adminProfile: Perfil = {
+          id: user.id,
+          rol: 'admin',
+          nombre: profile?.nombre || 'Administrador'
+        };
+        await supabase.from('perfiles').upsert(adminProfile);
+        profile = adminProfile;
+      } else if (userEmail === 'profesor@inclusion.com' && profile) {
         profile.nombre = 'Profesor';
+      }
+
+      if (!profile) {
+        profile = {
+          id: user.id,
+          rol: esAdmin ? 'admin' : 'profesor',
+          nombre: esAdmin ? 'Administrador' : 'Profesor'
+        };
       }
       return { user, profile };
     } else {

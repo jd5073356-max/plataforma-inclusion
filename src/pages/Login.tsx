@@ -49,18 +49,16 @@ export default function Login() {
       if (!email.trim() || !password.trim()) {
         throw new Error('Por favor, ingresa tu correo y contraseña.');
       }
-      await login(email, password);
+      const perfilAutenticado = await login(email, password);
 
-      const { db } = await import('../lib/db');
-      const userData = await db.getCurrentUser();
-      if (rolTab === 'admin' && userData?.profile?.rol !== 'admin') {
+      if (rolTab === 'admin' && perfilAutenticado?.rol !== 'admin') {
         await logout();
         throw new Error(
-          'Esta cuenta tiene rol de Profesor, no de Administrador. Usa la pestaña «Profesor» o ingresa con la cuenta de Administrador institucional para crear docentes.'
+          'Esta cuenta tiene rol de Profesor, no de Administrador. Usa la pestaña «Profesor» o ingresa con la cuenta de Administrador institucional (admin@inclusion.com).'
         );
       }
 
-      if (userData?.profile?.rol === 'admin') {
+      if (perfilAutenticado?.rol === 'admin') {
         navigate('/admin');
       } else {
         navigate('/profesor');
@@ -209,7 +207,7 @@ export default function Login() {
                     </div>
                     <input
                       type="email"
-                      placeholder={rolTab === 'admin' ? 'coordinacion@institucion.edu.co' : 'profesor@institucion.edu.co'}
+                      placeholder={rolTab === 'admin' ? 'admin@inclusion.com' : 'educador@escuela.edu.co'}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 border border-[#EFECE6] rounded-2xl text-[#1C1917] font-medium placeholder-[#A8A29E] bg-[#FBF9F5] focus:outline-none focus:border-[#EE7C6A] transition"

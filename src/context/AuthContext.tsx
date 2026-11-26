@@ -14,7 +14,7 @@ interface AuthContextType {
   user: any;
   profile: Perfil | null;
   loading: boolean;
-  login: (emailOrName: string, pass: string, course?: string) => Promise<void>;
+  login: (emailOrName: string, pass: string, course?: string) => Promise<Perfil | null>;
   logout: () => Promise<void>;
   registerStudent: (nombre: string, curso: string, contrasena: string) => Promise<void>;
 }
@@ -74,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       setUser(data.user);
       setProfile(data.profile);
+      return data.profile;
     } catch (err) {
       setLoading(false);
       throw err;
